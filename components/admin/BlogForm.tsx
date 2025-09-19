@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { 
   ArrowLeftIcon,
   DocumentTextIcon,
@@ -9,7 +10,8 @@ import {
   CalendarIcon,
   UserIcon,
   StarIcon,
-  ClockIcon
+  ClockIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 
 interface BlogPost {
@@ -25,6 +27,7 @@ interface BlogPost {
   authorBn: string;
   category: string;
   image: string;
+  imageKey?: string;
   tags: string[];
   featured: boolean;
   isActive: boolean;
@@ -47,6 +50,7 @@ const CATEGORIES = [
 
 export default function BlogForm({ postId }: BlogFormProps) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(postId !== 'new');
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -63,6 +67,7 @@ export default function BlogForm({ postId }: BlogFormProps) {
     authorBn: 'নির্বাচন কমিশন',
     category: 'general',
     image: '',
+    imageKey: '',
     tags: [] as string[],
     featured: false,
     isActive: true,
@@ -70,8 +75,13 @@ export default function BlogForm({ postId }: BlogFormProps) {
     publishedAt: new Date().toISOString().split('T')[0],
   });
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [tagInput, setTagInput] = useState('');
+  const [error, setError] = useState<string | null>(null);
+
+  const isEditing = postId !== 'new';
 
   // Load existing post data if editing
   useEffect(() => {
@@ -94,12 +104,14 @@ export default function BlogForm({ postId }: BlogFormProps) {
               authorBn: post.authorBn || 'নির্বাচন কমিশন',
               category: post.category || 'general',
               image: post.image || '',
+              imageKey: post.imageKey || '',
               tags: post.tags || [],
               featured: post.featured || false,
               isActive: post.isActive !== undefined ? post.isActive : true,
               readTime: post.readTime || 5,
               publishedAt: post.publishedAt ? new Date(post.publishedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
             });
+            setPreviewUrl(post.image);
           } else {
             setMessage({ type: 'error', text: 'Failed to load blog post' });
           }
@@ -146,6 +158,51 @@ export default function BlogForm({ postId }: BlogFormProps) {
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (!allowedTypes.includes(file.type)) {
+        setError('Invalid file type. Only JPEG, PNG, WebP, and GIF files are allowed.');
+        return;
+      }
+
+      // Validate file size (10MB max)
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setError('File size too large. Maximum size is 10MB.');
+        return;
+      }
+
+      setSelectedFile(file);
+      setError(null);
+      
+      // Create preview URL
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+
+      // Clear image error if it exists
+      if (errors.image) {
+        setErrors(prev => ({
+          ...prev,
+          image: ''
+        }));
+      }
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    if (previewUrl && previewUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setPreviewUrl(isEditing && formData.image ? formData.image : null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const generateSlug = (title: string) => {
     return title
       .toLowerCase()
@@ -165,7 +222,12 @@ export default function BlogForm({ postId }: BlogFormProps) {
     if (!formData.contentEn.trim()) newErrors.contentEn = 'English content is required';
     if (!formData.contentBn.trim()) newErrors.contentBn = 'Bengali content is required';
     if (!formData.slug.trim()) newErrors.slug = 'Slug is required';
-    if (!formData.image.trim()) newErrors.image = 'Image URL is required';
+    
+    // For new posts, require either a file or existing image URL
+    // For editing, allow keeping existing image
+    if (!isEditing && !selectedFile) {
+      newErrors.image = 'Image file is required for new blog posts';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -173,6 +235,7 @@ export default function BlogForm({ postId }: BlogFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     
     if (!validateForm()) {
       return;
@@ -182,17 +245,42 @@ export default function BlogForm({ postId }: BlogFormProps) {
     setMessage(null);
 
     try {
-      const url = postId === 'new' ? '/api/admin/blog' : '/api/admin/blog';
-      const method = postId === 'new' ? 'POST' : 'PUT';
+      // Create FormData for file upload
+      const submitData = new FormData();
       
-      const payload = postId === 'new' ? formData : { id: postId, ...formData };
+      if (isEditing) {
+        submitData.append('id', postId);
+      }
+      
+      submitData.append('slug', formData.slug.trim());
+      submitData.append('titleEn', formData.titleEn.trim());
+      submitData.append('titleBn', formData.titleBn.trim());
+      submitData.append('excerptEn', formData.excerptEn.trim());
+      submitData.append('excerptBn', formData.excerptBn.trim());
+      submitData.append('contentEn', formData.contentEn.trim());
+      submitData.append('contentBn', formData.contentBn.trim());
+      submitData.append('authorEn', formData.authorEn.trim());
+      submitData.append('authorBn', formData.authorBn.trim());
+      submitData.append('category', formData.category);
+      submitData.append('tags', JSON.stringify(formData.tags));
+      submitData.append('featured', formData.featured.toString());
+      submitData.append('isActive', formData.isActive.toString());
+      submitData.append('readTime', formData.readTime.toString());
+      submitData.append('publishedAt', formData.publishedAt);
+      
+      if (selectedFile) {
+        submitData.append('file', selectedFile);
+      } else if (isEditing && formData.image) {
+        // Keep existing image for edits when no new file is selected
+        submitData.append('existingImage', formData.image);
+        if (formData.imageKey) {
+          submitData.append('existingImageKey', formData.imageKey);
+        }
+      }
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+      const response = await fetch('/api/admin/blog', {
+        method: isEditing ? 'PUT' : 'POST',
+        body: submitData, // Send FormData directly for file upload
       });
 
       const data = await response.json();
@@ -207,6 +295,7 @@ export default function BlogForm({ postId }: BlogFormProps) {
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -256,6 +345,14 @@ export default function BlogForm({ postId }: BlogFormProps) {
       {/* Form */}
       <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
         <form onSubmit={handleSubmit} className="p-6 space-y-8">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+              <p className="text-sm font-medium text-red-600 dark:text-red-400">
+                {error}
+              </p>
+            </div>
+          )}
           {/* Basic Information */}
           <div className="space-y-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center">
@@ -491,27 +588,60 @@ export default function BlogForm({ postId }: BlogFormProps) {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                Image URL *
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <PhotoIcon className="h-5 w-5 text-slate-400" />
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Image {!isEditing && <span className="text-red-500">*</span>}
+                </label>
+                
+                {/* File Input */}
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 dark:border-slate-600 border-dashed rounded-lg">
+                  <div className="space-y-1 text-center">
+                    {previewUrl ? (
+                      <div className="relative">
+                        <div className="relative w-48 h-32 mx-auto">
+                          <Image
+                            src={previewUrl}
+                            alt="Preview"
+                            fill
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleRemoveFile}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                        >
+                          <XMarkIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <PhotoIcon className="mx-auto h-12 w-12 text-slate-400" />
+                    )}
+                    
+                    <div className="flex text-sm text-slate-600 dark:text-slate-400">
+                      <label htmlFor="file-upload" className="relative cursor-pointer bg-white dark:bg-slate-800 rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
+                        <span>{previewUrl ? 'Change image' : 'Upload an image'}</span>
+                        <input
+                          ref={fileInputRef}
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                          accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                          onChange={handleFileChange}
+                        />
+                      </label>
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      PNG, JPG, WebP, GIF up to 10MB
+                    </p>
+                  </div>
                 </div>
-                <input
-                  type="url"
-                  value={formData.image}
-                  onChange={(e) => handleInputChange('image', e.target.value)}
-                  className={`block w-full pl-10 pr-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.image ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
-                  }`}
-                  placeholder="/blog-images/image.jpg"
-                />
+                {errors.image && (
+                  <p className="text-sm text-red-600 dark:text-red-400">{errors.image}</p>
+                )}
               </div>
-              {errors.image && (
-                <p className="text-sm text-red-600 dark:text-red-400">{errors.image}</p>
-              )}
             </div>
 
             {/* Tags */}

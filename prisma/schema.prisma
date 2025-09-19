@@ -155,6 +155,7 @@ model BlogPost {
   authorBn    String
   category    String
   image       String
+  imageKey    String?  // S3 key for image cleanup
   tags        String[] // Array of tags
   featured    Boolean  @default(false)
   isActive    Boolean  @default(true)
