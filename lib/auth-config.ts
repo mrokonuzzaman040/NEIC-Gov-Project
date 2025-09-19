@@ -132,6 +132,17 @@ export const authOptions: NextAuthOptions = {
         (session as any).role = token.role;
         (session as any).isActive = token.isActive;
         (session as any).userId = token.userId;
+
+        session.user = {
+          ...session.user,
+          role: token.role as string,
+          isActive: token.isActive as boolean,
+          id: token.userId as string
+        } as typeof session.user & {
+          role?: string;
+          isActive?: boolean;
+          id?: string;
+        };
       }
       return session;
     },
