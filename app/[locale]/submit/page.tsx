@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { submissionSchema } from '@/lib/validation/submission';
 import Link from 'next/link';
+import ReCAPTCHA from 'react-google-recaptcha';
+import type { ReCAPTCHA as ReCAPTCHAInstance } from 'react-google-recaptcha';
 
 export default function SubmitPage() {
   const t = useTranslations();
@@ -14,16 +16,32 @@ export default function SubmitPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const recaptchaRef = useRef<ReCAPTCHAInstance | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState<string | null>(null);
+  const captchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_KEY;
+  const captchaRequired = Boolean(captchaSiteKey);
+  const maxFileSizeMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '25');
+  const maxFileSizeBytes = Math.max(1, maxFileSizeMb) * 1024 * 1024;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMsg(null);
+    setCaptchaError(null);
     setStatus('submitting');
     const formData = new FormData(e.currentTarget);
     
     // Add file to form data if selected
     if (selectedFile) {
       formData.append('attachment', selectedFile);
+    }
+
+    if (captchaRequired && !captchaToken) {
+      setStatus('error');
+      const message = isEnglish ? 'Please complete the verification challenge before submitting.' : 'জমা দেওয়ার আগে অনুগ্রহ করে যাচাইকরণ সম্পন্ন করুন।';
+      setCaptchaError(message);
+      setErrorMsg(message);
+      return;
     }
     
     const data = {
@@ -66,6 +84,9 @@ export default function SubmitPage() {
         submitFormData.append('message', parsed.data.message);
         submitFormData.append('website', formData.get('website') as string || '');
         submitFormData.append('attachment', selectedFile);
+        if (captchaRequired && captchaToken) {
+          submitFormData.append('captchaToken', captchaToken);
+        }
         
         response = await fetch('/api/submit', {
           method: 'POST',
@@ -76,7 +97,10 @@ export default function SubmitPage() {
         response = await fetch('/api/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(parsed.data)
+          body: JSON.stringify({
+            ...parsed.data,
+            ...(captchaRequired && captchaToken ? { captchaToken } : {})
+          })
         });
       }
       
@@ -87,6 +111,9 @@ export default function SubmitPage() {
         setSelectedFile(null);
         setFieldErrors({});
         setErrorMsg(null);
+        setCaptchaToken(null);
+        setCaptchaError(null);
+        recaptchaRef.current?.reset();
         // Clear the file input
         const fileInput = document.getElementById('attachment') as HTMLInputElement;
         if (fileInput) fileInput.value = '';
@@ -104,10 +131,14 @@ export default function SubmitPage() {
           setFieldErrors(errors);
         }
         setErrorMsg(result.error?.message || 'Submission failed');
+        setCaptchaToken(null);
+        recaptchaRef.current?.reset();
       }
     } catch (error) {
       setStatus('error');
       setErrorMsg('Network error. Please try again.');
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
     }
   }
 
@@ -122,10 +153,9 @@ export default function SubmitPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Check file size (max 512MB)
-      const maxSize = 512 * 1024 * 1024; // 512MB in bytes
-      if (file.size > maxSize) {
-        setErrorMsg(`File size must be less than 512MB. Current file size: ${formatFileSize(file.size)}`);
+      // Check file size
+      if (file.size > maxFileSizeBytes) {
+        setErrorMsg(`File size must be less than ${maxFileSizeMb}MB. Current file size: ${formatFileSize(file.size)}`);
         e.target.value = ''; // Clear the input
         return;
       }
@@ -416,7 +446,9 @@ export default function SubmitPage() {
                           {selectedFile ? `Size: ${formatFileSize(selectedFile.size)}` : t('form.uploadHint')}
                         </span>
                         <span className="text-xs text-gray-400 dark:text-gray-500 text-center break-words px-2">
-                          {isEnglish ? 'Max size: 512MB | Supported: Images, Documents, Archives, Audio, Video' : 'সর্বোচ্চ আকার: ৫১২MB | সমর্থিত: ছবি, ডকুমেন্ট, আর্কাইভ, অডিও, ভিডিও'}
+                          {isEnglish
+                            ? `Max size: ${maxFileSizeMb}MB | Supported: Images, Documents, Archives, Audio, Video`
+                            : `সর্বোচ্চ আকার: ${maxFileSizeMb}MB | সমর্থিত: ছবি, ডকুমেন্ট, আর্কাইভ, অডিও, ভিডিও`}
                         </span>
                       </div>
                     </label>
@@ -453,6 +485,38 @@ export default function SubmitPage() {
 
                 {/* Form Actions */}
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-gray-200 dark:border-slate-700">
+                  <div className="w-full sm:w-auto">
+                    {captchaSiteKey ? (
+                      <ReCAPTCHA
+                        sitekey={captchaSiteKey}
+                        ref={recaptchaRef}
+                        onChange={(token) => {
+                          if (token) {
+                            setCaptchaToken(token);
+                            setCaptchaError(null);
+                          } else {
+                            setCaptchaToken(null);
+                          }
+                        }}
+                        onExpired={() => {
+                          setCaptchaToken(null);
+                          setCaptchaError(isEnglish ? 'Verification expired. Please try again.' : 'যাচাইকরণের সময়সীমা শেষ হয়েছে। অনুগ্রহ করে পুনরায় চেষ্টা করুন।');
+                        }}
+                        onErrored={() => {
+                          const message = isEnglish ? 'Verification could not be completed. Please reload the challenge.' : 'যাচাইকরণ সম্পন্ন করা যায়নি। অনুগ্রহ করে পুনরায় চেষ্টা করুন।';
+                          setCaptchaToken(null);
+                          setCaptchaError(message);
+                        }}
+                      />
+                    ) : (
+                      <p className="text-xs text-yellow-600">
+                        {isEnglish ? 'Captcha protection is not configured. Please contact the administrator.' : 'ক্যাপচা সুরক্ষা কনফিগার করা হয়নি। অনুগ্রহ করে প্রশাসকের সাথে যোগাযোগ করুন।'}
+                      </p>
+                    )}
+                    {captchaError && (
+                      <p className="text-xs text-red-600 mt-2" role="alert">{captchaError}</p>
+                    )}
+                  </div>
                   <button
                     disabled={status === 'submitting'}
                     className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"

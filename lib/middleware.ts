@@ -92,14 +92,46 @@ export async function authMiddleware(request: NextRequest) {
 // Security headers middleware
 const isProduction = process.env.NODE_ENV === 'production';
 
+const RECAPTCHA_DOMAINS = [
+  'https://www.google.com',
+  'https://www.gstatic.com',
+  'https://www.google.com/recaptcha/',
+  'https://www.gstatic.com/recaptcha/',
+  'https://www.recaptcha.net',
+  'https://www.recaptcha.net/recaptcha/'
+];
+
 function buildContentSecurityPolicy() {
+  const scriptSrc = [
+    "'self'",
+    "'unsafe-inline'",
+    ...RECAPTCHA_DOMAINS
+  ];
+
+  if (!isProduction) {
+    scriptSrc.push("'unsafe-eval'");
+  }
+
+  const connectSrc = [
+    "'self'",
+    ...RECAPTCHA_DOMAINS
+  ];
+
+  const imgSrc = [
+    "'self'",
+    'data:',
+    'blob:',
+    ...RECAPTCHA_DOMAINS
+  ];
+
   const directives = [
     "default-src 'self'",
-    `script-src 'self'${isProduction ? '' : " 'unsafe-eval' 'unsafe-inline'"}`,
+    `script-src ${scriptSrc.join(' ')}`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "img-src 'self' data: blob:",
+    `img-src ${imgSrc.join(' ')}`,
     "font-src 'self' https://fonts.gstatic.com data:",
-    "connect-src 'self'",
+    `connect-src ${connectSrc.join(' ')}`,
+    `frame-src 'self' ${RECAPTCHA_DOMAINS.join(' ')}`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",

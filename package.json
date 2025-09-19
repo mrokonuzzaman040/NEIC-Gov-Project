@@ -43,6 +43,7 @@
     "pino": "9.3.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-google-recaptcha": "^3.1.0",
     "sharp": "^0.34.3",
     "zod": "3.23.8"
   },
@@ -56,6 +57,7 @@
     "@types/node": "20.11.30",
     "@types/react": "18.2.74",
     "@types/react-dom": "18.2.24",
+    "@types/react-google-recaptcha": "^2.1.9",
     "autoprefixer": "10.4.19",
     "axe-core": "4.9.1",
     "eslint": "8.57.0",
