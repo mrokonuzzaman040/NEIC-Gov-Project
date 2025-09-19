@@ -2,7 +2,6 @@ import { writeFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
-import { fileTypeFromBuffer } from 'file-type';
 
 // File storage configuration
 const UPLOAD_DIR = process.env.UPLOAD_DIR || './uploads/submissions';
@@ -89,9 +88,19 @@ function ensureUploadLimit(size: number) {
   }
 }
 
+type DetectedFileType = { ext?: string; mime?: string } | undefined | null;
+let fileTypeFromBufferFn: ((buffer: Uint8Array) => Promise<DetectedFileType>) | null = null;
+
 async function detectFileType(buffer: Buffer) {
   try {
-    return await fileTypeFromBuffer(buffer);
+    if (!fileTypeFromBufferFn) {
+      const mod = await import('file-type');
+      fileTypeFromBufferFn = mod.fileTypeFromBuffer;
+    }
+  if (!fileTypeFromBufferFn) return null;
+  // Convert Buffer to Uint8Array for compatibility
+  const uint8Buffer = new Uint8Array(buffer);
+  return await fileTypeFromBufferFn(uint8Buffer);
   } catch (error) {
     return null;
   }
@@ -176,7 +185,9 @@ export async function storeFileLocally(file: File, validated?: ValidatedFile): P
   const safeFilename = generateSafeFilename(file.name);
   const filePath = path.join(UPLOAD_DIR, safeFilename);
 
-  await writeFile(filePath, validatedFile.buffer);
+  // Convert Buffer to Uint8Array for writeFile compatibility
+  const uint8Buffer = new Uint8Array(validatedFile.buffer);
+  await writeFile(filePath, uint8Buffer);
 
   return {
     url: `/uploads/submissions/${safeFilename}`,
