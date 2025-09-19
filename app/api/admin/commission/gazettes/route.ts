@@ -4,6 +4,8 @@ import { authOptions } from '@/lib/auth-config';
 import { prisma } from '@/lib/db';
 import { uploadToS3, deleteFromS3 } from '@/lib/s3';
 
+export const dynamic = 'force-dynamic';
+
 // Validate PDF file for uploads
 function validatePdfFile(contentType: string, fileSize: number): { isValid: boolean; error?: string } {
   if (contentType !== 'application/pdf') {

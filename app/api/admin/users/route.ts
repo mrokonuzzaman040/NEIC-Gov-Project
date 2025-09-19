@@ -4,6 +4,8 @@ import { authOptions } from '@/lib/auth-config';
 import { prisma } from '@/lib/db';
 import { hash } from 'bcryptjs';
 
+export const dynamic = 'force-dynamic';
+
 // GET - Fetch all users (admin only)
 export async function GET(request: NextRequest) {
   try {

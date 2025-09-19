@@ -4,6 +4,8 @@ import { prisma } from '@/lib/db';
 import { hashPassword } from '@/lib/crypto/hash';
 import bcrypt from 'bcryptjs';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuthenticatedSession();

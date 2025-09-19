@@ -4,6 +4,8 @@ import { authOptions } from '@/lib/auth-config';
 import { prisma } from '@/lib/db';
 import { uploadToS3, deleteFromS3, validateImageFile } from '@/lib/s3';
 
+export const dynamic = 'force-dynamic';
+
 // GET - Fetch all blog posts or single post by ID
 export async function GET(request: NextRequest) {
   try {
