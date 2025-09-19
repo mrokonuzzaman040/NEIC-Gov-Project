@@ -1,0 +1,285 @@
+{
+  "meta": {
+    "title": "National Elections Inquiry Commission — Your Voice, Our Duty",
+    "description": "Collecting public opinions & incident reports about Bangladesh national elections (2014, 2018, 2024) to build future recommendations."
+  },
+  "banner": {
+    "subtitle": "National Parliament Elections (2014, 2018, 2024)",
+    "title": "Speak up — we are listening and verifying.",
+    "lead": "The commission is formed to collect your experiences and views about the elections of 2014, 2018 & 2024. Your voice shapes policies & recommendations."
+  },
+  "cta": {
+    "opinion": "Submit Opinion",
+    "reporting": "Reporting Flow"
+  },
+  "slogans": {
+    "title": "Commission Messages",
+    "list": [
+      "Raise your voice — the commission stands with you.",
+      "Participate in impartial inquiry — shape the future.",
+      "Share your views — we will reflect them.",
+      "Your voice, your rights, your country."
+    ]
+  },
+  "alert": {"privacy": "Caution: Please avoid sharing sensitive personal data. The commission will follow legal & ethical guidelines."},
+  "section": {
+    "how": {
+      "title": "How to Participate",
+      "text": "You can submit via online form, direct verified email or designated phone channels. Keep inputs concise, evidence‑oriented and respectful.",
+      "li1": "Send opinion through interactive form",
+      "li2": "Upload documents/evidence if applicable",
+      "li3": "Report while preserving confidentiality"
+    },
+    "reporting": {
+      "title": "Reporting Guidance",
+      "text": "While reporting, state time / place / event concisely. Provide reference to witnesses or evidence if possible to accelerate objective review."
+    },
+    "quick": {
+      "title": "Quick Links",
+      "text": "Use links below to jump directly to key pages.",
+      "opinion": "Opinion Form",
+      "faq": "FAQ",
+      "privacy": "Privacy & Policy"
+    }
+  },
+  "table": {
+    "serialNumber": "SI.",
+    "title": "Title",
+    "publishedAt": "Published at",
+    "action": "Action",
+    "download": "Download",
+    "noDataAvailable": "No data available"
+  },
+  "notice": {
+    "title": "Official Notices",
+    "description": "Stay updated with the latest announcements and notices from the National Elections Inquiry Commission.",
+    "allNotices": "All Notices",
+    "importantNote": "Important Note",
+    "noteDescription": "All notices are official documents from the National Elections Inquiry Commission. Please download and read them carefully for important updates and announcements."
+  },
+  "gazettes": {
+    "title": "Official Gazettes",
+    "description": "Access official gazette notifications and legal documents published by the Election Commission.",
+    "allGazettes": "All Gazettes",
+    "importantNote": "Important Note",
+    "noteDescription": "All gazettes are official legal documents with statutory authority. Please download and review them for complete legal information."
+  },
+  "form": {
+    "title": "Share what you want to say",
+    "desc": "Briefly write your experience, expectations or complaint. The commission will verify and produce relevant recommendations.",
+    "pageTitle": "Submit Your Opinion",
+    "pageDescription": "Share your experiences and views about the national elections. Your voice matters in shaping future recommendations.",
+    "backToHome": "Back to Home",
+    "name": "Name (optional)",
+    "namePlaceholder": "Enter your full name",
+    "phone": "Phone Number *",
+    "phonePlaceholder": "01XXXXXXXXX (Bangladesh phone number)",
+    "email": "Email (optional)",
+    "emailPlaceholder": "Enter your email address",
+    "shareName": "I agree to share my name",
+    "shareNameDesc": "Check this box if you want to share your name",
+    "message": "Your opinion / incident description *",
+    "placeholder": "Summarize — what happened, when, where, and mention evidence if any",
+    "attachment": "Attachment (optional)",
+    "uploadText": "Click to upload file or drag and drop",
+    "uploadHint": "Images, PDF, or text files (max 1GB)",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "reset": "Reset",
+    "privacy": "* Learn about privacy"
+   },
+   "footer": {"tagline": "Dignity of the vote, dignity of the nation — listening, verifying, committed."},
+  "success": {"submitted": "Your submission has been received."},
+  "error": {
+    "generic": "Something went wrong.",
+    "tooMany": "Too many requests, please try again later.",
+    "validation": "Validation failed. Please correct the highlighted fields.",
+    "404": {
+      "title": "Page Not Found",
+      "subtitle": "The page you're looking for doesn't exist",
+      "description": "The requested page could not be found. This might happen if the page was moved, deleted, or you entered an incorrect URL.",
+      "homeButton": "Back to Home",
+      "reportButton": "Report Issue"
+    },
+    "500": {
+      "title": "Server Error",
+      "subtitle": "Something went wrong on our end",
+      "description": "We're experiencing technical difficulties. Our team has been notified and is working to resolve this issue.",
+      "tryAgain": "Try Again",
+      "homeButton": "Back to Home"
+    },
+    "global": {
+      "title": "Unexpected Error",
+      "subtitle": "An error occurred while processing your request",
+      "description": "Something unexpected happened. Please try refreshing the page or contact support if the problem persists.",
+      "refresh": "Refresh Page",
+      "homeButton": "Back to Home"
+    }
+  },
+  "reporting": {
+    "title": "Incident & Irregularity Reporting",
+    "intro": "Use this page to understand how to submit credible, structured reports about election-related incidents. Provide factual, time-bound, location-specific details.",
+    "guidelinesTitle": "Guidelines",
+    "li1": "Be objective: avoid speculation, focus on observed facts.",
+    "li2": "Preserve evidence: do not alter media or documents.",
+    "li3": "Protect identities where safety risks exist.",
+    "scopeTitle": "Scope of Reports",
+    "scopeText": "Covers polling process issues, intimidation, procedural violations, ballot handling anomalies, accessibility barriers and systemic irregularities. Non-election personal disputes are out of scope."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Common questions and answers about the election investigation process.",
+    "q1": {
+      "question": "What is the purpose of this commission?",
+      "answer": "The commission is formed to collect experiences and views about the elections of 2014, 2018, and 2024. We aim to gather public opinions and incident reports to build future recommendations for improving the electoral process."
+    },
+    "q2": {
+      "question": "How can I submit my opinion or report?",
+      "answer": "You can submit your opinion through our interactive online form, verified email channels, or designated phone lines. Please keep your inputs concise, evidence-oriented, and respectful."
+    },
+    "q3": {
+      "question": "Is my information kept confidential?",
+      "answer": "Yes, we follow strict legal and ethical guidelines to protect your privacy. Please avoid sharing sensitive personal data, and we will handle all submissions according to our privacy policy."
+    },
+    "q4": {
+      "question": "What types of incidents should I report?",
+      "answer": "You can report polling process issues, intimidation, procedural violations, ballot handling anomalies, accessibility barriers, and systemic irregularities. Personal disputes unrelated to elections are outside our scope."
+    },
+    "q5": {
+      "question": "How will my submission be used?",
+      "answer": "Your submissions will be analyzed to identify patterns and issues in the electoral process. The findings will contribute to recommendations for future electoral reforms and improvements."
+    },
+    "contact": {
+      "title": "Still have questions?",
+      "description": "If you can't find the answer you're looking for, please contact us through the reporting page.",
+      "button": "Contact Support"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "description": "Our commitment to protecting your privacy and personal information.",
+    "collection": {
+      "title": "Information We Collect",
+      "submission": {
+        "title": "Submission Data",
+        "items": [
+          "Opinions and experiences you voluntarily share",
+          "Incident reports and supporting documentation", 
+          "Contact information (if provided)",
+          "Timestamp and submission metadata"
+        ]
+      },
+      "technical": {
+        "title": "Technical Data",
+        "items": [
+          "IP address (anonymized for security)",
+          "Browser type and version",
+          "Device information",
+          "Usage patterns and analytics"
+        ]
+      }
+    },
+    "usage": {
+      "title": "How We Use Your Information",
+      "items": [
+        {
+          "title": "Electoral Analysis",
+          "description": "To analyze patterns and issues in electoral processes"
+        },
+        {
+          "title": "Policy Development", 
+          "description": "To inform recommendations for electoral reforms"
+        },
+        {
+          "title": "System Security",
+          "description": "To prevent abuse and maintain system integrity"
+        },
+        {
+          "title": "Communication",
+          "description": "To respond to inquiries and provide updates (when contact info is provided)"
+        }
+      ]
+    },
+    "protection": {
+      "title": "Data Protection Measures",
+      "technical": {
+        "title": "Technical Safeguards",
+        "items": [
+          "End-to-end encryption",
+          "Secure data transmission (HTTPS)",
+          "Regular security audits",
+          "Access controls and authentication"
+        ]
+      },
+      "organizational": {
+        "title": "Organizational Measures",
+        "items": [
+          "Limited access on need-to-know basis",
+          "Staff training on data protection",
+          "Regular backup and recovery procedures",
+          "Incident response protocols"
+        ]
+      }
+    },
+    "rights": {
+      "title": "Your Rights and Choices",
+      "items": [
+        {
+          "title": "Anonymous Submissions",
+          "description": "You can submit information without providing personal details"
+        },
+        {
+          "title": "Data Minimization",
+          "description": "We only collect information necessary for our investigation purposes"
+        },
+        {
+          "title": "Transparent Process",
+          "description": "Clear information about how your data will be used and protected"
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "If you have questions about this privacy policy or how we handle your data, please contact us:",
+      "email": "privacy@ec.gov.bd",
+      "phone": "+880-2-8391397",
+      "address": "National Elections Inquiry Commission Secretariat, Sher-e-Bangla Nagar, Dhaka"
+    },
+    "lastUpdated": "Last updated: September 14, 2025"
+  },
+  "commission": {
+    "members": {
+      "title": "Commission Members",
+      "commissionMembers": "Commission Members",
+      "secretarialSupport": "Secretarial Support",
+      "memberNumber": "Member",
+      "staffNumber": "Staff"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Official Blog & Updates",
+    "description": "Stay informed with the latest updates, insights, and official communications from the National Elections Inquiry Commission.",
+    "categories": "Categories",
+    "allPosts": "All Posts",
+    "electoralProcess": "Electoral Process",
+    "technology": "Technology",
+    "citizenRights": "Citizen Rights",
+    "transparency": "Transparency",
+    "readMore": "Read More",
+    "stayUpdated": "Stay Updated",
+    "newsletterDescription": "Subscribe to our newsletter to receive the latest updates and official communications from the Commission.",
+    "enterEmail": "Enter your email",
+    "subscribe": "Subscribe",
+    "backToHome": "Back to Home"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Get in touch with us and share your feedback.",
+    "address": "Address",
+    "email": "Email",
+    "emailDescription": "Send us an email for your questions or feedback.",
+    "importantNote": "Important Information",
+    "noteDescription": "All communications and submitted information will be handled with confidentiality. We value your feedback and information."
+  }
+}

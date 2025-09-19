@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: election_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: election_commission
+      POSTGRES_USER: election_admin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-SecureElectionDB2024!}
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d
+    networks:
+      - election_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U election_admin -d election_commission"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: election_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - election_network
+    command: redis-server --requirepass ${REDIS_PASSWORD:-SecureRedis2024!}
+
+  app:
+    build: .
+    container_name: election_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://election_admin:${POSTGRES_PASSWORD:-SecureElectionDB2024!}@postgres:5432/election_commission
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-SecureRedis2024!}@redis:6379
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-YourSuperSecretKeyForElectionCommission2024!}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
+      # AWS S3 Configuration
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - election_network
+    volumes:
+      - ./uploads:/app/uploads
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  election_network:
+    driver: bridge

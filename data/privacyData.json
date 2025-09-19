@@ -1,0 +1,125 @@
+{
+  "privacyPage": {
+    "header": {
+      "title": {
+        "en": "Privacy Policy",
+        "bn": "গোপনীয়তা নীতি"
+      },
+      "subtitle": {
+        "en": "National Elections (2014, 2018, 2024) Inquiry Commission",
+        "bn": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন"
+      },
+      "documentType": {
+        "en": "Official Document",
+        "bn": "সরকারি নথি"
+      },
+      "tagline": {
+        "en": "Your Privacy, Our Priority",
+        "bn": "আপনার গোপনীয়তা, আমাদের অগ্রাধিকার"
+      }
+    },
+    "navigation": {
+      "backToHome": {
+        "en": "Back to Home",
+        "bn": "হোমে ফিরুন"
+      }
+    },
+    "sections": [
+      {
+        "id": "informationCollection",
+        "titleKey": "collection.title",
+        "icon": "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4",
+        "color": "blue",
+        "subsections": [
+          {
+            "id": "submissionData",
+            "titleKey": "collection.submission.title",
+            "icon": "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z",
+            "color": "blue",
+            "itemsKey": "collection.submission.items"
+          },
+          {
+            "id": "technicalData",
+            "titleKey": "collection.technical.title",
+            "icon": "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+            "color": "green",
+            "itemsKey": "collection.technical.items"
+          }
+        ]
+      },
+      {
+        "id": "dataUsage",
+        "titleKey": "usage.title",
+        "icon": "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+        "color": "green",
+        "itemsKey": "usage.items"
+      },
+      {
+        "id": "dataProtection",
+        "titleKey": "protection.title",
+        "icon": "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+        "color": "purple",
+        "subsections": [
+          {
+            "id": "technicalProtection",
+            "titleKey": "protection.technical.title",
+            "icon": "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+            "color": "purple",
+            "itemsKey": "protection.technical.items"
+          },
+          {
+            "id": "organizationalProtection",
+            "titleKey": "protection.organizational.title",
+            "icon": "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z",
+            "color": "orange",
+            "itemsKey": "protection.organizational.items"
+          }
+        ]
+      },
+      {
+        "id": "userRights",
+        "titleKey": "rights.title",
+        "icon": "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z",
+        "color": "green",
+        "itemsKey": "rights.items"
+      },
+      {
+        "id": "contact",
+        "titleKey": "contact.title",
+        "icon": "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+        "color": "blue",
+        "descriptionKey": "contact.description",
+        "contactInfo": [
+          {
+            "type": "email",
+            "icon": "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+            "key": "contact.email"
+          },
+          {
+            "type": "phone",
+            "icon": "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z",
+            "key": "contact.phone"
+          },
+          {
+            "type": "address",
+            "icon": "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z",
+            "key": "contact.address"
+          }
+        ]
+      }
+    ],
+    "footer": {
+      "lastUpdatedKey": "lastUpdated",
+      "importantNotice": {
+        "title": {
+          "en": "Important Notice",
+          "bn": "গুরুত্বপূর্ণ বিজ্ঞপ্তি"
+        },
+        "description": {
+          "en": "This privacy policy is subject to change. We will notify users of any significant changes through our official channels. For the most current version, please visit our website regularly.",
+          "bn": "এই গোপনীয়তা নীতি পরিবর্তনের বিষয়। আমরা আমাদের সরকারি চ্যানেলের মাধ্যমে যে কোন গুরুত্বপূর্ণ পরিবর্তনের বিষয়ে ব্যবহারকারীদের অবহিত করব। সর্বশেষ সংস্করণের জন্য আমাদের ওয়েবসাইট নিয়মিত দেখুন।"
+        }
+      }
+    }
+  }
+}

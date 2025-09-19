@@ -1,0 +1,129 @@
+{
+  "sliderData": {
+    "title": {
+      "en": "Featured Updates",
+      "bn": "বিশেষ আপডেট"
+    },
+    "description": {
+      "en": "Stay informed with the latest news and updates from the National Elections Inquiry Commission",
+      "bn": "জাতীয় নির্বাচন তদন্ত কমিশনের সর্বশেষ খবর ও আপডেটের সাথে অবগত থাকুন"
+    },
+    "slides": [
+      {
+        "id": 1,
+        "title": {
+          "en": "Commission Launches Digital Transparency Initiative",
+          "bn": "কমিশন ডিজিটাল স্বচ্ছতা উদ্যোগ চালু করেছে"
+        },
+        "description": {
+          "en": "The National Elections Inquiry Commission has launched a comprehensive digital transparency initiative to enhance public access to electoral information and processes.",
+          "bn": "জাতীয় নির্বাচন তদন্ত কমিশন নির্বাচনী তথ্য ও প্রক্রিয়ায় জনগণের অ্যাক্সেস বৃদ্ধির জন্য একটি ব্যাপক ডিজিটাল স্বচ্ছতা উদ্যোগ চালু করেছে।"
+        },
+        "image": "/slider-images/police.jpg",
+        "link": "/blog/understanding-electoral-transparency-bangladesh",
+        "buttonText": {
+          "en": "Learn More",
+          "bn": "আরও জানুন"
+        },
+        "category": {
+          "en": "Transparency",
+          "bn": "স্বচ্ছতা"
+        },
+        "date": "2024-01-15",
+        "featured": true
+      },
+      {
+        "id": 2,
+        "title": {
+          "en": "Enhanced Security Measures for Electoral Systems",
+          "bn": "নির্বাচনী ব্যবস্থার জন্য উন্নত নিরাপত্তা ব্যবস্থা"
+        },
+        "description": {
+          "en": "New cybersecurity protocols and enhanced security measures have been implemented to protect electoral integrity and voter data.",
+          "bn": "নির্বাচনী অখণ্ডতা এবং ভোটার তথ্য রক্ষার জন্য নতুন সাইবার নিরাপত্তা প্রোটোকল এবং উন্নত নিরাপত্তা ব্যবস্থা বাস্তবায়ন করা হয়েছে।"
+        },
+        "image": "/slider-images/fall.avif",
+        "link": "/blog/digital-security-modern-elections",
+        "buttonText": {
+          "en": "Read Details",
+          "bn": "বিস্তারিত পড়ুন"
+        },
+        "category": {
+          "en": "Security",
+          "bn": "নিরাপত্তা"
+        },
+        "date": "2024-01-10",
+        "featured": true
+      },
+      {
+        "id": 3,
+        "title": {
+          "en": "Citizen Engagement Portal Now Live",
+          "bn": "নাগরিক অংশগ্রহণ পোর্টাল এখন লাইভ"
+        },
+        "description": {
+          "en": "The new citizen engagement portal provides enhanced opportunities for public participation in electoral oversight and reporting.",
+          "bn": "নতুন নাগরিক অংশগ্রহণ পোর্টাল নির্বাচনী তদারকি এবং রিপোর্টিংয়ে জনসাধারণের অংশগ্রহণের জন্য উন্নত সুযোগ প্রদান করে।"
+        },
+        "image": "/slider-images/caught.webp",
+        "link": "/blog/citizen-engagement-electoral-oversight",
+        "buttonText": {
+          "en": "Get Involved",
+          "bn": "জড়িত হন"
+        },
+        "category": {
+          "en": "Engagement",
+          "bn": "অংশগ্রহণ"
+        },
+        "date": "2024-01-05",
+        "featured": true
+      },
+      {
+        "id": 4,
+        "title": {
+          "en": "Technology Innovation in Electoral Processes",
+          "bn": "নির্বাচনী প্রক্রিয়ায় প্রযুক্তি উদ্ভাবন"
+        },
+        "description": {
+          "en": "Latest technological advancements are being integrated into electoral systems to improve efficiency, accuracy, and transparency.",
+          "bn": "দক্ষতা, নির্ভুলতা এবং স্বচ্ছতা উন্নত করার জন্য নির্বাচনী ব্যবস্থায় সর্বশেষ প্রযুক্তিগত অগ্রগতি একীভূত করা হচ্ছে।"
+        },
+        "image": "/slider-images/real/election11.png",
+        "link": "/blog/technology-advancements-electoral-systems",
+        "buttonText": {
+          "en": "Explore Tech",
+          "bn": "প্রযুক্তি অন্বেষণ"
+        },
+        "category": {
+          "en": "Technology",
+          "bn": "প্রযুক্তি"
+        },
+        "date": "2024-01-01",
+        "featured": false
+      },
+      {
+        "id": 5,
+        "title": {
+          "en": "Public Consultation on Electoral Reforms",
+          "bn": "নির্বাচনী সংস্কার নিয়ে জনসাধারণের পরামর্শ"
+        },
+        "description": {
+          "en": "The commission invites public input on proposed electoral reforms to ensure democratic participation in the decision-making process.",
+          "bn": "সিদ্ধান্ত গ্রহণ প্রক্রিয়ায় গণতান্ত্রিক অংশগ্রহণ নিশ্চিত করার জন্য কমিশন প্রস্তাবিত নির্বাচনী সংস্কার নিয়ে জনসাধারণের মতামত আহ্বান করে।"
+        },
+        "image": "/slider-images/real/election12.jpg",
+        "link": "/submit",
+        "buttonText": {
+          "en": "Share Your Views",
+          "bn": "আপনার মতামত জানান"
+        },
+        "category": {
+          "en": "Consultation",
+          "bn": "পরামর্শ"
+        },
+        "date": "2023-12-28",
+        "featured": true
+      }
+    ]
+  }
+}

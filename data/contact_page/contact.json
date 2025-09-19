@@ -1,0 +1,311 @@
+{
+  "contactPage": {
+    "title": {
+      "en": "Contact Us",
+      "bn": "যোগাযোগ করুন"
+    },
+    "description": {
+      "en": "Get in touch with the National Elections Inquiry Commission. We are here to assist you with any questions, concerns, or information you may need regarding the commission's work and activities.",
+      "bn": "জাতীয় সংসদ নির্বাচন তদন্ত কমিশনের সাথে যোগাযোগ করুন। কমিশনের কাজ ও কার্যক্রম সম্পর্কে আপনার যে কোন প্রশ্ন, উদ্বেগ বা তথ্যের জন্য আমরা এখানে আছি।"
+    },
+    "contactInfo": {
+      "email": "feedback@neic.ecs.gov.bd",
+      "phone": "+880-2-12345678",
+      "fax": "+880-2-12345679",
+      "website": "www.neic.ecs.gov.bd",
+      "address": {
+        "en": {
+          "organization": "National Elections (2014, 2018, 2024) Inquiry Commission",
+          "location": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban",
+          "area": "Sher-e-Bangla Nagar",
+          "city": "Dhaka-1000",
+          "country": "Bangladesh"
+        },
+        "bn": {
+          "organization": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন",
+          "location": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন",
+          "area": "শের-ই-বাংলা নগর",
+          "city": "ঢাকা-১০০০",
+          "country": "বাংলাদেশ"
+        }
+      }
+    },
+    "officeHours": {
+      "title": {
+        "en": "Office Hours",
+        "bn": "অফিস সময়"
+      },
+      "schedule": [
+        {
+          "days": {
+            "en": "Sunday to Thursday",
+            "bn": "রবিবার থেকে বৃহস্পতিবার"
+          },
+          "time": {
+            "en": "9:00 AM - 5:00 PM",
+            "bn": "সকাল ৯টা - বিকাল ৫টা"
+          },
+          "status": "open"
+        },
+        {
+          "days": {
+            "en": "Friday",
+            "bn": "শনিবার"
+          },
+          "time": {
+            "en": "9:00 AM - 12:00 PM",
+            "bn": "সকাল ৯টা - দুপুর ১২টা"
+          },
+          "status": "open"
+        },
+        {
+          "days": {
+            "en": "Saturday",
+            "bn": "শুক্রবার"
+          },
+          "time": {
+            "en": "Closed",
+            "bn": "বন্ধ"
+          },
+          "status": "closed"
+        }
+      ]
+    },
+    "responseTime": {
+      "title": {
+        "en": "Response Time",
+        "bn": "প্রতিক্রিয়া সময়"
+      },
+      "timelines": [
+        {
+          "type": {
+            "en": "Email Response",
+            "bn": "ইমেইল প্রতিক্রিয়া"
+          },
+          "duration": {
+            "en": "2-3 Business Days",
+            "bn": "২-৩ কর্মদিবস"
+          }
+        },
+        {
+          "type": {
+            "en": "Urgent Matters",
+            "bn": "জরুরি বিষয়"
+          },
+          "duration": {
+            "en": "24 Hours",
+            "bn": "২৪ ঘণ্টা"
+          }
+        },
+        {
+          "type": {
+            "en": "General Inquiries",
+            "bn": "সাধারণ জিজ্ঞাসা"
+          },
+          "duration": {
+            "en": "5-7 Business Days",
+            "bn": "৫-৭ কর্মদিবস"
+          }
+        }
+      ]
+    },
+    "location": {
+      "title": {
+        "en": "Location Map",
+        "bn": "অবস্থান মানচিত্র"
+      },
+      "description": {
+        "en": "Find our office location on the map below",
+        "bn": "নিচের মানচিত্রে আমাদের অফিসের অবস্থান দেখুন"
+      },
+      "coordinates": {
+        "lat": 23.7629,
+        "lng": 90.3789
+      },
+      "zoom": 16,
+      "marker": {
+        "title": {
+          "en": "National Elections Inquiry Commission",
+          "bn": "জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন"
+        },
+        "info": {
+          "en": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban<br>Sher-e-Bangla Nagar, Dhaka",
+          "bn": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন<br>শের-ই-বাংলা নগর, ঢাকা"
+        }
+      }
+    },
+    "locationDetails": {
+      "title": {
+        "en": "Office Location Details",
+        "bn": "অফিস অবস্থানের বিবরণ"
+      },
+      "details": [
+        {
+          "icon": "building",
+          "label": {
+            "en": "Building",
+            "bn": "ভবন"
+          },
+          "value": {
+            "en": "Jatiya Sangsad Bhaban (National Parliament Building)",
+            "bn": "জাতীয় সংসদ ভবন"
+          }
+        },
+        {
+          "icon": "floor",
+          "label": {
+            "en": "Floor & Block",
+            "bn": "তলা ও ব্লক"
+          },
+          "value": {
+            "en": "Block-2, 2nd Floor (West Wing)",
+            "bn": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম অংশ)"
+          }
+        },
+        {
+          "icon": "location",
+          "label": {
+            "en": "Area",
+            "bn": "এলাকা"
+          },
+          "value": {
+            "en": "Sher-e-Bangla Nagar, Dhaka",
+            "bn": "শের-ই-বাংলা নগর, ঢাকা"
+          }
+        }
+      ]
+    },
+    "directions": {
+      "title": {
+        "en": "How to Reach",
+        "bn": "কিভাবে যাবেন"
+      },
+      "instructions": [
+        {
+          "en": "Take a taxi or ride-sharing service to Jatiya Sangsad Bhaban",
+          "bn": "জাতীয় সংসদ ভবনে যাওয়ার জন্য ট্যাক্সি বা রাইড শেয়ারিং সার্ভিস নিন"
+        },
+        {
+          "en": "Nearest metro station: Agargaon (Uttara-Agargaon Line)",
+          "bn": "নিকটতম মেট্রো স্টেশন: আগারগাঁও (উত্তরা-আগারগাঁও লাইন)"
+        },
+        {
+          "en": "Public bus routes: 47, 48, 49, 50, 51",
+          "bn": "পাবলিক বাস রুট: ৪৭, ৪৮, ৪৯, ৫০, ৫১"
+        },
+        {
+          "en": "Parking available in the basement of the building",
+          "bn": "ভবনের বেসমেন্টে পার্কিং সুবিধা রয়েছে"
+        }
+      ]
+    },
+    "contactMethods": {
+      "title": {
+        "en": "Contact Methods",
+        "bn": "যোগাযোগের পদ্ধতি"
+      },
+      "methods": [
+        {
+          "type": "email",
+          "icon": "email",
+          "label": {
+            "en": "Email",
+            "bn": "ইমেইল"
+          },
+          "value": "feedback@neic.ecs.gov.bd",
+          "description": {
+            "en": "Send us an email for general inquiries and feedback",
+            "bn": "সাধারণ জিজ্ঞাসা ও মতামতের জন্য আমাদের ইমেইল করুন"
+          }
+        },
+        {
+          "type": "phone",
+          "icon": "phone",
+          "label": {
+            "en": "Phone",
+            "bn": "ফোন"
+          },
+          "value": "+880-2-12345678",
+          "description": {
+            "en": "Call us during office hours for immediate assistance",
+            "bn": "তাত্ক্ষণিক সহায়তার জন্য অফিস সময়ে আমাদের ফোন করুন"
+          }
+        },
+        {
+          "type": "fax",
+          "icon": "fax",
+          "label": {
+            "en": "Fax",
+            "bn": "ফ্যাক্স"
+          },
+          "value": "+880-2-12345679",
+          "description": {
+            "en": "Send official documents via fax",
+            "bn": "সরকারি নথি ফ্যাক্সের মাধ্যমে পাঠান"
+          }
+        },
+        {
+          "type": "website",
+          "icon": "globe",
+          "label": {
+            "en": "Website",
+            "bn": "ওয়েবসাইট"
+          },
+          "value": "www.neic.ecs.gov.bd",
+          "description": {
+            "en": "Visit our official website for more information",
+            "bn": "আরও তথ্যের জন্য আমাদের সরকারি ওয়েবসাইট দেখুন"
+          }
+        }
+      ]
+    },
+    "importantNotice": {
+      "title": {
+        "en": "Important Notice",
+        "bn": "গুরুত্বপূর্ণ বিজ্ঞপ্তি"
+      },
+      "description": {
+        "en": "For security and confidentiality reasons, all communications are monitored and recorded. Please ensure that your inquiries are relevant to the commission's mandate and activities. Any misuse of the contact system may result in legal action.",
+        "bn": "নিরাপত্তা ও গোপনীয়তার কারণে সকল যোগাযোগ পর্যবেক্ষণ ও রেকর্ড করা হয়। অনুগ্রহ করে নিশ্চিত করুন যে আপনার জিজ্ঞাসা কমিশনের ম্যান্ডেট ও কার্যক্রমের সাথে সম্পর্কিত। যোগাযোগ ব্যবস্থার যে কোন অপব্যবহারের ফলে আইনি ব্যবস্থা নেওয়া হতে পারে।"
+      }
+    },
+    "accessibility": {
+      "title": {
+        "en": "Accessibility Information",
+        "bn": "সুবিধা সংক্রান্ত তথ্য"
+      },
+      "features": [
+        {
+          "en": "Wheelchair accessible entrance and elevators",
+          "bn": "হুইলচেয়ার অ্যাক্সেসযোগ্য প্রবেশদ্বার ও লিফট"
+        },
+        {
+          "en": "Sign language interpretation available upon request",
+          "bn": "অনুরোধে সাইন ল্যাঙ্গুয়েজ দোভাষী সেবা"
+        },
+        {
+          "en": "Audio assistance for visually impaired visitors",
+          "bn": "দৃষ্টিপ্রতিবন্ধী দর্শকদের জন্য অডিও সহায়তা"
+        },
+        {
+          "en": "Braille documents available for official forms",
+          "bn": "সরকারি ফরমের জন্য ব্রেইল নথি পাওয়া যায়"
+        }
+      ]
+    },
+    "emergency": {
+      "title": {
+        "en": "Emergency Contact",
+        "bn": "জরুরি যোগাযোগ"
+      },
+      "description": {
+        "en": "For urgent matters that require immediate attention outside office hours",
+        "bn": "অফিস সময়ের বাইরে তাত্ক্ষণিক মনোযোগের প্রয়োজন এমন জরুরি বিষয়ের জন্য"
+      },
+      "contact": {
+        "phone": "+880-1711-123456",
+        "email": "emergency@neic.ecs.gov.bd"
+      }
+    }
+  }
+}

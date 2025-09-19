@@ -1,0 +1,371 @@
+@font-face {
+  font-family: 'Kalpurush';
+  src: url('/fonts/kalpurush.ttf') format('truetype'),
+       url('/fonts/kalpurush-ansi.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-accent: #22c55e;
+  --color-muted: #6b7280;
+  --color-bg: #f7fafc;
+  --color-text: #1f2937;
+  --color-text-secondary: #6b7280;
+}
+
+.dark {
+  --color-accent: #22c55e; /* green-500 */
+  --color-muted: #9ca3af; /* gray-400 */
+  --color-bg: #0f172a; /* slate-950/900 mix */
+  --color-text: #f8fafc; /* slate-50 */
+  --color-text-secondary: #cbd5e1; /* slate-300 */
+}
+
+body {
+  @apply bg-[var(--color-bg)] text-neutral-900 dark:text-neutral-100 antialiased transition-colors;
+  font-feature-settings: "ss01";
+}
+
+.container-max {
+  @apply max-w-7xl mx-auto px-6;
+}
+
+/* Reusable card */
+.card {
+  @apply bg-white dark:bg-slate-800 rounded-xl shadow-card p-5 transition-colors;
+}
+
+/* Focus outline */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Custom text color utilities */
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.text-primary {
+  color: var(--color-text);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+/* Logo watermark background */
+.watermark-bg {
+  position: relative;
+}
+
+.watermark-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/logo.png');
+  background-repeat: repeat;
+  background-size: 120px 120px;
+  background-position: 0 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dark .watermark-bg::before {
+  opacity: 0.05;
+}
+
+/* Enhanced card styles */
+.enhanced-card {
+  @apply bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-xl shadow-lg;
+}
+
+
+/* Enhanced section styling */
+.content-section {
+  @apply mb-8 p-6 rounded-xl bg-gradient-to-br from-white/60 to-slate-50/80 dark:from-slate-800/60 dark:to-slate-900/80 backdrop-blur border border-slate-200/30 dark:border-slate-700/30 shadow-sm;
+}
+
+/* Enhanced headings */
+.section-heading {
+  @apply text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 pb-2 border-b-2 border-green-500/20 dark:border-green-400/20;
+}
+
+.subsection-heading {
+  @apply text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2;
+}
+
+/* Hide scrollbars for mobile navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom green scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #16a34a;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: #f1f5f9;
+}
+
+.dark ::-webkit-scrollbar-corner {
+  background: #1e293b;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #22c55e #f1f5f9;
+}
+
+.dark * {
+  scrollbar-color: #22c55e #1e293b;
+}
+
+/* Enhanced list styles */
+.enhanced-list {
+  @apply space-y-3;
+}
+
+.enhanced-list li {
+  @apply flex items-start gap-3 p-3 rounded-lg bg-white/50 dark:bg-slate-700/30 border border-slate-200/30 dark:border-slate-600/30;
+}
+
+/* FAQ specific styles */
+.faq-item {
+  @apply enhanced-card p-6 mb-6;
+}
+
+.faq-question {
+  @apply text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3 flex items-start gap-3;
+}
+
+.faq-answer {
+  @apply text-slate-600 dark:text-slate-300 leading-relaxed;
+}
+
+/* Contact card styling */
+.contact-card {
+  @apply mt-12 p-6 bg-gradient-to-br from-green-50/80 to-emerald-50/80 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200/50 dark:border-green-800/50 rounded-xl backdrop-blur-sm shadow-lg;
+}
+
+/* Privacy specific styles */
+.privacy-section {
+  @apply content-section;
+}
+
+.privacy-grid {
+  @apply grid md:grid-cols-2 gap-6;
+}
+
+.privacy-list {
+  @apply enhanced-list;
+}
+
+/* Icon styles */
+.section-icon {
+  @apply w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0;
+}
+
+.check-icon {
+  @apply w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5;
+}
+
+/* Mobile-responsive text utilities */
+.text-responsive-xs {
+  @apply text-xs sm:text-sm;
+}
+
+.text-responsive-sm {
+  @apply text-sm sm:text-base;
+}
+
+.text-responsive-base {
+  @apply text-sm sm:text-base lg:text-lg;
+}
+
+.text-responsive-lg {
+  @apply text-base sm:text-lg lg:text-xl;
+}
+
+.text-responsive-xl {
+  @apply text-lg sm:text-xl lg:text-2xl;
+}
+
+.text-responsive-2xl {
+  @apply text-xl sm:text-2xl lg:text-3xl;
+}
+
+.text-responsive-3xl {
+  @apply text-2xl sm:text-3xl lg:text-4xl;
+}
+
+/* Mobile-responsive heading utilities */
+.heading-responsive-h1 {
+  @apply text-xl sm:text-2xl lg:text-3xl font-bold;
+}
+
+.heading-responsive-h2 {
+  @apply text-lg sm:text-xl lg:text-2xl font-bold;
+}
+
+.heading-responsive-h3 {
+  @apply text-base sm:text-lg lg:text-xl font-semibold;
+}
+
+.heading-responsive-h4 {
+  @apply text-sm sm:text-base lg:text-lg font-semibold;
+}
+
+/* Mobile-responsive spacing utilities */
+.spacing-responsive-sm {
+  @apply p-3 sm:p-4 lg:p-6;
+}
+
+.spacing-responsive-md {
+  @apply p-4 sm:p-6 lg:p-8;
+}
+
+.spacing-responsive-lg {
+  @apply p-6 sm:p-8 lg:p-12;
+}
+
+/* Mobile-responsive margin utilities */
+.margin-responsive-sm {
+  @apply m-3 sm:m-4 lg:m-6;
+}
+
+.margin-responsive-md {
+  @apply m-4 sm:m-6 lg:m-8;
+}
+
+.margin-responsive-lg {
+  @apply m-6 sm:m-8 lg:m-12;
+}
+
+/* Mobile-responsive gap utilities */
+.gap-responsive-sm {
+  @apply gap-2 sm:gap-3 lg:gap-4;
+}
+
+.gap-responsive-md {
+  @apply gap-3 sm:gap-4 lg:gap-6;
+}
+
+.gap-responsive-lg {
+  @apply gap-4 sm:gap-6 lg:gap-8;
+}
+
+/* Enhanced section styling with mobile responsiveness */
+.content-section {
+  @apply mb-6 sm:mb-8 p-4 sm:p-6 rounded-xl bg-gradient-to-br from-white/60 to-slate-50/80 dark:from-slate-800/60 dark:to-slate-900/80 backdrop-blur border border-slate-200/30 dark:border-slate-700/30 shadow-sm;
+}
+
+/* Enhanced headings with mobile responsiveness */
+.section-heading {
+  @apply text-lg sm:text-xl lg:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 pb-2 border-b-2 border-green-500/20 dark:border-green-400/20;
+}
+
+.subsection-heading {
+  @apply text-sm sm:text-base lg:text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2 sm:mb-3 flex items-center gap-2;
+}
+
+/* FAQ specific styles with mobile responsiveness */
+.faq-item {
+  @apply enhanced-card p-4 sm:p-6 mb-4 sm:mb-6;
+}
+
+.faq-question {
+  @apply text-sm sm:text-base lg:text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2 sm:mb-3 flex items-start gap-2 sm:gap-3;
+}
+
+.faq-answer {
+  @apply text-xs sm:text-sm lg:text-base text-slate-600 dark:text-slate-300 leading-relaxed;
+}
+
+/* Contact card styling with mobile responsiveness */
+.contact-card {
+  @apply mt-8 sm:mt-12 p-4 sm:p-6 bg-gradient-to-br from-green-50/80 to-emerald-50/80 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200/50 dark:border-green-800/50 rounded-xl backdrop-blur-sm shadow-lg;
+}
+
+/* Enhanced list styles with mobile responsiveness */
+.enhanced-list {
+  @apply space-y-2 sm:space-y-3;
+}
+
+.enhanced-list li {
+  @apply flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-slate-700/30 border border-slate-200/30 dark:border-slate-600/30;
+}
+
+/* Icon styles with mobile responsiveness */
+.section-icon {
+  @apply w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-green-600 dark:text-green-400 flex-shrink-0;
+}
+
+.check-icon {
+  @apply w-3 h-3 sm:w-4 sm:h-4 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .watermark-bg::before {
+    background-size: 80px 80px;
+    opacity: 0.02;
+  }
+  
+  .dark .watermark-bg::before {
+    opacity: 0.03;
+  }
+  
+  /* Additional mobile-specific adjustments */
+  .container-max {
+    @apply px-4;
+  }
+  
+  .card {
+    @apply p-4;
+  }
+}
+

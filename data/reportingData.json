@@ -1,0 +1,87 @@
+{
+  "reportingPage": {
+    "header": {
+      "title": {
+        "en": "Reporting Guidelines",
+        "bn": "রিপোর্টিং নির্দেশিকা"
+      },
+      "subtitle": {
+        "en": "National Elections (2014, 2018, 2024) Inquiry Commission",
+        "bn": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন"
+      },
+      "documentType": {
+        "en": "Official Guidelines",
+        "bn": "সরকারি নির্দেশিকা"
+      },
+      "tagline": {
+        "en": "Your Report, Our Investigation",
+        "bn": "আপনার রিপোর্ট, আমাদের তদন্ত"
+      }
+    },
+    "navigation": {
+      "backToHome": {
+        "en": "Back to Home",
+        "bn": "হোমে ফিরুন"
+      }
+    },
+    "sections": [
+      {
+        "id": "guidelines",
+        "titleKey": "guidelinesTitle",
+        "icon": "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+        "color": "green",
+        "guidelines": [
+          {
+            "id": "objective",
+            "title": {
+              "en": "Objective Reporting",
+              "bn": "উদ্দেশ্যমূলক রিপোর্টিং"
+            },
+            "descriptionKey": "li1",
+            "icon": "M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
+            "color": "blue"
+          },
+          {
+            "id": "evidence",
+            "title": {
+              "en": "Evidence Preservation",
+              "bn": "প্রমাণ সংরক্ষণ"
+            },
+            "descriptionKey": "li2",
+            "icon": "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+            "color": "green"
+          },
+          {
+            "id": "identity",
+            "title": {
+              "en": "Identity Protection",
+              "bn": "পরিচয় সুরক্ষা"
+            },
+            "descriptionKey": "li3",
+            "icon": "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z",
+            "color": "orange"
+          }
+        ]
+      },
+      {
+        "id": "scope",
+        "titleKey": "scopeTitle",
+        "icon": "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+        "color": "amber",
+        "descriptionKey": "scopeText"
+      }
+    ],
+    "footer": {
+      "importantNotice": {
+        "title": {
+          "en": "Important Reminder",
+          "bn": "গুরুত্বপূর্ণ স্মরণিকা"
+        },
+        "description": {
+          "en": "All reports are treated with strict confidentiality. Your identity will be protected throughout the investigation process. False or misleading reports may result in legal consequences.",
+          "bn": "সমস্ত রিপোর্ট কঠোর গোপনীয়তার সাথে বিবেচনা করা হয়। তদন্ত প্রক্রিয়া জুড়ে আপনার পরিচয় সুরক্ষিত থাকবে। মিথ্যা বা বিভ্রান্তিকর রিপোর্টের আইনি পরিণতি হতে পারে।"
+        }
+      }
+    }
+  }
+}

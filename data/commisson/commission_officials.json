@@ -1,0 +1,277 @@
+{
+  "officials": {
+    "title": {
+      "en": "Commission Officials & Staff",
+      "bn": "কমিশন কর্মকর্তা ও কর্মচারী"
+    },
+    "description": {
+      "en": "The National Elections Inquiry Commission is supported by a dedicated team of officials and staff members who ensure the smooth operation of the commission's activities.",
+      "bn": "জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন একটি নিবেদিত কর্মকর্তা ও কর্মচারী দল দ্বারা সমর্থিত, যারা কমিশনের কার্যক্রমের সুচারু পরিচালনা নিশ্চিত করে।"
+    },
+    "secretariat": {
+      "title": {
+        "en": "Secretariat Staff",
+        "bn": "সচিবালয় কর্মচারী"
+      },
+      "members": [
+        {
+          "name": {
+            "en": "Md. Abdul Karim",
+            "bn": "মোঃ আব্দুল করিম"
+          },
+          "position": {
+            "en": "Secretary General",
+            "bn": "সাধারণ সম্পাদক"
+          },
+          "department": {
+            "en": "Cabinet Division",
+            "bn": "মন্ত্রিপরিষদ বিভাগ"
+          },
+          "email": "secretary@ec.giv.bd",
+          "phone": "+880-2-12345678",
+          "experience": {
+            "en": "25 years in government service",
+            "bn": "সরকারি চাকরিতে ২৫ বছর"
+          },
+          "qualification": {
+            "en": "Masters in Public Administration, University of Dhaka",
+            "bn": "সরকারি প্রশাসনে স্নাতকোত্তর, ঢাকা বিশ্ববিদ্যালয়"
+          }
+        },
+        {
+          "name": {
+            "en": "Fatema Begum",
+            "bn": "ফাতেমা বেগম"
+          },
+          "position": {
+            "en": "Deputy Secretary",
+            "bn": "উপসচিব"
+          },
+          "department": {
+            "en": "Cabinet Division",
+            "bn": "মন্ত্রিপরিষদ বিভাগ"
+          },
+          "email": "deputy.secretary@ec.giv.bd",
+          "phone": "+880-2-12345679",
+          "experience": {
+            "en": "18 years in government service",
+            "bn": "সরকারি চাকরিতে ১৮ বছর"
+          },
+          "qualification": {
+            "en": "Masters in Political Science, University of Dhaka",
+            "bn": "রাজনীতি বিজ্ঞানে স্নাতকোত্তর, ঢাকা বিশ্ববিদ্যালয়"
+          }
+        },
+        {
+          "name": {
+            "en": "Dr. Ahmed Hossain",
+            "bn": "ড. আহমেদ হোসেন"
+          },
+          "position": {
+            "en": "Research Director",
+            "bn": "গবেষণা পরিচালক"
+          },
+          "department": {
+            "en": "Research & Analysis Unit",
+            "bn": "গবেষণা ও বিশ্লেষণ ইউনিট"
+          },
+          "email": "research.director@ec.giv.bd",
+          "phone": "+880-2-12345680",
+          "experience": {
+            "en": "20 years in research and policy analysis",
+            "bn": "গবেষণা ও নীতি বিশ্লেষণে ২০ বছর"
+          },
+          "qualification": {
+            "en": "PhD in Political Science, University of Dhaka",
+            "bn": "রাজনীতি বিজ্ঞানে পিএইচডি, ঢাকা বিশ্ববিদ্যালয়"
+          }
+        }
+      ]
+    },
+    "technical_support": {
+      "title": {
+        "en": "Technical Support Team",
+        "bn": "প্রযুক্তিগত সহায়তা দল"
+      },
+      "members": [
+        {
+          "name": {
+            "en": "Eng. Mohammad Ali",
+            "bn": "ইঞ্জি. মোহাম্মদ আলী"
+          },
+          "position": {
+            "en": "IT Director",
+            "bn": "আইটি পরিচালক"
+          },
+          "department": {
+            "en": "Information Technology",
+            "bn": "তথ্য প্রযুক্তি"
+          },
+          "email": "it.director@ec.giv.bd",
+          "phone": "+880-2-12345681",
+          "experience": {
+            "en": "15 years in IT and system administration",
+            "bn": "আইটি ও সিস্টেম প্রশাসনে ১৫ বছর"
+          },
+          "qualification": {
+            "en": "BSc in Computer Science, BUET",
+            "bn": "কম্পিউটার বিজ্ঞানে স্নাতক, বুয়েট"
+          }
+        },
+        {
+          "name": {
+            "en": "Sultana Rahman",
+            "bn": "সুলতানা রহমান"
+          },
+          "position": {
+            "en": "Data Analyst",
+            "bn": "তথ্য বিশ্লেষক"
+          },
+          "department": {
+            "en": "Data Management",
+            "bn": "তথ্য ব্যবস্থাপনা"
+          },
+          "email": "data.analyst@ec.giv.bd",
+          "phone": "+880-2-12345682",
+          "experience": {
+            "en": "12 years in data analysis and statistics",
+            "bn": "তথ্য বিশ্লেষণ ও পরিসংখ্যানে ১২ বছর"
+          },
+          "qualification": {
+            "en": "MSc in Statistics, University of Dhaka",
+            "bn": "পরিসংখ্যানে স্নাতকোত্তর, ঢাকা বিশ্ববিদ্যালয়"
+          }
+        }
+      ]
+    },
+    "legal_team": {
+      "title": {
+        "en": "Legal Team",
+        "bn": "আইনি দল"
+      },
+      "members": [
+        {
+          "name": {
+            "en": "Advocate Rokon Uddin",
+            "bn": "অ্যাডভোকেট রোকন উদ্দিন"
+          },
+          "position": {
+            "en": "Legal Advisor",
+            "bn": "আইনি উপদেষ্টা"
+          },
+          "department": {
+            "en": "Legal Affairs",
+            "bn": "আইনি বিষয়"
+          },
+          "email": "legal.advisor@ec.giv.bd",
+          "phone": "+880-2-12345683",
+          "experience": {
+            "en": "22 years in legal practice",
+            "bn": "আইনি অনুশীলনে ২২ বছর"
+          },
+          "qualification": {
+            "en": "LLM in Constitutional Law, University of Dhaka",
+            "bn": "সাংবিধানিক আইনে এলএলএম, ঢাকা বিশ্ববিদ্যালয়"
+          }
+        },
+        {
+          "name": {
+            "en": "Barrister Nasir Ahmed",
+            "bn": "ব্যারিস্টার নাসির আহমেদ"
+          },
+          "position": {
+            "en": "Senior Legal Counsel",
+            "bn": "সিনিয়র আইনি পরামর্শদাতা"
+          },
+          "department": {
+            "en": "Legal Affairs",
+            "bn": "আইনি বিষয়"
+          },
+          "email": "senior.counsel@ec.giv.bd",
+          "phone": "+880-2-12345684",
+          "experience": {
+            "en": "18 years in constitutional and administrative law",
+            "bn": "সাংবিধানিক ও প্রশাসনিক আইনে ১৮ বছর"
+          },
+          "qualification": {
+            "en": "Bar-at-Law, Lincoln's Inn, London",
+            "bn": "বার-এট-ল, লিংকন'স ইন, লন্ডন"
+          }
+        }
+      ]
+    },
+    "administrative_staff": {
+      "title": {
+        "en": "Administrative Staff",
+        "bn": "প্রশাসনিক কর্মচারী"
+      },
+      "members": [
+        {
+          "name": {
+            "en": "Rashida Khatun",
+            "bn": "রশিদা খাতুন"
+          },
+          "position": {
+            "en": "Office Manager",
+            "bn": "অফিস ম্যানেজার"
+          },
+          "department": {
+            "en": "Administration",
+            "bn": "প্রশাসন"
+          },
+          "email": "office.manager@ec.giv.bd",
+          "phone": "+880-2-12345685",
+          "experience": {
+            "en": "16 years in office administration",
+            "bn": "অফিস প্রশাসনে ১৬ বছর"
+          },
+          "qualification": {
+            "en": "BBA in Management, University of Dhaka",
+            "bn": "ব্যবস্থাপনায় বিবিএ, ঢাকা বিশ্ববিদ্যালয়"
+          }
+        },
+        {
+          "name": {
+            "en": "Abdul Malek",
+            "bn": "আব্দুল মালেক"
+          },
+          "position": {
+            "en": "Public Relations Officer",
+            "bn": "জনসংযোগ কর্মকর্তা"
+          },
+          "department": {
+            "en": "Public Relations",
+            "bn": "জনসংযোগ"
+          },
+          "email": "pro@ec.giv.bd",
+          "phone": "+880-2-12345686",
+          "experience": {
+            "en": "14 years in public relations and media",
+            "bn": "জনসংযোগ ও মিডিয়ায় ১৪ বছর"
+          },
+          "qualification": {
+            "en": "Masters in Mass Communication, University of Dhaka",
+            "bn": "যোগাযোগ বিজ্ঞানে স্নাতকোত্তর, ঢাকা বিশ্ববিদ্যালয়"
+          }
+        }
+      ]
+    },
+    "contact_info": {
+      "title": {
+        "en": "Contact Information",
+        "bn": "যোগাযোগের তথ্য"
+      },
+      "office_address": {
+        "en": "National Elections Inquiry Commission Secretariat, Cabinet Division, Bangladesh Secretariat, Dhaka-1000",
+        "bn": "জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন সচিবালয়, মন্ত্রিপরিষদ বিভাগ, বাংলাদেশ সচিবালয়, ঢাকা-১০০০"
+      },
+      "phone": "+880-2-12345678",
+      "email": "info@ec.giv.bd",
+      "website": "www.ec.giv.bd",
+      "office_hours": {
+        "en": "Sunday to Thursday: 9:00 AM - 5:00 PM",
+        "bn": "রবিবার থেকে বৃহস্পতিবার: সকাল ৯টা - বিকাল ৫টা"
+      }
+    }
+  }
+}

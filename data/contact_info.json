@@ -1,0 +1,19 @@
+{
+  "contactInfo": {
+    "email": "feedback@neic.ecs.gov.bd",
+    "address": {
+      "en": {
+        "organization": "National Elections (2014, 2018, 2024) Inquiry Commission",
+        "location": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban",
+        "area": "Sher-e-Bangla Nagar",
+        "city": "Dhaka"
+      },
+      "bn": {
+        "organization": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন",
+        "location": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন",
+        "area": "শের-ই-বাংলা নগর",
+        "city": "ঢাকা"
+      }
+    }
+  }
+}

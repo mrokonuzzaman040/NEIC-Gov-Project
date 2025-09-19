@@ -1,0 +1,429 @@
+"use client";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { 
+  XMarkIcon,
+  PhotoIcon,
+  LinkIcon,
+  TagIcon,
+  StarIcon,
+  CalendarIcon
+} from '@heroicons/react/24/outline';
+
+interface SliderFormData {
+  titleEn: string;
+  titleBn: string;
+  descriptionEn: string;
+  descriptionBn: string;
+  image: string;
+  link: string;
+  buttonTextEn: string;
+  buttonTextBn: string;
+  categoryEn: string;
+  categoryBn: string;
+  featured: boolean;
+  order: number;
+}
+
+interface SliderFormProps {
+  slider?: SliderFormData | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (data: SliderFormData) => Promise<void>;
+  isLoading?: boolean;
+}
+
+const CATEGORIES = [
+  { en: 'Transparency', bn: 'স্বচ্ছতা' },
+  { en: 'Security', bn: 'নিরাপত্তা' },
+  { en: 'Engagement', bn: 'অংশগ্রহণ' },
+  { en: 'Technology', bn: 'প্রযুক্তি' },
+  { en: 'Consultation', bn: 'পরামর্শ' },
+  { en: 'News', bn: 'খবর' },
+  { en: 'Updates', bn: 'আপডেট' },
+];
+
+export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading = false }: SliderFormProps) {
+  const [formData, setFormData] = useState<SliderFormData>({
+    titleEn: '',
+    titleBn: '',
+    descriptionEn: '',
+    descriptionBn: '',
+    image: '',
+    link: '',
+    buttonTextEn: 'Learn More',
+    buttonTextBn: 'আরও জানুন',
+    categoryEn: 'News',
+    categoryBn: 'খবর',
+    featured: false,
+    order: 0,
+  });
+
+  const [errors, setErrors] = useState<Partial<SliderFormData>>({});
+
+  // Initialize form data when slider prop changes
+  useEffect(() => {
+    if (slider) {
+      setFormData(slider);
+    } else {
+      setFormData({
+        titleEn: '',
+        titleBn: '',
+        descriptionEn: '',
+        descriptionBn: '',
+        image: '',
+        link: '',
+        buttonTextEn: 'Learn More',
+        buttonTextBn: 'আরও জানুন',
+        categoryEn: 'News',
+        categoryBn: 'খবর',
+        featured: false,
+        order: 0,
+      });
+    }
+    setErrors({});
+  }, [slider]);
+
+  const handleInputChange = (field: keyof SliderFormData, value: string | boolean | number) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: undefined
+      }));
+    }
+  };
+
+  const handleCategoryChange = (categoryEn: string) => {
+    const category = CATEGORIES.find(c => c.en === categoryEn);
+    if (category) {
+      setFormData(prev => ({
+        ...prev,
+        categoryEn: category.en,
+        categoryBn: category.bn
+      }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Partial<SliderFormData> = {};
+
+    if (!formData.titleEn.trim()) newErrors.titleEn = 'English title is required';
+    if (!formData.titleBn.trim()) newErrors.titleBn = 'Bengali title is required';
+    if (!formData.descriptionEn.trim()) newErrors.descriptionEn = 'English description is required';
+    if (!formData.descriptionBn.trim()) newErrors.descriptionBn = 'Bengali description is required';
+    if (!formData.image.trim()) newErrors.image = 'Image URL is required';
+    if (!formData.link.trim()) newErrors.link = 'Link is required';
+    if (!formData.buttonTextEn.trim()) newErrors.buttonTextEn = 'English button text is required';
+    if (!formData.buttonTextBn.trim()) newErrors.buttonTextBn = 'Bengali button text is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      await onSave(formData);
+    } catch (error) {
+      console.error('Error saving slider:', error);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-slate-800 rounded-xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            {slider ? 'Edit Slider' : 'Add New Slider'}
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+          >
+            <XMarkIcon className="h-6 w-6" />
+          </button>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Title Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Title (English) *
+              </label>
+              <input
+                type="text"
+                value={formData.titleEn}
+                onChange={(e) => handleInputChange('titleEn', e.target.value)}
+                className={`block w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  errors.titleEn ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                }`}
+                placeholder="Enter English title"
+              />
+              {errors.titleEn && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.titleEn}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Title (Bengali) *
+              </label>
+              <input
+                type="text"
+                value={formData.titleBn}
+                onChange={(e) => handleInputChange('titleBn', e.target.value)}
+                className={`block w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  errors.titleBn ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                }`}
+                placeholder="বাংলা শিরোনাম লিখুন"
+              />
+              {errors.titleBn && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.titleBn}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Description Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Description (English) *
+              </label>
+              <textarea
+                value={formData.descriptionEn}
+                onChange={(e) => handleInputChange('descriptionEn', e.target.value)}
+                rows={4}
+                className={`block w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  errors.descriptionEn ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                }`}
+                placeholder="Enter English description"
+              />
+              {errors.descriptionEn && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.descriptionEn}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Description (Bengali) *
+              </label>
+              <textarea
+                value={formData.descriptionBn}
+                onChange={(e) => handleInputChange('descriptionBn', e.target.value)}
+                rows={4}
+                className={`block w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  errors.descriptionBn ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                }`}
+                placeholder="বাংলা বর্ণনা লিখুন"
+              />
+              {errors.descriptionBn && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.descriptionBn}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Image and Link */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Image URL *
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <PhotoIcon className="h-5 w-5 text-slate-400" />
+                </div>
+                <input
+                  type="url"
+                  value={formData.image}
+                  onChange={(e) => handleInputChange('image', e.target.value)}
+                  className={`block w-full pl-10 pr-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                    errors.image ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                  }`}
+                  placeholder="/slider-images/image.jpg"
+                />
+              </div>
+              {errors.image && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.image}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Link *
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <LinkIcon className="h-5 w-5 text-slate-400" />
+                </div>
+                <input
+                  type="url"
+                  value={formData.link}
+                  onChange={(e) => handleInputChange('link', e.target.value)}
+                  className={`block w-full pl-10 pr-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                    errors.link ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                  }`}
+                  placeholder="/blog/article-name"
+                />
+              </div>
+              {errors.link && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.link}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Button Text Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Button Text (English) *
+              </label>
+              <input
+                type="text"
+                value={formData.buttonTextEn}
+                onChange={(e) => handleInputChange('buttonTextEn', e.target.value)}
+                className={`block w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  errors.buttonTextEn ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                }`}
+                placeholder="Learn More"
+              />
+              {errors.buttonTextEn && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.buttonTextEn}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Button Text (Bengali) *
+              </label>
+              <input
+                type="text"
+                value={formData.buttonTextBn}
+                onChange={(e) => handleInputChange('buttonTextBn', e.target.value)}
+                className={`block w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  errors.buttonTextBn ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
+                }`}
+                placeholder="আরও জানুন"
+              />
+              {errors.buttonTextBn && (
+                <p className="text-sm text-red-600 dark:text-red-400">{errors.buttonTextBn}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Category and Settings */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Category
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <TagIcon className="h-5 w-5 text-slate-400" />
+                </div>
+                <select
+                  value={formData.categoryEn}
+                  onChange={(e) => handleCategoryChange(e.target.value)}
+                  className="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                >
+                  {CATEGORIES.map((category) => (
+                    <option key={category.en} value={category.en}>
+                      {category.en} / {category.bn}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Order
+              </label>
+              <input
+                type="number"
+                value={formData.order}
+                onChange={(e) => handleInputChange('order', parseInt(e.target.value) || 0)}
+                className="block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="0"
+                min="0"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Settings
+              </label>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.featured}
+                    onChange={(e) => handleInputChange('featured', e.target.checked)}
+                    className="rounded border-slate-300 text-green-600 focus:ring-green-500"
+                  />
+                  <span className="ml-2 text-sm text-slate-700 dark:text-slate-300 flex items-center">
+                    <StarIcon className="h-4 w-4 mr-1" />
+                    Featured
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Image Preview */}
+          {formData.image && (
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                Image Preview
+              </label>
+              <div className="w-full h-48 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden relative">
+                <Image
+                  src={formData.image}
+                  alt="Preview"
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/placeholder-image.jpg';
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex items-center justify-end space-x-3 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-medium py-2 px-4 rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="bg-green-600 hover:bg-green-700 disabled:bg-slate-400 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Saving...' : (slider ? 'Update Slider' : 'Create Slider')}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

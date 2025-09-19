@@ -1,0 +1,162 @@
+{
+  "gazettes": [
+    {
+      "id": 1,
+      "title": {
+        "en": "Election Commission Formation Gazette",
+        "bn": "নির্বাচন কমিশন গঠন গেজেট"
+      },
+      "publishedAt": "2024-01-20",
+      "downloadUrl": "/documents/gazettes/commission-formation.pdf",
+      "gazetteNumber": "SRO-001/2024",
+      "category": "formation",
+      "priority": "high"
+    },
+    {
+      "id": 2,
+      "title": {
+        "en": "Terms of Reference for Election Inquiry",
+        "bn": "নির্বাচন অনুসন্ধানের কার্যপরিধি"
+      },
+      "publishedAt": "2024-01-18",
+      "downloadUrl": "/documents/gazettes/terms-of-reference.pdf",
+      "gazetteNumber": "SRO-002/2024",
+      "category": "terms",
+      "priority": "high"
+    },
+    {
+      "id": 3,
+      "title": {
+        "en": "Commission Members Appointment",
+        "bn": "কমিশন সদস্য নিয়োগ"
+      },
+      "publishedAt": "2024-01-15",
+      "downloadUrl": "/documents/gazettes/members-appointment.pdf",
+      "gazetteNumber": "SRO-003/2024",
+      "category": "appointment",
+      "priority": "high"
+    },
+    {
+      "id": 4,
+      "title": {
+        "en": "Investigation Powers and Procedures",
+        "bn": "তদন্ত ক্ষমতা ও পদ্ধতি"
+      },
+      "publishedAt": "2024-01-12",
+      "downloadUrl": "/documents/gazettes/investigation-powers.pdf",
+      "gazetteNumber": "SRO-004/2024",
+      "category": "procedures",
+      "priority": "medium"
+    },
+    {
+      "id": 5,
+      "title": {
+        "en": "Public Hearing Guidelines",
+        "bn": "জনশুনানির নির্দেশিকা"
+      },
+      "publishedAt": "2024-01-10",
+      "downloadUrl": "/documents/gazettes/public-hearing-guidelines.pdf",
+      "gazetteNumber": "SRO-005/2024",
+      "category": "guidelines",
+      "priority": "medium"
+    },
+    {
+      "id": 6,
+      "title": {
+        "en": "Evidence Collection Procedures",
+        "bn": "প্রমাণ সংগ্রহের পদ্ধতি"
+      },
+      "publishedAt": "2024-01-08",
+      "downloadUrl": "/documents/gazettes/evidence-collection.pdf",
+      "gazetteNumber": "SRO-006/2024",
+      "category": "procedures",
+      "priority": "medium"
+    },
+    {
+      "id": 7,
+      "title": {
+        "en": "Witness Protection Measures",
+        "bn": "সাক্ষী সুরক্ষা ব্যবস্থা"
+      },
+      "publishedAt": "2024-01-05",
+      "downloadUrl": "/documents/gazettes/witness-protection.pdf",
+      "gazetteNumber": "SRO-007/2024",
+      "category": "protection",
+      "priority": "high"
+    },
+    {
+      "id": 8,
+      "title": {
+        "en": "Commission Budget Allocation",
+        "bn": "কমিশনের বাজেট বরাদ্দ"
+      },
+      "publishedAt": "2024-01-03",
+      "downloadUrl": "/documents/gazettes/budget-allocation.pdf",
+      "gazetteNumber": "SRO-008/2024",
+      "category": "budget",
+      "priority": "low"
+    },
+    {
+      "id": 9,
+      "title": {
+        "en": "Administrative Rules and Regulations",
+        "bn": "প্রশাসনিক নিয়ম ও বিধিমালা"
+      },
+      "publishedAt": "2023-12-30",
+      "downloadUrl": "/documents/gazettes/admin-rules.pdf",
+      "gazetteNumber": "SRO-009/2023",
+      "category": "administration",
+      "priority": "medium"
+    },
+    {
+      "id": 10,
+      "title": {
+        "en": "Final Report Submission Timeline",
+        "bn": "চূড়ান্ত প্রতিবেদন জমা দেওয়ার সময়সূচি"
+      },
+      "publishedAt": "2023-12-28",
+      "downloadUrl": "/documents/gazettes/report-timeline.pdf",
+      "gazetteNumber": "SRO-010/2023",
+      "category": "timeline",
+      "priority": "high"
+    }
+  ],
+  "categories": {
+    "formation": {
+      "en": "Commission Formation",
+      "bn": "কমিশন গঠন"
+    },
+    "terms": {
+      "en": "Terms of Reference",
+      "bn": "কার্যপরিধি"
+    },
+    "appointment": {
+      "en": "Appointments",
+      "bn": "নিয়োগ"
+    },
+    "procedures": {
+      "en": "Procedures",
+      "bn": "পদ্ধতি"
+    },
+    "guidelines": {
+      "en": "Guidelines",
+      "bn": "নির্দেশিকা"
+    },
+    "protection": {
+      "en": "Protection Measures",
+      "bn": "সুরক্ষা ব্যবস্থা"
+    },
+    "budget": {
+      "en": "Budget & Finance",
+      "bn": "বাজেট ও অর্থ"
+    },
+    "administration": {
+      "en": "Administration",
+      "bn": "প্রশাসন"
+    },
+    "timeline": {
+      "en": "Timeline & Schedule",
+      "bn": "সময়সূচি"
+    }
+  }
+}

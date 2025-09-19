@@ -1,0 +1,86 @@
+{
+    "document": {
+      "title": {
+        "en": "Government of the People's Republic of Bangladesh - Gazette Notification",
+        "ban": "গণপ্রজাতন্ত্রী বাংলাদেশ সরকার - গেজেট প্রজ্ঞাপন"
+      },
+      "date": {
+        "en": "14 Shraban 1432 (Bengali) / 29 July 2025 (Gregorian)",
+        "ban": "১৪ শ্রাবণ, ১৪৩২ বঙ্গাব্দ / ২৯ জুলাই, ২০২৫ খ্রিষ্টাব্দ"
+      },
+      "reference_number": {
+        "en": "S.R.O. No. 324-Law/2025",
+        "ban": "এস.আর.ও. নম্বর ৩২৪-আইন/২০২৫"
+      },
+      "background": {
+        "en": "Due to widespread criticism of the national elections held in 2014, 2018, and 2024, including allegations of voter suppression and rigged processes favoring a particular party, the government has decided to form a commission under The Commissions of Inquiry Act, 1956.",
+        "ban": "২০১৪, ২০১৮ এবং ২০২৪ সালের জাতীয় সংসদ নির্বাচন নিয়ে ব্যাপক সমালোচনা এবং জনগণের ভোটাধিকার হরণ ও সাজানো প্রক্রিয়ায় একটি বিশেষ দলকে নির্বাচিত করার অভিযোগের প্রেক্ষিতে, সরকার The Commissions of Inquiry Act, 1956 এর আওতায় একটি কমিশন গঠন করিল।"
+      },
+      "commission_members": [
+        {
+          "en": "Justice Shamim Hasnain, Former Justice, High Court Division - Chairman",
+          "ban": "বিচারপতি শামীম হাসনাইন, সাবেক বিচারপতি, হাইকোর্ট বিভাগ - সভাপতি"
+        },
+        {
+          "en": "Shamim Al Mamun, Former Grade-1 Officer, Government - Member",
+          "ban": "শামীম আল মামুন, সরকারের সাবেক গ্রেড-১ কর্মকর্তা - সদস্য"
+        },
+        {
+          "en": "Kazi Mahfuzul Haque (Supon), Associate Professor, Law Department, University of Dhaka - Member",
+          "ban": "কাজী মাহফুজুল হক (সুপণ), সহযোগী অধ্যাপক, আইন বিভাগ, ঢাকা বিশ্ববিদ্যালয় - সদস্য"
+        },
+        {
+          "en": "Barrister Tajrian Akram Hossain, Advocate, District and Sessions Judge Court, Dhaka - Member",
+          "ban": "ব্যারিস্টার তাজরিয়ান আকরাম হোসাইন, অ্যাডভোকেট, জেলা ও দায়রা জজ আদালত, ঢাকা - সদস্য"
+        },
+        {
+          "en": "Dr. Md. Abdul Aleem, Election Expert - Member",
+          "ban": "ড. মোঃ আব্দুল আলীম, নির্বাচন বিশেষজ্ঞ - সদস্য"
+        }
+      ],
+      "terms_of_reference": {
+        "en": [
+          "Analyze reports and complaints from election observers, monitoring institutions, civil society organizations, and media regarding the 2014, 2018, and 2024 elections.",
+          "Examine allegations of corruption, irregularities, and criminal activities in those elections.",
+          "Assess the role of ruling parties and related entities in limiting political participation and obstructing voters' rights.",
+          "Analyze the role of election-related institutions and agencies.",
+          "Examine the involvement of law enforcement and intelligence agencies in the election process.",
+          "Investigate allegations of financial irregularities against the then Election Commissions.",
+          "Identify responsibility for the irregularities found.",
+          "Provide recommendations for ensuring free, fair, and quality elections in the future.",
+          "Summon documents or persons as required."
+        ],
+        "ban": [
+          "২০১৪, ২০১৮ এবং ২০২৪ সালের জাতীয় সংসদ নির্বাচনের বিষয়ে পর্যবেক্ষক, দেশি-বিদেশি তদারকি প্রতিষ্ঠান, নাগরিক সংগঠন এবং গণমাধ্যমের অভিযোগ বিশ্লেষণ।",
+          "উক্ত নির্বাচনে দুর্নীতি, অনিয়ম ও অপরাধমূলক কর্মকাণ্ডের অভিযোগ যাচাই।",
+          "রাজনৈতিক দলের অংশগ্রহণ সীমাবদ্ধকরণ ও ভোটাধিকার বাধাগ্রস্ত করার ক্ষেত্রে তৎকালীন ক্ষমতাসীন দলের ভূমিকা বিশ্লেষণ।",
+          "নির্বাচন সংশ্লিষ্ট প্রতিষ্ঠান ও সংস্থার ভূমিকা বিশ্লেষণ।",
+          "আইন প্রয়োগকারী ও গোয়েন্দা সংস্থার ভূমিকা পর্যালোচনা।",
+          "তৎকালীন নির্বাচন কমিশনসমূহের আর্থিক অনিয়ম যাচাই।",
+          "অনিয়মের দায়-দায়িত্ব নির্ধারণ।",
+          "ভবিষ্যতের সুষ্ঠু ও মানসম্মত নির্বাচন নিশ্চিত করতে সুপারিশ প্রদান।",
+          "প্রয়োজনে দলিল তলব ও ব্যক্তিকে জিজ্ঞাসাবাদ।"
+        ]
+      },
+      "powers": {
+        "en": "The commission may visit any place, summon documents, and question any person. It will exercise powers under Sections 4 and 5 (Sub-sections 2-6) of The Commissions of Inquiry Act, 1956.",
+        "ban": "কমিশন যে কোনো স্থান পরিদর্শন, দলিল তলব ও ব্যক্তিকে জিজ্ঞাসাবাদ করতে পারিবে। কমিশন The Commissions of Inquiry Act, 1956 এর ধারা ৪ এবং ধারা ৫ এর উপধারা ২-৬ এর ক্ষমতা প্রয়োগ করিবে।"
+      },
+      "report_deadline": {
+        "en": "The commission must submit its report to the government by 31 October 2025.",
+        "ban": "কমিশনকে আগামী ৩১ অক্টোবর ২০২৫ তারিখের মধ্যে সরকারের নিকট প্রতিবেদন দাখিল করিতে হইবে।"
+      },
+      "support": {
+        "en": "The Cabinet Division will provide secretarial support, and the Bangladesh Election Commission will provide logistics and information support.",
+        "ban": "মন্ত্রিপরিষদ বিভাগ কমিশনকে সাচিবিক সহায়তা প্রদান করিবে এবং বাংলাদেশ নির্বাচন কমিশন লজিস্টিক ও তথ্য সহায়তা প্রদান করিবে।"
+      },
+      "effective_date": {
+        "en": "This notification will come into effect immediately.",
+        "ban": "এই প্রজ্ঞাপন অবিলম্বে কার্যকর হইবে।"
+      },
+      "signed_by": {
+        "en": "By order of the President, Dr. Sheikh Abdur Rashid, Cabinet Secretary",
+        "ban": "রাষ্ট্রপতির আদেশক্রমে, ড. শেখ আব্দুর রশীদ, মন্ত্রিপরিষদ সচিব"
+      }
+    }
+  }

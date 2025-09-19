@@ -1,0 +1,128 @@
+{
+  "homePage": {
+    "header": {
+      "title": {
+        "en": "National Elections (2014, 2018, 2024) Inquiry Commission",
+        "bn": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন"
+      },
+      "subtitle": {
+        "en": "Government of the People's Republic of Bangladesh",
+        "bn": "গণপ্রজাতন্ত্রী বাংলাদেশ সরকার"
+      },
+      "portal": {
+        "en": "Official Portal",
+        "bn": "সরকারি পোর্টাল"
+      },
+      "tagline": {
+        "en": "Your Voice, Our Duty",
+        "bn": "আপনার কণ্ঠ, আমাদের কর্তব্য"
+      }
+    },
+    "hero": {
+      "stats": [
+        {
+          "id": "electionYears",
+          "value": "২০১৪-২০১৮-২০২৪",
+          "label": {
+            "en": "Election Years",
+            "bn": "নির্বাচনের বছর"
+          }
+        },
+        {
+          "id": "publicParticipation",
+          "value": {
+            "en": "Public",
+            "bn": "জনসাধারণ"
+          },
+          "label": {
+            "en": "Participation",
+            "bn": "অংশগ্রহণ"
+          }
+        },
+        {
+          "id": "secureSubmission",
+          "value": {
+            "en": "Secure",
+            "bn": "নিরাপদ"
+          },
+          "label": {
+            "en": "Submission",
+            "bn": "জমাদান"
+          }
+        }
+      ]
+    },
+    "sections": [
+      {
+        "id": "howToParticipate",
+        "icon": "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+        "color": "blue",
+        "titleKey": "section.how.title",
+        "textKey": "section.how.text",
+        "items": [
+          {
+            "key": "section.how.li1"
+          },
+          {
+            "key": "section.how.li2"
+          },
+          {
+            "key": "section.how.li3"
+          }
+        ]
+      },
+      {
+        "id": "reportingGuidelines",
+        "icon": "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+        "color": "green",
+        "titleKey": "section.reporting.title",
+        "textKey": "section.reporting.text",
+        "link": {
+          "href": "/reporting",
+          "text": {
+            "en": "Learn More",
+            "bn": "আরও জানুন"
+          }
+        }
+      },
+      {
+        "id": "quickLinks",
+        "icon": "M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1",
+        "color": "purple",
+        "titleKey": "section.quick.title",
+        "textKey": "section.quick.text",
+        "links": [
+          {
+            "href": "/submit",
+            "icon": "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
+            "key": "section.quick.opinion"
+          },
+          {
+            "href": "/faq",
+            "icon": "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+            "key": "section.quick.faq"
+          },
+          {
+            "href": "/privacy",
+            "icon": "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+            "key": "section.quick.privacy"
+          }
+        ]
+      }
+    ],
+    "footer": {
+      "title": {
+        "en": "National Elections Inquiry Commission",
+        "bn": "জাতীয় সংসদ নির্বাচন তদন্ত কমিশন"
+      },
+      "subtitle": {
+        "en": "Government of Bangladesh",
+        "bn": "বাংলাদেশ সরকার"
+      },
+      "copyright": {
+        "en": "© 2025 All rights reserved",
+        "bn": "© ২০২৫ সকল অধিকার সংরক্ষিত"
+      }
+    }
+  }
+}

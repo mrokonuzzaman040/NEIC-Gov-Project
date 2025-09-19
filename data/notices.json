@@ -1,0 +1,156 @@
+{
+  "notices": [
+    {
+      "id": 1,
+      "title": {
+        "en": "Election Commission Notice - Voter Registration",
+        "bn": "নির্বাচন কমিশনের বিজ্ঞপ্তি - ভোটার নিবন্ধন"
+      },
+      "publishedAt": "2024-01-15",
+      "downloadUrl": "/documents/voter-registration-notice.pdf",
+      "category": "registration",
+      "priority": "high"
+    },
+    {
+      "id": 2,
+      "title": {
+        "en": "Polling Station Updates",
+        "bn": "ভোটকেন্দ্র আপডেট"
+      },
+      "publishedAt": "2024-01-10",
+      "downloadUrl": "/documents/polling-station-updates.pdf",
+      "category": "polling",
+      "priority": "medium"
+    },
+    {
+      "id": 3,
+      "title": {
+        "en": "Candidate Nomination Guidelines",
+        "bn": "প্রার্থী মনোনয়নের নির্দেশিকা"
+      },
+      "publishedAt": "2024-01-05",
+      "downloadUrl": "/documents/nomination-guidelines.pdf",
+      "category": "nomination",
+      "priority": "high"
+    },
+    {
+      "id": 4,
+      "title": {
+        "en": "Election Schedule Announcement",
+        "bn": "নির্বাচনের সময়সূচী ঘোষণা"
+      },
+      "publishedAt": "2024-01-01",
+      "downloadUrl": "/documents/election-schedule.pdf",
+      "category": "schedule",
+      "priority": "high"
+    },
+    {
+      "id": 5,
+      "title": {
+        "en": "Voter Education Program",
+        "bn": "ভোটার শিক্ষা কর্মসূচি"
+      },
+      "publishedAt": "2023-12-28",
+      "downloadUrl": "/documents/voter-education.pdf",
+      "category": "education",
+      "priority": "medium"
+    },
+    {
+      "id": 6,
+      "title": {
+        "en": "Code of Conduct for Political Parties",
+        "bn": "রাজনৈতিক দলের আচরণবিধি"
+      },
+      "publishedAt": "2023-12-20",
+      "downloadUrl": "/documents/code-of-conduct.pdf",
+      "category": "conduct",
+      "priority": "high"
+    },
+    {
+      "id": 7,
+      "title": {
+        "en": "Media Guidelines for Election Coverage",
+        "bn": "নির্বাচনী কভারেজের জন্য মিডিয়া নির্দেশিকা"
+      },
+      "publishedAt": "2023-12-15",
+      "downloadUrl": "/documents/media-guidelines.pdf",
+      "category": "media",
+      "priority": "medium"
+    },
+    {
+      "id": 8,
+      "title": {
+        "en": "Security Arrangements for Elections",
+        "bn": "নির্বাচনের জন্য নিরাপত্তা ব্যবস্থা"
+      },
+      "publishedAt": "2023-12-10",
+      "downloadUrl": "/documents/security-arrangements.pdf",
+      "category": "security",
+      "priority": "high"
+    },
+    {
+      "id": 9,
+      "title": {
+        "en": "Observer Accreditation Process",
+        "bn": "পর্যবেক্ষক স্বীকৃতি প্রক্রিয়া"
+      },
+      "publishedAt": "2023-12-05",
+      "downloadUrl": "/documents/observer-accreditation.pdf",
+      "category": "observers",
+      "priority": "medium"
+    },
+    {
+      "id": 10,
+      "title": {
+        "en": "Electronic Voting Machine Guidelines",
+        "bn": "ইলেকট্রনিক ভোটিং মেশিনের নির্দেশিকা"
+      },
+      "publishedAt": "2023-11-30",
+      "downloadUrl": "/documents/evm-guidelines.pdf",
+      "category": "technology",
+      "priority": "high"
+    }
+  ],
+  "categories": {
+    "registration": {
+      "en": "Voter Registration",
+      "bn": "ভোটার নিবন্ধন"
+    },
+    "polling": {
+      "en": "Polling Stations",
+      "bn": "ভোটকেন্দ্র"
+    },
+    "nomination": {
+      "en": "Candidate Nomination",
+      "bn": "প্রার্থী মনোনয়ন"
+    },
+    "schedule": {
+      "en": "Election Schedule",
+      "bn": "নির্বাচনের সময়সূচী"
+    },
+    "education": {
+      "en": "Voter Education",
+      "bn": "ভোটার শিক্ষা"
+    },
+    "conduct": {
+      "en": "Code of Conduct",
+      "bn": "আচরণবিধি"
+    },
+    "media": {
+      "en": "Media Guidelines",
+      "bn": "মিডিয়া নির্দেশিকা"
+    },
+    "security": {
+      "en": "Security",
+      "bn": "নিরাপত্তা"
+    },
+    "observers": {
+      "en": "Election Observers",
+      "bn": "নির্বাচন পর্যবেক্ষক"
+    },
+    "technology": {
+      "en": "Election Technology",
+      "bn": "নির্বাচনী প্রযুক্তি"
+    }
+  }
+}

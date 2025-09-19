@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+
+# Builds
+.next
+out
+dist
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Misc
+*.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.DS_Store
