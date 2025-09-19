@@ -39,11 +39,13 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 - **System Settings**: Configuration and maintenance
 
 ### 📱 **Modern UI/UX**
-- **Responsive Design**: Mobile-first approach
-- **Accessibility**: WCAG 2.1 AA compliant
-- **Performance**: Optimized loading and rendering
-- **Dark/Light Theme**: User preference support
-- **Progressive Web App**: Offline capability ready
+- **Responsive Design**: Mobile-first approach with comprehensive responsive layouts
+- **Mobile Optimization**: All pages fully responsive across devices (320px to 4K+ screens)
+- **Touch-Friendly Interface**: Optimized touch targets and mobile interactions
+- **Accessibility**: WCAG 2.1 AA compliant with semantic HTML and proper contrast
+- **Performance**: Optimized loading and rendering with static generation
+- **Dark/Light Theme**: User preference support with system theme detection
+- **Progressive Web App**: Offline capability ready with service worker support
 
 ## 🛠️ Tech Stack
 
@@ -57,7 +59,7 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 | **Styling** | Tailwind CSS | Utility-first CSS framework |
 | **Validation** | Zod | Schema validation |
 | **File Storage** | AWS S3 | Secure file uploads |
-| **Rate Limiting** | Upstash Redis | API protection |
+| **Rate Limiting** | Upstash Redis | Distributed API protection with sliding window |
 | **Icons** | Heroicons + Lucide | Consistent iconography |
 | **Deployment** | Docker | Containerized deployment |
 
@@ -103,8 +105,16 @@ ADMIN_EMAIL="admin@election-commission.gov.bd"
 ADMIN_PASSWORD="SecureAdmin2024!"
 ADMIN_NAME="System Administrator"
 
-# Redis (for rate limiting)
-REDIS_PASSWORD="SecureRedis2024!"
+# Upstash Redis (for rate limiting)
+KV_URL="rediss://default:your_token@your-instance.upstash.io:6379"
+KV_REST_API_URL="https://your-instance.upstash.io"
+KV_REST_API_TOKEN="your_rest_api_token"
+KV_REST_API_READ_ONLY_TOKEN="your_readonly_token"
+REDIS_URL="rediss://default:your_token@your-instance.upstash.io:6379"
+
+# Rate Limiting Configuration
+RATE_LIMIT_WINDOW_SECONDS=60
+RATE_LIMIT_MAX=10
 
 # AWS S3 (for file uploads)
 AWS_REGION="us-east-1"
@@ -462,6 +472,19 @@ aws s3 ls s3://your-bucket-name
 # Review IAM policy and bucket CORS
 ```
 
+#### Rate Limiting Issues
+```bash
+# Check Upstash Redis connection
+curl -H "Authorization: Bearer $KV_REST_API_TOKEN" $KV_REST_API_URL/ping
+
+# Verify rate limiting configuration
+echo "Rate limit window: $RATE_LIMIT_WINDOW_SECONDS seconds"
+echo "Rate limit max: $RATE_LIMIT_MAX requests"
+
+# Test rate limiting in development
+# Rate limiting is disabled in development mode (NODE_ENV=development)
+```
+
 ### Log Analysis
 ```bash
 # Application logs
@@ -507,6 +530,8 @@ Government project for the National Elections Inquiry Commission of Bangladesh. 
 - Comprehensive audit logging
 - Docker deployment setup
 - Database seeding system
+- **Full mobile responsiveness across all pages**
+- **Production-ready rate limiting with Upstash Redis**
 
 🚧 **In Development**
 - Advanced analytics dashboard
@@ -520,6 +545,44 @@ Government project for the National Elections Inquiry Commission of Bangladesh. 
 - Integration with government SSO
 - Mobile applications
 - Public API for transparency
+
+---
+
+## 🆕 Recent Updates & Improvements
+
+### 📱 **Mobile Responsiveness Overhaul** *(Latest)*
+- **Complete Mobile Optimization**: All pages now fully responsive across devices (320px to 4K+ screens)
+- **Touch-Friendly Interface**: Optimized touch targets, spacing, and mobile interactions
+- **Responsive Components**: Updated all major components for mobile-first design:
+  - Commission pages (members, officials, terms, gazettes)
+  - Public pages (submit, notice, reporting, blog, gallery, contact)
+  - Admin interface and dashboard
+  - Error pages (rate-limit, 404, 500)
+- **Enhanced Typography**: Responsive text scaling and improved readability
+- **Mobile Navigation**: Improved mobile menu and navigation experience
+- **Grid Layouts**: Adaptive grid systems that work across all screen sizes
+- **Button Optimization**: Full-width buttons on mobile with proper touch targets
+
+### ⚡ **Rate Limiting System Upgrade** *(Latest)*
+- **Production-Ready**: Upgraded to use Upstash Redis for distributed rate limiting
+- **Sliding Window**: Implemented sliding window rate limiting (10 requests per 60 seconds)
+- **High Availability**: Distributed rate limiting across multiple server instances
+- **Fallback System**: Graceful degradation to in-memory rate limiting if Redis fails
+- **Environment Configuration**: Updated to use standard KV environment variables
+- **Error Handling**: Enhanced error handling and user feedback for rate limit scenarios
+
+### 🎨 **UI/UX Enhancements**
+- **Z-Index Management**: Fixed overlapping issues between mobile menu and slider
+- **Component Consistency**: Standardized responsive patterns across all components
+- **Loading States**: Enhanced loading and error states for better user experience
+- **Accessibility**: Improved screen reader support and keyboard navigation
+- **Dark Mode**: Enhanced dark mode support across all responsive breakpoints
+
+### 🔧 **Technical Improvements**
+- **CSS Optimization**: Cleaned up redundant and conflicting CSS classes
+- **Performance**: Optimized component rendering and layout calculations
+- **Code Quality**: Eliminated linting errors and improved code maintainability
+- **Type Safety**: Enhanced TypeScript types for responsive props and configurations
 
 ---
 
