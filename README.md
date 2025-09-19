@@ -12,11 +12,12 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 
 ### 🔐 **Advanced Security**
 - **Role-based Access Control**: Admin, Management, Support, and Viewer roles
-- **Multi-factor Authentication**: Ready for implementation
-- **Security Headers**: CSP, HSTS, X-Frame-Options, and more
-- **Rate Limiting**: Protect against abuse and DDoS
-- **Audit Logging**: Complete activity tracking
-- **Input Validation**: Zod-based validation on client and server
+- **Session Hardening**: Signed JWT sessions with forced logout for deactivated users
+- **Security Headers**: Strict CSP with Google reCAPTCHA allow-list, HSTS, X-Frame-Options, COOP/CORP, and more
+- **Rate Limiting**: Upstash Redis-backed sliding window throttling for abusive requests plus edge-level middleware guard rails
+- **Audit Logging**: Pino-based structured logging for submissions, auth, and administrative actions
+- **Input & Upload Validation**: Zod validation everywhere, MIME-sniffing file inspection, size/extension allow-lists, and S3 private ACL uploads
+- **Bot Mitigation**: Google reCAPTCHA v2 challenge on public submissions and hidden honeypot fields
 
 ### 🏛️ **Public Features**
 - **Opinion Submission**: Secure form for public feedback
@@ -60,6 +61,16 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 | **Icons** | Heroicons + Lucide | Consistent iconography |
 | **Deployment** | Docker | Containerized deployment |
 
+## 🔐 Security Architecture
+
+This portal is designed for a high-assurance government environment. Key defensive layers include:
+
+- **Authentication & Authorization**: NextAuth.js with Prisma adapter, JWT sessions, enforced role hierarchy, and activity locking for inactive users.
+- **Request Protection**: Google reCAPTCHA v2 challenge on public submission endpoints, honeypot fields, sliding-window rate limiting (Upstash Redis + edge middleware), and password-reset throttling.
+- **Transport & Browser Security**: Middleware-enforced HSTS, X-Content-Type-Options, X-Frame-Options, COOP/CORP, Permissions-Policy, and a restrictive Content-Security-Policy that only whitelists required Google reCAPTCHA assets.
+- **Data & File Safety**: SHA-256 IP hashing, detailed submission/audit logging, S3 private ACL uploads, UUID file naming, MIME signature checking via `file-type`, strict extension allow-list, and configurable size limits (`NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB`).
+- **Code Integrity**: Shared Zod schemas, spam heuristics for submissions, Prisma schema-level constraints, and centralized logging for observability.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -84,6 +95,8 @@ DATABASE_URL="postgresql://election_admin:SecureElectionDB2024!@localhost:5432/e
 # Authentication
 NEXTAUTH_SECRET="YourSuperSecretKeyForElectionCommission2024!"
 NEXTAUTH_URL="http://localhost:3000"
+NEXT_PUBLIC_RECAPTCHA_KEY="your_recaptcha_v2_site_key"
+RECAPTCHA_SECRET_KEY="your_recaptcha_v2_secret_key"
 
 # Admin User (for initial setup)
 ADMIN_EMAIL="admin@election-commission.gov.bd"
@@ -99,9 +112,14 @@ AWS_ACCESS_KEY_ID="your_access_key_here"
 AWS_SECRET_ACCESS_KEY="your_secret_access_key_here"
 AWS_S3_BUCKET_NAME="your_bucket_name_here"
 
+# Upload constraints
+NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB="25"
+
 # Security
 POSTGRES_PASSWORD="SecureElectionDB2024!"
 ```
+
+> ℹ️  Use Google reCAPTCHA **v2 (checkbox or invisible)** keys and list your development/production domains in the reCAPTCHA admin console. The API reads `RECAPTCHA_SECRET_KEY` for verification and will fall back to `NEXT_PUBLIC_RECAPTCHA_KEY_SECRET` if necessary.
 
 ### 3. Database Setup
 ```bash
