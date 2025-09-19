@@ -34,17 +34,17 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         {/* Header with Logo and Controls */}
         <header className="w-full border-b border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-sm">
           <div className="container-max">
-            <div className="flex items-center justify-between h-16">
+            <div className="flex items-center justify-between h-14 sm:h-16">
               {/* Logo/Brand */}
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                 <Logo size="md" />
-                <div className="text-xl font-bold text-slate-800 dark:text-slate-100">
+                <div className="text-sm sm:text-base lg:text-xl font-bold text-slate-800 dark:text-slate-100 truncate">
                   {locale === 'bn' ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
                 </div>
               </div>
 
               {/* Right side: Controls (Language, Theme, Mobile Menu) */}
-              <div className="flex items-center space-x-3 relative">
+              <div className="flex items-center space-x-2 sm:space-x-3 relative flex-shrink-0">
                 <div className="hidden sm:block">
                   <ErrorBoundary>
                     <LanguageSwitcher />

@@ -361,11 +361,126 @@ body {
   
   /* Additional mobile-specific adjustments */
   .container-max {
-    @apply px-4;
+    @apply px-3 sm:px-4;
   }
   
   .card {
-    @apply p-4;
+    @apply p-3 sm:p-4;
   }
+}
+
+/* Additional responsive utilities for better mobile experience */
+.responsive-text-xs {
+  @apply text-xs sm:text-sm lg:text-base;
+}
+
+.responsive-text-sm {
+  @apply text-sm sm:text-base lg:text-lg;
+}
+
+.responsive-text-base {
+  @apply text-sm sm:text-base lg:text-lg xl:text-xl;
+}
+
+.responsive-text-lg {
+  @apply text-base sm:text-lg lg:text-xl xl:text-2xl;
+}
+
+.responsive-text-xl {
+  @apply text-lg sm:text-xl lg:text-2xl xl:text-3xl;
+}
+
+/* Responsive padding utilities */
+.responsive-p-sm {
+  @apply p-2 sm:p-3 lg:p-4;
+}
+
+.responsive-p-md {
+  @apply p-3 sm:p-4 lg:p-6;
+}
+
+.responsive-p-lg {
+  @apply p-4 sm:p-6 lg:p-8;
+}
+
+/* Responsive margin utilities */
+.responsive-m-sm {
+  @apply m-2 sm:m-3 lg:m-4;
+}
+
+.responsive-m-md {
+  @apply m-3 sm:m-4 lg:m-6;
+}
+
+.responsive-m-lg {
+  @apply m-4 sm:m-6 lg:m-8;
+}
+
+/* Responsive gap utilities */
+.responsive-gap-sm {
+  @apply gap-2 sm:gap-3 lg:gap-4;
+}
+
+.responsive-gap-md {
+  @apply gap-3 sm:gap-4 lg:gap-6;
+}
+
+.responsive-gap-lg {
+  @apply gap-4 sm:gap-6 lg:gap-8;
+}
+
+/* Mobile-first button styles */
+.btn-responsive {
+  @apply px-3 py-2 sm:px-4 sm:py-2.5 lg:px-6 lg:py-3 text-xs sm:text-sm lg:text-base font-medium rounded-lg transition-all duration-200;
+}
+
+/* Responsive icon sizes */
+.icon-responsive-sm {
+  @apply w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6;
+}
+
+.icon-responsive-md {
+  @apply w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7;
+}
+
+.icon-responsive-lg {
+  @apply w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8;
+}
+
+/* Improved container max width for better mobile experience */
+.container-responsive {
+  @apply max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8;
+}
+
+/* Mobile-friendly form inputs */
+.input-responsive {
+  @apply w-full px-3 py-2 sm:py-2.5 text-xs sm:text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors;
+}
+
+/* Responsive table wrapper */
+.table-responsive {
+  @apply overflow-x-auto -mx-3 sm:mx-0;
+}
+
+.table-responsive table {
+  @apply min-w-full;
+}
+
+/* Mobile-friendly navigation */
+.nav-responsive {
+  @apply flex items-center px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200;
+}
+
+/* Responsive grid layouts */
+.grid-responsive-1-2 {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6;
+}
+
+.grid-responsive-1-3 {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+}
+
+.grid-responsive-1-4 {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
 }
 
