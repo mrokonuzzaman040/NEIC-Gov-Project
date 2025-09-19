@@ -121,6 +121,7 @@ model Slider {
   descriptionEn String
   descriptionBn String
   image       String
+  imageKey    String?  // S3 key for image cleanup
   link        String
   buttonTextEn String
   buttonTextBn String
