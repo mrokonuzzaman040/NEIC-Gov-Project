@@ -88,6 +88,21 @@
     "reset": "Reset",
     "privacy": "* Learn about privacy"
    },
+  "rateLimit": {
+    "badge": "Access throttled",
+    "title": "You’ve reached the request limit",
+    "description": "We’ve detected a high number of requests from your connection in a short period. To keep the portal available for everyone, we temporarily limit traffic.",
+    "retry": "You can try again in a few minutes. Refresh the page or return to the home screen once the limit resets.",
+    "tipsTitle": "How to regain access quickly",
+    "tip1": "Wait 1–2 minutes before trying again.",
+    "tip2": "Avoid automated tools or rapid repeated clicks.",
+    "tip3": "If you share this network, ask others to pause submissions briefly.",
+    "supportTitle": "Need urgent assistance?",
+    "supportDescription": "If you believe you’re seeing this by mistake, contact the commission support team.",
+    "backHome": "Back to Home",
+    "contactSupport": "Contact Support",
+    "errorCode": "Error code: 429"
+  },
    "footer": {"tagline": "Dignity of the vote, dignity of the nation — listening, verifying, committed."},
   "success": {"submitted": "Your submission has been received."},
   "error": {

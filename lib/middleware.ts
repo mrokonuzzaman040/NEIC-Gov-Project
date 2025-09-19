@@ -175,6 +175,15 @@ export function rateLimitMiddleware(request: NextRequest, limit: number = 100, w
     return NextResponse.next();
   }
 
+  const { pathname } = request.nextUrl;
+
+  if (
+    pathname === '/rate-limit' ||
+    /^\/(bn|en)\/rate-limit(?:\/|$)/.test(pathname)
+  ) {
+    return NextResponse.next();
+  }
+
   const forwardedFor = request.headers.get('x-forwarded-for');
   const realIp = request.headers.get('x-real-ip');
   const ip = request.ip || forwardedFor?.split(',')[0]?.trim() || realIp || 'unknown';
@@ -192,11 +201,28 @@ export function rateLimitMiddleware(request: NextRequest, limit: number = 100, w
     rateLimitMap.set(ip, { count: 1, resetTime: now });
     return NextResponse.next();
   }
-  
+
   if (current.count >= limit) {
-    return new NextResponse('Too Many Requests', { status: 429 });
+    const isApiRoute = pathname.startsWith('/api');
+
+    if (isApiRoute) {
+      return new NextResponse(
+        JSON.stringify({ ok: false, error: { code: 'RATE_LIMIT', message: 'Too many requests' } }),
+        {
+          status: 429,
+          headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+        }
+      );
+    }
+
+    const localeMatch = pathname.match(/^\/(bn|en)(?:\/|$)/);
+    const locale = localeMatch ? localeMatch[1] : 'bn';
+    const redirectUrl = new URL(`/${locale}/rate-limit`, request.url);
+    const response = NextResponse.redirect(redirectUrl, { status: 307 });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   }
-  
+
   current.count++;
   current.resetTime = now;
   return NextResponse.next();
