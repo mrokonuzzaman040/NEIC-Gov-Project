@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { 
   XMarkIcon,
@@ -16,6 +16,7 @@ interface SliderFormData {
   descriptionEn: string;
   descriptionBn: string;
   image: string;
+  imageKey?: string;
   link: string;
   buttonTextEn: string;
   buttonTextBn: string;
@@ -26,10 +27,10 @@ interface SliderFormData {
 }
 
 interface SliderFormProps {
-  slider?: SliderFormData | null;
+  slider?: (SliderFormData & { id?: string }) | null;
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: SliderFormData) => Promise<void>;
+  onSave: (data: FormData) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -44,12 +45,15 @@ const CATEGORIES = [
 ];
 
 export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading = false }: SliderFormProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const [formData, setFormData] = useState<SliderFormData>({
     titleEn: '',
     titleBn: '',
     descriptionEn: '',
     descriptionBn: '',
     image: '',
+    imageKey: '',
     link: '',
     buttonTextEn: 'Learn More',
     buttonTextBn: 'আরও জানুন',
@@ -59,12 +63,21 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
     order: 0,
   });
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [errors, setErrors] = useState<Partial<SliderFormData>>({});
+  const [error, setError] = useState<string | null>(null);
+
+  const isEditing = !!slider;
 
   // Initialize form data when slider prop changes
   useEffect(() => {
     if (slider) {
-      setFormData(slider);
+      setFormData({
+        ...slider,
+        imageKey: (slider as any).imageKey || ''
+      });
+      setPreviewUrl(slider.image);
     } else {
       setFormData({
         titleEn: '',
@@ -72,6 +85,7 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
         descriptionEn: '',
         descriptionBn: '',
         image: '',
+        imageKey: '',
         link: '',
         buttonTextEn: 'Learn More',
         buttonTextBn: 'আরও জানুন',
@@ -80,8 +94,11 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
         featured: false,
         order: 0,
       });
+      setPreviewUrl(null);
     }
+    setSelectedFile(null);
     setErrors({});
+    setError(null);
   }, [slider]);
 
   const handleInputChange = (field: keyof SliderFormData, value: string | boolean | number) => {
@@ -110,6 +127,51 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (!allowedTypes.includes(file.type)) {
+        setError('Invalid file type. Only JPEG, PNG, WebP, and GIF files are allowed.');
+        return;
+      }
+
+      // Validate file size (10MB max)
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setError('File size too large. Maximum size is 10MB.');
+        return;
+      }
+
+      setSelectedFile(file);
+      setError(null);
+      
+      // Create preview URL
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+
+      // Clear image URL error if it exists
+      if (errors.image) {
+        setErrors(prev => ({
+          ...prev,
+          image: undefined
+        }));
+      }
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    if (previewUrl && previewUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setPreviewUrl(isEditing && slider ? slider.image : null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const validateForm = (): boolean => {
     const newErrors: Partial<SliderFormData> = {};
 
@@ -117,7 +179,13 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
     if (!formData.titleBn.trim()) newErrors.titleBn = 'Bengali title is required';
     if (!formData.descriptionEn.trim()) newErrors.descriptionEn = 'English description is required';
     if (!formData.descriptionBn.trim()) newErrors.descriptionBn = 'Bengali description is required';
-    if (!formData.image.trim()) newErrors.image = 'Image URL is required';
+    
+    // For new sliders, require either a file or existing image URL
+    // For editing, allow keeping existing image
+    if (!isEditing && !selectedFile) {
+      newErrors.image = 'Image file is required for new sliders';
+    }
+    
     if (!formData.link.trim()) newErrors.link = 'Link is required';
     if (!formData.buttonTextEn.trim()) newErrors.buttonTextEn = 'English button text is required';
     if (!formData.buttonTextBn.trim()) newErrors.buttonTextBn = 'Bengali button text is required';
@@ -128,15 +196,46 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     
     if (!validateForm()) {
       return;
     }
 
     try {
-      await onSave(formData);
+      // Create FormData for file upload
+      const submitData = new FormData();
+      
+      if (isEditing && slider?.id) {
+        submitData.append('id', slider.id);
+      }
+      
+      submitData.append('titleEn', formData.titleEn.trim());
+      submitData.append('titleBn', formData.titleBn.trim());
+      submitData.append('descriptionEn', formData.descriptionEn.trim());
+      submitData.append('descriptionBn', formData.descriptionBn.trim());
+      submitData.append('link', formData.link.trim());
+      submitData.append('buttonTextEn', formData.buttonTextEn.trim());
+      submitData.append('buttonTextBn', formData.buttonTextBn.trim());
+      submitData.append('categoryEn', formData.categoryEn);
+      submitData.append('categoryBn', formData.categoryBn);
+      submitData.append('featured', formData.featured.toString());
+      submitData.append('order', formData.order.toString());
+      
+      if (selectedFile) {
+        submitData.append('file', selectedFile);
+      } else if (isEditing && formData.image) {
+        // Keep existing image for edits when no new file is selected
+        submitData.append('existingImage', formData.image);
+        if (formData.imageKey) {
+          submitData.append('existingImageKey', formData.imageKey);
+        }
+      }
+
+      await onSave(submitData);
     } catch (error) {
       console.error('Error saving slider:', error);
+      setError(error instanceof Error ? error.message : 'An error occurred');
     }
   };
 
@@ -160,6 +259,14 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+              <p className="text-sm font-medium text-red-600 dark:text-red-400">
+                {error}
+              </p>
+            </div>
+          )}
           {/* Title Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -238,29 +345,62 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
             </div>
           </div>
 
-          {/* Image and Link */}
+          {/* Image Upload and Link */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                Image URL *
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <PhotoIcon className="h-5 w-5 text-slate-400" />
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Image {!isEditing && <span className="text-red-500">*</span>}
+                </label>
+                
+                {/* File Input */}
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 dark:border-slate-600 border-dashed rounded-lg">
+                  <div className="space-y-1 text-center">
+                    {previewUrl ? (
+                      <div className="relative">
+                        <div className="relative w-48 h-32 mx-auto">
+                          <Image
+                            src={previewUrl}
+                            alt="Preview"
+                            fill
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleRemoveFile}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                        >
+                          <XMarkIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <PhotoIcon className="mx-auto h-12 w-12 text-slate-400" />
+                    )}
+                    
+                    <div className="flex text-sm text-slate-600 dark:text-slate-400">
+                      <label htmlFor="file-upload" className="relative cursor-pointer bg-white dark:bg-slate-800 rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
+                        <span>{previewUrl ? 'Change image' : 'Upload an image'}</span>
+                        <input
+                          ref={fileInputRef}
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                          accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                          onChange={handleFileChange}
+                        />
+                      </label>
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      PNG, JPG, WebP, GIF up to 10MB
+                    </p>
+                  </div>
                 </div>
-                <input
-                  type="url"
-                  value={formData.image}
-                  onChange={(e) => handleInputChange('image', e.target.value)}
-                  className={`block w-full pl-10 pr-3 py-2 border rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.image ? 'border-red-300 dark:border-red-600' : 'border-slate-300 dark:border-slate-600'
-                  }`}
-                  placeholder="/slider-images/image.jpg"
-                />
+                {errors.image && (
+                  <p className="text-sm text-red-600 dark:text-red-400">{errors.image}</p>
+                )}
               </div>
-              {errors.image && (
-                <p className="text-sm text-red-600 dark:text-red-400">{errors.image}</p>
-              )}
             </div>
 
             <div className="space-y-2">
@@ -385,25 +525,6 @@ export default function SliderForm({ slider, isOpen, onClose, onSave, isLoading 
             </div>
           </div>
 
-          {/* Image Preview */}
-          {formData.image && (
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                Image Preview
-              </label>
-              <div className="w-full h-48 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden relative">
-                <Image
-                  src={formData.image}
-                  alt="Preview"
-                  fill
-                  className="object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/placeholder-image.jpg';
-                  }}
-                />
-              </div>
-            </div>
-          )}
 
           {/* Action Buttons */}
           <div className="flex items-center justify-end space-x-3 pt-6 border-t border-slate-200 dark:border-slate-700">

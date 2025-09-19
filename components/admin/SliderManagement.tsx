@@ -90,53 +90,26 @@ export default function SliderManagement() {
     setIsModalOpen(true);
   };
 
-  const handleSaveSlider = async (formData: any) => {
+  const handleSaveSlider = async (formData: FormData) => {
     setIsFormLoading(true);
     setMessage(null);
 
     try {
-      if (editingSlider) {
-        // Update existing slider
-        const response = await fetch('/api/admin/sliders', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: editingSlider.id,
-            ...formData
-          }),
-        });
+      const response = await fetch('/api/admin/sliders', {
+        method: editingSlider ? 'PUT' : 'POST',
+        body: formData, // Send FormData directly for file upload
+      });
 
-        if (response.ok) {
-          setMessage({ type: 'success', text: 'Slider updated successfully!' });
-          setIsModalOpen(false);
-          setEditingSlider(null);
-          // Reload sliders
-          window.location.reload();
-        } else {
-          const error = await response.json();
-          setMessage({ type: 'error', text: error.error || 'Failed to update slider' });
-        }
+      if (response.ok) {
+        const successMessage = editingSlider ? 'Slider updated successfully!' : 'Slider created successfully!';
+        setMessage({ type: 'success', text: successMessage });
+        setIsModalOpen(false);
+        setEditingSlider(null);
+        // Reload sliders
+        window.location.reload();
       } else {
-        // Create new slider
-        const response = await fetch('/api/admin/sliders', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          setMessage({ type: 'success', text: 'Slider created successfully!' });
-          setIsModalOpen(false);
-          // Reload sliders
-          window.location.reload();
-        } else {
-          const error = await response.json();
-          setMessage({ type: 'error', text: error.error || 'Failed to create slider' });
-        }
+        const error = await response.json();
+        setMessage({ type: 'error', text: error.error || `Failed to ${editingSlider ? 'update' : 'create'} slider` });
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
