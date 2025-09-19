@@ -32,7 +32,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute left-4 top-4 bg-white dark:bg-slate-800 text-sm px-3 py-2 rounded shadow">Skip to content</a>
       <NextIntlClientProvider messages={messages} locale={locale}>
         {/* Header with Logo and Controls */}
-        <header className="w-full border-b border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-sm">
+        <header className="w-full border-b border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-sm relative z-30">
           <div className="container-max">
             <div className="flex items-center justify-between h-14 sm:h-16">
               {/* Logo/Brand */}
@@ -62,7 +62,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         </header>
 
         {/* Premium Minimal Navigation Section with Dropdowns - Hidden on Mobile */}
-        <nav className="hidden lg:block w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <nav className="hidden lg:block w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm relative z-20">
           <div className="container-max">
             <div className="flex items-center justify-center">
               {/* Desktop Navigation Links */}

@@ -128,7 +128,7 @@ export default function ImageSlider({
   const currentSlideData = slides[currentSlide];
 
   return (
-    <div className="relative w-full h-[350px] sm:h-[380px] lg:h-[420px] overflow-hidden rounded-2xl shadow-2xl">
+    <div className="relative w-full h-[350px] sm:h-[380px] lg:h-[420px] overflow-hidden rounded-2xl shadow-2xl z-10">
       {/* Main Slide */}
       <div className="relative w-full h-full">
         <Image
