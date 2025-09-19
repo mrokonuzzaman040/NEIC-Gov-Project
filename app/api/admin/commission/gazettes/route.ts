@@ -2,6 +2,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-config';
 import { prisma } from '@/lib/db';
+import { uploadToS3, deleteFromS3 } from '@/lib/s3';
+
+// Validate PDF file for uploads
+function validatePdfFile(contentType: string, fileSize: number): { isValid: boolean; error?: string } {
+  if (contentType !== 'application/pdf') {
+    return {
+      isValid: false,
+      error: 'Invalid file type. Only PDF files are allowed.',
+    };
+  }
+
+  const maxSize = 50 * 1024 * 1024; // 50MB
+  if (fileSize > maxSize) {
+    return {
+      isValid: false,
+      error: 'File size too large. Maximum size is 50MB.',
+    };
+  }
+
+  return { isValid: true };
+}
 
 // GET - Fetch all gazettes or single gazette by ID
 export async function GET(request: NextRequest) {
@@ -85,22 +106,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await request.json();
-    const {
-      titleEn,
-      titleBn,
-      gazetteNumber,
-      category,
-      priority,
-      publishedAt,
-      downloadUrl,
-      description,
-      isActive,
-    } = body;
+    const formData = await request.formData();
+    
+    // Extract form fields
+    const titleEn = formData.get('titleEn') as string;
+    const titleBn = formData.get('titleBn') as string;
+    const gazetteNumber = formData.get('gazetteNumber') as string;
+    const category = formData.get('category') as string;
+    const priority = formData.get('priority') as string;
+    const publishedAt = formData.get('publishedAt') as string;
+    const description = formData.get('description') as string;
+    const isActive = formData.get('isActive') === 'true';
+    const file = formData.get('file') as File;
 
     // Validate required fields
-    if (!titleEn || !titleBn || !gazetteNumber || !downloadUrl) {
+    if (!titleEn || !titleBn || !gazetteNumber) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    if (!file) {
+      return NextResponse.json({ error: 'PDF file is required' }, { status: 400 });
+    }
+
+    // Validate file
+    const validation = validatePdfFile(file.type, file.size);
+    if (!validation.isValid) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
     }
 
     // Check if gazette number already exists
@@ -112,15 +143,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Gazette number already exists' }, { status: 400 });
     }
 
+    // Upload file to S3 or local storage
+    const fileBuffer = Buffer.from(await file.arrayBuffer());
+    const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'gazettes');
+
     const gazette = await prisma.gazette.create({
       data: {
         titleEn,
         titleBn,
         gazetteNumber,
         category: category || 'general',
-        priority: priority || 'MEDIUM',
+        priority: (priority as 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL') || 'MEDIUM',
         publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
-        downloadUrl,
+        downloadUrl: uploadResult.url,
         description,
         isActive: isActive !== undefined ? isActive : true,
         createdBy: session.user.email,
@@ -142,8 +177,20 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await request.json();
-    const { id, ...updateData } = body;
+    const formData = await request.formData();
+    
+    // Extract form fields
+    const id = formData.get('id') as string;
+    const titleEn = formData.get('titleEn') as string;
+    const titleBn = formData.get('titleBn') as string;
+    const gazetteNumber = formData.get('gazetteNumber') as string;
+    const category = formData.get('category') as string;
+    const priority = formData.get('priority') as string;
+    const publishedAt = formData.get('publishedAt') as string;
+    const description = formData.get('description') as string;
+    const isActive = formData.get('isActive') === 'true';
+    const file = formData.get('file') as File;
+    const existingDownloadUrl = formData.get('existingDownloadUrl') as string;
 
     if (!id) {
       return NextResponse.json({ error: 'Gazette ID is required' }, { status: 400 });
@@ -159,9 +206,9 @@ export async function PUT(request: NextRequest) {
     }
 
     // If gazette number is being updated, check for uniqueness
-    if (updateData.gazetteNumber && updateData.gazetteNumber !== existingGazette.gazetteNumber) {
+    if (gazetteNumber && gazetteNumber !== existingGazette.gazetteNumber) {
       const numberExists = await prisma.gazette.findUnique({
-        where: { gazetteNumber: updateData.gazetteNumber },
+        where: { gazetteNumber },
       });
 
       if (numberExists) {
@@ -169,11 +216,38 @@ export async function PUT(request: NextRequest) {
       }
     }
 
+    let downloadUrl = existingGazette.downloadUrl;
+
+    // Handle file upload if new file is provided
+    if (file && file.size > 0) {
+      // Validate file
+      const validation = validatePdfFile(file.type, file.size);
+      if (!validation.isValid) {
+        return NextResponse.json({ error: validation.error }, { status: 400 });
+      }
+
+      // Upload new file
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
+      const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'gazettes');
+      
+      downloadUrl = uploadResult.url;
+
+      // Note: We could delete the old file here if we had the S3 key
+      // This would require adding a fileKey field to the Gazette model
+    }
+
     const gazette = await prisma.gazette.update({
       where: { id },
       data: {
-        ...updateData,
-        publishedAt: updateData.publishedAt ? new Date(updateData.publishedAt) : undefined,
+        titleEn,
+        titleBn,
+        gazetteNumber,
+        category,
+        priority: priority as 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL',
+        publishedAt: publishedAt ? new Date(publishedAt) : undefined,
+        downloadUrl,
+        description,
+        isActive,
         updatedBy: session.user.email,
       },
     });
