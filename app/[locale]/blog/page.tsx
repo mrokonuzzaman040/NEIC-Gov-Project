@@ -111,8 +111,8 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-4 sm:py-6 lg:py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Government Header */}
         <GovernmentHeader
           title={isEnglish ? 'Official Blog & Updates' : 'সরকারি ব্লগ ও আপডেট'}
@@ -124,12 +124,12 @@ export default function BlogPage() {
         />
 
         {/* Back to Home Link */}
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <Link 
             href={`/${locale}`}
-            className="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-colors"
+            className="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-colors text-sm sm:text-base"
           >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             {isEnglish ? 'Back to Home' : 'হোমে ফিরুন'}
@@ -139,9 +139,9 @@ export default function BlogPage() {
         {/* Loading State */}
         {isLoading && (
           <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg">
-            <div className="p-12 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-              <p className="text-gray-600 dark:text-gray-400 mt-4">
+            <div className="p-6 sm:p-8 lg:p-12 text-center">
+              <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 border-b-2 border-green-600 mx-auto"></div>
+              <p className="text-gray-600 dark:text-gray-400 mt-3 sm:mt-4 text-sm sm:text-base">
                 {isEnglish ? 'Loading blog posts...' : 'ব্লগ পোস্ট লোড হচ্ছে...'}
               </p>
             </div>
@@ -150,21 +150,21 @@ export default function BlogPage() {
 
         {/* Error State */}
         {error && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
-            <div className="flex items-start">
-              <svg className="w-6 h-6 text-red-600 dark:text-red-400 mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-3">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0 mx-auto sm:mx-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
-              <div>
-                <h4 className="text-lg font-semibold text-red-900 dark:text-red-100 mb-2">
+              <div className="text-center sm:text-left min-w-0">
+                <h4 className="text-base sm:text-lg font-semibold text-red-900 dark:text-red-100 mb-1 sm:mb-2">
                   {isEnglish ? 'Error Loading Blog Posts' : 'ব্লগ পোস্ট লোড করতে ত্রুটি'}
                 </h4>
-                <p className="text-red-800 dark:text-red-200 text-sm">
+                <p className="text-red-800 dark:text-red-200 text-xs sm:text-sm break-words">
                   {error}
                 </p>
                 <button
                   onClick={() => window.location.reload()}
-                  className="mt-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="mt-2 sm:mt-3 inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 border border-transparent text-xs sm:text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   {isEnglish ? 'Retry' : 'পুনরায় চেষ্টা করুন'}
                 </button>
@@ -175,12 +175,12 @@ export default function BlogPage() {
 
         {/* Blog Description */}
         {!isLoading && !error && (
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-8 mb-8">
+          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
                 {isEnglish ? 'Official Blog & Updates' : 'সরকারি ব্লগ ও আপডেট'}
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
                 {isEnglish 
                   ? 'Stay informed with the latest updates, insights, and official communications from the National Elections Inquiry Commission.'
                   : 'জাতীয় নির্বাচন তদন্ত কমিশনের সর্বশেষ আপডেট, অন্তর্দৃষ্টি এবং সরকারি যোগাযোগের সাথে অবগত থাকুন।'
@@ -192,16 +192,16 @@ export default function BlogPage() {
 
         {/* Category Filter */}
         {!isLoading && !error && (
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
               {isEnglish ? 'Categories' : 'বিভাগসমূহ'}
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {categories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 border rounded-lg transition-colors duration-200 font-medium ${
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 border rounded-lg transition-colors duration-200 font-medium text-xs sm:text-sm ${
                     selectedCategory === category.id
                       ? 'bg-green-600 text-white border-green-600'
                       : 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30'
@@ -216,16 +216,16 @@ export default function BlogPage() {
 
         {/* Blog Posts Grid */}
         {!isLoading && !error && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8">
             {filteredPosts.length === 0 ? (
-              <div className="col-span-full text-center py-12">
-                <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="col-span-full text-center py-8 sm:py-12">
+                <svg className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                <h3 className="mt-2 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100">
                   {isEnglish ? 'No blog posts available' : 'কোন ব্লগ পোস্ট উপলব্ধ নেই'}
                 </h3>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   {selectedCategory !== 'all' 
                     ? (isEnglish ? 'No posts in this category.' : 'এই বিভাগে কোন পোস্ট নেই।')
                     : (isEnglish ? 'Check back later for new blog posts.' : 'নতুন ব্লগ পোস্টের জন্য পরে আবার দেখুন।')
@@ -237,7 +237,7 @@ export default function BlogPage() {
                 <Link key={post.id} href={`/${locale}/blog/${post.slug}`} className="block">
                   <article className="bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     {/* Post Image */}
-                    <div className="relative h-48">
+                    <div className="relative h-40 sm:h-48">
                       <Image
                         src={post.image}
                         alt={isEnglish ? post.titleEn : post.titleBn}
@@ -245,7 +245,7 @@ export default function BlogPage() {
                         className="object-cover"
                       />
                       {post.featured && (
-                        <div className="absolute top-4 left-4">
+                        <div className="absolute top-2 sm:top-4 left-2 sm:left-4">
                           <span className="inline-block px-2 py-1 bg-yellow-500 text-white text-xs font-medium rounded-full">
                             {isEnglish ? 'Featured' : 'বিশেষ'}
                           </span>
@@ -254,34 +254,34 @@ export default function BlogPage() {
                     </div>
 
                     {/* Post Content */}
-                    <div className="p-6">
+                    <div className="p-4 sm:p-6">
                       {/* Category Badge */}
-                      <div className="mb-3">
-                        <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-xs font-medium rounded-full">
+                      <div className="mb-2 sm:mb-3">
+                        <span className="inline-block px-2 sm:px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-xs font-medium rounded-full">
                           {getCategoryName(post.category)}
                         </span>
                       </div>
 
                       {/* Post Title */}
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3 line-clamp-2">
                         {isEnglish ? post.titleEn : post.titleBn}
                       </h3>
 
                       {/* Post Excerpt */}
-                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                      <p className="text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 line-clamp-3 text-sm sm:text-base">
                         {isEnglish ? post.excerptEn : post.excerptBn}
                       </p>
 
                       {/* Post Meta */}
-                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 space-y-2 sm:space-y-0">
                         <div className="flex items-center">
-                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                           </svg>
-                          {isEnglish ? post.authorEn : post.authorBn}
+                          <span className="truncate">{isEnglish ? post.authorEn : post.authorBn}</span>
                         </div>
                         <div className="flex items-center">
-                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                           {post.readTime} {isEnglish ? 'min read' : 'মিনিট পড়া'}
@@ -289,12 +289,12 @@ export default function BlogPage() {
                       </div>
 
                       {/* Post Date */}
-                      <div className="text-xs text-gray-400 dark:text-gray-500 mb-4">
+                      <div className="text-xs text-gray-400 dark:text-gray-500 mb-3 sm:mb-4">
                         {formatDate(post.publishedAt)}
                       </div>
 
                       {/* Read More Button */}
-                      <div className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 text-center">
+                      <div className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 text-center text-xs sm:text-sm">
                         {isEnglish ? 'Read More' : 'আরও পড়ুন'}
                       </div>
                     </div>
@@ -306,24 +306,24 @@ export default function BlogPage() {
         )}
 
         {/* Newsletter Subscription */}
-        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg p-8 text-white">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg p-4 sm:p-6 lg:p-8 text-white">
           <div className="text-center">
-            <h3 className="text-2xl font-bold mb-4">
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4">
               {isEnglish ? 'Stay Updated' : 'আপডেট থাকুন'}
             </h3>
-            <p className="text-green-100 mb-6 max-w-2xl mx-auto">
+            <p className="text-green-100 mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base">
               {isEnglish 
                 ? 'Subscribe to our newsletter to receive the latest updates and official communications from the Commission.'
                 : 'কমিশনের সর্বশেষ আপডেট এবং সরকারি যোগাযোগ পেতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন।'
               }
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder={isEnglish ? 'Enter your email' : 'আপনার ইমেইল দিন'}
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-300"
+                className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-300 text-sm sm:text-base"
               />
-              <button className="bg-white text-green-600 font-semibold px-6 py-3 rounded-lg hover:bg-green-50 transition-colors duration-200">
+              <button className="bg-white text-green-600 font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm sm:text-base">
                 {isEnglish ? 'Subscribe' : 'সাবস্ক্রাইব'}
               </button>
             </div>

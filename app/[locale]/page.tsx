@@ -84,9 +84,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
   const data = (homepageData as HomePageData).homePage;
   
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <section className="mb-8">
+    <div className="min-h-screen py-4 sm:py-6 lg:py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+        <section className="mb-6 sm:mb-8">
           <ImageSlider 
             slides={sliderData.sliderData.slides} 
             locale={locale as 'en' | 'bn'} 
@@ -106,7 +106,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
           iconColor="green"
         />
 
-        <main id="main" className="space-y-10">
+        <main id="main" className="space-y-6 sm:space-y-8 lg:space-y-10">
           <Hero />  
           <InfoGrid />
           <Footer />

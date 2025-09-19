@@ -108,18 +108,18 @@ export default function AdminSidebar() {
   }
 
   return (
-    <div className="flex flex-col w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 h-full">
+    <div className="flex flex-col w-56 sm:w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 h-full">
       {/* Logo/Brand */}
-      <div className="flex items-center px-6 py-4 border-b border-slate-200 dark:border-slate-700">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
-            <ShieldCheckIcon className="w-5 h-5 text-white" />
+      <div className="flex items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-slate-700">
+        <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+            <ShieldCheckIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
-          <div>
-            <h1 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+          <div className="min-w-0">
+            <h1 className="text-sm sm:text-base lg:text-lg font-bold text-slate-900 dark:text-slate-100 truncate">
               Admin Panel
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
               Election Commission
             </p>
           </div>
@@ -127,29 +127,29 @@ export default function AdminSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      <nav className="flex-1 px-3 sm:px-4 py-4 sm:py-6 space-y-1 sm:space-y-2 overflow-y-auto">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.name}
               href={item.href as any}
-              className={`group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+              className={`group flex items-center px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 ${
                 isActive
                   ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-r-2 border-green-500'
                   : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100'
               }`}
             >
               <item.icon
-                className={`mr-3 h-5 w-5 flex-shrink-0 ${
+                className={`mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 ${
                   isActive
                     ? 'text-green-500 dark:text-green-400'
                     : 'text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-300'
                 }`}
               />
-              <span className="flex-1">{item.name}</span>
+              <span className="flex-1 truncate">{item.name}</span>
               {item.badge && item.badge > 0 && (
-                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300">
+                <span className="ml-1 sm:ml-2 inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300">
                   {item.badge}
                 </span>
               )}
@@ -161,52 +161,52 @@ export default function AdminSidebar() {
             <div className="space-y-1">
               <button
                 onClick={() => setIsCommissionOpen(!isCommissionOpen)}
-                className={`group flex items-center justify-between w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                className={`group flex items-center justify-between w-full px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 ${
                   pathname.startsWith('/en/admin/commission')
                     ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-r-2 border-green-500'
                     : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100'
                 }`}
               >
-                <div className="flex items-center">
+                <div className="flex items-center min-w-0 flex-1">
                   <BuildingOfficeIcon
-                    className={`mr-3 h-5 w-5 flex-shrink-0 ${
+                    className={`mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 ${
                       pathname.startsWith('/en/admin/commission')
                         ? 'text-green-500 dark:text-green-400'
                         : 'text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-300'
                     }`}
                   />
-                  <span className="flex-1">Commission Info</span>
+                  <span className="flex-1 truncate">Commission Info</span>
                 </div>
                 {isCommissionOpen ? (
-                  <ChevronDownIcon className="h-4 w-4 text-slate-400" />
+                  <ChevronDownIcon className="h-3 w-3 sm:h-4 sm:w-4 text-slate-400 flex-shrink-0" />
                 ) : (
-                  <ChevronRightIcon className="h-4 w-4 text-slate-400" />
+                  <ChevronRightIcon className="h-3 w-3 sm:h-4 sm:w-4 text-slate-400 flex-shrink-0" />
                 )}
               </button>
 
               {/* Commission Submenu */}
               {isCommissionOpen && (
-                <div className="ml-6 space-y-1">
+                <div className="ml-4 sm:ml-6 space-y-1">
                   {commissionNavigation.map((item) => {
                     const isActive = pathname === item.href;
                     return (
                       <Link
                         key={item.name}
                         href={item.href as any}
-                        className={`group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                        className={`group flex items-center px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 ${
                           isActive
                             ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-r-2 border-green-500'
                             : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100'
                         }`}
                       >
                         <item.icon
-                          className={`mr-3 h-4 w-4 flex-shrink-0 ${
+                          className={`mr-2 sm:mr-3 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 ${
                             isActive
                               ? 'text-green-500 dark:text-green-400'
                               : 'text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-300'
                           }`}
                         />
-                        <span className="flex-1">{item.name}</span>
+                        <span className="flex-1 truncate">{item.name}</span>
                       </Link>
                     );
                   })}

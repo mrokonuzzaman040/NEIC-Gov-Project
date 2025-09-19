@@ -32,19 +32,19 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute left-4 top-4 bg-white dark:bg-slate-800 text-sm px-3 py-2 rounded shadow">Skip to content</a>
       <NextIntlClientProvider messages={messages} locale={locale}>
         {/* Header with Logo and Controls */}
-        <header className="w-full border-b border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-sm">
+        <header className="w-full border-b border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-sm relative z-30">
           <div className="container-max">
-            <div className="flex items-center justify-between h-16">
+            <div className="flex items-center justify-between h-14 sm:h-16">
               {/* Logo/Brand */}
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                 <Logo size="md" />
-                <div className="text-xl font-bold text-slate-800 dark:text-slate-100">
+                <div className="text-sm sm:text-base lg:text-xl font-bold text-slate-800 dark:text-slate-100 truncate">
                   {locale === 'bn' ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
                 </div>
               </div>
 
               {/* Right side: Controls (Language, Theme, Mobile Menu) */}
-              <div className="flex items-center space-x-3 relative">
+              <div className="flex items-center space-x-2 sm:space-x-3 relative flex-shrink-0">
                 <div className="hidden sm:block">
                   <ErrorBoundary>
                     <LanguageSwitcher />
@@ -62,7 +62,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         </header>
 
         {/* Premium Minimal Navigation Section with Dropdowns - Hidden on Mobile */}
-        <nav className="hidden lg:block w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <nav className="hidden lg:block w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm relative z-20">
           <div className="container-max">
             <div className="flex items-center justify-center">
               {/* Desktop Navigation Links */}

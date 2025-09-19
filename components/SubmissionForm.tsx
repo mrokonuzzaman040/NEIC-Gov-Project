@@ -47,36 +47,36 @@ export function SubmissionForm() {
   }
 
   return (
-    <section id="opinion-form" className="card mt-8">
-  <h3 className="text-xl font-semibold m-0">{t('form.title')}</h3>
-      <p className="text-muted text-sm mt-1 mb-4 max-w-prose">{t('form.desc')}</p>
-      <form onSubmit={handleSubmit} className="space-y-4" aria-label="opinion form">
+    <section id="opinion-form" className="card mt-6 sm:mt-8">
+  <h3 className="text-lg sm:text-xl font-semibold m-0">{t('form.title')}</h3>
+      <p className="text-muted text-xs sm:text-sm mt-1 mb-3 sm:mb-4 max-w-prose">{t('form.desc')}</p>
+      <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" aria-label="opinion form">
         {/* Honeypot field (bots may fill). Hidden from users via CSS */}
         <div className="hidden" aria-hidden="true">
           <label htmlFor="hp_field">Do not fill</label>
           <input id="hp_field" name="hp_field" tabIndex={-1} autoComplete="off" />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="text-sm font-medium">{t('form.name')}</label>
-          <input id="name" name="name" maxLength={120} className="border rounded-lg px-3 py-2 text-sm" />
+        <div className="flex flex-col gap-1.5 sm:gap-2">
+          <label htmlFor="name" className="text-xs sm:text-sm font-medium">{t('form.name')}</label>
+          <input id="name" name="name" maxLength={120} className="border rounded-lg px-3 py-2 text-xs sm:text-sm w-full" />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="contact" className="text-sm font-medium">{t('form.contact')}</label>
-          <input id="contact" name="contact" maxLength={120} className="border rounded-lg px-3 py-2 text-sm" />
+        <div className="flex flex-col gap-1.5 sm:gap-2">
+          <label htmlFor="contact" className="text-xs sm:text-sm font-medium">{t('form.contact')}</label>
+          <input id="contact" name="contact" maxLength={120} className="border rounded-lg px-3 py-2 text-xs sm:text-sm w-full" />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="message" className="text-sm font-medium">{t('form.message')}</label>
-          <textarea id="message" name="message" required maxLength={500} className="border rounded-lg px-3 py-2 text-sm min-h-40" placeholder={t('form.placeholder')}></textarea>
+        <div className="flex flex-col gap-1.5 sm:gap-2">
+          <label htmlFor="message" className="text-xs sm:text-sm font-medium">{t('form.message')}</label>
+          <textarea id="message" name="message" required maxLength={500} className="border rounded-lg px-3 py-2 text-xs sm:text-sm min-h-32 sm:min-h-40 w-full resize-y" placeholder={t('form.placeholder')}></textarea>
         </div>
-        <div className="flex flex-wrap items-center gap-4">
-          <button disabled={status === 'submitting'} className="bg-accent text-white px-5 py-2 rounded-lg font-semibold text-sm hover:shadow disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-4">
+          <button disabled={status === 'submitting'} className="w-full sm:w-auto bg-accent text-white px-4 sm:px-5 py-2.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm hover:shadow disabled:opacity-60 disabled:cursor-not-allowed transition-colors" type="submit">
             {status === 'submitting' ? '...' : t('form.submit')}
           </button>
-          <button type="reset" className="text-sm font-medium px-4 py-2 rounded border border-slate-300 hover:bg-slate-50">{t('form.reset')}</button>
-          <small className="text-muted text-xs">{t('form.privacy')}</small>
+          <button type="reset" className="w-full sm:w-auto text-xs sm:text-sm font-medium px-3 sm:px-4 py-2.5 sm:py-2 rounded border border-slate-300 hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700 transition-colors">{t('form.reset')}</button>
+          <small className="text-muted text-xs w-full sm:w-auto">{t('form.privacy')}</small>
         </div>
-  {status === 'success' && <p className="text-green-600 text-sm" role="status">{t('success.submitted')}</p>}
-        {status === 'error' && errorMsg && <p className="text-red-600 text-sm" role="alert">{errorMsg}</p>}
+  {status === 'success' && <p className="text-green-600 text-xs sm:text-sm" role="status">{t('success.submitted')}</p>}
+        {status === 'error' && errorMsg && <p className="text-red-600 text-xs sm:text-sm" role="alert">{errorMsg}</p>}
       </form>
     </section>
   );
