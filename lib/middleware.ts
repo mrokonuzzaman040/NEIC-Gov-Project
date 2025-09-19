@@ -90,35 +90,47 @@ export async function authMiddleware(request: NextRequest) {
 }
 
 // Security headers middleware
-export function securityHeadersMiddleware(request: NextRequest) {
-  const response = NextResponse.next();
-  
-  // Security headers
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
-  
-  // Content Security Policy
-  const csp = [
+const isProduction = process.env.NODE_ENV === 'production';
+
+function buildContentSecurityPolicy() {
+  const directives = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
-    "style-src 'self' 'unsafe-inline'",
+    `script-src 'self'${isProduction ? '' : " 'unsafe-eval' 'unsafe-inline'"}`,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: blob:",
-    "font-src 'self'",
+    "font-src 'self' https://fonts.gstatic.com data:",
     "connect-src 'self'",
     "frame-ancestors 'none'",
     "base-uri 'self'",
-    "form-action 'self'"
-  ].join('; ');
-  
-  response.headers.set('Content-Security-Policy', csp);
-  
-  // HSTS for HTTPS
-  if (request.nextUrl.protocol === 'https:') {
-    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    "form-action 'self'",
+    "object-src 'none'",
+    "media-src 'self' blob:",
+    "worker-src 'self' blob:"
+  ];
+
+  if (isProduction) {
+    directives.push('upgrade-insecure-requests');
   }
-  
+
+  return directives.join('; ');
+}
+
+export function securityHeadersMiddleware(request: NextRequest, response: NextResponse) {
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('X-XSS-Protection', '0');
+  response.headers.set('Permissions-Policy', 'accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), microphone=(), midi=(), payment=(), usb=()');
+  response.headers.set('X-DNS-Prefetch-Control', 'off');
+  response.headers.set('X-Permitted-Cross-Domain-Policies', 'none');
+  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+  response.headers.set('Cross-Origin-Resource-Policy', 'same-site');
+  response.headers.set('Content-Security-Policy', buildContentSecurityPolicy());
+
+  if (request.nextUrl.protocol === 'https:') {
+    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  }
+
   return response;
 }
 
@@ -131,7 +143,14 @@ export function rateLimitMiddleware(request: NextRequest, limit: number = 100, w
     return NextResponse.next();
   }
 
-  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  const realIp = request.headers.get('x-real-ip');
+  const ip = request.ip || forwardedFor?.split(',')[0]?.trim() || realIp || 'unknown';
+
+  if (!ip || ip === 'unknown') {
+    return NextResponse.next();
+  }
+
   const now = Date.now();
   const windowStart = now - windowMs;
   
@@ -147,6 +166,7 @@ export function rateLimitMiddleware(request: NextRequest, limit: number = 100, w
   }
   
   current.count++;
+  current.resetTime = now;
   return NextResponse.next();
 }
 

@@ -5,7 +5,7 @@ import { prisma } from '../../../lib/db';
 import { hashIp } from '../../../lib/crypto/hash';
 import { logSubmission } from '../../../lib/logger';
 import { assessSpam } from '../../../lib/spam';
-import { storeFile, validateFile, type StoredFileInfo } from '../../../lib/storage';
+import { FileValidationError, storeFile } from '../../../lib/storage';
 
 export const runtime = 'nodejs';
 
@@ -42,18 +42,6 @@ export async function POST(req: NextRequest) {
       };
       const attachment = formData.get('attachment') as File;
       if (attachment && attachment.size > 0) {
-        // Validate file
-        const validation = validateFile(attachment);
-        if (!validation.valid) {
-          return json({
-            ok: false,
-            error: {
-              code: 'FILE_VALIDATION_ERROR',
-              message: validation.error
-            }
-          }, 400);
-        }
-        
         try {
           // Store file and get file info
           const storedFile = await storeFile(attachment);
@@ -65,10 +53,23 @@ export async function POST(req: NextRequest) {
             url: storedFile.url,
             key: storedFile.key
           };
-          
-          // Log file upload for audit purposes
-          console.log(`File stored: ${storedFile.originalName}, size: ${(storedFile.size / (1024 * 1024)).toFixed(2)}MB, type: ${storedFile.mimeType}, url: ${storedFile.url}`);
+
+          logSubmission('submission.fileStored', {
+            fileName: storedFile.originalName,
+            fileSize: storedFile.size,
+            mimeType: storedFile.mimeType,
+            storageKey: storedFile.key
+          }, reqId);
         } catch (fileError) {
+          if (fileError instanceof FileValidationError) {
+            return json({
+              ok: false,
+              error: {
+                code: 'FILE_VALIDATION_ERROR',
+                message: fileError.message
+              }
+            }, 400);
+          }
           console.error('File storage error:', fileError);
           return json({
             ok: false,

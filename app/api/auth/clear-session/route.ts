@@ -26,8 +26,18 @@ function expireAuthCookies(response: NextResponse) {
 export async function POST(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const redirectParam = searchParams.get('redirect') || '/admin/login';
-    const response = NextResponse.redirect(new URL(redirectParam, request.url));
+    const redirectParam = searchParams.get('redirect');
+    const fallbackPath = '/admin/login';
+
+    const isSafeRelativePath = (value: string) => {
+      return value.startsWith('/') && !value.startsWith('//') && !value.startsWith('/\\');
+    };
+
+    const redirectPath = redirectParam && isSafeRelativePath(redirectParam)
+      ? redirectParam
+      : fallbackPath;
+
+    const response = NextResponse.redirect(new URL(redirectPath, request.url));
     expireAuthCookies(response);
     return response;
   } catch (err) {
@@ -39,4 +49,3 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   return POST(request);
 }
-
