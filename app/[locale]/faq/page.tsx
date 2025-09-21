@@ -163,7 +163,7 @@ export default async function FAQPage({ params: { locale } }: FAQProps) {
 
         <div className="space-y-8">
           {/* FAQ Items */}
-          {data.faqs.map((faq: FAQItem) => {
+          {data.faqs.map((faq: any) => {
             const colors = getColorClasses(faq.color);
             
             return (
@@ -173,12 +173,18 @@ export default async function FAQPage({ params: { locale } }: FAQProps) {
                     <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={faq.icon} />
                     </svg>
-                    {t(faq.questionKey as any)}
+                    {faq.questionEn && faq.questionBn ? 
+                      (isEnglish ? faq.questionEn : faq.questionBn) : 
+                      t(faq.questionKey as any)
+                    }
                   </h3>
                 </div>
                 <div className="p-8">
                   <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-                    {t(faq.answerKey as any)}
+                    {faq.answerEn && faq.answerBn ? 
+                      (isEnglish ? faq.answerEn : faq.answerBn) : 
+                      t(faq.answerKey as any)
+                    }
                   </p>
                 </div>
               </div>
