@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import GovernmentHeader from '@/components/GovernmentHeader';
+import ShareButtons from '@/components/ShareButtons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PhotoIcon, StarIcon, TagIcon } from '@heroicons/react/24/outline';
@@ -296,11 +297,22 @@ export default function GalleryPage() {
                       )}
 
                       {/* Date */}
-                      <div className="text-xs text-gray-400 dark:text-gray-500">
+                      <div className="text-xs text-gray-400 dark:text-gray-500 mb-2">
                         {new Date(item.publishedAt).toLocaleDateString(
                           locale === 'en' ? 'en-US' : 'bn-BD'
                         ).replace(/\//g, '-')}
                       </div>
+
+                      {/* Share Buttons */}
+                      <ShareButtons
+                        title={isEnglish ? item.titleEn : item.titleBn}
+                        description={isEnglish ? item.descriptionEn || '' : item.descriptionBn || ''}
+                        image={item.imageUrl}
+                        hashtags={['Gallery', 'ElectionCommission', 'Bangladesh', getCategoryName(item.category), ...item.tags.slice(0, 2)]}
+                        size="sm"
+                        orientation="horizontal"
+                        className="justify-center scale-75"
+                      />
                     </div>
                   </div>
                 ))}
@@ -414,6 +426,19 @@ export default function GalleryPage() {
                     ))}
                   </div>
                 )}
+
+                {/* Share Buttons in Modal */}
+                <div className="mt-4 sm:mt-6 flex justify-center">
+                  <ShareButtons
+                    title={isEnglish ? selectedImage.titleEn : selectedImage.titleBn}
+                    description={isEnglish ? selectedImage.descriptionEn || '' : selectedImage.descriptionBn || ''}
+                    image={selectedImage.imageUrl}
+                    hashtags={['Gallery', 'ElectionCommission', 'Bangladesh', getCategoryName(selectedImage.category), ...selectedImage.tags.slice(0, 2)]}
+                    size="sm"
+                    orientation="horizontal"
+                    className="justify-center bg-black bg-opacity-50 rounded-lg p-2 scale-90"
+                  />
+                </div>
               </div>
             </div>
 

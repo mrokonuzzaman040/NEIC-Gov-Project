@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
+import ShareButtons from '@/components/ShareButtons';
 
 interface Notice {
   id: string;
@@ -317,6 +318,18 @@ export default function NoticePage() {
                             {notice.content.substring(0, 150)}...
                           </p>
                         )}
+
+                        {/* Share Buttons */}
+                        <div className="mb-2">
+                          <ShareButtons
+                            title={notice.title}
+                            description={notice.content ? notice.content.substring(0, 200) : notice.title}
+                            hashtags={['Notice', 'ElectionCommission', 'Bangladesh', getCategoryName(notice.category)]}
+                            size="sm"
+                            orientation="horizontal"
+                            className="justify-start scale-75"
+                          />
+                        </div>
                         
                         <div className="space-y-2 text-xs text-gray-600 dark:text-gray-400">
                           <div className="flex items-center justify-between">
@@ -379,6 +392,16 @@ export default function NoticePage() {
                                   {notice.content.substring(0, 100)}...
                                 </div>
                               )}
+                              <div className="mt-2">
+                                <ShareButtons
+                                  title={notice.title}
+                                  description={notice.content ? notice.content.substring(0, 200) : notice.title}
+                                  hashtags={['Notice', 'ElectionCommission', 'Bangladesh', getCategoryName(notice.category)]}
+                                  size="sm"
+                                  orientation="horizontal"
+                                  className="justify-start scale-75"
+                                />
+                              </div>
                             </td>
                             <td className="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap">
                               <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
