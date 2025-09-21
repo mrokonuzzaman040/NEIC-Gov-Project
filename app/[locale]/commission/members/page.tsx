@@ -151,6 +151,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
         </div>
 
         {/* Secretarial Support Section */}
+        {/*
         <div className="bg-white dark:bg-slate-800 shadow-lg">
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white flex items-center">
@@ -199,7 +200,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                         <div className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white break-words">
                           {isEnglish ? member.name_english : member.name_bengali}
                         </div>
-                        {/* Show designation on mobile */}
+                        
                         <div className="sm:hidden text-xs text-blue-600 dark:text-blue-400 font-medium mt-1">
                           {isEnglish 
                             ? (member.designation_english || member.designation_bengali)
@@ -238,7 +239,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                         >
                           {member.phone}
                         </a>
-                        {/* Show email on mobile */}
+                        
                         <div className="md:hidden mt-1">
                           <a 
                             href={`mailto:${member.email}`}
@@ -254,7 +255,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
               </table>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Footer Note */}
         <div className="mt-6 sm:mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6">
