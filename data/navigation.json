@@ -57,6 +57,15 @@
             "type": "link"
           },
           {
+            "id": "commission-formation",
+            "label": {
+              "en": "Commission Formation",
+              "bn": "কমিশন গঠন"
+            },
+            "href": "/commission/formation",
+            "type": "link"
+          },
+          {
             "id": "gazettes",
             "label": {
               "en": "Gazettes",
