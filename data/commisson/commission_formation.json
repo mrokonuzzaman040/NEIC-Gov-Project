@@ -1,0 +1,68 @@
+{
+    "commission_formation": {
+      "title": {
+        "bn": "গণপ্রজাতন্ত্রী বাংলাদেশ সরকার - মন্ত্রিপরিষদ বিভাগ - এসআরও নং ৩২৪",
+        "en": "Government of the People’s Republic of Bangladesh - Cabinet Division - SRO No. 324"
+      },
+      "date": {
+        "bn": "২৯ জুলাই ২০২৫",
+        "en": "29 July 2025"
+      },
+      "reference": {
+        "bn": "The Commissions of Inquiry Act, 1956 (Act No. VI of 1956)",
+        "en": "The Commissions of Inquiry Act, 1956 (Act No. VI of 1956)"
+      }
+    },
+    "commission_scope": [
+      {
+        "bn": "২০১৪, ২০১৮ এবং ২০২৪ সালের জাতীয় সংসদ নির্বাচন বিষয়ে পর্যবেক্ষক, দেশি-বিদেশি তদারকি প্রতিষ্ঠান ও নাগরিক সংগঠনের প্রতিবেদন এবং গণমাধ্যমে উত্থাপিত অভিযোগসমূহ বিশ্লেষণ।",
+        "en": "Analyze reports from election observers, domestic and international monitoring institutions, and civil society organizations, along with allegations raised in the media regarding the national elections of 2014, 2018, and 2024."
+      },
+      {
+        "bn": "এইসব নির্বাচনের দুর্নীতি, অনিয়ম ও অপরাধমূলক কর্মকাণ্ড এবং তাদের নিরপেক্ষতা ও গ্রহণযোগ্যতা বিষয়ে বিশেষজ্ঞদের মতামত গ্রহণ ও বিশ্লেষণ।",
+        "en": "Collect and analyze expert opinions on corruption, irregularities, and criminal activities in these elections, and assess their neutrality and credibility."
+      },
+      {
+        "bn": "রাজনৈতিক দলের অংশগ্রহণ সীমাবদ্ধ করতে এবং জনগণের ভোটাধিকার বাধাগ্রস্ত করতে তৎকালীন ক্ষমতাসীন দল ও সংশ্লিষ্টদের ভূমিকা বিশ্লেষণ।",
+        "en": "Examine the role of ruling parties and others in restricting political participation and obstructing citizens’ voting rights."
+      },
+      {
+        "bn": "নির্বাচন সংশ্লিষ্ট প্রতিষ্ঠান ও সংস্থার ভূমিকা বিশ্লেষণ।",
+        "en": "Analyze the role of relevant institutions and agencies in those elections."
+      },
+      {
+        "bn": "আইন প্রয়োগকারী ও গোয়েন্দা সংস্থার ভূমিকা বিশ্লেষণ।",
+        "en": "Examine the role of law enforcement and intelligence agencies."
+      },
+      {
+        "bn": "তৎকালীন নির্বাচন কমিশনের আর্থিক অনিয়ম যাচাই ও অনুসন্ধান।",
+        "en": "Investigate financial irregularities against the then Election Commissions."
+      },
+      {
+        "bn": "উল্লিখিত নির্বাচনের অনিয়মের দায় নির্ধারণ।",
+        "en": "Determine responsibility for irregularities in those elections."
+      },
+      {
+        "bn": "ভবিষ্যতের নির্বাচনকে সুষ্ঠু ও মানসম্মত করতে সুপারিশ প্রদান।",
+        "en": "Provide recommendations to ensure future elections are fair and credible."
+      },
+      {
+        "bn": "প্রয়োজনে দপ্তরের দলিল দস্তাবেজ তলব করা ও ব্যক্তিকে জিজ্ঞাসাবাদ।",
+        "en": "Summon documents from offices and interrogate individuals if necessary."
+      }
+    ],
+    "commission_powers": [
+      {
+        "bn": "বাংলাদেশের যে কোনো স্থান পরিদর্শন, যে কোনো দপ্তরের দলিল দস্তাবেজ তলব এবং সন্দেহভাজন ব্যক্তিকে তলব ও জিজ্ঞাসাবাদ করার ক্ষমতা।",
+        "en": "Power to visit any place in Bangladesh, summon documents, and summon and interrogate suspected persons."
+      },
+      {
+        "bn": "The Commissions of Inquiry Act, 1956 এর Section 4 এবং Section 5 এর Sub-Sections 2, 3, 4, 5 ও 6 এর ক্ষমতা প্রয়োগ।",
+        "en": "Exercise powers under Section 4 and Sub-Sections 2, 3, 4, 5, and 6 of Section 5 of the Commissions of Inquiry Act, 1956."
+      },
+      {
+        "bn": "৩১ অক্টোবর ২০২৫ তারিখের মধ্যে সরকারের নিকট তদন্ত প্রতিবেদন দাখিল।",
+        "en": "Submit investigation report to the Government by 31 October 2025."
+      }
+    ]
+  }

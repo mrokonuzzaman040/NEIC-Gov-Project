@@ -24,7 +24,7 @@
             "id": "commission-details",
             "label": {
               "en": "Commission Details",
-              "bn": "কমিশনের বিস্তারিত"
+              "bn": "কমিশনের মিশন"
             },
             "href": "/commission/info",
             "type": "link"
@@ -54,6 +54,24 @@
               "bn": "কমিশনের কার্যপরিধি"
             },
             "href": "/commission/terms",
+            "type": "link"
+          },
+          {
+            "id": "commission-formation",
+            "label": {
+              "en": "Commission Formation",
+              "bn": "কমিশন গঠন"
+            },
+            "href": "/commission/formation",
+            "type": "link"
+          },
+          {
+            "id": "commission-extension",
+            "label": {
+              "en": "Commission Date Extension",
+              "bn": "কমিশনের সময়সীমা বর্ধিতকরণ"
+            },
+            "href": "/commission/extension",
             "type": "link"
           },
           {

@@ -1,0 +1,52 @@
+{
+      "commission_date_extaintion": {
+        "title": {
+          "bn": "গণপ্রজাতন্ত্রী বাংলাদেশ সরকার - মন্ত্রিপরিষদ বিভাগ - এসআরও নং ৩৫৯",
+          "en": "Government of the People’s Republic of Bangladesh - Cabinet Division - SRO No. 359"
+        },
+        "date": {
+          "bn": "৪ সেপ্টেম্বর ২০২৫",
+          "en": "4 September 2025"
+        },
+        "reference": {
+          "bn": "The Commissions of Inquiry Act, 1956 (Act No. VI of 1956), Section 3",
+          "en": "The Commissions of Inquiry Act, 1956 (Act No. VI of 1956), Section 3"
+        }
+      },
+      "commission_formation": {
+        "bn": "The Commissions of Inquiry Act, 1956 এর Section 3 অনুযায়ী কমিশন গঠন করা হলো।",
+        "en": "A Commission has been constituted under Section 3 of The Commissions of Inquiry Act, 1956."
+      },
+      "commission_members": [
+        {
+          "position": {
+            "bn": "চেয়ারম্যান",
+            "en": "Chairman"
+          },
+          "name": {
+            "bn": "মাননীয় বিচারপতি (অব.) মো. আশরাফুল কামাল",
+            "en": "Hon’ble Justice (Retd.) Md. Ashraful Kamal"
+          }
+        },
+        {
+          "position": {
+            "bn": "সদস্য",
+            "en": "Member"
+          },
+          "name": {
+            "bn": "ড. সেলিনা হোসেন",
+            "en": "Dr. Selina Hossain"
+          }
+        },
+        {
+          "position": {
+            "bn": "সদস্য",
+            "en": "Member"
+          },
+          "name": {
+            "bn": "অ্যাডভোকেট শাহনূর ইসলাম",
+            "en": "Advocate Shahnoor Islam"
+          }
+        }
+      ]
+    }

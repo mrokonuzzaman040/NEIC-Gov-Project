@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import GovernmentHeader from '@/components/GovernmentHeader';
+import ShareButtons from '@/components/ShareButtons';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -291,6 +292,20 @@ export default function BlogPage() {
                       {/* Post Date */}
                       <div className="text-xs text-gray-400 dark:text-gray-500 mb-3 sm:mb-4">
                         {formatDate(post.publishedAt)}
+                      </div>
+
+                      {/* Share Buttons */}
+                      <div className="mb-2 sm:mb-3">
+                        <ShareButtons
+                          title={isEnglish ? post.titleEn : post.titleBn}
+                          description={isEnglish ? post.excerptEn : post.excerptBn}
+                          url={`${typeof window !== 'undefined' ? window.location.origin : ''}/${locale}/blog/${post.slug}`}
+                          image={post.image}
+                          hashtags={['ElectionCommission', 'Bangladesh', ...post.tags]}
+                          size="sm"
+                          orientation="horizontal"
+                          className="justify-center scale-90"
+                        />
                       </div>
 
                       {/* Read More Button */}

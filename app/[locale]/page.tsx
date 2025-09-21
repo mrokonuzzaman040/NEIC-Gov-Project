@@ -7,8 +7,8 @@ import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import type { HomePageData } from '../../types/home';
 
-// Force dynamic rendering to ensure fresh data from APIs
-export const dynamic = 'force-dynamic';
+// Use static generation with revalidation
+export const revalidate = 3600; // Revalidate every hour
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   try {
@@ -35,39 +35,45 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   }
 }
 
-// Fetch data from APIs
+// Fetch data from APIs with fallback to static data
 async function fetchHomepageData() {
-  try {
-    const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/public/homepage`, {
-      cache: 'no-store' // Ensure fresh data
-    });
-    if (!response.ok) {
-      throw new Error('Failed to fetch homepage data');
+  // In development, try API first, in production use static data primarily
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/public/homepage`, {
+        cache: 'no-store'
+      });
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.error('Error fetching homepage data from API:', error);
     }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching homepage data:', error);
-    // Fallback to static data
-    const homeData = await import('../../data/homeData.json');
-    return homeData.default;
   }
+  
+  // Fallback to static data
+  const homeData = await import('../../data/homeData.json');
+  return homeData.default;
 }
 
 async function fetchSliderData() {
-  try {
-    const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/public/sliders`, {
-      cache: 'no-store' // Ensure fresh data
-    });
-    if (!response.ok) {
-      throw new Error('Failed to fetch slider data');
+  // In development, try API first, in production use static data primarily
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/public/sliders`, {
+        cache: 'no-store'
+      });
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.error('Error fetching slider data from API:', error);
     }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching slider data:', error);
-    // Fallback to static data
-    const sliderData = await import('../../data/sliderData.json');
-    return sliderData.default;
   }
+  
+  // Fallback to static data
+  const sliderData = await import('../../data/sliderData.json');
+  return sliderData.default;
 }
 
 export default async function HomePage({ params }: { params: { locale: string } }) {
