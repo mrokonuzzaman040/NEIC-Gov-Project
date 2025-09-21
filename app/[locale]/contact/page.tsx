@@ -123,10 +123,20 @@ export default function ContactPage() {
     } else {
       // Load Google Maps script
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'YOUR_API_KEY'}&libraries=places`;
+      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+      
+      if (!apiKey) {
+        console.warn('Google Maps API key not found. Map will not be displayed.');
+        return;
+      }
+      
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
       script.async = true;
       script.defer = true;
       script.onload = loadGoogleMaps;
+      script.onerror = () => {
+        console.error('Failed to load Google Maps API. Please check your API key and domain restrictions.');
+      };
       document.head.appendChild(script);
     }
   }, [isEnglish, contactData, langKey]);
