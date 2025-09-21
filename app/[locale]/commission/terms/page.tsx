@@ -1,5 +1,5 @@
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
-import commissionTermsData from '@/data/commisson/commission_terms.json';
+import commissionScopeData from '@/data/commisson/commission_scope.json';
 import GovernmentHeader from '@/components/GovernmentHeader';
 
 interface CommissionTermsPageProps {
@@ -10,9 +10,8 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
   unstable_setRequestLocale(params.locale);
   const t = await getTranslations({ locale: params.locale, namespace: 'commission' });
   
-  const { document } = commissionTermsData;
   const isBengali = params.locale === 'bn';
-  const langKey = isBengali ? 'ban' : 'en';
+  const langKey = isBengali ? 'bn' : 'en';
 
   return (
     <div className="min-h-screen">
@@ -21,50 +20,45 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
         <GovernmentHeader
           title={isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
           subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
-          portal={isBengali ? 'গেজেট প্রজ্ঞাপন' : 'Gazette Notification'}
-          tagline={isBengali ? 'কমিশনের কার্যপরিধি' : 'Commission Terms'}
+          portal={isBengali ? 'কমিশনের কার্যপরিধি ও ক্ষমতা' : 'Commission Scope & Powers'}
+          tagline={isBengali ? 'আদেশ ও নির্দেশনা' : 'Terms & Directives'}
           borderColor="green"
           iconColor="green"
         />
 
-        {/* Document Header */}
+        {/* Introduction */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <div className="text-center mb-6 sm:mb-8">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 break-words">
-              {document.title[langKey]}
+              {isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের কার্যপরিধি' : 'National Elections (2014, 2018, 2024) Inquiry Commission Terms of Reference'}
             </h1>
-            <div className="space-y-1 sm:space-y-2 text-gray-600 dark:text-gray-300">
-              <p className="text-sm sm:text-base lg:text-lg font-semibold">{document.date[langKey]}</p>
-              <p className="text-xs sm:text-sm lg:text-base break-words">{document.reference_number[langKey]}</p>
-            </div>
-          </div>
-
-          {/* Background */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
-            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-blue-900 dark:text-blue-100 mb-3 sm:mb-4">
-              {isBengali ? 'পটভূমি' : 'Background'}
-            </h2>
-            <p className="text-xs sm:text-sm lg:text-base text-blue-800 dark:text-blue-200 leading-relaxed">
-              {document.background[langKey]}
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+              {isBengali 
+                ? 'এই কমিশন বিগত তিনটি জাতীয় সংসদ নির্বাচনের সার্বিক বিশ্লেষণ ও তদন্তের জন্য গঠিত হয়েছে।'
+                : 'This Commission has been established to conduct comprehensive analysis and investigation of the past three national parliamentary elections.'
+              }
             </p>
           </div>
         </div>
 
-        {/* Commission Members */}
+        {/* Commission Scope */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            {isBengali ? 'কমিশন সদস্য' : 'Commission Members'}
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 mr-2 sm:mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            {isBengali ? 'কার্যপরিধি' : 'Commission Scope'}
           </h2>
           <div className="space-y-3 sm:space-y-4">
-            {document.commission_members.map((member, index) => (
-              <div key={index} className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg p-3 sm:p-4">
+            {commissionScopeData.commission_scope.map((scope, index) => (
+              <div key={index} className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 sm:p-4">
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
                     {index + 1}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs sm:text-sm lg:text-base text-gray-900 dark:text-white font-medium leading-relaxed break-words">
-                      {member[langKey]}
+                    <p className="text-xs sm:text-sm lg:text-base text-blue-800 dark:text-blue-200 leading-relaxed break-words">
+                      {scope[langKey]}
                     </p>
                   </div>
                 </div>
@@ -73,40 +67,59 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
           </div>
         </div>
 
-        {/* Terms of Reference */}
+        {/* Powers */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            {isBengali ? 'কার্যপরিধি' : 'Terms of Reference'}
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 mr-2 sm:mr-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            {isBengali ? 'ক্ষমতা' : 'Powers'}
           </h2>
           <div className="space-y-3 sm:space-y-4">
-            {document.terms_of_reference[langKey].map((term, index) => (
-              <div key={index} className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3 sm:p-4">
+            {commissionScopeData.powers.map((power, index) => (
+              <div key={index} className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 sm:p-4">
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-yellow-500 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
                     {index + 1}
                   </div>
-                  <p className="text-xs sm:text-sm lg:text-base text-yellow-800 dark:text-yellow-200 leading-relaxed break-words">
-                    {term}
-                  </p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs sm:text-sm lg:text-base text-red-800 dark:text-red-200 leading-relaxed break-words">
+                      {power[langKey]}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Powers */}
+        {/* Tasks */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            {isBengali ? 'ক্ষমতা' : 'Powers'}
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 mr-2 sm:mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            {isBengali ? 'কার্যাবলি' : 'Tasks'}
           </h2>
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6">
-            <p className="text-xs sm:text-sm lg:text-base text-red-800 dark:text-red-200 leading-relaxed break-words">
-              {document.powers[langKey]}
-            </p>
+          <div className="space-y-3 sm:space-y-4">
+            {commissionScopeData.tasks.map((task, index) => (
+              <div key={index} className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
+                    {index + 1}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs sm:text-sm lg:text-base text-green-800 dark:text-green-200 leading-relaxed break-words">
+                      {task[langKey]}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Report Deadline */}
+        {/* Report Deadline Notice */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 break-words">
             {isBengali ? 'প্রতিবেদন জমাদানের সময়সীমা' : 'Report Submission Deadline'}
@@ -119,45 +132,10 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
                 </svg>
               </div>
               <p className="text-xs sm:text-sm lg:text-base xl:text-lg text-orange-800 dark:text-orange-200 font-semibold break-words">
-                {document.report_deadline[langKey]}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Support */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            {isBengali ? 'সহায়তা' : 'Support'}
-          </h2>
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6">
-            <p className="text-xs sm:text-sm lg:text-base text-green-800 dark:text-green-200 leading-relaxed break-words">
-              {document.support[langKey]}
-            </p>
-          </div>
-        </div>
-
-        {/* Effective Date */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            {isBengali ? 'কার্যকর তারিখ' : 'Effective Date'}
-          </h2>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 sm:p-6">
-            <p className="text-sm sm:text-base lg:text-lg text-purple-800 dark:text-purple-200 font-semibold break-words">
-              {document.effective_date[langKey]}
-            </p>
-          </div>
-        </div>
-
-        {/* Signature */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            {isBengali ? 'স্বাক্ষর' : 'Signature'}
-          </h2>
-          <div className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg p-4 sm:p-6">
-            <div className="text-center">
-              <p className="text-sm sm:text-base lg:text-lg text-gray-800 dark:text-gray-200 font-medium break-words">
-                {document.signed_by[langKey]}
+                {isBengali 
+                  ? 'কমিশন ২০২৫ সালের ৩১ অক্টোবরের মধ্যে তদন্ত প্রতিবেদন সরকারের নিকট দাখিল করবে।'
+                  : 'The Commission shall submit its investigation report to the government by October 31, 2025.'
+                }
               </p>
             </div>
           </div>
@@ -177,8 +155,8 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
               </h3>
               <p className="text-yellow-700 dark:text-yellow-300 text-xs sm:text-sm leading-relaxed break-words">
                 {isBengali 
-                  ? 'এই গেজেট প্রজ্ঞাপনটি সরকারি নথি এবং এর সকল তথ্য সরকারি সূত্র থেকে প্রাপ্ত।' 
-                  : 'This gazette notification is an official document and all information is sourced from official government records.'
+                  ? 'এই কার্যপরিধি ও ক্ষমতাসমূহ সরকারি আদেশ অনুযায়ী নির্ধারিত এবং কমিশনের সকল কার্যক্রম এই নির্দেশনা অনুসরণ করে পরিচালিত হবে।' 
+                  : 'These terms of reference and powers are determined according to government orders and all commission activities will be conducted following these directives.'
                 }
               </p>
             </div>

@@ -24,7 +24,7 @@
             "id": "commission-details",
             "label": {
               "en": "Commission Details",
-              "bn": "মিশন"
+              "bn": "কমিশনের মিশন"
             },
             "href": "/commission/info",
             "type": "link"
