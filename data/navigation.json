@@ -66,6 +66,15 @@
             "type": "link"
           },
           {
+            "id": "commission-extension",
+            "label": {
+              "en": "Commission Date Extension",
+              "bn": "কমিশনের সময়সীমা বর্ধিতকরণ"
+            },
+            "href": "/commission/extension",
+            "type": "link"
+          },
+          {
             "id": "gazettes",
             "label": {
               "en": "Gazettes",
