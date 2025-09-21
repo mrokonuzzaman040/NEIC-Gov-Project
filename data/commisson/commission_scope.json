@@ -1,0 +1,80 @@
+{
+    "commission_scope": [
+      {
+        "bn": "বিগত ২০১৪, ২০১৮ এবং ২০২৪ সালে অনুষ্ঠিত জাতীয় সংসদ নির্বাচনসমূহ বিষয়ে নির্বাচন পর্যবেক্ষক, দেশি ও বিদেশি তদারকি প্রতিষ্ঠান ও নাগরিক সংগঠনের প্রতিবেদন এবং গণমাধ্যমে উত্থাপিত অভিযোগসমূহ বিশ্লেষণ;",
+        "en": "Analyze reports from election observers, domestic and international monitoring institutions, and civil society organizations, along with allegations raised in the media regarding the national elections of 2014, 2018, and 2024."
+      },
+      {
+        "bn": "এসব নির্বাচনের বিভিন্ন দুর্নীতি, অনিয়ম ও অপরাধমূলক কর্মকাণ্ডের অভিযোগ এবং সার্বিকভাবে উল্লিখিত বিষয়সমূহের নিরপেক্ষতা ও গ্রহণযোগ্যতার বিষয়ে বিশেষজ্ঞদের মতামত গ্রহণ ও বিশ্লেষণ;",
+        "en": "Collect and analyze expert opinions on allegations of corruption, irregularities, and criminal activities in these elections, and assess their neutrality and credibility."
+      },
+      {
+        "bn": "এসব নির্বাচনে রাজনৈতিক দলের অংশগ্রহণ সীমাবদ্ধ করতে ও জনগণের ভোটাধিকার প্রদান বাধাগ্রস্ত করতে তৎকালীন ক্ষমতাসীন দল ও সংশ্লিষ্টদের ভূমিকা বিশ্লেষণ;",
+        "en": "Examine the role of ruling parties and others in restricting political participation and obstructing citizens’ voting rights in these elections."
+      },
+      {
+        "bn": "নির্বাচনসমূহে তৎকালীন নির্বাচন সংশ্লিষ্ট সকল প্রতিষ্ঠান ও সংস্থার ভূমিকা বিশ্লেষণ;",
+        "en": "Analyze the role of all relevant institutions and agencies in those elections."
+      },
+      {
+        "bn": "নির্বাচন কার্যক্রমে আইন প্রয়োগকারী ও গোয়েন্দা সংস্থার ভূমিকা বিশ্লেষণ;",
+        "en": "Examine the role of law enforcement and intelligence agencies in election activities."
+      },
+      {
+        "bn": "তৎকালীন নির্বাচন কমিশনসমূহের বিরুদ্ধে উত্থাপিত আর্থিক অনিয়মের অভিযোগসমূহ যাচাই ও অনুসন্ধান;",
+        "en": "Investigate allegations of financial irregularities against the then Election Commissions."
+      },
+      {
+        "bn": "বিশ্লেষণের ভিত্তিতে উল্লিখিত নির্বাচনসমূহে অনিয়মের দায়-দায়িত্ব নির্ধারণ;",
+        "en": "Determine responsibility for irregularities based on the analysis of those elections."
+      },
+      {
+        "bn": "ভবিষ্যতের সকল নির্বাচনকে সুষ্ঠু ও মানসম্পন্ন পর্যায়ে উপনীত করার লক্ষ্যে সুচিন্তিত সুপারিশ প্রদান;",
+        "en": "Provide well-considered recommendations to ensure future elections are fair and of high quality."
+      },
+      {
+        "bn": "প্রয়োজনে যে কোনো দপ্তরের দলিল দস্তাবেজ তলব করা ও সংশ্লিষ্ট ব্যক্তিকে জিজ্ঞাসাবাদ করা।",
+        "en": "Summon documents from any office and interrogate relevant individuals, if necessary."
+      }
+    ],
+    "powers": [
+      {
+        "bn": "কমিশন, বাংলাদেশের যে কোনো স্থান পরিদর্শন, যে কোনো দপ্তরের দলিল দস্তাবেজ তলব এবং সন্দিগ্ধ যে কোনো ব্যক্তিকে কমিশনে তলব ও জিজ্ঞাসাবাদ করিতে পারিবে।",
+        "en": "The Commission may visit any place in Bangladesh, summon documents from any office, and summon and interrogate any suspected person."
+      },
+      {
+        "bn": "কমিশন, The Commissions of Inquiry Act, 1956 এর Section 4 এবং Section 5 এর Sub-Section 2, 3, 4, 5 ও 6 এর উল্লিখিত ক্ষমতা প্রয়োগ করিতে পারিবে।",
+        "en": "The Commission may exercise the powers mentioned in Section 4 and Sub-Sections 2, 3, 4, 5, and 6 of Section 5 of the Commissions of Inquiry Act, 1956."
+      },
+      {
+        "bn": "কমিশন, The Commissions of Inquiry Act, 1956 অনুসারে তদন্তকার্য সম্পন্ন করিয়া আগামী ৩১ অক্টোবর ২০২৫ তারিখের মধ্যে সরকারের নিকট তদন্ত প্রতিবেদন দাখিল করিবে।",
+        "en": "The Commission shall complete the inquiry under the Commissions of Inquiry Act, 1956, and submit its investigation report to the government by October 31, 2025."
+      }
+    ],
+    "tasks": [
+      {
+        "bn": "নির্বাচন পর্যবেক্ষক, দেশী বিদেশী তদারকি প্রতিষ্ঠান ও নাগরিক সংগঠনের প্রতিবেদন তলব।",
+        "en": "Summon reports from election observers, domestic and foreign monitoring institutions, and civil society organizations."
+      },
+      {
+        "bn": "প্রাপ্ত প্রতিবেদন সমূহে উল্লেখিত অভিযোগ ও গণমাধ্যমে উত্থাপিত অভিযোগ সমূহ পর্যবেক্ষণ ও বিশ্লেষণ।",
+        "en": "Review and analyze the allegations mentioned in received reports and raised in the media."
+      },
+      {
+        "bn": "চিহ্নিত সুনির্দিষ্ট অভিযোগসমূহের প্রেক্ষিতে অনুসন্ধান ও তদন্তকার্য পরিচালনা করা।",
+        "en": "Conduct investigations based on identified specific allegations."
+      },
+      {
+        "bn": "নির্বাচন কমিশনের আর্থিক দুর্নীতি, আইন লঙ্ঘন জনিত প্রশাসনিক দুর্নীতিসহ নানাবিধ দুর্নীতি ও অপরাধমূলক কর্মকাণ্ডের অভিযোগের বিষয়ে সাবেক নির্বাচন কমিশনারসহ বিশেষজ্ঞদের মতামত গ্রহণ ও বিশ্লেষণ করে কৃত দুর্নীতি ও অপরাধের দায় নিরূপণ করা।",
+        "en": "Gather and analyze opinions from former election commissioners and experts regarding allegations of financial corruption, administrative corruption due to legal violations, and other criminal acts, and determine accountability."
+      },
+      {
+        "bn": "নির্বাচন সংশ্লিষ্ট সকল প্রতিষ্ঠানের ও সংস্থার ভূমিকা বিশ্লেষণ এবং দায় নিরূপণ করা। এক্ষেত্রে, জুডিসিয়াল সার্ভিস এডমিনিস্ট্রেশনসহ নির্বাচন সংশ্লিষ্ট সুনির্দিষ্ট সকল এডমিনিস্ট্রেশনকে জিজ্ঞাসাবাদের আওতায় নিয়ে আসা প্রয়োজন।",
+        "en": "Analyze the role of all election-related institutions and organizations and determine accountability. In this regard, judicial service administrations and other election-related administrations must be brought under interrogation."
+      },
+      {
+        "bn": "আইন প্রয়োগকারী সংস্থা ও গোয়েন্দা সংস্থার ভূমিকা বিশ্লেষণ ও দায় নিরূপণের প্রয়োজনে সকল বাহিনী প্রধান ও তাদের অধীনস্থ প্রধান প্রধান কর্মকর্তাদের ব্যাপক জিজ্ঞাসাবাদের আওতায় নিয়ে আসা প্রয়োজন।",
+        "en": "Examine the role of law enforcement and intelligence agencies and, for accountability purposes, subject force chiefs and their senior officers to extensive interrogation."
+      }
+    ]
+  }
