@@ -14,21 +14,20 @@ const intlMiddleware = createMiddleware({
 export default async function middleware(request: NextRequest) {
   // Apply rate limiting first
   const rateLimitResponse = rateLimitMiddleware(request, 100, 15 * 60 * 1000);
-  if (rateLimitResponse.status === 429) {
-    return rateLimitResponse;
+  if (!rateLimitResponse.headers.get('x-middleware-next')) {
+    return securityHeadersMiddleware(request, rateLimitResponse);
   }
 
-  // Apply security headers
-  const securityResponse = securityHeadersMiddleware(request);
-  
   // Apply authentication middleware for admin routes
   const authResponse = await authMiddleware(request);
-  if (authResponse.status !== 200) {
-    return authResponse;
+  if (!authResponse.headers.get('x-middleware-next')) {
+    return securityHeadersMiddleware(request, authResponse);
   }
 
   // Apply internationalization middleware
-  return intlMiddleware(request);
+  const intlResponse = intlMiddleware(request);
+  const resolvedResponse = intlResponse instanceof Promise ? await intlResponse : intlResponse;
+  return securityHeadersMiddleware(request, resolvedResponse);
 }
 
 export const config = {

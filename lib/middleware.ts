@@ -90,35 +90,79 @@ export async function authMiddleware(request: NextRequest) {
 }
 
 // Security headers middleware
-export function securityHeadersMiddleware(request: NextRequest) {
-  const response = NextResponse.next();
-  
-  // Security headers
+const isProduction = process.env.NODE_ENV === 'production';
+
+const RECAPTCHA_DOMAINS = [
+  'https://www.google.com',
+  'https://www.gstatic.com',
+  'https://www.google.com/recaptcha/',
+  'https://www.gstatic.com/recaptcha/',
+  'https://www.recaptcha.net',
+  'https://www.recaptcha.net/recaptcha/'
+];
+
+function buildContentSecurityPolicy() {
+  const scriptSrc = [
+    "'self'",
+    "'unsafe-inline'",
+    ...RECAPTCHA_DOMAINS
+  ];
+
+  if (!isProduction) {
+    scriptSrc.push("'unsafe-eval'");
+  }
+
+  const connectSrc = [
+    "'self'",
+    ...RECAPTCHA_DOMAINS
+  ];
+
+  const imgSrc = [
+    "'self'",
+    'data:',
+    'blob:',
+    ...RECAPTCHA_DOMAINS
+  ];
+
+  const directives = [
+    "default-src 'self'",
+    `script-src ${scriptSrc.join(' ')}`,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    `img-src ${imgSrc.join(' ')}`,
+    "font-src 'self' https://fonts.gstatic.com data:",
+    `connect-src ${connectSrc.join(' ')}`,
+    `frame-src 'self' ${RECAPTCHA_DOMAINS.join(' ')}`,
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "object-src 'none'",
+    "media-src 'self' blob:",
+    "worker-src 'self' blob:"
+  ];
+
+  if (isProduction) {
+    directives.push('upgrade-insecure-requests');
+  }
+
+  return directives.join('; ');
+}
+
+export function securityHeadersMiddleware(request: NextRequest, response: NextResponse) {
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
-  
-  // Content Security Policy
-  const csp = [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob:",
-    "font-src 'self'",
-    "connect-src 'self'",
-    "frame-ancestors 'none'",
-    "base-uri 'self'",
-    "form-action 'self'"
-  ].join('; ');
-  
-  response.headers.set('Content-Security-Policy', csp);
-  
-  // HSTS for HTTPS
+  response.headers.set('X-XSS-Protection', '0');
+  response.headers.set('Permissions-Policy', 'accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), microphone=(), midi=(), payment=(), usb=()');
+  response.headers.set('X-DNS-Prefetch-Control', 'off');
+  response.headers.set('X-Permitted-Cross-Domain-Policies', 'none');
+  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+  response.headers.set('Cross-Origin-Resource-Policy', 'same-site');
+  response.headers.set('Content-Security-Policy', buildContentSecurityPolicy());
+
   if (request.nextUrl.protocol === 'https:') {
-    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   }
-  
+
   return response;
 }
 
@@ -131,7 +175,23 @@ export function rateLimitMiddleware(request: NextRequest, limit: number = 100, w
     return NextResponse.next();
   }
 
-  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+  const { pathname } = request.nextUrl;
+
+  if (
+    pathname === '/rate-limit' ||
+    /^\/(bn|en)\/rate-limit(?:\/|$)/.test(pathname)
+  ) {
+    return NextResponse.next();
+  }
+
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  const realIp = request.headers.get('x-real-ip');
+  const ip = request.ip || forwardedFor?.split(',')[0]?.trim() || realIp || 'unknown';
+
+  if (!ip || ip === 'unknown') {
+    return NextResponse.next();
+  }
+
   const now = Date.now();
   const windowStart = now - windowMs;
   
@@ -141,12 +201,30 @@ export function rateLimitMiddleware(request: NextRequest, limit: number = 100, w
     rateLimitMap.set(ip, { count: 1, resetTime: now });
     return NextResponse.next();
   }
-  
+
   if (current.count >= limit) {
-    return new NextResponse('Too Many Requests', { status: 429 });
+    const isApiRoute = pathname.startsWith('/api');
+
+    if (isApiRoute) {
+      return new NextResponse(
+        JSON.stringify({ ok: false, error: { code: 'RATE_LIMIT', message: 'Too many requests' } }),
+        {
+          status: 429,
+          headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+        }
+      );
+    }
+
+    const localeMatch = pathname.match(/^\/(bn|en)(?:\/|$)/);
+    const locale = localeMatch ? localeMatch[1] : 'bn';
+    const redirectUrl = new URL(`/${locale}/rate-limit`, request.url);
+    const response = NextResponse.redirect(redirectUrl, { status: 307 });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   }
-  
+
   current.count++;
+  current.resetTime = now;
   return NextResponse.next();
 }
 

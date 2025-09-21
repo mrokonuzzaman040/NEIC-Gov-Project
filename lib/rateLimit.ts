@@ -9,10 +9,10 @@ const store = new Map<string, Bucket>();
 
 let upstash: Ratelimit | null = null;
 try {
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
     const redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN
+      url: process.env.KV_REST_API_URL,
+      token: process.env.KV_REST_API_TOKEN
     });
     upstash = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(max, `${windowSeconds} s`) });
   }
