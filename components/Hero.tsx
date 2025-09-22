@@ -55,7 +55,7 @@ export function Hero() {
                 {t('cta.opinion')}
               </Link>
               <Link 
-                href={`/${locale}/submit`} 
+                href={`/${locale}/reporting`} 
                 className="inline-flex items-center justify-center border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white font-semibold px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg transition-all duration-200 text-sm sm:text-base"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
