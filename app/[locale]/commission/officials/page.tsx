@@ -1,5 +1,5 @@
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
-import commissionOfficialsData from '@/data/commisson/commission_officials.json';
+import officerListData from '@/data/commisson/officer_list_bilingual.json';
 import GovernmentHeader from '@/components/GovernmentHeader';
 
 interface CommissionOfficialsPageProps {
@@ -10,7 +10,7 @@ export default async function CommissionOfficialsPage({ params }: CommissionOffi
   unstable_setRequestLocale(params.locale);
   const t = await getTranslations({ locale: params.locale, namespace: 'commission' });
   
-  const { officials } = commissionOfficialsData;
+  const { Chief_and_Members, Officials_and_Employees } = officerListData;
   const isBengali = params.locale === 'bn';
   const langKey = isBengali ? 'bn' : 'en';
 
@@ -31,15 +31,18 @@ export default async function CommissionOfficialsPage({ params }: CommissionOffi
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <div className="text-center">
             <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              {officials.title[langKey]}
+              {isBengali ? 'কমিশনের প্রধান ও সদস্যবৃন্দ' : 'Commission Chairman & Members'}
             </h1>
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              {officials.description[langKey]}
+              {isBengali 
+                ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশনের প্রধান ও সদস্যদের পরিচিতি এবং যোগাযোগের তথ্য।'
+                : 'Meet the Chairman and Members of the National Elections Inquiry Commission with their contact information.'
+              }
             </p>
           </div>
         </div>
 
-        {/* Secretariat Staff */}
+        {/* Commission Chairman & Members */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
             <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-green-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
@@ -47,229 +50,147 @@ export default async function CommissionOfficialsPage({ params }: CommissionOffi
                 <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
             </div>
-            <span className="truncate">{officials.secretariat.title[langKey]}</span>
+            <span className="truncate">{isBengali ? 'কমিশনের প্রধান ও সদস্যবৃন্দ' : 'Commission Chairman & Members'}</span>
           </h2>
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {officials.secretariat.members.map((member, index) => (
-              <div key={index} className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow">
-                <div className="text-center mb-3 sm:mb-4">
-                  <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
-                      {member.name[langKey].split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white break-words">
-                    {member.name[langKey]}
-                  </h3>
-                  <p className="text-green-700 dark:text-green-300 font-semibold text-sm sm:text-base break-words">
-                    {member.position[langKey]}
-                  </p>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
-                    {member.department[langKey]}
-                  </p>
-                </div>
-                <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <a href={`mailto:${member.email}`} className="text-blue-600 dark:text-blue-400 hover:underline break-all">
-                      {member.email}
-                    </a>
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span className="text-gray-700 dark:text-gray-300">{member.phone}</span>
-                  </div>
-                  <div className="pt-1.5 sm:pt-2 border-t border-green-200 dark:border-green-700">
-                    <p className="text-xs text-gray-600 dark:text-gray-400">
-                      <strong>{isBengali ? 'অভিজ্ঞতা:' : 'Experience:'}</strong> {member.experience[langKey]}
-                    </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      <strong>{isBengali ? 'শিক্ষাগত যোগ্যতা:' : 'Qualification:'}</strong> {member.qualification[langKey]}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+          
+          {/* Table for Chairman & Members */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-green-50 dark:bg-green-900/20">
+                  <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                    {isBengali ? 'ক্রমিক নং' : 'Serial No'}
+                  </th>
+                  <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                    {isBengali ? 'নাম' : 'Name'}
+                  </th>
+                  <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                    {isBengali ? 'পদবি' : 'Designation'}
+                  </th>
+                  <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                    {isBengali ? 'কক্ষ নং' : 'Room No'}
+                  </th>
+                  <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                    {isBengali ? 'টেলিফোন' : 'Telephone'}
+                  </th>
+                  <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                    {isBengali ? 'মোবাইল' : 'Mobile'}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {Chief_and_Members.map((member) => (
+                  <tr key={member.serial_no} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                      {member.serial_no}
+                    </td>
+                    <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-900 dark:text-white font-medium">
+                      {isBengali ? member.name_bangla : member.name_english}
+                    </td>
+                    <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-green-700 dark:text-green-400 font-semibold">
+                      {isBengali ? member.designation_bangla : member.designation_english}
+                    </td>
+                    <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                      {member.room_no}
+                    </td>
+                    <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm">
+                      <a href={`tel:${member.telephone}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                        {member.telephone}
+                      </a>
+                    </td>
+                    <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm">
+                      <a href={`tel:${member.mobile}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                        {member.mobile}
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
-        {/* Technical Support Team */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
-            <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-blue-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
-              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <span className="truncate">{officials.technical_support.title[langKey]}</span>
-          </h2>
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2">
-            {officials.technical_support.members.map((member, index) => (
-              <div key={index} className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow">
-                <div className="text-center mb-3 sm:mb-4">
-                  <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
-                      {member.name[langKey].split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white break-words">
-                    {member.name[langKey]}
-                  </h3>
-                  <p className="text-blue-700 dark:text-blue-300 font-semibold text-sm sm:text-base break-words">
-                    {member.position[langKey]}
-                  </p>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
-                    {member.department[langKey]}
-                  </p>
-                </div>
-                <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <a href={`mailto:${member.email}`} className="text-blue-600 dark:text-blue-400 hover:underline break-all">
-                      {member.email}
-                    </a>
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span className="text-gray-700 dark:text-gray-300">{member.phone}</span>
-                  </div>
-                  <div className="pt-1.5 sm:pt-2 border-t border-blue-200 dark:border-blue-700">
-                    <p className="text-xs text-gray-600 dark:text-gray-400">
-                      <strong>{isBengali ? 'অভিজ্ঞতা:' : 'Experience:'}</strong> {member.experience[langKey]}
-                    </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      <strong>{isBengali ? 'শিক্ষাগত যোগ্যতা:' : 'Qualification:'}</strong> {member.qualification[langKey]}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Officials and Employees by Department */}
+        {Object.entries(Officials_and_Employees).map(([departmentKey, members], index) => {
+          const departmentNames: Record<string, { en: string; bn: string }> = {
+            'Cabinet Division': { en: 'Cabinet Division', bn: 'ক্যাবিনেট বিভাগ' },
+            'Law and Justice Division': { en: 'Law and Justice Division', bn: 'আইন ও বিচার বিভাগ' },
+            'National Parliament Secretariat': { en: 'National Parliament Secretariat', bn: 'জাতীয় সংসদ সচিবালয়' },
+            'Statistics and Information Management Division': { en: 'Statistics and Information Management Division', bn: 'পরিসংখ্যান ও তথ্য ব্যবস্থাপনা বিভাগ' },
+            'Election Commission Secretariat': { en: 'Election Commission Secretariat', bn: 'নির্বাচন কমিশন সচিবালয়' }
+          };
 
-        {/* Legal Team */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
-            <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-purple-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
-              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <span className="truncate">{officials.legal_team.title[langKey]}</span>
-          </h2>
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2">
-            {officials.legal_team.members.map((member, index) => (
-              <div key={index} className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow">
-                <div className="text-center mb-3 sm:mb-4">
-                  <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
-                      {member.name[langKey].split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white break-words">
-                    {member.name[langKey]}
-                  </h3>
-                  <p className="text-purple-700 dark:text-purple-300 font-semibold text-sm sm:text-base break-words">
-                    {member.position[langKey]}
-                  </p>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
-                    {member.department[langKey]}
-                  </p>
-                </div>
-                <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <a href={`mailto:${member.email}`} className="text-blue-600 dark:text-blue-400 hover:underline break-all">
-                      {member.email}
-                    </a>
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span className="text-gray-700 dark:text-gray-300">{member.phone}</span>
-                  </div>
-                  <div className="pt-1.5 sm:pt-2 border-t border-purple-200 dark:border-purple-700">
-                    <p className="text-xs text-gray-600 dark:text-gray-400">
-                      <strong>{isBengali ? 'অভিজ্ঞতা:' : 'Experience:'}</strong> {member.experience[langKey]}
-                    </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      <strong>{isBengali ? 'শিক্ষাগত যোগ্যতা:' : 'Qualification:'}</strong> {member.qualification[langKey]}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+          const departmentName = departmentNames[departmentKey] || { en: departmentKey, bn: departmentKey };
+          const colors = ['blue', 'purple', 'orange', 'indigo', 'teal'];
+          const color = colors[index % colors.length];
 
-        {/* Administrative Staff */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
-            <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-orange-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+          return (
+            <div key={departmentKey} className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+              <h2 className={`text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center`}>
+                <div className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-${color}-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0`}>
               <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a2 2 0 114 0 2 2 0 01-4 0zm2 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 100 2h2a1 1 0 100-2H9z" clipRule="evenodd" />
               </svg>
-            </div>
-            <span className="truncate">{officials.administrative_staff.title[langKey]}</span>
-          </h2>
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2">
-            {officials.administrative_staff.members.map((member, index) => (
-              <div key={index} className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow">
-                <div className="text-center mb-3 sm:mb-4">
-                  <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
-                      {member.name[langKey].split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white break-words">
-                    {member.name[langKey]}
-                  </h3>
-                  <p className="text-orange-700 dark:text-orange-300 font-semibold text-sm sm:text-base break-words">
-                    {member.position[langKey]}
-                  </p>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
-                    {member.department[langKey]}
-                  </p>
                 </div>
-                <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <a href={`mailto:${member.email}`} className="text-blue-600 dark:text-blue-400 hover:underline break-all">
-                      {member.email}
-                    </a>
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span className="text-gray-700 dark:text-gray-300">{member.phone}</span>
-                  </div>
-                  <div className="pt-1.5 sm:pt-2 border-t border-orange-200 dark:border-orange-700">
-                    <p className="text-xs text-gray-600 dark:text-gray-400">
-                      <strong>{isBengali ? 'অভিজ্ঞতা:' : 'Experience:'}</strong> {member.experience[langKey]}
-                    </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      <strong>{isBengali ? 'শিক্ষাগত যোগ্যতা:' : 'Qualification:'}</strong> {member.qualification[langKey]}
-                    </p>
-                  </div>
-                </div>
+                <span className="truncate">{isBengali ? departmentName.bn : departmentName.en}</span>
+              </h2>
+              
+              {/* Table for Department Members */}
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className={`bg-${color}-50 dark:bg-${color}-900/20`}>
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                        {isBengali ? 'ক্রমিক নং' : 'Serial No'}
+                      </th>
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                        {isBengali ? 'নাম' : 'Name'}
+                      </th>
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                        {isBengali ? 'পদবি' : 'Designation'}
+                      </th>
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                        {isBengali ? 'টেলিফোন' : 'Telephone'}
+                      </th>
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                        {isBengali ? 'মোবাইল' : 'Mobile'}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {members.map((member) => (
+                      <tr key={member.serial_no} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                          {member.serial_no}
+                        </td>
+                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-900 dark:text-white font-medium">
+                          {isBengali ? member.name_bangla : member.name_english}
+                        </td>
+                        <td className={`border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-${color}-700 dark:text-${color}-400 font-semibold`}>
+                          {isBengali ? member.designation_bangla : member.designation_english}
+                        </td>
+                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm">
+                          {(member as any).telephone ? (
+                            <a href={`tel:${(member as any).telephone}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                              {(member as any).telephone}
+                            </a>
+                          ) : (
+                            <span className="text-gray-400 dark:text-gray-500">-</span>
+                          )}
+                        </td>
+                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm">
+                          <a href={`tel:${member.mobile}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                            {member.mobile}
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          );
+        })}
 
         {/* Contact Information */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8">
@@ -279,15 +200,18 @@ export default async function CommissionOfficialsPage({ params }: CommissionOffi
                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
               </svg>
             </div>
-            <span className="truncate">{officials.contact_info.title[langKey]}</span>
+            <span className="truncate">{isBengali ? 'যোগাযোগের তথ্য' : 'Contact Information'}</span>
           </h2>
           <div className="grid gap-4 sm:gap-6 sm:grid-cols-1 md:grid-cols-2">
             <div className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg p-4 sm:p-6">
               <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                {isBengali ? 'অফিসের ঠিকানা' : 'Office Address'}
+                {isBengali ? 'কমিশন সম্পর্কে' : 'About the Commission'}
               </h3>
               <p className="text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-                {officials.contact_info.office_address[langKey]}
+                {isBengali 
+                  ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন একটি স্বাধীন ও নিরপেক্ষ প্রতিষ্ঠান যা নির্বাচনী প্রক্রিয়ার স্বচ্ছতা ও ন্যায়বিচার নিশ্চিত করার জন্য কাজ করে।'
+                  : 'The National Elections Inquiry Commission is an independent and impartial institution working to ensure transparency and justice in the electoral process.'
+                }
               </p>
             </div>
             <div className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg p-4 sm:p-6">
@@ -299,29 +223,17 @@ export default async function CommissionOfficialsPage({ params }: CommissionOffi
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">{officials.contact_info.phone}</span>
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <a href={`mailto:${officials.contact_info.email}`} className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:underline break-all">
-                    {officials.contact_info.email}
-                  </a>
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
-                  </svg>
-                  <a href={`https://${officials.contact_info.website}`} target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:underline break-all">
-                    {officials.contact_info.website}
-                  </a>
+                  <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    {isBengali ? 'সকল প্রশ্নের জন্য উপরের কর্মকর্তাদের সাথে যোগাযোগ করুন' : 'Contact the above officials for any inquiries'}
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">{officials.contact_info.office_hours[langKey]}</span>
+                  <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    {isBengali ? 'অফিস সময়: সকাল ৯টা থেকে বিকাল ৫টা (রবিবার বন্ধ)' : 'Office Hours: 9:00 AM to 5:00 PM (Closed on Sundays)'}
+                  </span>
                 </div>
               </div>
             </div>
