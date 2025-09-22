@@ -5,16 +5,19 @@ import Image from 'next/image';
 
 interface CommissionMember {
   id: string;
-  nameEn: string;
-  nameBn: string;
-  designationEn: string;
-  designationBn: string;
-  descriptionEn: string;
-  descriptionBn: string;
+  serial_no: number;
+  name_english: string;
+  name_bengali: string;
+  role_type: string;
+  designation_english: string;
+  designation_bengali: string;
+  department_english?: string;
+  department_bengali?: string;
+  image?: string;
   email?: string;
   phone?: string;
-  image?: string;
-  serialNo: number;
+  description_english?: string;
+  description_bengali?: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -119,7 +122,7 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                     {member.image ? (
                       <Image
                         src={member.image}
-                        alt={isEnglish ? member.nameEn : member.nameBn}
+                        alt={isEnglish ? member.name_english : member.name_bengali}
                         fill
                         className="object-cover rounded-full border-2 border-green-200 dark:border-green-800"
                       />
@@ -135,12 +138,29 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
 
                 {/* Member Details */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white break-words">
-                    {isEnglish ? member.nameEn : member.nameBn}
-                  </h3>
+                  <div className="flex items-center space-x-2 mb-1">
+                    <h3 className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white break-words">
+                      {isEnglish ? member.name_english : member.name_bengali}
+                    </h3>
+                    <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                      member.role_type === 'commission_member' 
+                        ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' 
+                        : 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300'
+                    }`}>
+                      {member.role_type === 'commission_member' 
+                        ? (isEnglish ? 'Member' : 'সদস্য') 
+                        : (isEnglish ? 'Support' : 'সহায়তা')
+                      }
+                    </span>
+                  </div>
                   <p className="text-xs sm:text-sm text-green-600 dark:text-green-400 font-medium mb-1 break-words">
-                    {isEnglish ? member.designationEn : member.designationBn}
+                    {isEnglish ? member.designation_english : member.designation_bengali}
                   </p>
+                  {(member.department_english || member.department_bengali) && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1 break-words">
+                      {isEnglish ? member.department_english : member.department_bengali}
+                    </p>
+                  )}
                   
                   {/* Contact Info */}
                   {(member.email || member.phone) && (
@@ -175,12 +195,7 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
         </div>
       </div>
 
-      {/* Footer - Outside the main card */}
-      <div className="mt-2 sm:mt-4 px-2 sm:px-4 py-2 sm:py-3 bg-gray-50 dark:bg-slate-700/50 rounded-lg border border-gray-200 dark:border-slate-600">
-        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
-          {members.length} {isEnglish ? 'Commission Members' : 'কমিশনের সদস্য'}
-        </p>
-      </div>
+      
     </div>
   );
 }
