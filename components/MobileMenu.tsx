@@ -24,11 +24,11 @@ export default function MobileMenu({ locale }: MobileMenuProps) {
     <>
       {/* Mobile menu button */}
       <button 
-        className="lg:hidden relative p-2 sm:p-3 rounded-lg bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg hover:from-green-700 hover:to-green-800 transition-all duration-200 transform hover:scale-105 active:scale-95"
+        className="lg:hidden relative p-1.5 sm:p-2 rounded-md bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg hover:from-green-700 hover:to-green-800 transition-all duration-200 transform hover:scale-105 active:scale-95"
         aria-label="Open mobile menu"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <svg className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           {isOpen ? (
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           ) : (
