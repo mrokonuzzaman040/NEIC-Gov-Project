@@ -201,7 +201,7 @@ export default function SubmitPage() {
   };
 
   return (
-    <div className="min-h-screen py-4 sm:py-6 lg:py-8">
+    <div className="min-h-screen py-2 sm:py-3 lg:py-4">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Government Header with Official Seal */}
         <div className="bg-white dark:bg-slate-800 shadow-lg border-l-4 border-green-600 mb-6 sm:mb-8">
@@ -236,7 +236,7 @@ export default function SubmitPage() {
         </div>
 
         {/* Back to Home Link */}
-        <div className="mb-4 sm:mb-6">
+        <div className="mb-2 sm:mb-4">
           <Link href={`/${locale}`} className="inline-flex items-center text-green-600 hover:text-green-700 transition-colors text-sm sm:text-base">
             <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -246,7 +246,7 @@ export default function SubmitPage() {
         </div>
 
         {/* Description Section */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
+        {/* <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
               {isEnglish ? 'Submit Your Opinion' : 'আপনার অভিমত জমা দিন'}
@@ -255,7 +255,7 @@ export default function SubmitPage() {
               {t('form.pageDescription')}
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* Form Container */}
         <div className="max-w-4xl mx-auto">
