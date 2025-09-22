@@ -293,33 +293,26 @@ model CommissionMember {
 }
 
 model CommissionOfficial {
-  id            String   @id @default(cuid())
-  nameEn        String
-  nameBn        String
-  positionEn    String
-  positionBn    String
-  departmentEn  String
-  departmentBn  String
-  descriptionEn String?
-  descriptionBn String?
-  email         String?
-  phone         String?
-  experienceEn  String?
-  experienceBn  String?
-  qualificationEn String?
-  qualificationBn String?
-  image         String?
-  category      OfficialCategory @default(SECRETARIAT)
-  isActive      Boolean  @default(true)
-  order         Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  createdBy     String?
-  updatedBy     String?
+  id                  String   @id @default(cuid())
+  serial_no           Int      @default(1)
+  name_english        String   @default("")
+  name_bangla         String   @default("")
+  designation_english String   @default("")
+  designation_bangla  String   @default("")
+  department          String   @default("")
+  telephone           String?
+  mobile              String   @default("")
+  room_no             String?
+  category            String   @default("Chief_and_Members")
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  createdBy           String?
+  updatedBy           String?
   
   @@index([category])
   @@index([isActive])
-  @@index([order])
+  @@index([serial_no])
 }
 
 model CommissionTerm {
@@ -396,9 +389,3 @@ model Gallery {
   @@index([order])
 }
 
-enum OfficialCategory {
-  SECRETARIAT
-  TECHNICAL
-  ADMINISTRATIVE
-  SUPPORT
-}

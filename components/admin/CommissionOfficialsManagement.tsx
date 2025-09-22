@@ -17,22 +17,16 @@ import {
 
 interface CommissionOfficial {
   id: string;
-  nameEn: string;
-  nameBn: string;
-  positionEn: string;
-  positionBn: string;
-  departmentEn: string;
-  departmentBn: string;
-  descriptionEn: string;
-  descriptionBn: string;
-  email: string;
-  phone: string;
-  experienceEn: string;
-  experienceBn: string;
-  qualificationEn: string;
-  qualificationBn: string;
-  image?: string;
-  category: 'secretariat' | 'technical' | 'administrative' | 'support';
+  serial_no: number;
+  name_english: string;
+  name_bangla: string;
+  designation_english: string;
+  designation_bangla: string;
+  department: string;
+  telephone?: string;
+  mobile: string;
+  room_no?: string;
+  category: 'Chief_and_Members' | 'Cabinet Division' | 'Law and Justice Division' | 'National Parliament Secretariat' | 'Statistics and Information Management Division' | 'Election Commission Secretariat';
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -69,14 +63,18 @@ export default function CommissionOfficialsManagement() {
 
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
-      case 'secretariat':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
-      case 'technical':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300';
-      case 'administrative':
+      case 'Chief_and_Members':
         return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300';
-      case 'support':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300';
+      case 'Cabinet Division':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
+      case 'Law and Justice Division':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300';
+      case 'National Parliament Secretariat':
+        return 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-300';
+      case 'Statistics and Information Management Division':
+        return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/20 dark:text-indigo-300';
+      case 'Election Commission Secretariat':
+        return 'bg-teal-100 text-teal-800 dark:bg-teal-900/20 dark:text-teal-300';
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300';
     }
@@ -139,13 +137,13 @@ export default function CommissionOfficialsManagement() {
   // Filter officials based on search and category
   const filteredOfficials = officials.filter(official => {
     const matchesSearch = searchTerm === '' || 
-      official.nameEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      official.nameBn.includes(searchTerm) ||
-      official.positionEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      official.positionBn.includes(searchTerm) ||
-      official.departmentEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      official.departmentBn.includes(searchTerm) ||
-      official.email.toLowerCase().includes(searchTerm.toLowerCase());
+      official.name_english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      official.name_bangla.includes(searchTerm) ||
+      official.designation_english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      official.designation_bangla.includes(searchTerm) ||
+      official.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      official.mobile.includes(searchTerm) ||
+      (official.telephone && official.telephone.includes(searchTerm));
     
     const matchesCategory = selectedCategory === 'all' || official.category === selectedCategory;
     
@@ -204,10 +202,12 @@ export default function CommissionOfficialsManagement() {
           className="px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
         >
           <option value="all">All Categories</option>
-          <option value="secretariat">Secretariat</option>
-          <option value="technical">Technical</option>
-          <option value="administrative">Administrative</option>
-          <option value="support">Support</option>
+          <option value="Chief_and_Members">Chief & Members</option>
+          <option value="Cabinet Division">Cabinet Division</option>
+          <option value="Law and Justice Division">Law and Justice Division</option>
+          <option value="National Parliament Secretariat">National Parliament Secretariat</option>
+          <option value="Statistics and Information Management Division">Statistics and Information Management Division</option>
+          <option value="Election Commission Secretariat">Election Commission Secretariat</option>
         </select>
       </div>
 
@@ -242,10 +242,10 @@ export default function CommissionOfficialsManagement() {
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-                        {official.nameEn}
+                        {official.name_english}
                       </h3>
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryBadgeColor(official.category)}`}>
-                        {official.category}
+                        {official.category.replace('_', ' & ')}
                       </span>
                       {!official.isActive && (
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300">
@@ -255,55 +255,57 @@ export default function CommissionOfficialsManagement() {
                     </div>
                     
                     <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">
-                      {official.nameBn}
+                      {official.name_bangla}
                     </p>
                     
                     <div className="flex items-center space-x-2 mb-3">
                       <div className="flex items-center space-x-1">
                         <BriefcaseIcon className="h-4 w-4 text-slate-400" />
                         <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                          {official.positionEn}
+                          {official.designation_english}
                         </span>
                       </div>
                       <span className="text-slate-400">•</span>
                       <div className="flex items-center space-x-1">
                         <BuildingOfficeIcon className="h-4 w-4 text-slate-400" />
                         <span className="text-sm text-slate-600 dark:text-slate-400">
-                          {official.departmentEn}
+                          {official.department}
                         </span>
                       </div>
+                      {official.room_no && (
+                        <>
+                          <span className="text-slate-400">•</span>
+                          <div className="flex items-center space-x-1">
+                            <BuildingOfficeIcon className="h-4 w-4 text-slate-400" />
+                            <span className="text-sm text-slate-600 dark:text-slate-400">
+                              Room: {official.room_no}
+                            </span>
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                      <div className="flex items-center space-x-2">
-                        <EnvelopeIcon className="h-4 w-4 text-slate-400" />
-                        <a href={`mailto:${official.email}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
-                          {official.email}
-                        </a>
-                      </div>
+                      {official.telephone && (
+                        <div className="flex items-center space-x-2">
+                          <PhoneIcon className="h-4 w-4 text-slate-400" />
+                          <a href={`tel:${official.telephone}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
+                            {official.telephone}
+                          </a>
+                        </div>
+                      )}
                       <div className="flex items-center space-x-2">
                         <PhoneIcon className="h-4 w-4 text-slate-400" />
-                        <a href={`tel:${official.phone}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
-                          {official.phone}
+                        <a href={`tel:${official.mobile}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
+                          {official.mobile}
                         </a>
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <div className="flex items-start space-x-2">
-                        <BriefcaseIcon className="h-4 w-4 text-slate-400 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{official.experienceEn}</p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">{official.experienceBn}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start space-x-2">
-                        <AcademicCapIcon className="h-4 w-4 text-slate-400 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{official.qualificationEn}</p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">{official.qualificationBn}</p>
-                        </div>
-                      </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                        Serial: {official.serial_no}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -362,3 +364,4 @@ export default function CommissionOfficialsManagement() {
     </div>
   );
 }
+
