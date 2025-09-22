@@ -12,6 +12,15 @@
         "type": "link"
       },
       {
+        "id": "commission-details",
+        "label": {
+          "en": "Commission Details",
+          "bn": "কমিশনের মিশন"
+        },
+        "href": "/commission/info",
+        "type": "link"
+      },
+      {
         "id": "opinion",
         "label": {
           "en": "Opinion",
@@ -60,15 +69,6 @@
         "type": "dropdown",
         "icon": "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h3M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 8h1m-1-4h1m4 4h1m-1-4h1",
         "children": [
-          {
-            "id": "commission-details",
-            "label": {
-              "en": "Commission Details",
-              "bn": "কমিশনের মিশন"
-            },
-            "href": "/commission/info",
-            "type": "link"
-          },
           {
             "id": "commission-members",
             "label": {
