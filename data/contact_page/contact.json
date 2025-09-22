@@ -122,14 +122,14 @@
         "lat": 23.7629,
         "lng": 90.3789
       },
-      "zoom": 16,
+      "zoom": 17,
       "marker": {
         "title": {
           "en": "National Elections Inquiry Commission",
           "bn": "জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন"
         },
         "info": {
-          "en": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban<br>Sher-e-Bangla Nagar, Dhaka",
+          "en": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban<br>Sher-e-Bangla Nagar, Dhaka-1000",
           "bn": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন<br>শের-ই-বাংলা নগর, ঢাকা"
         }
       }

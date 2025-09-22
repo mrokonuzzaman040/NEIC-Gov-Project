@@ -150,7 +150,7 @@ export default function NoticePage() {
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 border-l-4 border-blue-600">
             <div className="flex items-center">
               <div className="flex-shrink-0">
@@ -187,7 +187,7 @@ export default function NoticePage() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 border-l-4 border-green-600">
+          {/* <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 border-l-4 border-green-600">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,7 +203,7 @@ export default function NoticePage() {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Loading State */}

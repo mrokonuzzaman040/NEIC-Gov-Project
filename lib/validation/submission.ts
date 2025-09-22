@@ -66,8 +66,11 @@ export const submissionSchema = z.object({
 });
 
 // File validation schema for client-side
+const MAX_FILE_SIZE_MB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '25');
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
 export const fileValidationSchema = z.object({
-  size: z.number().max(512 * 1024 * 1024, 'File size must be less than 512MB'),
+  size: z.number().max(MAX_FILE_SIZE_BYTES, `File size must be less than ${MAX_FILE_SIZE_MB}MB`),
   type: z.string().refine(
     (type) => {
       const allowedTypes = [

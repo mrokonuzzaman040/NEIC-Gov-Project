@@ -66,6 +66,7 @@ export default function ContactPage() {
 
     // Load Google Maps script
     const loadGoogleMaps = () => {
+      console.log('loadGoogleMaps called, google:', !!window.google, 'maps:', !!(window.google && window.google.maps), 'mapRef:', !!mapRef.current);
       if (window.google && window.google.maps && mapRef.current) {
         const map = new window.google.maps.Map(mapRef.current, {
           center: mapCenter,
@@ -123,10 +124,26 @@ export default function ContactPage() {
     } else {
       // Load Google Maps script
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'YOUR_API_KEY'}&libraries=places`;
+      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+      
+      if (!apiKey) {
+        console.warn('Google Maps API key not found. Map will not be displayed.');
+        console.log('Available env vars:', Object.keys(process.env).filter(key => key.includes('GOOGLE')));
+        return;
+      }
+      
+      console.log('Loading Google Maps with API key:', apiKey);
+      
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
       script.async = true;
       script.defer = true;
       script.onload = loadGoogleMaps;
+      script.onerror = (error) => {
+        console.error('Failed to load Google Maps API. Please check your API key and domain restrictions.');
+        console.error('Error details:', error);
+        console.error('API Key:', apiKey ? `${apiKey.substring(0, 10)}...` : 'Not found');
+        console.error('Current domain:', window.location.hostname);
+      };
       document.head.appendChild(script);
     }
   }, [isEnglish, contactData, langKey]);
@@ -366,7 +383,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Directions */}
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6">
+                {/* <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6">
                   <h3 className="text-base sm:text-lg font-semibold text-green-900 dark:text-green-100 mb-3 sm:mb-4">
                     {data.directions?.title?.[langKey] || (isEnglish ? 'How to Reach' : 'কিভাবে যাবেন')}
                   </h3>
@@ -378,14 +395,14 @@ export default function ContactPage() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
 
         {/* Office Hours and Response Time */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
+        {/* <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white flex items-center">
               <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -430,7 +447,7 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Important Notice */}
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6">

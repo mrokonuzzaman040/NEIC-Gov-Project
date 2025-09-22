@@ -132,26 +132,6 @@ export default function NotFound() {
               </svg>
               {t.homeButton}
             </Link>
-            
-            <Link 
-              href={`/${locale}/reporting`}
-              className="inline-flex items-center justify-center px-8 py-4 bg-white dark:bg-slate-800 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white font-semibold rounded-lg transition-colors"
-            >
-              <svg 
-                className="w-5 h-5 mr-2" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" 
-                />
-              </svg>
-              {t.reportButton}
-            </Link>
           </div>
 
           {/* Important Notice */}
@@ -161,21 +141,6 @@ export default function NotFound() {
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
-                  {t.importantNotice}
-                </h3>
-                <p className="text-yellow-700 dark:text-yellow-300 text-sm leading-relaxed">
-                  {t.noticeText}{' '}
-                  <Link 
-                    href={`/${locale}/reporting`}
-                    className="text-green-600 dark:text-green-400 hover:underline font-medium"
-                  >
-                    {t.reportButton.toLowerCase()}
-                  </Link>
-                  {' '}{t.noticeText2}
-                </p>
               </div>
             </div>
           </div>
