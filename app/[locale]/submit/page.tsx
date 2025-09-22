@@ -20,7 +20,7 @@ export default function SubmitPage() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState<string | null>(null);
   const captchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_KEY;
-  const captchaRequired = Boolean(captchaSiteKey);
+  const captchaRequired = Boolean(captchaSiteKey) && process.env.NODE_ENV === 'production';
   const maxFileSizeMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '25');
   const maxFileSizeBytes = Math.max(1, maxFileSizeMb) * 1024 * 1024;
 
@@ -486,7 +486,7 @@ export default function SubmitPage() {
                 {/* Form Actions */}
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-gray-200 dark:border-slate-700">
                   <div className="w-full sm:w-auto">
-                    {captchaSiteKey ? (
+                    {captchaRequired && captchaSiteKey ? (
                       <ReCAPTCHA
                         sitekey={captchaSiteKey}
                         ref={recaptchaRef}
@@ -508,6 +508,12 @@ export default function SubmitPage() {
                           setCaptchaError(message);
                         }}
                       />
+                    ) : process.env.NODE_ENV === 'development' ? (
+                      <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                        <p className="text-blue-800 dark:text-blue-200 text-xs">
+                          <strong>Development Mode:</strong> {isEnglish ? 'reCAPTCHA is disabled for easier testing.' : 'পরীক্ষার সুবিধার জন্য reCAPTCHA নিষ্ক্রিয় করা হয়েছে।'}
+                        </p>
+                      </div>
                     ) : (
                       <p className="text-xs text-yellow-600">
                         {isEnglish ? 'Captcha protection is not configured. Please contact the administrator.' : 'ক্যাপচা সুরক্ষা কনফিগার করা হয়নি। অনুগ্রহ করে প্রশাসকের সাথে যোগাযোগ করুন।'}

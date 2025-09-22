@@ -20,6 +20,10 @@ function getSiteKey() {
 }
 
 export function isCaptchaConfigured() {
+  // In development mode, always return false to disable reCAPTCHA
+  if (process.env.NODE_ENV === 'development') {
+    return false;
+  }
   return Boolean(getSecretKey() && getSiteKey());
 }
 
