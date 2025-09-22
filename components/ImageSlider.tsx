@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 // Custom SVG Icons
@@ -66,48 +66,63 @@ export default function ImageSlider({
   autoplayInterval = 5000,
   showText = false
 }: ImageSliderProps) {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoplay);
+  const [isHovered, setIsHovered] = useState(false);
+  const [animationProgress, setAnimationProgress] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number>(0);
   const isEnglish = locale === 'en';
   const langKey = isEnglish ? 'en' : 'bn';
 
-  // Auto-play functionality
+  // Animation frame function for smooth marquee
+  const animate = useCallback((timestamp: number) => {
+    if (!startTimeRef.current) {
+      startTimeRef.current = timestamp;
+    }
+
+    const elapsed = timestamp - startTimeRef.current;
+    // Slow down the animation by increasing the duration (multiply by 3 for slower speed)
+    const totalDuration = autoplayInterval * slides.length * 3;
+    const progress = (elapsed % totalDuration) / totalDuration;
+    
+    setAnimationProgress(progress);
+
+    if (isPlaying && !isHovered) {
+      animationRef.current = requestAnimationFrame(animate);
+    }
+  }, [isPlaying, isHovered, autoplayInterval, slides.length]);
+
+  // Auto-play functionality for marquee effect
   useEffect(() => {
-    if (isPlaying && slides.length > 1) {
-      intervalRef.current = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-      }, autoplayInterval);
+    if (isPlaying && !isHovered && slides.length > 1) {
+      startTimeRef.current = 0;
+      animationRef.current = requestAnimationFrame(animate);
     } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     }
 
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isPlaying, slides.length, autoplayInterval]);
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-    setIsPlaying(false); // Pause autoplay when user manually navigates
-  };
-
-  const goToPrevious = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    setIsPlaying(false);
-  };
-
-  const goToNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-    setIsPlaying(false);
-  };
+  }, [isPlaying, isHovered, slides.length, autoplayInterval, animate]);
 
   const toggleAutoplay = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    // Reset start time to continue from current position
+    startTimeRef.current = 0;
   };
 
   const formatDate = (dateString: string) => {
@@ -125,95 +140,93 @@ export default function ImageSlider({
     return null;
   }
 
-  const currentSlideData = slides[currentSlide];
+  // Duplicate slides for seamless marquee effect
+  const duplicatedSlides = [...slides, ...slides];
 
   return (
-    <div className="relative w-full h-[350px] sm:h-[380px] lg:h-[420px] overflow-hidden rounded-2xl shadow-2xl z-10">
-      {/* Main Slide */}
+    <div 
+      className="relative w-full h-[350px] sm:h-[380px] lg:h-[420px] overflow-hidden rounded-2xl shadow-2xl z-10"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Marquee Container */}
       <div className="relative w-full h-full">
-        <Image
-          src={currentSlideData.image}
-          alt={currentSlideData.title[langKey]}
-          fill
-          className="object-cover transition-opacity duration-500"
-          priority={currentSlide === 0}
-        />
-        
-        {/* Overlay - only show when text is enabled */}
-        {showText && (
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
-        )}
-        
-        {/* Content - only show when showText is true */}
-        {showText && (
-          <div className="absolute inset-0 flex items-center">
-            <div className="max-w-5xl px-6 sm:px-8 lg:px-16">
-              {/* Category Badge */}
-              <div className="mb-3">
-                <span className="inline-block px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-full">
-                  {currentSlideData.category[langKey]}
-                </span>
-                {currentSlideData.featured && (
-                  <span className="ml-2 inline-block px-2 py-1 bg-yellow-500 text-white text-xs font-medium rounded-full">
-                    {isEnglish ? 'Featured' : 'বিশেষ'}
-                  </span>
-                )}
-              </div>
+        <div 
+          className="flex h-full"
+          style={{
+            width: `${duplicatedSlides.length * 100}%`,
+            transform: `translateX(-${animationProgress * 50}%)`,
+            transition: isHovered ? 'none' : 'transform 0.1s linear'
+          }}
+        >
+          {duplicatedSlides.map((slide, index) => (
+            <div key={`${slide.id}-${index}`} className="relative flex-shrink-0 h-full" style={{ width: `${100 / duplicatedSlides.length}%` }}>
+              <Image
+                src={slide.image}
+                alt={slide.title[langKey]}
+                fill
+                className="object-cover"
+                priority={index < 2}
+              />
+              
+              {/* Overlay - only show when text is enabled */}
+              {showText && (
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+              )}
+              
+              {/* Content - only show when showText is true */}
+              {showText && (
+                <div className="absolute inset-0 flex items-center">
+                  <div className="max-w-5xl px-6 sm:px-8 lg:px-16">
+                    {/* Category Badge */}
+                    <div className="mb-3">
+                      <span className="inline-block px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-full">
+                        {slide.category[langKey]}
+                      </span>
+                      {slide.featured && (
+                        <span className="ml-2 inline-block px-2 py-1 bg-yellow-500 text-white text-xs font-medium rounded-full">
+                          {isEnglish ? 'Featured' : 'বিশেষ'}
+                        </span>
+                      )}
+                    </div>
 
-              {/* Title */}
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
-                {currentSlideData.title[langKey]}
-              </h2>
+                    {/* Title */}
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+                      {slide.title[langKey]}
+                    </h2>
 
-              {/* Description */}
-              <p className="text-sm sm:text-base lg:text-lg text-gray-200 mb-4 sm:mb-6 leading-relaxed max-w-2xl">
-                {currentSlideData.description[langKey]}
-              </p>
+                    {/* Description */}
+                    <p className="text-sm sm:text-base lg:text-lg text-gray-200 mb-4 sm:mb-6 leading-relaxed max-w-2xl">
+                      {slide.description[langKey]}
+                    </p>
 
-              {/* Date */}
-              <div className="mb-6">
-                <span className="text-xs text-gray-300">
-                  {formatDate(currentSlideData.date)}
-                </span>
-              </div>
+                    {/* Date */}
+                    <div className="mb-6">
+                      <span className="text-xs text-gray-300">
+                        {formatDate(slide.date)}
+                      </span>
+                    </div>
 
-              {/* CTA Button */}
-              <Link
-                href={currentSlideData.link as any}
-                className="inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base"
-              >
-                {currentSlideData.buttonText[langKey]}
-                <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-              </Link>
+                    {/* CTA Button */}
+                    <Link
+                      href={slide.link as any}
+                      className="inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base"
+                    >
+                      {slide.buttonText[langKey]}
+                      <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-
-        {/* Navigation Arrows */}
-        {slides.length > 1 && (
-          <>
-            <button
-              onClick={goToPrevious}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2.5 rounded-full transition-colors duration-200"
-              aria-label={isEnglish ? 'Previous slide' : 'পূর্ববর্তী স্লাইড'}
-            >
-              <ChevronLeftIcon className="w-5 h-5" />
-            </button>
-            <button
-              onClick={goToNext}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2.5 rounded-full transition-colors duration-200"
-              aria-label={isEnglish ? 'Next slide' : 'পরবর্তী স্লাইড'}
-            >
-              <ChevronRightIcon className="w-5 h-5" />
-            </button>
-          </>
-        )}
+          ))}
+        </div>
 
         {/* Play/Pause Button */}
         {slides.length > 1 && (
           <button
             onClick={toggleAutoplay}
-            className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200"
+            className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200 z-20"
             aria-label={isPlaying ? (isEnglish ? 'Pause slideshow' : 'স্লাইডশো বিরতি') : (isEnglish ? 'Play slideshow' : 'স্লাইডশো চালান')}
           >
             {isPlaying ? (
@@ -224,31 +237,6 @@ export default function ImageSlider({
           </button>
         )}
       </div>
-
-      {/* Slide Indicators */}
-      {slides.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2.5 h-2.5 rounded-full transition-colors duration-200 ${
-                index === currentSlide
-                  ? 'bg-white'
-                  : 'bg-white/50 hover:bg-white/70'
-              }`}
-              aria-label={`${isEnglish ? 'Go to slide' : 'স্লাইডে যান'} ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Slide Counter */}
-      {slides.length > 1 && (
-        <div className="absolute bottom-4 right-4 bg-black/50 text-white px-2.5 py-1 rounded-full text-xs">
-          {currentSlide + 1} / {slides.length}
-        </div>
-      )}
     </div>
   );
 }
