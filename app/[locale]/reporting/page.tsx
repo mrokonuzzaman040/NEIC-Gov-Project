@@ -155,6 +155,29 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
           </div>
         </div>
 
+        {/* Special Section for Bengali - Enforced Disappearance Complaints */}
+        {!isEnglish && (
+          <div className="bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 border-2 border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-red-600 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+              <div className="min-w-0 flex-1">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-red-800 dark:text-red-200 mb-3 sm:mb-4">
+                  সেবা গ্রহণের প্রক্রিয়া (গুম সংক্রান্ত অভিযোগ)
+                </h2>
+                <div className="text-red-700 dark:text-red-300 text-sm sm:text-base leading-relaxed space-y-3 sm:space-y-4">
+                  <p>
+                    আপনি যদি ০৬ জানুয়ারি ২০০৯ থেকে ০৫ আগস্ট ২০২৪ খ্রিষ্টাব্দের মধ্যে বাংলাদেশের কোনো আইন-শৃঙ্খলা রক্ষাকারী বাহিনী বা সংস্থার (যেমন: বাংলাদেশ পুলিশ, র‍্যাব, বর্ডার গার্ড বাংলাদেশ, সিআইডি, বিশেষ শাখা, গোয়েন্দা শাখা, আনসার ব্যাটালিয়ন, এনএসআই, প্রতিরক্ষা বাহিনী, ডিজিএফআই, কোস্ট গার্ড ইত্যাদি) সদস্য কর্তৃক জোরপূর্বক গুম হওয়ার শিকার হয়ে থাকেন, তাহলে আমাদের সেবা পেতে হলে নিম্নলিখিত যেকোনো এক উপায়ে অভিযোগ দাখিল করতে হবে:
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Service Process Steps */}
         <div className="space-y-6 sm:space-y-8">
           {/* Step 1: Service Request */}
@@ -220,6 +243,89 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
               </div>
             </div>
           </section>
+
+          {/* Special Complaint Submission Methods for Bengali */}
+          {!isEnglish && (
+            <section className="bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white flex items-center">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span className="truncate">অভিযোগ দাখিলের উপায়সমূহ</span>
+                </h2>
+              </div>
+              <div className="p-4 sm:p-6 lg:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                  {/* উপায় ১: সরাসরি অভিযোগ দাখিল */}
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6">
+                    <div className="flex items-center mb-3 sm:mb-4">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                        <span className="text-white font-bold text-sm sm:text-base">১</span>
+                      </div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
+                        সরাসরি অভিযোগ দাখিল
+                      </h3>
+                    </div>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mb-4 leading-relaxed">
+                      ভিক্টিম নিজে অথবা ভিক্টিম না থাকলে তার প্রতিনিধি সরাসরি উপস্থিত হয়ে দাখিল করতে পারবেন। সেক্ষেত্রে নিম্নোক্ত কাগজপত্র সঙ্গে আনতে হবে:
+                    </p>
+                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                      <li className="flex items-start">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-xs sm:text-sm break-words">মিডিয়া রিপোর্ট (যদি থাকে)</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-xs sm:text-sm break-words">ভিডিও ফুটেজ (যদি থাকে)</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-xs sm:text-sm break-words">অন্যান্য প্রমাণাদি (যদি থাকে)</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* উপায় ২: ই-মেইলের মাধ্যমে অভিযোগ পাঠানো */}
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6">
+                    <div className="flex items-center mb-3 sm:mb-4">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-600 rounded-full flex items-center justify-center mr-3">
+                        <span className="text-white font-bold text-sm sm:text-base">২</span>
+                      </div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
+                        ই-মেইলের মাধ্যমে অভিযোগ পাঠানো
+                      </h3>
+                    </div>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mb-4 leading-relaxed">
+                      উপায় ১-এ উল্লিখিত তথ্য ও প্রমাণাদি নিম্নোক্ত ইমেইল ঠিকানায় পাঠানো যাবে:
+                    </p>
+                    <div className="bg-white dark:bg-slate-700 rounded-lg p-3 sm:p-4 border border-gray-200 dark:border-slate-600">
+                      <div className="flex items-center">
+                        <svg className="w-5 h-5 text-green-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-sm sm:text-base font-medium text-gray-900 dark:text-white">
+                          ইমেইল: 
+                        </span>
+                        <a 
+                          href="mailto:edcommission.bd@gmail.com" 
+                          className="text-sm sm:text-base font-semibold text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 ml-2 break-all"
+                        >
+                          edcommission.bd@gmail.com
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* Step 2: Processing */}
           <section className="bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden">
