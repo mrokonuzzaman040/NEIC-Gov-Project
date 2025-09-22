@@ -66,6 +66,7 @@ export default function ContactPage() {
 
     // Load Google Maps script
     const loadGoogleMaps = () => {
+      console.log('loadGoogleMaps called, google:', !!window.google, 'maps:', !!(window.google && window.google.maps), 'mapRef:', !!mapRef.current);
       if (window.google && window.google.maps && mapRef.current) {
         const map = new window.google.maps.Map(mapRef.current, {
           center: mapCenter,
@@ -127,15 +128,21 @@ export default function ContactPage() {
       
       if (!apiKey) {
         console.warn('Google Maps API key not found. Map will not be displayed.');
+        console.log('Available env vars:', Object.keys(process.env).filter(key => key.includes('GOOGLE')));
         return;
       }
+      
+      console.log('Loading Google Maps with API key:', apiKey);
       
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
       script.async = true;
       script.defer = true;
       script.onload = loadGoogleMaps;
-      script.onerror = () => {
+      script.onerror = (error) => {
         console.error('Failed to load Google Maps API. Please check your API key and domain restrictions.');
+        console.error('Error details:', error);
+        console.error('API Key:', apiKey ? `${apiKey.substring(0, 10)}...` : 'Not found');
+        console.error('Current domain:', window.location.hostname);
       };
       document.head.appendChild(script);
     }
