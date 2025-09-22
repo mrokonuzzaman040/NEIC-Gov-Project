@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import GovernmentHeader from '@/components/GovernmentHeader';
+import ShareButtons from '@/components/ShareButtons';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -50,6 +51,7 @@ export default function BlogDetailPage() {
   const [relatedPosts, setRelatedPosts] = useState<RelatedPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showFloatingShare, setShowFloatingShare] = useState(false);
 
   useEffect(() => {
     const loadBlogPost = async () => {
@@ -87,6 +89,17 @@ export default function BlogDetailPage() {
 
     loadBlogPost();
   }, [params.slug, locale, router]);
+
+  // Handle scroll for floating share button
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setShowFloatingShare(scrollTop > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Loading state
   if (isLoading) {
@@ -340,6 +353,35 @@ export default function BlogDetailPage() {
                   {renderContent(isEnglish ? post.contentEn : post.contentBn)}
                 </div>
 
+                {/* Share Section */}
+                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-slate-700">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                        {isEnglish ? 'Share this article' : 'এই নিবন্ধটি শেয়ার করুন'}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {isEnglish 
+                          ? 'Help others discover this important information by sharing it on social media.'
+                          : 'সামাজিক যোগাযোগ মাধ্যমে শেয়ার করে অন্যদের এই গুরুত্বপূর্ণ তথ্য জানতে সাহায্য করুন।'
+                        }
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <ShareButtons
+                        title={isEnglish ? post.titleEn : post.titleBn}
+                        description={isEnglish ? post.excerptEn : post.excerptBn}
+                        url={typeof window !== 'undefined' ? window.location.href : ''}
+                        image={post.image}
+                        hashtags={post.tags}
+                        size="md"
+                        orientation="horizontal"
+                        className="justify-end"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 {/* Article Footer */}
                 <div className="mt-12 pt-8 border-t border-gray-200 dark:border-slate-700">
                   <div className="flex items-center justify-between">
@@ -375,6 +417,22 @@ export default function BlogDetailPage() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="space-y-8">
+              {/* Share Widget */}
+              <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  {isEnglish ? 'Share Article' : 'নিবন্ধ শেয়ার করুন'}
+                </h3>
+                <ShareButtons
+                  title={isEnglish ? post.titleEn : post.titleBn}
+                  description={isEnglish ? post.excerptEn : post.excerptBn}
+                  url={typeof window !== 'undefined' ? window.location.href : ''}
+                  image={post.image}
+                  hashtags={post.tags}
+                  size="sm"
+                  orientation="vertical"
+                />
+              </div>
+
               {/* Related Posts */}
               {relatedPosts.length > 0 && (
                 <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6">
@@ -452,6 +510,24 @@ export default function BlogDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Floating Share Button (Mobile) */}
+      {showFloatingShare && post && (
+        <div className="fixed bottom-6 right-6 z-50 lg:hidden">
+          <div className="bg-white dark:bg-slate-800 shadow-2xl rounded-full p-3 border border-gray-200 dark:border-slate-700">
+            <ShareButtons
+              title={isEnglish ? post.titleEn : post.titleBn}
+              description={isEnglish ? post.excerptEn : post.excerptBn}
+              url={typeof window !== 'undefined' ? window.location.href : ''}
+              image={post.image}
+              hashtags={post.tags}
+              size="sm"
+              orientation="horizontal"
+              className="justify-center"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

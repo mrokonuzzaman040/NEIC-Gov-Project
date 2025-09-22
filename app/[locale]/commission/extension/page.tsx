@@ -19,7 +19,7 @@ export default async function CommissionExtensionPage({ params }: CommissionExte
         {/* Government Header */}
         <GovernmentHeader
           title={isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
-          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
+          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           portal={isBengali ? 'কমিশনের সময়সীমা বর্ধিতকরণ' : 'Commission Date Extension'}
           tagline={isBengali ? 'সরকারি আদেশ ও সদস্যগণের তালিকা' : 'Government Orders & Member List'}
           borderColor="blue"

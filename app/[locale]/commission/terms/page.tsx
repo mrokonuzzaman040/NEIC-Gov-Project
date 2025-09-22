@@ -19,7 +19,7 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
         {/* Government Header */}
         <GovernmentHeader
           title={isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
-          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
+          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           portal={isBengali ? 'কমিশনের কার্যপরিধি ও ক্ষমতা' : 'Commission Scope & Powers'}
           tagline={isBengali ? 'আদেশ ও নির্দেশনা' : 'Terms & Directives'}
           borderColor="green"
@@ -30,7 +30,7 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <div className="text-center mb-6 sm:mb-8">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 break-words">
-              {isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের কার্যপরিধি' : 'National Elections (2014, 2018, 2024) Inquiry Commission Terms of Reference'}
+              {isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশনের কার্যপরিধি' : 'National Elections (2014, 2018, 2024) Inquiry Commission Terms of Reference'}
             </h1>
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               {isBengali 

@@ -69,11 +69,10 @@ export default function ImageSlider({
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [isHovered, setIsHovered] = useState(false);
   const [animationProgress, setAnimationProgress] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
-  const isEnglish = locale === 'en';
-  const langKey = isEnglish ? 'en' : 'bn';
+  const isEnglish = locale === 'bn';
+  const langKey = isEnglish ? 'bn' : 'en';
 
   // Animation frame function for smooth marquee
   const animate = useCallback((timestamp: number) => {
