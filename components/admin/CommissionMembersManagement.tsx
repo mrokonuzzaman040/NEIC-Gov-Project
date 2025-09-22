@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { 
   PlusIcon, 
   PencilIcon, 
@@ -16,16 +17,19 @@ import {
 
 interface CommissionMember {
   id: string;
-  nameEn: string;
-  nameBn: string;
-  designationEn: string;
-  designationBn: string;
-  descriptionEn: string;
-  descriptionBn: string;
-  email: string;
-  phone: string;
+  serial_no: number;
+  name_english: string;
+  name_bengali: string;
+  role_type: string;
+  designation_english: string;
+  designation_bengali: string;
+  department_english?: string;
+  department_bengali?: string;
   image?: string;
-  serialNo: number;
+  email?: string;
+  phone?: string;
+  description_english?: string;
+  description_bengali?: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -116,11 +120,13 @@ export default function CommissionMembersManagement() {
   // Filter members based on search
   const filteredMembers = members.filter(member => 
     searchTerm === '' || 
-    member.nameEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.nameBn.includes(searchTerm) ||
-    member.designationEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.designationBn.includes(searchTerm) ||
-    member.email.toLowerCase().includes(searchTerm.toLowerCase())
+    member.name_english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    member.name_bengali.includes(searchTerm) ||
+    member.designation_english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    member.designation_bengali.includes(searchTerm) ||
+    (member.email && member.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (member.phone && member.phone.includes(searchTerm)) ||
+    (member.department_english && member.department_english.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   if (isLoading) {
@@ -194,19 +200,45 @@ export default function CommissionMembersManagement() {
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                    <UserGroupIcon className="h-6 w-6 text-white" />
-                  </div>
+                  {member.image ? (
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-700">
+                      <Image 
+                        src={member.image || '/placeholder-avatar.png'} 
+                        alt={member.name_english}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          // Fallback to icon if image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `<div class="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center"><svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>`;
+                          }
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                      <UserGroupIcon className="h-6 w-6 text-white" />
+                    </div>
+                  )}
                   <div>
                     <div className="flex items-center space-x-2">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
                         <IdentificationIcon className="h-3 w-3 mr-1" />
-                        #{member.serialNo}
+                        #{member.serial_no}
                       </span>
-                      {member.designationEn === 'Chairman' && (
+                      {member.role_type === 'commission_member' && member.designation_english === 'Chairman' && (
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300">
                           <StarIcon className="h-3 w-3 mr-1" />
                           Chairman
+                        </span>
+                      )}
+                      {member.role_type === 'secretarial_support' && (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+                          Support Staff
                         </span>
                       )}
                       {!member.isActive && (
@@ -247,39 +279,50 @@ export default function CommissionMembersManagement() {
               <div className="space-y-3">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-                    {member.nameEn}
+                    {member.name_english}
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">
-                    {member.nameBn}
+                    {member.name_bengali}
                   </p>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    {member.designationEn}
+                    {member.designation_english}
                   </p>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    {member.designationBn}
+                    {member.designation_bengali}
                   </p>
+                  {member.department_english && (
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                      {member.department_english}
+                    </p>
+                  )}
                 </div>
 
-                <p className="text-sm text-slate-700 dark:text-slate-300">
-                  {member.descriptionEn.substring(0, 120)}...
-                </p>
+                {member.description_english && (
+                  <p className="text-sm text-slate-700 dark:text-slate-300">
+                    {member.description_english.substring(0, 120)}...
+                  </p>
+                )}
 
                 <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <EnvelopeIcon className="h-4 w-4 text-slate-400" />
-                    <a href={`mailto:${member.email}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
-                      {member.email}
-                    </a>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <PhoneIcon className="h-4 w-4 text-slate-400" />
-                    <a href={`tel:${member.phone}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
-                      {member.phone}
-                    </a>
-                  </div>
+                  {member.email && (
+                    <div className="flex items-center space-x-2">
+                      <EnvelopeIcon className="h-4 w-4 text-slate-400" />
+                      <a href={`mailto:${member.email}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
+                        {member.email}
+                      </a>
+                    </div>
+                  )}
+                  {member.phone && (
+                    <div className="flex items-center space-x-2">
+                      <PhoneIcon className="h-4 w-4 text-slate-400" />
+                      <a href={`tel:${member.phone}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
+                        {member.phone}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

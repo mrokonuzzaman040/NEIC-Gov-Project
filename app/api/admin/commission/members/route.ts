@@ -37,11 +37,13 @@ export async function GET(request: NextRequest) {
     const where: any = {};
     if (search) {
       where.OR = [
-        { nameEn: { contains: search, mode: 'insensitive' } },
-        { nameBn: { contains: search, mode: 'insensitive' } },
-        { designationEn: { contains: search, mode: 'insensitive' } },
-        { designationBn: { contains: search, mode: 'insensitive' } },
+        { name_english: { contains: search, mode: 'insensitive' } },
+        { name_bengali: { contains: search, mode: 'insensitive' } },
+        { designation_english: { contains: search, mode: 'insensitive' } },
+        { designation_bengali: { contains: search, mode: 'insensitive' } },
+        { department_english: { contains: search, mode: 'insensitive' } },
         { email: { contains: search, mode: 'insensitive' } },
+        { phone: { contains: search, mode: 'insensitive' } },
       ];
     }
 
@@ -50,7 +52,7 @@ export async function GET(request: NextRequest) {
         where,
         skip,
         take: limit,
-        orderBy: { serialNo: 'asc' },
+        orderBy: { serial_no: 'asc' },
       }),
       prisma.commissionMember.count({ where }),
     ]);
@@ -80,45 +82,54 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const {
-      nameEn,
-      nameBn,
-      designationEn,
-      designationBn,
-      descriptionEn,
-      descriptionBn,
+      serial_no,
+      name_english,
+      name_bengali,
+      role_type,
+      designation_english,
+      designation_bengali,
+      department_english,
+      department_bengali,
+      image,
       email,
       phone,
-      image,
-      serialNo,
+      description_english,
+      description_bengali,
       isActive,
     } = body;
 
     // Validate required fields
-    if (!nameEn || !nameBn || !designationEn || !designationBn || !descriptionEn || !descriptionBn || !serialNo) {
+    if (!name_english || !name_bengali || !designation_english || !designation_bengali || !serial_no) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Check if serial number already exists
-    const existingMember = await prisma.commissionMember.findUnique({
-      where: { serialNo: parseInt(serialNo) },
+    // Check if serial number already exists for the same role type
+    const existingMember = await prisma.commissionMember.findFirst({
+      where: { 
+        serial_no: parseInt(serial_no),
+        role_type: role_type || 'commission_member'
+      },
     });
 
     if (existingMember) {
-      return NextResponse.json({ error: 'Serial number already exists' }, { status: 400 });
+      return NextResponse.json({ error: 'Serial number already exists for this role type' }, { status: 400 });
     }
 
     const member = await prisma.commissionMember.create({
       data: {
-        nameEn,
-        nameBn,
-        designationEn,
-        designationBn,
-        descriptionEn,
-        descriptionBn,
+        serial_no: serial_no || 1,
+        name_english,
+        name_bengali,
+        role_type: role_type || 'commission_member',
+        designation_english,
+        designation_bengali,
+        department_english,
+        department_bengali,
+        image,
         email,
         phone,
-        image,
-        serialNo: parseInt(serialNo),
+        description_english,
+        description_bengali,
         isActive: isActive !== undefined ? isActive : true,
         createdBy: session.user.email,
       },
@@ -156,13 +167,16 @@ export async function PUT(request: NextRequest) {
     }
 
     // If serial number is being updated, check for uniqueness
-    if (updateData.serialNo && updateData.serialNo !== existingMember.serialNo) {
-      const serialExists = await prisma.commissionMember.findUnique({
-        where: { serialNo: parseInt(updateData.serialNo) },
+    if (updateData.serial_no && updateData.serial_no !== existingMember.serial_no) {
+      const serialExists = await prisma.commissionMember.findFirst({
+        where: { 
+          serial_no: parseInt(updateData.serial_no),
+          role_type: updateData.role_type || existingMember.role_type
+        },
       });
 
       if (serialExists) {
-        return NextResponse.json({ error: 'Serial number already exists' }, { status: 400 });
+        return NextResponse.json({ error: 'Serial number already exists for this role type' }, { status: 400 });
       }
     }
 
@@ -170,7 +184,7 @@ export async function PUT(request: NextRequest) {
       where: { id },
       data: {
         ...updateData,
-        serialNo: updateData.serialNo ? parseInt(updateData.serialNo) : undefined,
+        serial_no: updateData.serial_no ? parseInt(updateData.serial_no) : undefined,
         updatedBy: session.user.email,
       },
     });

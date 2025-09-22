@@ -41,13 +41,13 @@ export async function GET(request: NextRequest) {
     }
     if (search) {
       where.OR = [
-        { nameEn: { contains: search, mode: 'insensitive' } },
-        { nameBn: { contains: search, mode: 'insensitive' } },
-        { positionEn: { contains: search, mode: 'insensitive' } },
-        { positionBn: { contains: search, mode: 'insensitive' } },
-        { departmentEn: { contains: search, mode: 'insensitive' } },
-        { departmentBn: { contains: search, mode: 'insensitive' } },
-        { email: { contains: search, mode: 'insensitive' } },
+        { name_english: { contains: search, mode: 'insensitive' } },
+        { name_bangla: { contains: search, mode: 'insensitive' } },
+        { designation_english: { contains: search, mode: 'insensitive' } },
+        { designation_bangla: { contains: search, mode: 'insensitive' } },
+        { department: { contains: search, mode: 'insensitive' } },
+        { mobile: { contains: search, mode: 'insensitive' } },
+        { telephone: { contains: search, mode: 'insensitive' } },
       ];
     }
 
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
         where,
         skip,
         take: limit,
-        orderBy: { order: 'asc' },
+        orderBy: { serial_no: 'asc' },
       }),
       prisma.commissionOfficial.count({ where }),
     ]);
@@ -86,50 +86,38 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const {
-      nameEn,
-      nameBn,
-      positionEn,
-      positionBn,
-      departmentEn,
-      departmentBn,
-      descriptionEn,
-      descriptionBn,
-      email,
-      phone,
-      experienceEn,
-      experienceBn,
-      qualificationEn,
-      qualificationBn,
-      image,
+      serial_no,
+      name_english,
+      name_bangla,
+      designation_english,
+      designation_bangla,
+      department,
+      telephone,
+      mobile,
+      room_no,
       category,
-      order,
+      image,
       isActive,
     } = body;
 
     // Validate required fields
-    if (!nameEn || !nameBn || !positionEn || !positionBn || !departmentEn || !departmentBn) {
+    if (!name_english || !name_bangla || !designation_english || !designation_bangla || !department || !mobile) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     const official = await prisma.commissionOfficial.create({
       data: {
-        nameEn,
-        nameBn,
-        positionEn,
-        positionBn,
-        departmentEn,
-        departmentBn,
-        descriptionEn,
-        descriptionBn,
-        email,
-        phone,
-        experienceEn,
-        experienceBn,
-        qualificationEn,
-        qualificationBn,
+        serial_no: serial_no || 1,
+        name_english,
+        name_bangla,
+        designation_english,
+        designation_bangla,
+        department,
+        telephone,
+        mobile,
+        room_no,
+        category: category || 'Chief_and_Members',
         image,
-        category: category || 'SECRETARIAT',
-        order: order || 0,
         isActive: isActive !== undefined ? isActive : true,
         createdBy: session.user.email,
       },
@@ -170,7 +158,7 @@ export async function PUT(request: NextRequest) {
       where: { id },
       data: {
         ...updateData,
-        order: updateData.order ? parseInt(updateData.order) : undefined,
+        serial_no: updateData.serial_no ? parseInt(updateData.serial_no) : undefined,
         updatedBy: session.user.email,
       },
     });
