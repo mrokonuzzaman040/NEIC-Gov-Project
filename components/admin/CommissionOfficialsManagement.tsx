@@ -228,115 +228,176 @@ export default function CommissionOfficialsManagement() {
         </div>
       )}
 
-      {/* Officials List */}
-      <div className="space-y-4">
-        {filteredOfficials.map((official) => (
-          <div key={official.id} className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
-            <div className="p-6">
-              <div className="flex items-start justify-between">
-                <div className="flex items-start space-x-4 flex-1">
-                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <UsersIcon className="h-6 w-6 text-white" />
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-                        {official.name_english}
-                      </h3>
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryBadgeColor(official.category)}`}>
-                        {official.category.replace('_', ' & ')}
+      {/* Officials List - Grouped by Category */}
+      <div className="space-y-8">
+        {(() => {
+          // Group officials by category
+          const groupedOfficials = filteredOfficials.reduce((acc, official) => {
+            const category = official.category;
+            if (!acc[category]) {
+              acc[category] = [];
+            }
+            acc[category].push(official);
+            return acc;
+          }, {} as Record<string, CommissionOfficial[]>);
+
+          // Sort categories for consistent display
+          const categoryOrder = [
+            'Chief_and_Members',
+            'Cabinet Division',
+            'Law and Justice Division',
+            'National Parliament Secretariat',
+            'Statistics and Information Management Division',
+            'Election Commission Secretariat'
+          ];
+
+          return categoryOrder.map(category => {
+            const officials = groupedOfficials[category];
+            if (!officials || officials.length === 0) return null;
+
+            return (
+              <div key={category} className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                {/* Category Header */}
+                <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getCategoryBadgeColor(category)}`}>
+                        {category.replace('_', ' & ')}
                       </span>
-                      {!official.isActive && (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300">
-                          Inactive
-                        </span>
-                      )}
-                    </div>
-                    
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">
-                      {official.name_bangla}
-                    </p>
-                    
-                    <div className="flex items-center space-x-2 mb-3">
-                      <div className="flex items-center space-x-1">
-                        <BriefcaseIcon className="h-4 w-4 text-slate-400" />
-                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                          {official.designation_english}
-                        </span>
-                      </div>
-                      <span className="text-slate-400">•</span>
-                      <div className="flex items-center space-x-1">
-                        <BuildingOfficeIcon className="h-4 w-4 text-slate-400" />
-                        <span className="text-sm text-slate-600 dark:text-slate-400">
-                          {official.department}
-                        </span>
-                      </div>
-                      {official.room_no && (
-                        <>
-                          <span className="text-slate-400">•</span>
-                          <div className="flex items-center space-x-1">
-                            <BuildingOfficeIcon className="h-4 w-4 text-slate-400" />
-                            <span className="text-sm text-slate-600 dark:text-slate-400">
-                              Room: {official.room_no}
-                            </span>
-                          </div>
-                        </>
-                      )}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                      {official.telephone && (
-                        <div className="flex items-center space-x-2">
-                          <PhoneIcon className="h-4 w-4 text-slate-400" />
-                          <a href={`tel:${official.telephone}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
-                            {official.telephone}
-                          </a>
-                        </div>
-                      )}
-                      <div className="flex items-center space-x-2">
-                        <PhoneIcon className="h-4 w-4 text-slate-400" />
-                        <a href={`tel:${official.mobile}`} className="text-sm text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400">
-                          {official.mobile}
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
-                        Serial: {official.serial_no}
+                      <span className="text-sm text-slate-600 dark:text-slate-400">
+                        {officials.length} official{officials.length !== 1 ? 's' : ''}
                       </span>
                     </div>
                   </div>
                 </div>
-                
-                <div className="flex items-center space-x-2 ml-4">
-                  <button
-                    onClick={() => handleEditOfficial(official.id)}
-                    className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 p-1"
-                    title="Edit Official"
-                  >
-                    <PencilIcon className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => handleToggleActive(official.id)}
-                    className={`p-1 ${official.isActive ? 'text-green-600 dark:text-green-400' : 'text-slate-400 hover:text-green-600 dark:hover:text-green-400'}`}
-                    title={official.isActive ? 'Deactivate' : 'Activate'}
-                  >
-                    <EyeIcon className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteOfficial(official.id)}
-                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 p-1"
-                    title="Delete Official"
-                  >
-                    <TrashIcon className="h-4 w-4" />
-                  </button>
+
+                {/* Table */}
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-50 dark:bg-slate-700">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Serial
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Name (English)
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Name (Bengali)
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Designation
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Department
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Room
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Contact
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                      {officials.map((official) => (
+                        <tr key={official.id} className="hover:bg-slate-50 dark:hover:bg-slate-700">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">
+                            {official.serial_no}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                              {official.name_english}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-slate-600 dark:text-slate-400">
+                              {official.name_bangla}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-slate-900 dark:text-slate-100">
+                              {official.designation_english}
+                            </div>
+                            <div className="text-xs text-slate-500 dark:text-slate-400">
+                              {official.designation_bangla}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-slate-600 dark:text-slate-400">
+                              {official.department}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-slate-600 dark:text-slate-400">
+                              {official.room_no || '-'}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="space-y-1">
+                              {official.telephone && (
+                                <div className="text-sm">
+                                  <a href={`tel:${official.telephone}`} className="text-slate-600 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400">
+                                    📞 {official.telephone}
+                                  </a>
+                                </div>
+                              )}
+                              <div className="text-sm">
+                                <a href={`tel:${official.mobile}`} className="text-slate-600 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400">
+                                  📱 {official.mobile}
+                                </a>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              official.isActive 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300'
+                                : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
+                            }`}>
+                              {official.isActive ? 'Active' : 'Inactive'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={() => handleEditOfficial(official.id)}
+                                className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 p-1"
+                                title="Edit Official"
+                              >
+                                <PencilIcon className="h-4 w-4" />
+                              </button>
+                              <button
+                                onClick={() => handleToggleActive(official.id)}
+                                className={`p-1 ${official.isActive ? 'text-green-600 dark:text-green-400' : 'text-slate-400 hover:text-green-600 dark:hover:text-green-400'}`}
+                                title={official.isActive ? 'Deactivate' : 'Activate'}
+                              >
+                                <EyeIcon className="h-4 w-4" />
+                              </button>
+                              <button
+                                onClick={() => handleDeleteOfficial(official.id)}
+                                className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 p-1"
+                                title="Delete Official"
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            );
+          }).filter(Boolean);
+        })()}
       </div>
 
       {filteredOfficials.length === 0 && (
