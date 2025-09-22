@@ -308,6 +308,7 @@ model CommissionOfficial {
   mobile              String   @default("")
   room_no             String?
   category            String   @default("Chief_and_Members")
+  image               String?
   isActive            Boolean  @default(true)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt

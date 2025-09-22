@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { 
   PlusIcon, 
   PencilIcon, 
@@ -27,6 +28,7 @@ interface CommissionOfficial {
   mobile: string;
   room_no?: string;
   category: 'Chief_and_Members' | 'Cabinet Division' | 'Law and Justice Division' | 'National Parliament Secretariat' | 'Statistics and Information Management Division' | 'Election Commission Secretariat';
+  image?: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -312,8 +314,36 @@ export default function CommissionOfficialsManagement() {
                             {official.serial_no}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                              {official.name_english}
+                            <div className="flex items-center space-x-3">
+                              {official.image ? (
+                                <div className="w-8 h-8 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-700">
+                                  <Image 
+                                    src={official.image || '/placeholder-avatar.png'} 
+                                    alt={official.name_english}
+                                    width={32}
+                                    height={32}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      // Fallback to icon if image fails to load
+                                      const target = e.target as HTMLImageElement;
+                                      target.style.display = 'none';
+                                      const parent = target.parentElement;
+                                      if (parent) {
+                                        parent.innerHTML = `<div class="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center"><svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg></div>`;
+                                      }
+                                    }}
+                                  />
+                                </div>
+                              ) : (
+                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                                  <UsersIcon className="h-4 w-4 text-white" />
+                                </div>
+                              )}
+                              <div>
+                                <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                                  {official.name_english}
+                                </div>
+                              </div>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">

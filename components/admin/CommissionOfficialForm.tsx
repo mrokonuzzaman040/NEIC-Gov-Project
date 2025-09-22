@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { 
   UserIcon,
   BriefcaseIcon,
@@ -8,7 +9,9 @@ import {
   PhoneIcon,
   DocumentTextIcon,
   CheckIcon,
-  XMarkIcon
+  XMarkIcon,
+  PhotoIcon,
+  TrashIcon
 } from '@heroicons/react/24/outline';
 
 interface CommissionOfficialFormProps {
@@ -27,6 +30,7 @@ interface CommissionOfficial {
   mobile: string;
   room_no?: string;
   category: string;
+  image?: string;
   isActive: boolean;
 }
 
@@ -44,6 +48,8 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   
   const [formData, setFormData] = useState<CommissionOfficial>({
     serial_no: 1,
@@ -56,6 +62,7 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
     mobile: '',
     room_no: '',
     category: 'Chief_and_Members',
+    image: '',
     isActive: true,
   });
 
@@ -69,6 +76,7 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
           if (response.ok) {
             const data = await response.json();
             setFormData(data.official);
+            setImagePreview(data.official.image || null);
           } else {
             setMessage({ type: 'error', text: 'Failed to load official data' });
           }
@@ -87,6 +95,59 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : 
               type === 'number' ? parseInt(value) || 0 : value
     }));
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type and size
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+
+    if (!allowedTypes.includes(file.type)) {
+      setMessage({ type: 'error', text: 'Invalid file type. Only JPEG, PNG, WebP, and GIF files are allowed.' });
+      return;
+    }
+
+    if (file.size > maxSize) {
+      setMessage({ type: 'error', text: 'File size too large. Maximum size is 10MB.' });
+      return;
+    }
+
+    setIsUploading(true);
+    setMessage(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'officials');
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setFormData(prev => ({ ...prev, image: result.url }));
+        setImagePreview(result.url);
+        setMessage({ type: 'success', text: 'Image uploaded successfully!' });
+      } else {
+        const error = await response.json();
+        setMessage({ type: 'error', text: error.error || 'Failed to upload image' });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Network error. Please try again.' });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData(prev => ({ ...prev, image: '' }));
+    setImagePreview(null);
+    setMessage({ type: 'success', text: 'Image removed successfully!' });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -170,6 +231,68 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
               </div>
             </div>
           )}
+
+          {/* Image Upload */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100 flex items-center">
+              <PhotoIcon className="h-5 w-5 mr-2" />
+              Profile Image
+            </h3>
+            
+            <div className="flex items-center space-x-6">
+              {/* Image Preview */}
+              <div className="flex-shrink-0">
+                {imagePreview || formData.image ? (
+                  <div className="relative">
+                    <Image
+                      src={imagePreview || formData.image || '/placeholder-avatar.png'}
+                      alt="Profile preview"
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 rounded-full object-cover border-2 border-slate-200 dark:border-slate-600"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                      title="Remove image"
+                    >
+                      <TrashIcon className="h-3 w-3" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="w-20 h-20 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center border-2 border-dashed border-slate-300 dark:border-slate-600">
+                    <PhotoIcon className="h-8 w-8 text-slate-400" />
+                  </div>
+                )}
+              </div>
+
+              {/* Upload Controls */}
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Upload Profile Image
+                </label>
+                <div className="flex items-center space-x-4">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={isUploading}
+                    className="block w-full text-sm text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/20 dark:file:text-blue-300 disabled:opacity-50"
+                  />
+                  {isUploading && (
+                    <div className="flex items-center text-sm text-slate-600 dark:text-slate-400">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
+                      Uploading...
+                    </div>
+                  )}
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  Supported formats: JPEG, PNG, WebP, GIF (max 10MB)
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* Basic Information */}
           <div className="space-y-4">

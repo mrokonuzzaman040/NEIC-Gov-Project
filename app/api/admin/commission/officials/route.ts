@@ -96,6 +96,7 @@ export async function POST(request: NextRequest) {
       mobile,
       room_no,
       category,
+      image,
       isActive,
     } = body;
 
@@ -116,6 +117,7 @@ export async function POST(request: NextRequest) {
         mobile,
         room_no,
         category: category || 'Chief_and_Members',
+        image,
         isActive: isActive !== undefined ? isActive : true,
         createdBy: session.user.email,
       },
