@@ -167,26 +167,6 @@ export default async function InternalServerError() {
                 </li>
               </ul>
             </div>
-            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6">
-              <h4 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z" />
-                </svg>
-                Need immediate help?
-              </h4>
-              <p className="text-sm text-green-700 dark:text-green-400 mb-3">
-                Contact our support team for immediate assistance.
-              </p>
-              <Link 
-                href={`/${locale}/reporting`}
-                className="inline-flex items-center text-green-600 dark:text-green-400 hover:underline font-medium text-sm"
-              >
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Go to reporting page
-              </Link>
-            </div>
           </div>
 
           {/* Important Notice */}
