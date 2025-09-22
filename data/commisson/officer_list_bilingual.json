@@ -1,0 +1,211 @@
+{
+    "source": "name list of officer niec english.docx",
+    "updated": "2025-09-22",
+    "Chief_and_Members": [
+      {
+        "serial_no": 1,
+        "name_english": "Justice Shamim Hasnain",
+        "name_bangla": "জাস্টিস শামীম হাসনাইন",
+        "designation_english": "Chairman",
+        "designation_bangla": "চেয়ারম্যান",
+        "room_no": "38 (Ka) & 38 (Kha)",
+        "telephone": "02222215644",
+        "mobile": "01711532635"
+      },
+      {
+        "serial_no": 2,
+        "name_english": "Shameem Al Mamun",
+        "name_bangla": "শামীম আল মামুন",
+        "designation_english": "Member",
+        "designation_bangla": "সদস্য",
+        "room_no": "41",
+        "telephone": "02222215637",
+        "mobile": "01755505353"
+      },
+      {
+        "serial_no": 3,
+        "name_english": "Quazi Mahfujul Hoque Supan",
+        "name_bangla": "কাজী মাহফুজুল হক সোপান",
+        "designation_english": "Member",
+        "designation_bangla": "সদস্য",
+        "room_no": "43",
+        "telephone": "02222215641",
+        "mobile": "01720090006"
+      },
+      {
+        "serial_no": 4,
+        "name_english": "Barrister Tajriyaan Akram Hussain",
+        "name_bangla": "ব্যারিস্টার তাজরিয়ান আক্রম হুসেইন",
+        "designation_english": "Member",
+        "designation_bangla": "সদস্য",
+        "room_no": "40",
+        "telephone": "02222215643",
+        "mobile": "01799900326"
+      },
+      {
+        "serial_no": 5,
+        "name_english": "Dr. Md. Abdul Alim",
+        "name_bangla": "ড. মো. আব্দুল আলিম",
+        "designation_english": "Member",
+        "designation_bangla": "সদস্য",
+        "room_no": "44",
+        "telephone": "02222215639",
+        "mobile": "01733568044"
+      }
+    ],
+    "Officials_and_Employees": {
+      "Cabinet Division": [
+        {
+          "serial_no": 1,
+          "name_english": "S. M. Majharul Islam",
+          "name_bangla": "এস. এম. মজহারুল ইসলাম",
+          "designation_english": "Joint Secretary",
+          "designation_bangla": "যুগ্ম সচিব",
+          "telephone": "02222215640",
+          "mobile": "01816509102"
+        },
+        {
+          "serial_no": 2,
+          "name_english": "Md. Masud Parvez Majumder",
+          "name_bangla": "মো. মাসুদ পারভেজ মজুমদার",
+          "designation_english": "Deputy Secretary",
+          "designation_bangla": "উপসচিব",
+          "telephone": "02222215630",
+          "mobile": "01715404848"
+        },
+        {
+          "serial_no": 3,
+          "name_english": "Md. Masbaul Hossain",
+          "name_bangla": "মো. মসবাউল হোসেন",
+          "designation_english": "Senior Assistant Secretary",
+          "designation_bangla": "সিনিয়র সহকারী সচিব",
+          "telephone": "02222215642",
+          "mobile": "01711156369"
+        }
+      ],
+      "Law and Justice Division": [
+        {
+          "serial_no": 1,
+          "name_english": "Md. Nurul Afsar",
+          "name_bangla": "মো. নুরুল আফসার",
+          "designation_english": "Joint District and Sessions Judge",
+          "designation_bangla": "যুগ্ম জেলা ও দায়রা জজ",
+          "telephone": "02222215636",
+          "mobile": "01751947776"
+        },
+        {
+          "serial_no": 2,
+          "name_english": "Mahmudul Islam",
+          "name_bangla": "মাহমুদুল ইসলাম",
+          "designation_english": "Joint District and Sessions Judge",
+          "designation_bangla": "যুগ্ম জেলা ও দায়রা জজ",
+          "telephone": "02222215638",
+          "mobile": "01818073454"
+        },
+        {
+          "serial_no": 3,
+          "name_english": "Md. Soyebur Rahman",
+          "name_bangla": "মো. সয়েবুর রহমান",
+          "designation_english": "Senior Assistant Judge",
+          "designation_bangla": "সিনিয়র সহকারী বিচারক",
+          "mobile": "01717743648"
+        }
+      ],
+      "National Parliament Secretariat": [
+        {
+          "serial_no": 1,
+          "name_english": "Md. Ali Akbor",
+          "name_bangla": "মো. আলী আকবর",
+          "designation_english": "Deputy Director, Research and Education",
+          "designation_bangla": "উপ-পরিচালক, গবেষণা ও শিক্ষা",
+          "telephone": "02222215646",
+          "mobile": "01550446684"
+        },
+        {
+          "serial_no": 2,
+          "name_english": "Mr. Md. Mostafizur Rahman",
+          "name_bangla": "জনাব মো. মোস্তাফিজুর রহমান",
+          "designation_english": "System Analyst",
+          "designation_bangla": "সিস্টেম অ্যানালিস্ট",
+          "mobile": "01553500298"
+        }
+      ],
+      "Statistics and Information Management Division": [
+        {
+          "serial_no": 1,
+          "name_english": "Mohammad Azizul Islam",
+          "name_bangla": "মোহাম্মদ আজিজুল ইসলাম",
+          "designation_english": "Research Officer",
+          "designation_bangla": "গবেষণা কর্মকর্তা",
+          "telephone": "02222215645",
+          "mobile": "01718321605"
+        },
+        {
+          "serial_no": 2,
+          "name_english": "Mohammad Waliur Rahman",
+          "name_bangla": "মোহাম্মদ ওয়ালিউর রহমান",
+          "designation_english": "Research Officer",
+          "designation_bangla": "গবেষণা কর্মকর্তা",
+          "mobile": "01750147957"
+        },
+        {
+          "serial_no": 3,
+          "name_english": "Amir Mohammad Imon",
+          "name_bangla": "আমির মোহাম্মদ ইমন",
+          "designation_english": "Research Officer",
+          "designation_bangla": "গবেষণা কর্মকর্তা",
+          "mobile": "01719197809"
+        }
+      ],
+      "Election Commission Secretariat": [
+        {
+          "serial_no": 1,
+          "name_english": "Mohammad Hasanuzzaman",
+          "name_bangla": "মোহাম্মদ হাসানুজ্জামান",
+          "designation_english": "Director",
+          "designation_bangla": "পরিচালক",
+          "mobile": "01711387783"
+        },
+        {
+          "serial_no": 2,
+          "name_english": "Md. Mahbub Alam Shah",
+          "name_bangla": "মো. মাহবুব আলম শাহ",
+          "designation_english": "Deputy Secretary",
+          "designation_bangla": "উপসচিব",
+          "mobile": "01716271898"
+        },
+        {
+          "serial_no": 3,
+          "name_english": "Md. Rafiqul Islam",
+          "name_bangla": "মো. রফিকুল ইসলাম",
+          "designation_english": "Deputy Secretary",
+          "designation_bangla": "উপসচিব",
+          "mobile": "01816379568"
+        },
+        {
+          "serial_no": 4,
+          "name_english": "Mohammad Enamul Haq",
+          "name_bangla": "মোহাম্মদ এনামুল হক",
+          "designation_english": "Deputy Secretary",
+          "designation_bangla": "উপসচিব",
+          "mobile": "01712609511"
+        },
+        {
+          "serial_no": 5,
+          "name_english": "Mahbub Roman Chowdhury",
+          "name_bangla": "মাহবুব রোমান চৌধুরী",
+          "designation_english": "Assistant Secretary",
+          "designation_bangla": "সহকারী সচিব",
+          "mobile": "01745728345"
+        },
+        {
+          "serial_no": 6,
+          "name_english": "Maliha Mustafij",
+          "name_bangla": "মালিহা মুস্তাফিজ",
+          "designation_english": "Assistant Programmer",
+          "designation_bangla": "সহকারী প্রোগ্রামার",
+          "mobile": "01684422703"
+        }
+      ]
+    }
+  }
