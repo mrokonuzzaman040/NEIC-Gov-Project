@@ -10,21 +10,24 @@ export async function GET() {
       },
       select: {
         id: true,
-        nameEn: true,
-        nameBn: true,
-        designationEn: true,
-        designationBn: true,
-        descriptionEn: true,
-        descriptionBn: true,
+        serial_no: true,
+        name_english: true,
+        name_bengali: true,
+        role_type: true,
+        designation_english: true,
+        designation_bengali: true,
+        department_english: true,
+        department_bengali: true,
+        description_english: true,
+        description_bengali: true,
         email: true,
         phone: true,
         image: true,
-        serialNo: true,
         isActive: true,
         createdAt: true,
         updatedAt: true
       },
-      orderBy: { serialNo: 'asc' }
+      orderBy: { serial_no: 'asc' }
     });
 
     return NextResponse.json({
