@@ -22,7 +22,7 @@ export async function GET() {
           },
           subtitle: {
             en: "National Elections (2014, 2018, 2024) Inquiry Commission",
-            bn: "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন"
+            bn: "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন"
           },
           description: {
             en: "Learn about our comprehensive service delivery process and how citizens can access various services provided by the National Elections Inquiry Commission.",

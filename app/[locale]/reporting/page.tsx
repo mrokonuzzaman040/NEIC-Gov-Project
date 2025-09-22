@@ -111,7 +111,7 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
                     {isEnglish ? 'Service Process' : 'সেবা গ্রহণের প্রক্রিয়া'}
                   </h1>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 break-words">
-                    {isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission' : 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন'}
+                    {isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission' : 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন'}
                   </p>
                 </div>
               </div>
