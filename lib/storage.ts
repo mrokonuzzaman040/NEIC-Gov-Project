@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto';
 
 // File storage configuration
 const UPLOAD_DIR = process.env.UPLOAD_DIR || './uploads/submissions';
-const MAX_FILE_SIZE_MB = Number(process.env.MAX_UPLOAD_FILE_SIZE_MB ?? '25');
+const MAX_FILE_SIZE_MB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '25');
 const MAX_FILE_SIZE = Math.max(1, MAX_FILE_SIZE_MB) * 1024 * 1024; // fall back to at least 1MB
 
 // Allow-list of extensions mapped to allowed mime-types (all values must be lowercase)
