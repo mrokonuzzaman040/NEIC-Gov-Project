@@ -1,9 +1,25 @@
 import type { Metadata } from 'next';
-import { Noto_Sans } from 'next/font/google';
+import { Noto_Sans, Noto_Sans_Bengali } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 
-const noto = Noto_Sans({ subsets: ['latin'], weight: ['400','500','600','700'] });
+const notoSans = Noto_Sans({ 
+  subsets: ['latin'], 
+  weight: ['400','500','600','700'],
+  display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+  preload: true,
+  adjustFontFallback: false
+});
+
+const notoSansBengali = Noto_Sans_Bengali({ 
+  subsets: ['bengali'], 
+  weight: ['400','500','600','700'],
+  display: 'swap',
+  fallback: ['Kalpurush', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+  preload: true,
+  adjustFontFallback: false
+});
 
 export const metadata: Metadata = {
   title: 'Bangladesh National Elections Inquiry Commission',
@@ -20,7 +36,7 @@ export default function RootLayout({
       <head>
         <Script src="/scripts/theme-init.js" strategy="beforeInteractive" />
       </head>
-      <body className={`${noto.className} watermark-bg`} suppressHydrationWarning>
+      <body className={`${notoSans.className} ${notoSansBengali.className} watermark-bg`} suppressHydrationWarning>
         {children}
       </body>
     </html>
