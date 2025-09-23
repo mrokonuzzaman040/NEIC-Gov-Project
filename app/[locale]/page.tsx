@@ -59,23 +59,17 @@ async function fetchHomepageData() {
 }
 
 async function fetchSliderData() {
-  // In development, try API first, in production use static data primarily
-  if (process.env.NODE_ENV === 'development') {
-    try {
-      const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/public/sliders`, {
-        cache: 'no-store'
-      });
-      if (response.ok) {
-        return await response.json();
-      }
-    } catch (error) {
-      console.error('Error fetching slider data from API:', error);
-    }
+  // Only use API data, no fallback
+  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  const response = await fetch(`${baseUrl}/api/public/sliders`, {
+    cache: 'no-store'
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch slider data: ${response.status}`);
   }
   
-  // Fallback to static data
-  const sliderData = await import('../../data/sliderData.json');
-  return sliderData.default;
+  return await response.json();
 }
 
 export default async function HomePage({ params }: { params: { locale: string } }) {
