@@ -31,14 +31,14 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <div className="text-center mb-6 sm:mb-8">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 break-words">
-              {isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন সম্পর্কে' : 'About the National Elections Inquiry Commission'}
+              {isBengali ? 'আমাদের মিশন' : 'Our Mission'}
             </h1>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            {/* <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               {isBengali 
                 ? 'বাংলাদেশের গণতান্ত্রিক প্রক্রিয়া শক্তিশালীকরণ এবং নির্বাচনী ব্যবস্থার উন্নয়নের লক্ষ্যে গঠিত তদন্ত কমিশন।'
                 : 'An inquiry commission established to strengthen Bangladesh\'s democratic process and improve the electoral system.'
               }
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -85,21 +85,21 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
 
         {/* Mission Statement */}
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
+          {/* <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
             <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 mr-2 sm:mr-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
             {isBengali ? 'আমাদের অঙ্গীকার' : 'Our Commitment'}
-          </h2>
-          <div className="bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6 lg:p-8">
+          </h2> */}
+          <div className="bg-gradient-to-r from-green-50 to-green-50 dark:from-green-900/20 dark:to-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6 lg:p-8">
             <div className="flex items-start space-x-3 sm:space-x-4">
-              <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-red-600 text-white rounded-full flex items-center justify-center mt-1">
+              <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-green-600 text-white rounded-full flex items-center justify-center mt-1">
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h8a2 2 0 002-2V8" />
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm sm:text-base lg:text-lg text-red-800 dark:text-red-200 leading-relaxed break-words font-medium">
+                <p className="text-lg sm:text-base lg:text-xl text-green-800 dark:text-red-200 leading-relaxed break-words font-medium">
                   {commissionMissionData.commitment[langKey]}
                 </p>
               </div>
