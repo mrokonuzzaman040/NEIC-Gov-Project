@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocale } from 'next-intl';
 import GovernmentHeader from '@/components/GovernmentHeader';
 import ShareButtons from '@/components/ShareButtons';
@@ -30,6 +30,7 @@ export default function GalleryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Load gallery items from database
@@ -52,7 +53,7 @@ export default function GalleryPage() {
         
         const data = await response.json();
         setItems(data.items || []);
-        setCategories(['all', ...data.categories] || ['all']);
+        setCategories(['all', ...(data.categories || [])]);
       } catch (error) {
         console.error('Error loading gallery items:', error);
         setError(error instanceof Error ? error.message : 'Failed to load gallery items');
@@ -81,7 +82,9 @@ export default function GalleryPage() {
   };
 
   const openImageModal = (item: GalleryItem) => {
+    const index = items.findIndex(img => img.id === item.id);
     setSelectedImage(item);
+    setSelectedImageIndex(index);
     setIsModalOpen(true);
     // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
@@ -89,27 +92,54 @@ export default function GalleryPage() {
 
   const closeImageModal = () => {
     setSelectedImage(null);
+    setSelectedImageIndex(0);
     setIsModalOpen(false);
     // Restore body scroll
     document.body.style.overflow = 'unset';
   };
 
-  // Handle escape key to close modal
+  const goToNextImage = useCallback(() => {
+    if (items.length === 0) return;
+    const nextIndex = (selectedImageIndex + 1) % items.length;
+    setSelectedImageIndex(nextIndex);
+    setSelectedImage(items[nextIndex]);
+  }, [items, selectedImageIndex]);
+
+  const goToPreviousImage = useCallback(() => {
+    if (items.length === 0) return;
+    const prevIndex = selectedImageIndex === 0 ? items.length - 1 : selectedImageIndex - 1;
+    setSelectedImageIndex(prevIndex);
+    setSelectedImage(items[prevIndex]);
+  }, [items, selectedImageIndex]);
+
+  // Handle keyboard navigation
   useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isModalOpen) {
-        closeImageModal();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isModalOpen) return;
+      
+      switch (event.key) {
+        case 'Escape':
+          closeImageModal();
+          break;
+        case 'ArrowLeft':
+          event.preventDefault();
+          goToPreviousImage();
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          goToNextImage();
+          break;
       }
     };
 
     if (isModalOpen) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, selectedImageIndex, items, goToNextImage, goToPreviousImage]);
 
   return (
     <div className="min-h-screen py-4 sm:py-6 lg:py-8">
@@ -356,6 +386,40 @@ export default function GalleryPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
+
+            {/* Navigation buttons - only show if there are multiple images */}
+            {items.length > 1 && (
+              <>
+                {/* Previous button */}
+                <button
+                  onClick={goToPreviousImage}
+                  className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-60 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 sm:p-3 rounded-full transition-colors"
+                  aria-label={isEnglish ? 'Previous image' : 'পূর্ববর্তী ছবি'}
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Next button */}
+                <button
+                  onClick={goToNextImage}
+                  className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-60 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 sm:p-3 rounded-full transition-colors"
+                  aria-label={isEnglish ? 'Next image' : 'পরবর্তী ছবি'}
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            {/* Image counter */}
+            {items.length > 1 && (
+              <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-60 bg-black bg-opacity-50 text-white px-3 py-1.5 rounded-full text-sm">
+                {selectedImageIndex + 1} / {items.length}
+              </div>
+            )}
 
             {/* Modal content */}
             <div className="max-w-7xl max-h-full w-full h-full flex flex-col items-center justify-center">
