@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocale } from 'next-intl';
 import GovernmentHeader from '@/components/GovernmentHeader';
 import ShareButtons from '@/components/ShareButtons';
@@ -53,7 +53,7 @@ export default function GalleryPage() {
         
         const data = await response.json();
         setItems(data.items || []);
-        setCategories(['all', ...data.categories] || ['all']);
+        setCategories(['all', ...(data.categories || [])]);
       } catch (error) {
         console.error('Error loading gallery items:', error);
         setError(error instanceof Error ? error.message : 'Failed to load gallery items');
@@ -98,19 +98,19 @@ export default function GalleryPage() {
     document.body.style.overflow = 'unset';
   };
 
-  const goToNextImage = () => {
+  const goToNextImage = useCallback(() => {
     if (items.length === 0) return;
     const nextIndex = (selectedImageIndex + 1) % items.length;
     setSelectedImageIndex(nextIndex);
     setSelectedImage(items[nextIndex]);
-  };
+  }, [items, selectedImageIndex]);
 
-  const goToPreviousImage = () => {
+  const goToPreviousImage = useCallback(() => {
     if (items.length === 0) return;
     const prevIndex = selectedImageIndex === 0 ? items.length - 1 : selectedImageIndex - 1;
     setSelectedImageIndex(prevIndex);
     setSelectedImage(items[prevIndex]);
-  };
+  }, [items, selectedImageIndex]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -139,7 +139,7 @@ export default function GalleryPage() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isModalOpen, selectedImageIndex, items]);
+  }, [isModalOpen, selectedImageIndex, items, goToNextImage, goToPreviousImage]);
 
   return (
     <div className="min-h-screen py-4 sm:py-6 lg:py-8">

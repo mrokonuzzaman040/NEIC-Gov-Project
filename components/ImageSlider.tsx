@@ -65,6 +65,7 @@ export default function ImageSlider({
   const [animationProgress, setAnimationProgress] = useState(0);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
+  const pausedProgressRef = useRef<number>(0);
   const isEnglish = locale === 'bn';
   const langKey = isEnglish ? 'bn' : 'en';
 
@@ -89,7 +90,10 @@ export default function ImageSlider({
   // Auto-play functionality for marquee effect
   useEffect(() => {
     if (isPlaying && !isHovered && slides.length > 1) {
-      startTimeRef.current = 0;
+      // Only reset start time if not resuming from hover
+      if (pausedProgressRef.current === 0) {
+        startTimeRef.current = 0;
+      }
       animationRef.current = requestAnimationFrame(animate);
     } else {
       if (animationRef.current) {
@@ -109,13 +113,18 @@ export default function ImageSlider({
   };
 
   const handleMouseEnter = () => {
+    // Store current progress when hovering
+    pausedProgressRef.current = animationProgress;
     setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    // Reset start time to continue from current position
-    startTimeRef.current = 0;
+    // Continue from the paused progress, not from the beginning
+    const currentProgress = pausedProgressRef.current;
+    const totalDuration = autoplayInterval * slides.length * 3;
+    const elapsedTime = currentProgress * totalDuration;
+    startTimeRef.current = performance.now() - elapsedTime;
   };
 
   const formatDate = (dateString: string) => {
@@ -149,7 +158,7 @@ export default function ImageSlider({
           style={{
             width: `${duplicatedSlides.length * 100}%`,
             transform: `translateX(-${animationProgress * 50}%)`,
-            transition: isHovered ? 'none' : 'transform 0.1s linear'
+            transition: isHovered ? 'none' : 'none'
           }}
         >
           {duplicatedSlides.map((slide, index) => (
