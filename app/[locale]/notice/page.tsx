@@ -121,13 +121,13 @@ export default function NoticePage() {
                     {t('title')}
                   </h1>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 break-words">
-                    {isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
+                    {/* {isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'} */}
                   </p>
                 </div>
               </div>
               <div className="text-left sm:text-right flex-shrink-0">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  {isEnglish ? 'Official Notices & Announcements' : 'সরকারি বিজ্ঞপ্তি ও ঘোষণা'}
+                  {isEnglish ? 'Official Notices & Announcements' : 'বিজ্ঞপ্তি ও ঘোষণা'}
                 </p>
                 <p className="text-xs text-gray-400 dark:text-gray-500">
                   {isEnglish ? `Last Updated: ${new Date().toLocaleDateString('en-US').replace(/\//g, '-')}` : `সর্বশেষ আপডেট: ${new Date().toLocaleDateString('bn-BD').replace(/\//g, '-')}`}
@@ -141,7 +141,7 @@ export default function NoticePage() {
         <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-              {isEnglish ? 'Official Notices & Announcements' : 'সরকারি বিজ্ঞপ্তি ও ঘোষণা'}
+              {isEnglish ? 'Official Notices & Announcements' : 'বিজ্ঞপ্তি ও ঘোষণা'}
             </h2>
             <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
               {t('description')}
@@ -150,7 +150,7 @@ export default function NoticePage() {
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 border-l-4 border-blue-600">
             <div className="flex items-center">
               <div className="flex-shrink-0">
@@ -204,7 +204,7 @@ export default function NoticePage() {
               </div>
             </div>
           </div> */}
-        </div>
+        
 
         {/* Loading State */}
         {isLoading && (
@@ -254,7 +254,7 @@ export default function NoticePage() {
                 <span className="truncate">{t('allNotices')}</span>
               </h2>
               <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">
-                {isEnglish ? 'Official notices and announcements from the National Elections Inquiry Commission' : 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশনের সরকারি বিজ্ঞপ্তি ও ঘোষণা'}
+                {isEnglish ? 'Official notices and announcements from the National Elections Inquiry Commission' : 'জাতীয়  নির্বাচন তদন্ত কমিশনের  বিজ্ঞপ্তি ও ঘোষণা'}
               </p>
             </div>
             

@@ -29,7 +29,7 @@
       "image": null,
       "email": "member1@ec.giv.bd",
       "phone": "+880-2-911-1235",
-      "description_bengali": "সরকারি প্রশাসনের অভিজ্ঞ কর্মকর্তা। দীর্ঘদিন ধরে সরকারি সেবায় নিয়োজিত এবং প্রশাসনিক দক্ষতার জন্য পরিচিত।",
+      "description_bengali": " প্রশাসনের অভিজ্ঞ কর্মকর্তা। দীর্ঘদিন ধরে  সেবায় নিয়োজিত এবং প্রশাসনিক দক্ষতার জন্য পরিচিত।",
       "description_english": "Experienced government administrative officer. Has served in government service for many years and is known for administrative expertise."
     },
     {
@@ -104,7 +104,7 @@
       "image": null,
       "email": "deputy.secretary@ec.giv.bd",
       "phone": "+880-2-911-1240",
-      "description_bengali": "মন্ত্রিপরিষদ বিভাগের উপসচিব। সরকারি নীতি ও কার্যক্রম বাস্তবায়নে দক্ষ।",
+      "description_bengali": "মন্ত্রিপরিষদ বিভাগের উপসচিব।  নীতি ও কার্যক্রম বাস্তবায়নে দক্ষ।",
       "description_english": "Deputy Secretary of Cabinet Division. Skilled in implementing government policies and programs."
     },
     {
@@ -129,12 +129,12 @@
       "role_type": "secretarial_support",
       "designation_bengali": "উপ-পরিচালক (গবেষণা ও শিক্ষা)",
       "designation_english": "Deputy Director (Research & Education)",
-      "department_bengali": "বাংলাদেশ জাতীয় সংসদ সচিবালয়",
+      "department_bengali": "বাংলাদেশ জাতীয়  সচিবালয়",
       "department_english": "Bangladesh Parliament Secretariat",
       "image": null,
       "email": "deputy.director@ec.giv.bd",
       "phone": "+880-2-911-1242",
-      "description_bengali": "বাংলাদেশ জাতীয় সংসদ সচিবালয়ের উপ-পরিচালক। গবেষণা ও শিক্ষা কার্যক্রমে বিশেষজ্ঞ।",
+      "description_bengali": "বাংলাদেশ জাতীয়  সচিবালয়ের উপ-পরিচালক। গবেষণা ও শিক্ষা কার্যক্রমে বিশেষজ্ঞ।",
       "description_english": "Deputy Director of Bangladesh Parliament Secretariat. Expert in research and education programs."
     }
   ]

@@ -116,9 +116,9 @@ export default function BlogPage() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isEnglish ? 'Official Blog & Updates' : 'সরকারি ব্লগ ও আপডেট'}
+          title={isEnglish ? 'Official Blog & Updates' : ' ব্লগ ও আপডেট'}
           subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-          portal={isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission' : 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন'}
+          portal={isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission' : 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন'}
           tagline={isEnglish ? `Latest Updates: ${new Date().toLocaleDateString('en-US').replace(/\//g, '-')}` : `সর্বশেষ আপডেট: ${new Date().toLocaleDateString('bn-BD').replace(/\//g, '-')}`}
           borderColor="green"
           iconColor="green"
@@ -179,12 +179,12 @@ export default function BlogPage() {
           <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
             <div className="text-center">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                {isEnglish ? 'Official Blog & Updates' : 'সরকারি ব্লগ ও আপডেট'}
+                {isEnglish ? 'Official Blog & Updates' : ' ব্লগ ও আপডেট'}
               </h2>
               <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
                 {isEnglish 
                   ? 'Stay informed with the latest updates, insights, and official communications from the National Elections Inquiry Commission.'
-                  : 'জাতীয় নির্বাচন তদন্ত কমিশনের সর্বশেষ আপডেট, অন্তর্দৃষ্টি এবং সরকারি যোগাযোগের সাথে অবগত থাকুন।'
+                  : 'জাতীয় নির্বাচন তদন্ত কমিশনের সর্বশেষ আপডেট, অন্তর্দৃষ্টি এবং  যোগাযোগের সাথে অবগত থাকুন।'
                 }
               </p>
             </div>
@@ -329,7 +329,7 @@ export default function BlogPage() {
             <p className="text-green-100 mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base">
               {isEnglish 
                 ? 'Subscribe to our newsletter to receive the latest updates and official communications from the Commission.'
-                : 'কমিশনের সর্বশেষ আপডেট এবং সরকারি যোগাযোগ পেতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন।'
+                : 'কমিশনের সর্বশেষ আপডেট এবং  যোগাযোগ পেতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন।'
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-md mx-auto">

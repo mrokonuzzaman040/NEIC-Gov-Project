@@ -19,8 +19,8 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 lg:py-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
-          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
+          title={isBengali ? 'জাতীয়  নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
+          subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           portal={isBengali ? 'কমিশন সম্পর্কে' : 'About the Commission'}
           tagline={isBengali ? 'আমাদের অঙ্গীকার ও লক্ষ্য' : 'Our Mission & Commitment'}
           borderColor="blue"
@@ -60,7 +60,7 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
               </h3>
               <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 leading-relaxed">
                 {isBengali 
-                  ? 'বিগত তিনটি জাতীয় সংসদ নির্বাচনের নিরপেক্ষ তদন্ত ও বিশ্লেষণ করে ভবিষ্যতের জন্য কার্যকর সুপারিশ প্রদান।'
+                  ? 'বিগত তিনটি জাতীয়  নির্বাচনের নিরপেক্ষ তদন্ত ও বিশ্লেষণ করে ভবিষ্যতের জন্য কার্যকর সুপারিশ প্রদান।'
                   : 'Conduct impartial investigation and analysis of the past three national elections to provide effective recommendations for the future.'
                 }
               </p>
@@ -75,7 +75,7 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
               </h3>
               <p className="text-xs sm:text-sm text-green-800 dark:text-green-200 leading-relaxed">
                 {isBengali 
-                  ? '২০১৪, ২০১৮ এবং ২০২৪ সালের জাতীয় সংসদ নির্বাচনের তদন্ত। প্রতিবেদন জমা: ৩১ অক্টোবর ২০২৫।'
+                  ? '২০১৪, ২০১৮ এবং ২০২৪ সালের জাতীয়  নির্বাচনের তদন্ত। প্রতিবেদন জমা: ৩১ অক্টোবর ২০২৫।'
                   : 'Investigation of 2014, 2018, and 2024 national elections. Report submission: October 31, 2025.'
                 }
               </p>
@@ -161,7 +161,7 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
               </h3>
               <p className="text-yellow-700 dark:text-yellow-300 text-xs sm:text-sm leading-relaxed break-words">
                 {isBengali 
-                  ? 'এই কমিশন সরকারি আদেশের মাধ্যমে গঠিত এবং এর সকল কার্যক্রম আইনি কাঠামোর মধ্যে পরিচালিত হচ্ছে।' 
+                  ? 'এই কমিশন  আদেশের মাধ্যমে গঠিত এবং এর সকল কার্যক্রম আইনি কাঠামোর মধ্যে পরিচালিত হচ্ছে।' 
                   : 'This commission is established through government orders and all its activities are conducted within the legal framework.'
                 }
               </p>

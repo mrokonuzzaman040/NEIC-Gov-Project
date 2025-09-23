@@ -68,7 +68,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
         <GovernmentHeader
           title={isEnglish ? commissionNameEnglish : commissionNameBengali}
           // subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-          portal={isEnglish ? 'Official Website' : 'সরকারি ওয়েবসাইট'}
+          portal={isEnglish ? 'Official Website' : ' ওয়েবসাইট'}
           tagline={isEnglish ? 'Last Updated: September 2024' : 'সর্বশেষ আপডেট: সেপ্টেম্বর ২০২৪'}
           borderColor="green"
           iconColor="green"

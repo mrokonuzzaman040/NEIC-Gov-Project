@@ -183,37 +183,16 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Government Header with Official Seal */}
         <GovernmentHeader
-          title={data.title?.[langKey] || (isEnglish ? 'Contact Us' : 'যোগাযোগ করুন')}
-          subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-          portal={isEnglish ? 'Official Contact Information' : 'সরকারি যোগাযোগের তথ্য'}
+          title={data.title?.[langKey] || (isEnglish ? 'Contact Us' : 'যোগাযোগ')}
+          // subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
+          portal={isEnglish ? 'Official Contact Information' : ' যোগাযোগের তথ্য'}
           tagline={isEnglish ? 'Last Updated: September 2024' : 'সর্বশেষ আপডেট: সেপ্টেম্বর ২০২৪'}
           borderColor="green"
           iconColor="green"
         />
 
-        {/* Description Section */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-              {isEnglish ? 'Contact Information' : 'যোগাযোগের তথ্য'}
-            </h2>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-              {data.description?.[langKey] || (isEnglish ? 'Get in touch with the National Elections Inquiry Commission' : 'জাতীয় নির্বাচন তদন্ত কমিশনের সাথে যোগাযোগ করুন')}
-            </p>
-          </div>
-        </div>
-
         {/* Contact Information Section */}
         <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white flex items-center">
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <span className="truncate">{isEnglish ? 'Official Contact Details' : ' যোগাযোগের বিবরণ'}</span>
-            </h2>
-          </div>
-          
           <div className="p-4 sm:p-6 lg:p-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
               {/* Address Information */}
@@ -234,7 +213,7 @@ export default function ContactPage() {
                         {data.contactInfo?.address?.[langKey]?.organization || (isEnglish ? 'National Elections Inquiry Commission' : 'জাতীয় নির্বাচন তদন্ত কমিশন')}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                        {data.contactInfo?.address?.[langKey]?.location || (isEnglish ? 'Block-2, 6th Floor (West), Jatiya Sangsad Bhaban' : 'ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন')}
+                        {data.contactInfo?.address?.[langKey]?.location || (isEnglish ? 'Block-2, 6th Floor (West), Jatiya Sangsad Bhaban' : 'ব্লক-২, (পশ্চিম), জাতীয় সংসদ ভবন')}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         {data.contactInfo?.address?.[langKey]?.area || (isEnglish ? 'Sher-e-Bangla Nagar' : 'শের-ই-বাংলা নগর')}

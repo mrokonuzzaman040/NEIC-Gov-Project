@@ -225,7 +225,7 @@ export default function SubmitPage() {
               </div>
               <div className="text-left sm:text-right flex-shrink-0">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  {isEnglish ? 'Official Opinion Submission Portal' : 'সরকারি অভিমত জমাদান পোর্টাল'}
+                  {isEnglish ? 'Official Opinion Submission Portal' : ' অভিমত জমাদান পোর্টাল'}
                 </p>
                 <p className="text-xs text-gray-400 dark:text-gray-500">
                   {isEnglish ? 'Secure & Confidential' : 'নিরাপদ ও গোপনীয়'}

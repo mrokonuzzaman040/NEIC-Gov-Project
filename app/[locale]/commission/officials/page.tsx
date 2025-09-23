@@ -62,9 +62,9 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
   
   const departmentNames: Record<string, { en: string; bn: string }> = {
     'Chief_and_Members': { en: 'Commission Chairman & Members', bn: 'কমিশনের প্রধান ও সদস্যবৃন্দ' },
-    'Cabinet Division': { en: 'Cabinet Division', bn: 'ক্যাবিনেট বিভাগ' },
-    'Law and Justice Division': { en: 'Law and Justice Division', bn: 'আইন ও বিচার বিভাগ' },
-    'National Parliament Secretariat': { en: 'National Parliament Secretariat', bn: 'জাতীয় সংসদ সচিবালয়' },
+    'Cabinet Division': { en: 'Cabinet Division', bn: 'কর্মকর্তাবৃন্দ' },
+    'Law and Justice Division': { en: 'Law and Justice Division', bn: 'আইন বিষয়ক কর্মকর্তা' },
+    'National Parliament Secretariat': { en: 'National Parliament Secretariat', bn: 'জাতীয়  সচিবালয়' },
     'Statistics and Information Management Division': { en: 'Statistics and Information Management Division', bn: 'পরিসংখ্যান ও তথ্য ব্যবস্থাপনা বিভাগ' },
     'Election Commission Secretariat': { en: 'Election Commission Secretariat', bn: 'নির্বাচন কমিশন সচিবালয়' }
   };
@@ -85,8 +85,8 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 lg:py-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
-          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
+          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
+          // subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           portal={isBengali ? 'কমিশন কর্মকর্তা' : 'Commission Officials'}
           // tagline={isBengali ? 'কর্মচারী তালিকা' : 'Staff Directory'}
           borderColor="green"
@@ -249,7 +249,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                 </h3>
                 <p className="text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                   {isBengali 
-                    ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন একটি স্বাধীন ও নিরপেক্ষ প্রতিষ্ঠান যা নির্বাচনী প্রক্রিয়ার স্বচ্ছতা ও ন্যায়বিচার নিশ্চিত করার জন্য কাজ করে।'
+                    ? 'জাতীয়  নির্বাচন তদন্ত কমিশন একটি স্বাধীন ও নিরপেক্ষ প্রতিষ্ঠান যা নির্বাচনী প্রক্রিয়ার স্বচ্ছতা ও ন্যায়বিচার নিশ্চিত করার জন্য কাজ করে।'
                     : 'The National Elections Inquiry Commission is an independent and impartial institution working to ensure transparency and justice in the electoral process.'
                   }
                 </p>

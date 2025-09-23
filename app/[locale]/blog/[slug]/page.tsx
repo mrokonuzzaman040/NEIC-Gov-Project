@@ -257,7 +257,7 @@ export default function BlogDetailPage() {
         <GovernmentHeader
           title={isEnglish ? post.titleEn : post.titleBn}
           subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-          portal={isEnglish ? 'Official Blog Post' : 'সরকারি ব্লগ পোস্ট'}
+          portal={isEnglish ? 'Official Blog Post' : ' ব্লগ পোস্ট'}
           tagline={formatDate(post.publishedAt)}
           borderColor="green"
           iconColor="green"

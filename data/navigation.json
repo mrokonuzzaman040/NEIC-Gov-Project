@@ -85,15 +85,6 @@
             },
             "href": "/commission/terms",
             "type": "link"
-          },
-          {
-            "id": "gazettes",
-            "label": {
-              "en": "Gazettes",
-              "bn": "গেজেটসমূহ"
-            },
-            "href": "/commission/gazettes",
-            "type": "link"
           }
         ]
       },
