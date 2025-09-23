@@ -9,7 +9,7 @@
       "bn": "জাতীয় সংসদ নির্বাচন তদন্ত কমিশনের সাথে যোগাযোগ করুন। কমিশনের কাজ ও কার্যক্রম সম্পর্কে আপনার যে কোন প্রশ্ন, উদ্বেগ বা তথ্যের জন্য আমরা এখানে আছি।"
     },
     "contactInfo": {
-      "email": "feedback@neic.ecs.gov.bd",
+      "email": "feedback@neic-bd.org",
       "phone": "+880-2-12345678",
       "fax": "+880-2-12345679",
       "website": "www.neic.ecs.gov.bd",
@@ -22,7 +22,7 @@
           "country": "Bangladesh"
         },
         "bn": {
-          "organization": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন",
+          "organization": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ এবং ২০২৪) তদন্ত কমিশন",
           "location": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন",
           "area": "শের-ই-বাংলা নগর",
           "city": "ঢাকা-১০০০",
@@ -212,7 +212,7 @@
             "en": "Email",
             "bn": "ইমেইল"
           },
-          "value": "feedback@neic.ecs.gov.bd",
+          "value": "feedback@neic-bd.org",
           "description": {
             "en": "Send us an email for general inquiries and feedback",
             "bn": "সাধারণ জিজ্ঞাসা ও মতামতের জন্য আমাদের ইমেইল করুন"
