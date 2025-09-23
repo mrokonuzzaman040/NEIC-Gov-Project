@@ -86,7 +86,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
         {/* Government Header */}
         <GovernmentHeader
           title={isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
-          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
+          subtitle={isBengali ? 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           portal={isBengali ? 'কমিশন কর্মকর্তা' : 'Commission Officials'}
           // tagline={isBengali ? 'কর্মচারী তালিকা' : 'Staff Directory'}
           borderColor="green"

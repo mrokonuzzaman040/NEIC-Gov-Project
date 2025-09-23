@@ -67,7 +67,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
         {/* Government Header with Official Seal */}
         <GovernmentHeader
           title={isEnglish ? commissionNameEnglish : commissionNameBengali}
-          subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
+          // subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
           portal={isEnglish ? 'Official Website' : 'সরকারি ওয়েবসাইট'}
           tagline={isEnglish ? 'Last Updated: September 2024' : 'সর্বশেষ আপডেট: সেপ্টেম্বর ২০২৪'}
           borderColor="green"
@@ -119,9 +119,9 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                 </svg>
                 <span className="truncate">{t('commissionMembers')}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">
+              {/* <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">
                 {isEnglish ? 'Distinguished members appointed to conduct the inquiry' : 'তদন্ত পরিচালনার জন্য নিযুক্ত বিশিষ্ট সদস্যগণ'}
-              </p>
+              </p> */}
             </div>
             
             <div className="p-4 sm:p-6 lg:p-8">
@@ -163,12 +163,12 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                                   {isEnglish ? member.name_english : member.name_bengali}
                                 </h3>
                               </div>
-                              <p className="text-green-600 dark:text-green-400 font-semibold text-sm sm:text-base lg:text-lg mb-2 break-words">
+                              {/* <p className="text-green-600 dark:text-green-400 font-semibold text-sm sm:text-base lg:text-lg mb-2 break-words">
                                 {isEnglish 
                                   ? (member.designation_english || member.designation_bengali)
                                   : member.designation_bengali
                                 }
-                              </p>
+                              </p> */}
                               {member.designation_bengali === 'চেয়ারম্যান' && (
                                 <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs sm:text-sm font-medium rounded-full">
                                   {isEnglish ? 'Chairman' : 'চেয়ারম্যান'}
@@ -190,13 +190,13 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                           </div>
                           
                           {/* Description */}
-                          {(member.description_english || member.description_bengali) && (
+                          {/* {(member.description_english || member.description_bengali) && (
                             <div className="mb-3 sm:mb-4">
                               <p className="text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                                 {isEnglish ? (member.description_english || member.description_bengali) : (member.description_bengali || member.description_english)}
                               </p>
                             </div>
-                          )}
+                          )} */}
                           
                           {/* Contact Information */}
                           <div className="space-y-1.5 sm:space-y-2">
@@ -216,7 +216,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                             )}
                             
                             {/* Phone Contact */}
-                            {member.phone && (
+                            {/* {member.phone && (
                               <div className="flex items-center space-x-2">
                                 <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -228,7 +228,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                                   {member.phone}
                                 </a>
                               </div>
-                            )}
+                            )} */}
                           </div>
                         </div>
                       </div>

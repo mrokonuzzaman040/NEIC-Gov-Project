@@ -93,7 +93,7 @@ export function Hero() {
                 {t('slogans.title')}
               </h3>
               <ul className="space-y-2 sm:space-y-3">
-                {([0,1,2,3]).map(i => (
+                {([0,1,2]).map(i => (
                   <li key={i} className="flex items-start">
                     <div className="flex-shrink-0 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 sm:mt-2 mr-2 sm:mr-3"></div>
                     <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
