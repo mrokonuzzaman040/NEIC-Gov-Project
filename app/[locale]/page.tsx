@@ -101,9 +101,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
         {/* Government Header with Official Seal */}
         <GovernmentHeader
           title={data.header.title[locale as keyof typeof data.header.title]}
-          subtitle={data.header.subtitle[locale as keyof typeof data.header.subtitle]}
-          portal={data.header.portal[locale as keyof typeof data.header.portal]}
-          tagline={data.header.tagline[locale as keyof typeof data.header.tagline]}
+          // subtitle={data.header.subtitle[locale as keyof typeof data.header.subtitle]}
+          // portal={data.header.portal[locale as keyof typeof data.header.portal]}
+          // tagline={data.header.tagline[locale as keyof typeof data.header.tagline]}
           borderColor="green"
           iconColor="green"
         />

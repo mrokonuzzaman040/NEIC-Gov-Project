@@ -23,9 +23,9 @@
         },
         "bn": {
           "organization": "জাতীয়  নির্বাচন (২০১৪, ২০১৮ এবং ২০২৪) তদন্ত কমিশন",
-          "location": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয়  ভবন",
+          "location": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন",
           "area": "শের-ই-বাংলা নগর",
-          "city": "ঢাকা-১০০০",
+          "city": "ঢাকা-১২০৭",
           "country": "বাংলাদেশ"
         }
       }
@@ -148,7 +148,7 @@
           },
           "value": {
             "en": "Jatiya Sangsad Bhaban (National Parliament Building)",
-            "bn": "জাতীয়  ভবন"
+            "bn": "জাতীয় সংসদ ভবন"
           }
         },
         {
@@ -183,7 +183,7 @@
       "instructions": [
         {
           "en": "Take a taxi or ride-sharing service to Jatiya Sangsad Bhaban",
-          "bn": "জাতীয়  ভবনে যাওয়ার জন্য ট্যাক্সি বা রাইড শেয়ারিং সার্ভিস নিন"
+          "bn": "জাতীয় সংসদ ভবনে যাওয়ার জন্য ট্যাক্সি বা রাইড শেয়ারিং সার্ভিস নিন"
         },
         {
           "en": "Nearest metro station: Agargaon (Uttara-Agargaon Line)",
@@ -254,7 +254,7 @@
           "value": "www.neic.ecs.gov.bd",
           "description": {
             "en": "Visit our official website for more information",
-            "bn": "আরও তথ্যের জন্য আমাদের  ওয়েবসাইট দেখুন"
+            "bn": "আরও তথ্যের জন্য আমাদের ওয়েবসাইট দেখুন"
           }
         }
       ]

@@ -218,9 +218,6 @@ export default function SubmitPage() {
                   <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white break-words">
                     {t('form.pageTitle')}
                   </h1>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 break-words">
-                    {isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-                  </p>
                 </div>
               </div>
               <div className="text-left sm:text-right flex-shrink-0">
