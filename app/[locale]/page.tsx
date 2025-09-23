@@ -112,7 +112,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
           <Hero /> 
           {/* Commission Scope & Members Section */}
           <section className="space-y-6 sm:space-y-8">
-            <div className="text-center">
+            {/* <div className="text-center">
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
                 {isEnglish ? 'Commission Information' : 'কমিশনের তথ্য'}
               </h2>
@@ -122,8 +122,11 @@ export default async function HomePage({ params }: { params: { locale: string } 
                   : 'সুষ্ঠু নির্বাচনের জন্য কাজ করা আমাদের কমিশনের কার্যক্ষেত্র, ক্ষমতা এবং নিবেদিত সদস্যদের সম্পর্কে জানুন।'
                 }
               </p>
-            </div>
-            
+            </div> */}
+
+            {/* Horizental Line */}
+            <div className="h-0.5 bg-gray-200 dark:bg-gray-700 my-6"></div>
+
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 sm:gap-8">
               <div className="xl:col-span-3">
                 <CommissionScope />

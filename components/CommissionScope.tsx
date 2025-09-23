@@ -85,31 +85,31 @@ export default function CommissionScope({ className = '' }: CommissionScopeProps
   const tabs = [
     {
       id: 'scope' as const,
-      label: isEnglish ? 'Commission Scope' : 'কমিশনের কার্যক্ষেত্র',
+      label: isEnglish ? 'Commission Scope' : 'কমিশনের কার্যপরিধি',
       icon: (
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       )
     },
-    {
-      id: 'powers' as const,
-      label: isEnglish ? 'Powers' : 'ক্ষমতা',
-      icon: (
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      )
-    },
-    {
-      id: 'tasks' as const,
-      label: isEnglish ? 'Tasks' : 'কাজ',
-      icon: (
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-        </svg>
-      )
-    }
+    // {
+    //   id: 'powers' as const,
+    //   label: isEnglish ? 'Powers' : 'ক্ষমতা',
+    //   icon: (
+    //     <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    //     </svg>
+    //   )
+    // },
+    // {
+    //   id: 'tasks' as const,
+    //   label: isEnglish ? 'Tasks' : 'কাজ',
+    //   icon: (
+    //     <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+    //     </svg>
+    //   )
+    // }
   ];
 
   const getCurrentData = () => {
@@ -128,14 +128,14 @@ export default function CommissionScope({ className = '' }: CommissionScopeProps
   return (
     <div className={`bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden ${className}`}>
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 px-2 sm:px-6 py-2 sm:py-4">
+      {/* <div className="bg-gradient-to-r from-green-600 to-green-700 px-2 sm:px-6 py-2 sm:py-4">
         <h2 className="text-sm sm:text-xl font-bold text-white flex items-center">
           <svg className="w-4 h-4 sm:w-6 sm:h-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
           </svg>
           <span className="break-words">{isEnglish ? 'Commission Scope & Powers' : 'কমিশনের কার্যক্ষেত্র ও ক্ষমতা'}</span>
         </h2>
-      </div>
+      </div> */}
 
       {/* Tabs */}
       <div className="border-b border-gray-200 dark:border-slate-700">
@@ -176,7 +176,7 @@ export default function CommissionScope({ className = '' }: CommissionScopeProps
         </div>
 
         {/* Footer Note */}
-        <div className="mt-3 sm:mt-6 p-2 sm:p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+        {/* <div className="mt-3 sm:mt-6 p-2 sm:p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
           <div className="flex items-start">
             <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400 mt-0.5 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -193,7 +193,7 @@ export default function CommissionScope({ className = '' }: CommissionScopeProps
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
