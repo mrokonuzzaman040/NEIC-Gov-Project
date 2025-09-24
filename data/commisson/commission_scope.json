@@ -1,7 +1,7 @@
 {
     "commission_scope": [
       {
-        "bn": "বিগত ২০১৪, ২০১৮ এবং ২০২৪ সালে অনুষ্ঠিত জাতীয় সংসদ নির্বাচনসমূহ বিষয়ে নির্বাচন পর্যবেক্ষক, দেশি ও বিদেশি তদারকি প্রতিষ্ঠান ও নাগরিক সংগঠনের প্রতিবেদন এবং গণমাধ্যমে উত্থাপিত অভিযোগসমূহ বিশ্লেষণ;",
+        "bn": "বিগত ২০১৪, ২০১৮ এবং ২০২৪ সালে অনুষ্ঠিত জাতীয়  নির্বাচন বিষয়ে নির্বাচন পর্যবেক্ষক, দেশি ও বিদেশি তদারকি প্রতিষ্ঠান ও নাগরিক সংগঠনের প্রতিবেদন এবং গণমাধ্যমে উত্থাপিত অভিযোগসমূহ বিশ্লেষণ;",
         "en": "Analyze reports from election observers, domestic and international monitoring institutions, and civil society organizations, along with allegations raised in the media regarding the national elections of 2014, 2018, and 2024."
       },
       {
@@ -31,24 +31,16 @@
       {
         "bn": "ভবিষ্যতের সকল নির্বাচনকে সুষ্ঠু ও মানসম্পন্ন পর্যায়ে উপনীত করার লক্ষ্যে সুচিন্তিত সুপারিশ প্রদান;",
         "en": "Provide well-considered recommendations to ensure future elections are fair and of high quality."
-      },
-      {
-        "bn": "প্রয়োজনে যে কোনো দপ্তরের দলিল দস্তাবেজ তলব করা ও সংশ্লিষ্ট ব্যক্তিকে জিজ্ঞাসাবাদ করা।",
-        "en": "Summon documents from any office and interrogate relevant individuals, if necessary."
       }
     ],
     "powers": [
       {
-        "bn": "কমিশন, বাংলাদেশের যে কোনো স্থান পরিদর্শন, যে কোনো দপ্তরের দলিল দস্তাবেজ তলব এবং সন্দিগ্ধ যে কোনো ব্যক্তিকে কমিশনে তলব ও জিজ্ঞাসাবাদ করিতে পারিবে।",
+        "bn": "কমিশন, বাংলাদেশের যে কোনো স্থান পরিদর্শন, যে কোনো দপ্তরের দলিল দস্তাবেজ তলব এবং সন্দিগ্ধ যে কোনো ব্যক্তিকে কমিশনে তলব ও জিজ্ঞাসাবাদ করতে পারবেন। ",
         "en": "The Commission may visit any place in Bangladesh, summon documents from any office, and summon and interrogate any suspected person."
       },
       {
-        "bn": "কমিশন, The Commissions of Inquiry Act, 1956 এর Section 4 এবং Section 5 এর Sub-Section 2, 3, 4, 5 ও 6 এর উল্লিখিত ক্ষমতা প্রয়োগ করিতে পারিবে।",
+        "bn": "কমিশন, The Commissions of Inquiry Act, 1956 এর Section 4 এবং Section 5 এর Sub-Section 2, 3, 4, 5 ও 6 এর উল্লিখিত ক্ষমতা প্রয়োগ করতে পারবেন। ",
         "en": "The Commission may exercise the powers mentioned in Section 4 and Sub-Sections 2, 3, 4, 5, and 6 of Section 5 of the Commissions of Inquiry Act, 1956."
-      },
-      {
-        "bn": "কমিশন, The Commissions of Inquiry Act, 1956 অনুসারে তদন্তকার্য সম্পন্ন করিয়া আগামী ৩১ অক্টোবর ২০২৫ তারিখের মধ্যে সরকারের নিকট তদন্ত প্রতিবেদন দাখিল করিবে।",
-        "en": "The Commission shall complete the inquiry under the Commissions of Inquiry Act, 1956, and submit its investigation report to the government by October 31, 2025."
       }
     ],
     "tasks": [

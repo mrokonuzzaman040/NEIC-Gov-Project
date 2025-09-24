@@ -31,9 +31,6 @@ export function Footer() {
           </div>
           
           <div className="text-center md:text-right">
-            <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium mb-1">
-              {t('footer.tagline')}
-            </p>
             <p className="text-xs text-gray-500 dark:text-gray-400 break-words">
               {data.footer.copyright[locale as keyof typeof data.footer.copyright]}
             </p>

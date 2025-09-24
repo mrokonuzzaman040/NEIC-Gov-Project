@@ -6,7 +6,7 @@
     },
     "description": {
       "en": "Get in touch with the National Elections Inquiry Commission. We are here to assist you with any questions, concerns, or information you may need regarding the commission's work and activities.",
-      "bn": "জাতীয় সংসদ নির্বাচন তদন্ত কমিশনের সাথে যোগাযোগ করুন। কমিশনের কাজ ও কার্যক্রম সম্পর্কে আপনার যে কোন প্রশ্ন, উদ্বেগ বা তথ্যের জন্য আমরা এখানে আছি।"
+      "bn": "জাতীয়  নির্বাচন তদন্ত কমিশনের সাথে যোগাযোগ করুন। কমিশনের কাজ ও কার্যক্রম সম্পর্কে আপনার যে কোন প্রশ্ন, উদ্বেগ বা তথ্যের জন্য আমরা এখানে আছি।"
     },
     "contactInfo": {
       "email": "feedback@neic-bd.org",
@@ -22,10 +22,10 @@
           "country": "Bangladesh"
         },
         "bn": {
-          "organization": "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ এবং ২০২৪) তদন্ত কমিশন",
-          "location": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন",
+          "organization": "জাতীয়  নির্বাচন (২০১৪, ২০১৮ এবং ২০২৪) তদন্ত কমিশন",
+          "location": "ব্লক-২,জাতীয় সংসদ ভবন এলাকা, শের-ই-বাংলা নগর, ঢাকা-১২০৭",
           "area": "শের-ই-বাংলা নগর",
-          "city": "ঢাকা-১০০০",
+          "city": "ঢাকা-১২০৭",
           "country": "বাংলাদেশ"
         }
       }
@@ -126,11 +126,11 @@
       "marker": {
         "title": {
           "en": "National Elections Inquiry Commission",
-          "bn": "জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন"
+          "bn": "জাতীয় জাতীয়  নির্বাচন তদন্ত কমিশন"
         },
         "info": {
-          "en": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban<br>Sher-e-Bangla Nagar, Dhaka-1000",
-          "bn": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন<br>শের-ই-বাংলা নগর, ঢাকা"
+          "en": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban<br>Sher-e-Bangla Nagar, Dhaka-1207",
+          "bn": "ব্লক-২,জাতীয় সংসদ ভবন এলাকা শের-ই-বাংলা নগর, ঢাকা-1207"
         }
       }
     },
@@ -148,7 +148,7 @@
           },
           "value": {
             "en": "Jatiya Sangsad Bhaban (National Parliament Building)",
-            "bn": "জাতীয় সংসদ ভবন"
+            "bn": "জাতীয় সংসদ ভবন "
           }
         },
         {
@@ -159,7 +159,7 @@
           },
           "value": {
             "en": "Block-2, 2nd Floor (West Wing)",
-            "bn": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম অংশ)"
+            "bn": "ব্লক-২,জাতীয় সংসদ ভবন এলাকা"
           }
         },
         {
@@ -170,7 +170,7 @@
           },
           "value": {
             "en": "Sher-e-Bangla Nagar, Dhaka",
-            "bn": "শের-ই-বাংলা নগর, ঢাকা"
+            "bn": "শের-ই-বাংলা নগর, ঢাকা-১২০৭"
           }
         }
       ]
@@ -228,7 +228,7 @@
           "value": "+880-2-12345678",
           "description": {
             "en": "Call us during office hours for immediate assistance",
-            "bn": "তাত্ক্ষণিক সহায়তার জন্য অফিস সময়ে আমাদের ফোন করুন"
+            "bn": "তাৎক্ষণিক সহায়তার জন্য অফিস সময়ে আমাদের ফোন করুন"
           }
         },
         {
@@ -241,7 +241,7 @@
           "value": "+880-2-12345679",
           "description": {
             "en": "Send official documents via fax",
-            "bn": "সরকারি নথি ফ্যাক্সের মাধ্যমে পাঠান"
+            "bn": " নথি ফ্যাক্সের মাধ্যমে পাঠান"
           }
         },
         {
@@ -251,10 +251,10 @@
             "en": "Website",
             "bn": "ওয়েবসাইট"
           },
-          "value": "www.neic.ecs.gov.bd",
+          "value": "www.neic-bd.org",
           "description": {
             "en": "Visit our official website for more information",
-            "bn": "আরও তথ্যের জন্য আমাদের সরকারি ওয়েবসাইট দেখুন"
+            "bn": "আরও তথ্যের জন্য আমাদের ওয়েবসাইট দেখুন"
           }
         }
       ]
@@ -289,7 +289,7 @@
         },
         {
           "en": "Braille documents available for official forms",
-          "bn": "সরকারি ফরমের জন্য ব্রেইল নথি পাওয়া যায়"
+          "bn": " ফরমের জন্য ব্রেইল নথি পাওয়া যায়"
         }
       ]
     },
@@ -304,7 +304,7 @@
       },
       "contact": {
         "phone": "+880-1711-123456",
-        "email": "emergency@neic.ecs.gov.bd"
+        "email": "emergency@neic-bd.org"
       }
     }
   }

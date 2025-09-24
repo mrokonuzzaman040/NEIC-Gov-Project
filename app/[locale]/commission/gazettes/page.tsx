@@ -225,7 +225,7 @@ export default function GazettesPage() {
                 <span className="truncate">{t('allGazettes')}</span>
               </h2>
               <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">
-                {isBengali ? 'জাতীয় সংসদ নির্বাচন তদন্ত কমিশনের গেজেট প্রজ্ঞাপন' : 'Gazette notifications from the National Elections Inquiry Commission'}
+                {isBengali ? 'জাতীয়  নির্বাচন তদন্ত কমিশনের গেজেট প্রজ্ঞাপন' : 'Gazette notifications from the National Elections Inquiry Commission'}
               </p>
             </div>
             

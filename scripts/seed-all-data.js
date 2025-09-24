@@ -400,7 +400,7 @@ async function seedCommissionTerms() {
         titleEn: 'Commission Mandate and Objectives',
         titleBn: 'কমিশনের ম্যান্ডেট ও উদ্দেশ্য',
         descriptionEn: 'To investigate and inquire into the conduct of the National Parliamentary Elections held in 2014, 2018, and 2024, and to examine allegations of irregularities.',
-        descriptionBn: '২০১৪, ২০১৮ এবং ২০২৪ সালে অনুষ্ঠিত জাতীয় সংসদ নির্বাচনের আচরণ তদন্ত ও অনুসন্ধান করা এবং অনিয়মের অভিযোগ পরীক্ষা করা।',
+        descriptionBn: '২০১৪, ২০১৮ এবং ২০২৪ সালে অনুষ্ঠিত জাতীয়  নির্বাচনের আচরণ তদন্ত ও অনুসন্ধান করা এবং অনিয়মের অভিযোগ পরীক্ষা করা।',
         category: 'mandate',
         section: 'Article 1',
         order: 1,

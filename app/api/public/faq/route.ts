@@ -21,11 +21,11 @@ export async function GET() {
           },
           subtitle: {
             en: "National Elections (2014, 2018, 2024) Inquiry Commission",
-            bn: "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন"
+            bn: "জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন"
           },
           documentType: {
             en: "Official FAQ",
-            bn: "সরকারি FAQ"
+            bn: " FAQ"
           },
           tagline: {
             en: "Your Questions, Our Answers",
@@ -110,11 +110,11 @@ function getColorForCategory(category: string): string {
           },
           subtitle: {
             en: "National Elections (2014, 2018, 2024) Inquiry Commission",
-            bn: "জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন"
+            bn: "জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন"
           },
           documentType: {
             en: "Official FAQ",
-            bn: "সরকারি FAQ"
+            bn: " FAQ"
           },
           tagline: {
             en: "Your Questions, Our Answers",

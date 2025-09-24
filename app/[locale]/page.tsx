@@ -101,9 +101,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
         {/* Government Header with Official Seal */}
         <GovernmentHeader
           title={data.header.title[locale as keyof typeof data.header.title]}
-          subtitle={data.header.subtitle[locale as keyof typeof data.header.subtitle]}
-          portal={data.header.portal[locale as keyof typeof data.header.portal]}
-          tagline={data.header.tagline[locale as keyof typeof data.header.tagline]}
+          // subtitle={data.header.subtitle[locale as keyof typeof data.header.subtitle]}
+          // portal={data.header.portal[locale as keyof typeof data.header.portal]}
+          // tagline={data.header.tagline[locale as keyof typeof data.header.tagline]}
           borderColor="green"
           iconColor="green"
         />
@@ -112,18 +112,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
           <Hero /> 
           {/* Commission Scope & Members Section */}
           <section className="space-y-6 sm:space-y-8">
-            <div className="text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                {isEnglish ? 'Commission Information' : 'কমিশনের তথ্য'}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                {isEnglish 
-                  ? 'Learn about our commission\'s scope, powers, and the dedicated members working for fair elections.'
-                  : 'সুষ্ঠু নির্বাচনের জন্য কাজ করা আমাদের কমিশনের কার্যক্ষেত্র, ক্ষমতা এবং নিবেদিত সদস্যদের সম্পর্কে জানুন।'
-                }
-              </p>
-            </div>
-            
+            {/* Horizental Line */}
+            <div className="h-0.5 bg-gray-200 dark:bg-gray-700 my-6"></div>
+
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 sm:gap-8">
               <div className="xl:col-span-3">
                 <CommissionScope />

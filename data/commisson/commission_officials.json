@@ -6,7 +6,7 @@
     },
     "description": {
       "en": "The National Elections Inquiry Commission is supported by a dedicated team of officials and staff members who ensure the smooth operation of the commission's activities.",
-      "bn": "জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন একটি নিবেদিত কর্মকর্তা দল দ্বারা সমর্থিত, যারা কমিশনের কার্যক্রমের সুচারু পরিচালনা নিশ্চিত করে।"
+      "bn": "জাতীয় জাতীয়  নির্বাচন তদন্ত কমিশন একটি নিবেদিত কর্মকর্তা দল দ্বারা সমর্থিত, যারা কমিশনের কার্যক্রমের সুচারু পরিচালনা নিশ্চিত করে।"
     },
     "secretariat": {
       "title": {
@@ -31,11 +31,11 @@
           "phone": "+880-2-12345678",
           "experience": {
             "en": "25 years in government service",
-            "bn": "সরকারি চাকরিতে ২৫ বছর"
+            "bn": " চাকরিতে ২৫ বছর"
           },
           "qualification": {
             "en": "Masters in Public Administration, University of Dhaka",
-            "bn": "সরকারি প্রশাসনে স্নাতকোত্তর, ঢাকা বিশ্ববিদ্যালয়"
+            "bn": " প্রশাসনে স্নাতকোত্তর, ঢাকা বিশ্ববিদ্যালয়"
           }
         },
         {
@@ -55,7 +55,7 @@
           "phone": "+880-2-12345679",
           "experience": {
             "en": "18 years in government service",
-            "bn": "সরকারি চাকরিতে ১৮ বছর"
+            "bn": " চাকরিতে ১৮ বছর"
           },
           "qualification": {
             "en": "Masters in Political Science, University of Dhaka",
@@ -263,7 +263,7 @@
       },
       "office_address": {
         "en": "National Elections Inquiry Commission Secretariat, Cabinet Division, Bangladesh Secretariat, Dhaka-1000",
-        "bn": "জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন সচিবালয়, মন্ত্রিপরিষদ বিভাগ, বাংলাদেশ সচিবালয়, ঢাকা-১০০০"
+        "bn": "জাতীয় জাতীয়  নির্বাচন তদন্ত কমিশন সচিবালয়, মন্ত্রিপরিষদ বিভাগ, বাংলাদেশ সচিবালয়, ঢাকা-১০০০"
       },
       "phone": "+880-2-12345678",
       "email": "info@ec.giv.bd",

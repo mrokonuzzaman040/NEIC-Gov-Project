@@ -93,313 +93,127 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
   };
   
   return (
-    <div className="min-h-screen py-4 sm:py-6 lg:py-8">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
-        {/* Government Header with Official Seal */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg border-l-4 border-green-600 mb-6 sm:mb-8">
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-              <div className="flex items-center space-x-3 sm:space-x-4">
-                {/* Official Seal/Logo */}
-                <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                  </svg>
-                </div>
-                <div className="min-w-0">
-                  <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white break-words">
-                    {isEnglish ? 'Service Process' : 'সেবা গ্রহণের প্রক্রিয়া'}
-                  </h1>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 break-words">
-                    {isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission' : 'জাতীয় সংসদ নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন'}
-                  </p>
-                </div>
-              </div>
-              <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  {isEnglish ? 'Service Guidelines' : 'সেবা নির্দেশিকা'}
-                </p>
-                <p className="text-xs text-gray-400 dark:text-gray-500">
-                  {isEnglish ? 'Your Service, Our Commitment' : 'আপনার সেবা, আমাদের প্রতিশ্রুতি'}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Back to Home Link */}
-        <div className="mb-4 sm:mb-6">
+        <div className="mb-8">
           <Link 
             href={`/${locale}`}
-            className="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-colors text-sm sm:text-base"
+            className="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-800 text-green-600 hover:text-green-700 font-medium transition-all duration-200 rounded-lg shadow-sm hover:shadow-md border border-green-200 dark:border-green-800 hover:border-green-300 dark:hover:border-green-700"
           >
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            {isEnglish ? 'Back to Home' : 'হোমে ফিরুন'}
+            {isEnglish ? 'Back to Home' : 'হোমপেজে ফিরুন'}
           </Link>
         </div>
 
-        {/* Description Section */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-          <div className="text-center">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              {isEnglish ? 'Service Process' : 'সেবা গ্রহণের প্রক্রিয়া'}
-            </h2>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              {isEnglish 
-                ? 'Learn about our comprehensive service delivery process and how citizens can access various services provided by the National Elections Inquiry Commission.'
-                : 'জাতীয় জাতীয় সংসদ নির্বাচন তদন্ত কমিশন কর্তৃক প্রদত্ত বিভিন্ন সেবা এবং নাগরিকরা কীভাবে এই সেবাগুলো পেতে পারেন সে সম্পর্কে বিস্তারিত জানুন।'
-              }
-            </p>
-          </div>
-        </div>
-
         {/* Service Process Steps */}
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-8">
           {/* Step 1: Service Request */}
-          <section className="bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-green-600 to-green-700 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white flex items-center">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <span className="truncate">{isEnglish ? 'Step 1: Service Request' : 'ধাপ ১: সেবা অনুরোধ'}</span>
-              </h2>
-            </div>
-            <div className="p-4 sm:p-6 lg:p-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6 text-center">
-                  <div className="mb-3 sm:mb-4">
-                    <svg className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                    {isEnglish ? 'Online Submission' : 'অনলাইন জমা'}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">
-                    {isEnglish 
-                      ? 'Submit your service request through our secure online portal with detailed information and supporting documents.'
-                      : 'বিস্তারিত তথ্য এবং সহায়ক নথি সহ আমাদের নিরাপদ অনলাইন পোর্টালের মাধ্যমে আপনার সেবা অনুরোধ জমা দিন।'
-                    }
-                  </p>
+          <section className="bg-white dark:bg-slate-800 shadow-xl rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-700">
+            <div className="bg-gradient-to-r from-green-600 via-green-700 to-green-800 px-6 sm:px-8 lg:px-10 py-6 sm:py-8">
+              <div className="flex items-center">
+                <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-2xl font-bold text-white">1</span>
                 </div>
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6 text-center">
-                  <div className="mb-3 sm:mb-4">
-                    <svg className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                    {isEnglish ? 'Phone Contact' : 'ফোন যোগাযোগ'}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">
+                <div>
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">
+                    {isEnglish ? 'Service Request Submission' : 'সেবা অনুরোধ জমা'}
+                  </h2>
+                  <p className="text-green-100 text-sm sm:text-base">
                     {isEnglish 
-                      ? 'Call our helpline during office hours for immediate assistance and guidance on service requirements.'
-                      : 'সেবার প্রয়োজনীয়তা সম্পর্কে তাৎক্ষণিক সহায়তা এবং নির্দেশনার জন্য অফিস সময়ে আমাদের হেল্পলাইনে ফোন করুন।'
-                    }
-                  </p>
-                </div>
-                <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 sm:p-6 text-center">
-                  <div className="mb-3 sm:mb-4">
-                    <svg className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                    {isEnglish ? 'In-Person Visit' : 'ব্যক্তিগত সাক্ষাৎ'}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">
-                    {isEnglish 
-                      ? 'Visit our office during business hours for face-to-face consultation and document submission.'
-                      : 'সাক্ষাৎকার এবং নথি জমা দেওয়ার জন্য ব্যবসায়িক সময়ে আমাদের অফিসে আসুন।'
+                      ? 'Choose your preferred method to submit your service request'
+                      : 'আপনার সেবা অনুরোধ জমা দেওয়ার জন্য পছন্দের পদ্ধতি নির্বাচন করুন'
                     }
                   </p>
                 </div>
               </div>
             </div>
-          </section>
-
-          {/* Step 2: Processing */}
-          <section className="bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white flex items-center">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="truncate">{isEnglish ? 'Step 2: Processing & Review' : 'ধাপ ২: প্রক্রিয়াকরণ ও পর্যালোচনা'}</span>
-              </h2>
-            </div>
-            <div className="p-4 sm:p-6 lg:p-8">
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6 lg:p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-                  <div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                      {isEnglish ? 'Initial Review' : 'প্রাথমিক পর্যালোচনা'}
-                    </h3>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                      <li className="flex items-start">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-xs sm:text-sm break-words">{isEnglish ? 'Document verification and completeness check' : 'নথি যাচাই এবং সম্পূর্ণতা পরীক্ষা'}</span>
-                      </li>
-                      <li className="flex items-start">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-xs sm:text-sm break-words">{isEnglish ? 'Eligibility assessment' : 'যোগ্যতা মূল্যায়ন'}</span>
-                      </li>
-                      <li className="flex items-start">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-xs sm:text-sm break-words">{isEnglish ? 'Case assignment to appropriate department' : 'উপযুক্ত বিভাগে মামলা বরাদ্দ'}</span>
-                      </li>
-                    </ul>
+            <div className="p-6 sm:p-8 lg:p-10">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                {/* Online Submission Card */}
+                <Link 
+                  href={`/${locale}/submit`}
+                  className="group relative bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105 block"
+                >
+                  <div className="absolute top-4 right-4">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
                   </div>
-                  <div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                      {isEnglish ? 'Processing Timeline' : 'প্রক্রিয়াকরণ সময়সীমা'}
-                    </h3>
-                    <div className="space-y-2 sm:space-y-3">
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-white dark:bg-slate-700 rounded-lg space-y-1 sm:space-y-0">
-                        <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-                          {isEnglish ? 'Standard Services' : 'সাধারণ সেবা সময়সীমা'}
-                        </span>
-                        <span className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-medium">
-                          {isEnglish ? '3-5 Business Days' : '৩-৫ কর্মদিবস'}
-                        </span>
-                      </div>
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 sm:p-3 bg-white dark:bg-slate-700 rounded-lg space-y-1 sm:space-y-0">
-                        <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-                          {isEnglish ? 'Complex Cases' : 'জটিল বিসয়ক সময়সীমা'}
-                        </span>
-                        <span className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-medium">
-                          {isEnglish ? '7-14 Business Days' : '৭-১৪ কর্মদিবস'}
-                        </span>
+                  <div className="text-center">
+                    <div className="mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
                       </div>
                     </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4">
+                      {isEnglish ? 'Online Submission' : 'অনলাইন জমা'}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
+                      {isEnglish 
+                        ? 'Submit your service request through our secure online portal with detailed information and supporting documents. Available 24/7 for your convenience.'
+                        : 'বিস্তারিত তথ্য এবং সহায়ক নথি সহ আমাদের নিরাপদ অনলাইন পোর্টালের মাধ্যমে আপনার সেবা অনুরোধ জমা দিন। আপনার সুবিধার জন্য ২৪/৭ উপলব্ধ।'
+                      }
+                    </p>
+                    <div className="flex items-center justify-center space-x-2 text-blue-600 dark:text-blue-400 text-sm font-medium">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      <span>{isEnglish ? 'Secure & Encrypted' : 'নিরাপদ ও এনক্রিপ্টেড'}</span>
+                    </div>
+                    <div className="mt-4 flex items-center justify-center text-blue-600 dark:text-blue-400 text-sm font-medium">
+                      <span>{isEnglish ? 'Click to Submit Online' : 'অনলাইনে জমা দিতে ক্লিক করুন'}</span>
+                      <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
+                </Link>
+
+                {/* In-Person Visit Card */}
+                <Link 
+                  href={`/${locale}/contact`}
+                  className="group relative bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-2 border-orange-200 dark:border-orange-800 rounded-xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105 block"
+                >
+                  <div className="absolute top-4 right-4">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                  </div>
+                  <div className="text-center">
+                    <div className="mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4">
+                      {isEnglish ? 'In-Person Visit' : 'ব্যক্তিগত সাক্ষাৎ'}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
+                      {isEnglish 
+                        ? 'Visit our office during business hours for face-to-face consultation and document submission. Our staff will assist you personally.'
+                        : 'সাক্ষাৎকার এবং নথি জমা দেওয়ার জন্য অফিস সময়ে আমাদের অফিসে আসুন। আমাদের কর্মীরা আপনাকে ব্যক্তিগতভাবে সহায়তা করবে।'
+                      }
+                    </p>
+                    <div className="flex items-center justify-center space-x-2 text-orange-600 dark:text-orange-400 text-sm font-medium">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{isEnglish ? 'Business Hours: 9AM-5PM' : 'অফিস সময়: সকাল ৯টা-বিকাল ৫টা'}</span>
+                    </div>
+                    <div className="mt-4 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm font-medium">
+                      <span>{isEnglish ? 'Click to Contact Us' : 'যোগাযোগ করতে ক্লিক করুন'}</span>
+                      <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </Link>
               </div>
             </div>
           </section>
-
-          {/* Step 3: Service Delivery */}
-          <section className="bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-amber-600 to-amber-700 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white flex items-center">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="truncate">{isEnglish ? 'Step 3: Service Delivery' : 'ধাপ ৩: সেবা প্রদান'}</span>
-              </h2>
-            </div>
-            <div className="p-4 sm:p-6 lg:p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-                <div className="space-y-4 sm:space-y-6">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2">
-                        {isEnglish ? 'Digital Delivery' : 'ডিজিটাল প্রদান'}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
-                        {isEnglish 
-                          ? 'Receive official documents and responses via secure email and online portal.'
-                          : 'নিরাপদ ইমেইল এবং অনলাইন পোর্টালের মাধ্যমে সরকারি নথি এবং প্রতিক্রিয়া পান।'
-                        }
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2">
-                        {isEnglish ? 'Phone Notification' : 'ফোন বিজ্ঞপ্তি'}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
-                        {isEnglish 
-                          ? 'Get notified via phone call when your service is ready for collection.'
-                          : 'আপনার সেবা সংগ্রহের জন্য প্রস্তুত হলে ফোন কলের মাধ্যমে জানানো হবে।'
-                        }
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-4 sm:space-y-6">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2">
-                        {isEnglish ? 'Office Collection' : 'অফিস সংগ্রহ'}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
-                        {isEnglish 
-                          ? 'Collect physical documents and certificates from our office with proper identification.'
-                          : 'সঠিক পরিচয়পত্র সহ আমাদের অফিস থেকে শারীরিক নথি এবং সার্টিফিকেট সংগ্রহ করুন।'
-                        }
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2">
-                        {isEnglish ? 'Follow-up Support' : 'অনুসরণ সহায়তা'}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
-                        {isEnglish 
-                          ? 'Ongoing support and assistance for any questions or concerns about your service.'
-                          : 'আপনার সেবা সম্পর্কে কোন প্রশ্ন বা উদ্বেগের জন্য চলমান সহায়তা এবং সহায়তা।'
-                        }
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Important Notice */}
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 sm:p-6">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-yellow-500 rounded-full flex items-center justify-center mt-0.5">
-                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="min-w-0">
-                <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-1 sm:mb-2">
-                  {isEnglish ? 'Important Notice' : 'গুরুত্বপূর্ণ বিজ্ঞপ্তি'}
-                </h3>
-                <p className="text-yellow-700 dark:text-yellow-300 text-xs sm:text-sm leading-relaxed break-words">
-                  {isEnglish 
-                    ? 'All service requests are processed with strict confidentiality and security. Please ensure all required documents are submitted correctly to avoid delays. For urgent matters, contact our emergency helpline.'
-                    : 'সমস্ত সেবা অনুরোধ কঠোর গোপনীয়তা এবং নিরাপত্তার সাথে প্রক্রিয়াজাত করা হয়। বিলম্ব এড়াতে অনুগ্রহ করে সমস্ত প্রয়োজনীয় নথি সঠিকভাবে জমা দিন। জরুরি বিষয়ের জন্য আমাদের জরুরি হেল্পলাইনে যোগাযোগ করুন।'
-                  }
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
