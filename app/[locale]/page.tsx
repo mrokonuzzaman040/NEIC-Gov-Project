@@ -1,6 +1,4 @@
 import { Hero } from '../../components/Hero';
-import { InfoGrid } from '../../components/InfoGrid';
-import { Footer } from '../../components/Footer';
 import GovernmentHeader from '../../components/GovernmentHeader';
 import ImageSlider from '../../components/ImageSlider';
 import CommissionScope from '../../components/CommissionScope';
@@ -125,8 +123,6 @@ export default async function HomePage({ params }: { params: { locale: string } 
               </div>
             </div>
           </section>
-          {/* <InfoGrid />         */}
-          <Footer />
         </main>
       </div>
     </div>

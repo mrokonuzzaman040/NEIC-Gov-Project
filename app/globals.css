@@ -1,16 +1,18 @@
+/* Import Bangla font from maateen.me for consistent Bengali typography across all devices */
 @font-face {
-  font-family: 'Kalpurush';
-  src: url('/fonts/kalpurush.ttf') format('truetype'),
-       url('/fonts/kalpurush-ansi.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'Bangla';
   font-display: swap;
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('https://fonts.maateen.me/bangla/bangla.woff2') format('woff2'),
+       url('https://fonts.maateen.me/bangla/bangla.ttf') format('truetype');
   unicode-range: U+0980-09FF; /* Bengali Unicode range */
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 :root {
   --color-accent: #22c55e;
@@ -39,14 +41,46 @@ body {
 }
 
 :lang(bn) {
-  font-family: var(--font-noto-sans-bengali), 'Kalpurush', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Bangla', var(--font-noto-sans-bengali), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 /* Bengali text styling */
 [lang="bn"] {
-  font-family: var(--font-noto-sans-bengali), 'Kalpurush', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Bangla', var(--font-noto-sans-bengali), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   line-height: 1.6;
   letter-spacing: 0.01em;
+}
+
+/* Force Bangla font for all Bengali text with higher specificity */
+html[lang="bn"] *,
+html[lang="bn"] body,
+html[lang="bn"] div,
+html[lang="bn"] p,
+html[lang="bn"] span,
+html[lang="bn"] h1,
+html[lang="bn"] h2,
+html[lang="bn"] h3,
+html[lang="bn"] h4,
+html[lang="bn"] h5,
+html[lang="bn"] h6 {
+  font-family: 'Bangla', var(--font-noto-sans-bengali), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+}
+
+/* Additional specificity for div with lang attribute */
+div[lang="bn"] {
+  font-family: 'Bangla', var(--font-noto-sans-bengali), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+}
+
+/* Override any conflicting font classes */
+.font-bangla {
+  font-family: 'Bangla', var(--font-noto-sans-bengali), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+}
+
+/* Test class to verify Bangla font is working */
+.font-test {
+  font-family: 'Bangla', Arial, sans-serif !important;
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 /* Utility classes for font management */
@@ -55,11 +89,11 @@ body {
 }
 
 .font-bengali {
-  font-family: var(--font-noto-sans-bengali), 'Kalpurush', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Bangla', var(--font-noto-sans-bengali), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .font-mixed {
-  font-family: var(--font-noto-sans-bengali), var(--font-noto-sans), 'Kalpurush', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Bangla', var(--font-noto-sans-bengali), var(--font-noto-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .container-max {

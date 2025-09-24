@@ -255,13 +255,6 @@ export default function GalleryPage() {
 
                     {/* Content */}
                     <div className="p-3 sm:p-4">
-                      {/* Category Badge */}
-                      <div className="mb-1.5 sm:mb-2">
-                        <span className="inline-block px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-xs font-medium rounded-full">
-                          {getCategoryName(item.category)}
-                        </span>
-                      </div>
-
                       {/* Title */}
                       <h3 className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2">
                         {isEnglish ? item.titleEn : item.titleBn}
