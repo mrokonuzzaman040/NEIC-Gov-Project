@@ -1,0 +1,686 @@
+[
+    {
+      "Serial": 1,
+      "Constituency Name": "Panchagarh",
+      "Seat Names": [
+        "Panchagarh-1",
+        "Panchagarh-2"
+      ]
+    },
+    {
+      "Serial": 2,
+      "Constituency Name": "Thakurgaon",
+      "Seat Names": [
+        "Thakurgaon-1",
+        "Thakurgaon-2",
+        "Thakurgaon-3"
+      ]
+    },
+    {
+      "Serial": 3,
+      "Constituency Name": "Dinajpur",
+      "Seat Names": [
+        "Dinajpur-1",
+        "Dinajpur-2",
+        "Dinajpur-3",
+        "Dinajpur-4",
+        "Dinajpur-5",
+        "Dinajpur-6"
+      ]
+    },
+    {
+      "Serial": 4,
+      "Constituency Name": "Nilphamari",
+      "Seat Names": [
+        "Nilphamari-1",
+        "Nilphamari-2",
+        "Nilphamari-3",
+        "Nilphamari-4"
+      ]
+    },
+    {
+      "Serial": 5,
+      "Constituency Name": "Lalmonirhat",
+      "Seat Names": [
+        "Lalmonirhat-1",
+        "Lalmonirhat-2",
+        "Lalmonirhat-3"
+      ]
+    },
+    {
+      "Serial": 6,
+      "Constituency Name": "Rangpur",
+      "Seat Names": [
+        "Rangpur-1",
+        "Rangpur-2",
+        "Rangpur-3",
+        "Rangpur-4",
+        "Rangpur-5",
+        "Rangpur-6"
+      ]
+    },
+    {
+      "Serial": 7,
+      "Constituency Name": "Kurigram",
+      "Seat Names": [
+        "Kurigram-1",
+        "Kurigram-2",
+        "Kurigram-3",
+        "Kurigram-4"
+      ]
+    },
+    {
+      "Serial": 8,
+      "Constituency Name": "Gaibandha",
+      "Seat Names": [
+        "Gaibandha-1",
+        "Gaibandha-2",
+        "Gaibandha-3",
+        "Gaibandha-4",
+        "Gaibandha-5"
+      ]
+    },
+    {
+      "Serial": 9,
+      "Constituency Name": "Joypurhat",
+      "Seat Names": [
+        "Joypurhat-1",
+        "Joypurhat-2"
+      ]
+    },
+    {
+      "Serial": 10,
+      "Constituency Name": "Bogra",
+      "Seat Names": [
+        "Bogra-1",
+        "Bogra-2",
+        "Bogra-3",
+        "Bogra-4",
+        "Bogra-5",
+        "Bogra-6",
+        "Bogra-7"
+      ]
+    },
+    {
+      "Serial": 11,
+      "Constituency Name": "Chapai Nawabganj",
+      "Seat Names": [
+        "Chapai Nawabganj-1",
+        "Chapai Nawabganj-2",
+        "Chapai Nawabganj-3"
+      ]
+    },
+    {
+      "Serial": 12,
+      "Constituency Name": "Naogaon",
+      "Seat Names": [
+        "Naogaon-1",
+        "Naogaon-2",
+        "Naogaon-3",
+        "Naogaon-4",
+        "Naogaon-5",
+        "Naogaon-6"
+      ]
+    },
+    {
+      "Serial": 13,
+      "Constituency Name": "Rajshahi",
+      "Seat Names": [
+        "Rajshahi-1",
+        "Rajshahi-2",
+        "Rajshahi-3",
+        "Rajshahi-4",
+        "Rajshahi-5",
+        "Rajshahi-6"
+      ]
+    },
+    {
+      "Serial": 14,
+      "Constituency Name": "Natore",
+      "Seat Names": [
+        "Natore-1",
+        "Natore-2",
+        "Natore-3",
+        "Natore-4"
+      ]
+    },
+    {
+      "Serial": 15,
+      "Constituency Name": "Sirajganj",
+      "Seat Names": [
+        "Sirajganj-1",
+        "Sirajganj-2",
+        "Sirajganj-3",
+        "Sirajganj-4",
+        "Sirajganj-5",
+        "Sirajganj-6"
+      ]
+    },
+    {
+      "Serial": 16,
+      "Constituency Name": "Pabna",
+      "Seat Names": [
+        "Pabna-1",
+        "Pabna-2",
+        "Pabna-3",
+        "Pabna-4",
+        "Pabna-5"
+      ]
+    },
+    {
+      "Serial": 17,
+      "Constituency Name": "Meherpur",
+      "Seat Names": [
+        "Meherpur-1",
+        "Meherpur-2"
+      ]
+    },
+    {
+      "Serial": 18,
+      "Constituency Name": "Kushtia",
+      "Seat Names": [
+        "Kushtia-1",
+        "Kushtia-2",
+        "Kushtia-3",
+        "Kushtia-4"
+      ]
+    },
+    {
+      "Serial": 19,
+      "Constituency Name": "Chuadanga",
+      "Seat Names": [
+        "Chuadanga-1",
+        "Chuadanga-2"
+      ]
+    },
+    {
+      "Serial": 20,
+      "Constituency Name": "Jhenaidah",
+      "Seat Names": [
+        "Jhenaidah-1",
+        "Jhenaidah-2",
+        "Jhenaidah-3",
+        "Jhenaidah-4"
+      ]
+    },
+    {
+      "Serial": 21,
+      "Constituency Name": "Jessore",
+      "Seat Names": [
+        "Jessore-1",
+        "Jessore-2",
+        "Jessore-3",
+        "Jessore-4",
+        "Jessore-5",
+        "Jessore-6"
+      ]
+    },
+    {
+      "Serial": 22,
+      "Constituency Name": "Magura",
+      "Seat Names": [
+        "Magura-1",
+        "Magura-2"
+      ]
+    },
+    {
+      "Serial": 23,
+      "Constituency Name": "Narail",
+      "Seat Names": [
+        "Narail-1",
+        "Narail-2"
+      ]
+    },
+    {
+      "Serial": 24,
+      "Constituency Name": "Bagerhat",
+      "Seat Names": [
+        "Bagerhat-1",
+        "Bagerhat-2",
+        "Bagerhat-3",
+        "Bagerhat-4"
+      ]
+    },
+    {
+      "Serial": 25,
+      "Constituency Name": "Khulna",
+      "Seat Names": [
+        "Khulna-1",
+        "Khulna-2",
+        "Khulna-3",
+        "Khulna-4",
+        "Khulna-5",
+        "Khulna-6"
+      ]
+    },
+    {
+      "Serial": 26,
+      "Constituency Name": "Satkhira",
+      "Seat Names": [
+        "Satkhira-1",
+        "Satkhira-2",
+        "Satkhira-3",
+        "Satkhira-4"
+      ]
+    },
+    {
+      "Serial": 27,
+      "Constituency Name": "Barguna",
+      "Seat Names": [
+        "Barguna-1",
+        "Barguna-2"
+      ]
+    },
+    {
+      "Serial": 28,
+      "Constituency Name": "Patuakhali",
+      "Seat Names": [
+        "Patuakhali-1",
+        "Patuakhali-2",
+        "Patuakhali-3",
+        "Patuakhali-4"
+      ]
+    },
+    {
+      "Serial": 29,
+      "Constituency Name": "Bhola",
+      "Seat Names": [
+        "Bhola-1",
+        "Bhola-2",
+        "Bhola-3",
+        "Bhola-4"
+      ]
+    },
+    {
+      "Serial": 30,
+      "Constituency Name": "Barisal",
+      "Seat Names": [
+        "Barisal-1",
+        "Barisal-2",
+        "Barisal-3",
+        "Barisal-4",
+        "Barisal-5",
+        "Barisal-6"
+      ]
+    },
+    {
+      "Serial": 31,
+      "Constituency Name": "Jhalokathi",
+      "Seat Names": [
+        "Jhalokathi-1",
+        "Jhalokathi-2"
+      ]
+    },
+    {
+      "Serial": 32,
+      "Constituency Name": "Pirojpur",
+      "Seat Names": [
+        "Pirojpur-1",
+        "Pirojpur-2",
+        "Pirojpur-3"
+      ]
+    },
+    {
+      "Serial": 33,
+      "Constituency Name": "Tangail",
+      "Seat Names": [
+        "Tangail-1",
+        "Tangail-2",
+        "Tangail-3",
+        "Tangail-4",
+        "Tangail-5",
+        "Tangail-6",
+        "Tangail-7",
+        "Tangail-8"
+      ]
+    },
+    {
+      "Serial": 34,
+      "Constituency Name": "Jamalpur",
+      "Seat Names": [
+        "Jamalpur-1",
+        "Jamalpur-2",
+        "Jamalpur-3",
+        "Jamalpur-4",
+        "Jamalpur-5"
+      ]
+    },
+    {
+      "Serial": 35,
+      "Constituency Name": "Sherpur",
+      "Seat Names": [
+        "Sherpur-1",
+        "Sherpur-2",
+        "Sherpur-3"
+      ]
+    },
+    {
+      "Serial": 36,
+      "Constituency Name": "Mymensingh",
+      "Seat Names": [
+        "Mymensingh-1",
+        "Mymensingh-2",
+        "Mymensingh-3",
+        "Mymensingh-4",
+        "Mymensingh-5",
+        "Mymensingh-6",
+        "Mymensingh-7",
+        "Mymensingh-8",
+        "Mymensingh-9",
+        "Mymensingh-10",
+        "Mymensingh-11"
+      ]
+    },
+    {
+      "Serial": 37,
+      "Constituency Name": "Netrokona",
+      "Seat Names": [
+        "Netrokona-1",
+        "Netrokona-2",
+        "Netrokona-3",
+        "Netrokona-4",
+        "Netrokona-5"
+      ]
+    },
+    {
+      "Serial": 38,
+      "Constituency Name": "Kishoreganj",
+      "Seat Names": [
+        "Kishoreganj-1",
+        "Kishoreganj-2",
+        "Kishoreganj-3",
+        "Kishoreganj-4",
+        "Kishoreganj-5",
+        "Kishoreganj-6"
+      ]
+    },
+    {
+      "Serial": 39,
+      "Constituency Name": "Manikganj",
+      "Seat Names": [
+        "Manikganj-1",
+        "Manikganj-2",
+        "Manikganj-3"
+      ]
+    },
+    {
+      "Serial": 40,
+      "Constituency Name": "Munshiganj",
+      "Seat Names": [
+        "Munshiganj-1",
+        "Munshiganj-2",
+        "Munshiganj-3"
+      ]
+    },
+    {
+      "Serial": 41,
+      "Constituency Name": "Dhaka",
+      "Seat Names": [
+        "Dhaka-1",
+        "Dhaka-2",
+        "Dhaka-3",
+        "Dhaka-4",
+        "Dhaka-5",
+        "Dhaka-6",
+        "Dhaka-7",
+        "Dhaka-8",
+        "Dhaka-9",
+        "Dhaka-10",
+        "Dhaka-11",
+        "Dhaka-12",
+        "Dhaka-13",
+        "Dhaka-14",
+        "Dhaka-15",
+        "Dhaka-16",
+        "Dhaka-17",
+        "Dhaka-18",
+        "Dhaka-19",
+        "Dhaka-20"
+      ]
+    },
+    {
+      "Serial": 42,
+      "Constituency Name": "Gazipur",
+      "Seat Names": [
+        "Gazipur-1",
+        "Gazipur-2",
+        "Gazipur-3",
+        "Gazipur-4",
+        "Gazipur-5"
+      ]
+    },
+    {
+      "Serial": 43,
+      "Constituency Name": "Narsingdi",
+      "Seat Names": [
+        "Narsingdi-1",
+        "Narsingdi-2",
+        "Narsingdi-3",
+        "Narsingdi-4",
+        "Narsingdi-5"
+      ]
+    },
+    {
+      "Serial": 44,
+      "Constituency Name": "Narayanganj",
+      "Seat Names": [
+        "Narayanganj-1",
+        "Narayanganj-2",
+        "Narayanganj-3",
+        "Narayanganj-4",
+        "Narayanganj-5"
+      ]
+    },
+    {
+      "Serial": 45,
+      "Constituency Name": "Rajbari",
+      "Seat Names": [
+        "Rajbari-1",
+        "Rajbari-2"
+      ]
+    },
+    {
+      "Serial": 46,
+      "Constituency Name": "Faridpur",
+      "Seat Names": [
+        "Faridpur-1",
+        "Faridpur-2",
+        "Faridpur-3",
+        "Faridpur-4"
+      ]
+    },
+    {
+      "Serial": 47,
+      "Constituency Name": "Gopalganj",
+      "Seat Names": [
+        "Gopalganj-1",
+        "Gopalganj-2",
+        "Gopalganj-3"
+      ]
+    },
+    {
+      "Serial": 48,
+      "Constituency Name": "Madaripur",
+      "Seat Names": [
+        "Madaripur-1",
+        "Madaripur-2",
+        "Madaripur-3"
+      ]
+    },
+    {
+      "Serial": 49,
+      "Constituency Name": "Shariatpur",
+      "Seat Names": [
+        "Shariatpur-1",
+        "Shariatpur-2",
+        "Shariatpur-3"
+      ]
+    },
+    {
+      "Serial": 50,
+      "Constituency Name": "Sunamganj",
+      "Seat Names": [
+        "Sunamganj-1",
+        "Sunamganj-2",
+        "Sunamganj-3",
+        "Sunamganj-4",
+        "Sunamganj-5"
+      ]
+    },
+    {
+      "Serial": 51,
+      "Constituency Name": "Sylhet",
+      "Seat Names": [
+        "Sylhet-1",
+        "Sylhet-2",
+        "Sylhet-3",
+        "Sylhet-4",
+        "Sylhet-5",
+        "Sylhet-6"
+      ]
+    },
+    {
+      "Serial": 52,
+      "Constituency Name": "Moulvibazar",
+      "Seat Names": [
+        "Moulvibazar-1",
+        "Moulvibazar-2",
+        "Moulvibazar-3",
+        "Moulvibazar-4"
+      ]
+    },
+    {
+      "Serial": 53,
+      "Constituency Name": "Habiganj",
+      "Seat Names": [
+        "Habiganj-1",
+        "Habiganj-2",
+        "Habiganj-3",
+        "Habiganj-4"
+      ]
+    },
+    {
+      "Serial": 54,
+      "Constituency Name": "Brahmanbaria",
+      "Seat Names": [
+        "Brahmanbaria-1",
+        "Brahmanbaria-2",
+        "Brahmanbaria-3",
+        "Brahmanbaria-4",
+        "Brahmanbaria-5",
+        "Brahmanbaria-6"
+      ]
+    },
+    {
+      "Serial": 55,
+      "Constituency Name": "Comilla",
+      "Seat Names": [
+        "Comilla-1",
+        "Comilla-2",
+        "Comilla-3",
+        "Comilla-4",
+        "Comilla-5",
+        "Comilla-6",
+        "Comilla-7",
+        "Comilla-8",
+        "Comilla-9",
+        "Comilla-10",
+        "Comilla-11"
+      ]
+    },
+    {
+      "Serial": 56,
+      "Constituency Name": "Chandpur",
+      "Seat Names": [
+        "Chandpur-1",
+        "Chandpur-2",
+        "Chandpur-3",
+        "Chandpur-4",
+        "Chandpur-5"
+      ]
+    },
+    {
+      "Serial": 57,
+      "Constituency Name": "Feni",
+      "Seat Names": [
+        "Feni-1",
+        "Feni-2",
+        "Feni-3"
+      ]
+    },
+    {
+      "Serial": 58,
+      "Constituency Name": "Noakhali",
+      "Seat Names": [
+        "Noakhali-1",
+        "Noakhali-2",
+        "Noakhali-3",
+        "Noakhali-4",
+        "Noakhali-5",
+        "Noakhali-6"
+      ]
+    },
+    {
+      "Serial": 59,
+      "Constituency Name": "Lakshmipur",
+      "Seat Names": [
+        "Lakshmipur-1",
+        "Lakshmipur-2",
+        "Lakshmipur-3",
+        "Lakshmipur-4"
+      ]
+    },
+    {
+      "Serial": 60,
+      "Constituency Name": "Chattogram",
+      "Seat Names": [
+        "Chattogram-1",
+        "Chattogram-2",
+        "Chattogram-3",
+        "Chattogram-4",
+        "Chattogram-5",
+        "Chattogram-6",
+        "Chattogram-7",
+        "Chattogram-8",
+        "Chattogram-9",
+        "Chattogram-10",
+        "Chattogram-11",
+        "Chattogram-12",
+        "Chattogram-13",
+        "Chattogram-14",
+        "Chattogram-15",
+        "Chattogram-16"
+      ]
+    },
+    {
+      "Serial": 61,
+      "Constituency Name": "Cox's Bazar",
+      "Seat Names": [
+        "Cox's Bazar-1",
+        "Cox's Bazar-2",
+        "Cox's Bazar-3",
+        "Cox's Bazar-4"
+      ]
+    },
+    {
+      "Serial": 62,
+      "Constituency Name": "Khagrachari",
+      "Seat Names": [
+        "Khagrachari"
+      ]
+    },
+    {
+      "Serial": 63,
+      "Constituency Name": "Rangamati",
+      "Seat Names": [
+        "Rangamati"
+      ]
+    },
+    {
+      "Serial": 64,
+      "Constituency Name": "Bandarban",
+      "Seat Names": [
+        "Bandarban"
+      ]
+    }
+  ]

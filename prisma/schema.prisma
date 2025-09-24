@@ -1,6 +1,3 @@
-// Prisma schema for PostgreSQL production database
-// npx prisma migrate dev --name init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,58 +8,58 @@ datasource db {
 }
 
 model Submission {
-  id         String   @id @default(cuid())
-  name       String?
-  contact    String?  // Now stores phone number
-  email      String?
-  message    String
-  ipHash     String
-  locale     String
-  status     String   @default("PENDING") // PENDING | REVIEWED | FLAGGED
-  // File attachment fields
-  attachmentUrl    String?  // URL to the stored file
-  attachmentKey    String?  // S3 key or file path for deletion
-  attachmentName   String?  // Original filename
-  attachmentSize   Int?     // File size in bytes
-  attachmentType   String?  // MIME type
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  source     String   @default("web")
-  auditLogs  AuditLog[]
+  id             String     @id @default(cuid())
+  name           String?
+  contact        String?
+  email          String?
+  district       String?
+  seatName       String?
+  message        String
+  ipHash         String
+  locale         String
+  status         String     @default("PENDING")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  source         String     @default("web")
+  attachmentKey  String?
+  attachmentName String?
+  attachmentSize Int?
+  attachmentType String?
+  attachmentUrl  String?
+  auditLogs      AuditLog[]
 
   @@index([ipHash])
   @@index([createdAt])
+  @@index([district])
+  @@index([seatName])
 }
 
 model AuditLog {
-  id           String   @id @default(cuid())
-  submission   Submission? @relation(fields: [submissionId], references: [id])
+  id           String      @id @default(cuid())
   submissionId String?
   action       String
   actor        String?
-  payload      String? // JSON stringified
-  createdAt    DateTime @default(now())
+  payload      String?
+  createdAt    DateTime    @default(now())
+  submission   Submission? @relation(fields: [submissionId], references: [id])
 }
 
-// User management system
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String?
-  passwordHash  String
-  role          UserRole  @default(SUPPORT)
-  isActive      Boolean   @default(true)
-  lastLoginAt   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  createdBy     String?
-  updatedBy     String?
-  
-  // Relations
-  sessions      Session[]
-  auditLogs     UserAuditLog[]
+  id                  String               @id @default(cuid())
+  email               String               @unique
+  name                String?
+  passwordHash        String
+  role                UserRole             @default(SUPPORT)
+  isActive            Boolean              @default(true)
+  lastLoginAt         DateTime?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  createdBy           String?
+  updatedBy           String?
   passwordResetTokens PasswordResetToken[]
-  
+  sessions            Session[]
+  auditLogs           UserAuditLog[]
+
   @@index([email])
   @@index([role])
   @@index([isActive])
@@ -76,9 +73,8 @@ model Session {
   createdAt DateTime @default(now())
   userAgent String?
   ipAddress String?
-  
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@index([token])
   @@index([expiresAt])
   @@index([userId])
@@ -88,13 +84,12 @@ model UserAuditLog {
   id        String   @id @default(cuid())
   userId    String
   action    String
-  details   String?  // JSON stringified
+  details   String?
   ipAddress String?
   userAgent String?
   createdAt DateTime @default(now())
-  
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@index([userId])
   @@index([createdAt])
 }
@@ -106,35 +101,34 @@ model PasswordResetToken {
   expiresAt DateTime
   used      Boolean  @default(false)
   createdAt DateTime @default(now())
-  
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@index([token])
   @@index([expiresAt])
   @@index([userId])
 }
 
 model Slider {
-  id          String   @id @default(cuid())
-  titleEn     String
-  titleBn     String
+  id            String   @id @default(cuid())
+  titleEn       String
+  titleBn       String
   descriptionEn String
   descriptionBn String
-  image       String
-  link        String
-  buttonTextEn String
-  buttonTextBn String
-  categoryEn  String
-  categoryBn  String
-  date        DateTime @default(now())
-  featured    Boolean  @default(false)
-  isActive    Boolean  @default(true)
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   String?
-  updatedBy   String?
-  
+  image         String
+  link          String
+  buttonTextEn  String
+  buttonTextBn  String
+  categoryEn    String
+  categoryBn    String
+  date          DateTime @default(now())
+  featured      Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdBy     String?
+  updatedBy     String?
+
   @@index([featured])
   @@index([isActive])
   @@index([order])
@@ -154,16 +148,16 @@ model BlogPost {
   authorBn    String
   category    String
   image       String
-  tags        String[] // Array of tags
+  tags        String[]
   featured    Boolean  @default(false)
   isActive    Boolean  @default(true)
-  readTime    Int      @default(5) // in minutes
+  readTime    Int      @default(5)
   publishedAt DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   createdBy   String?
   updatedBy   String?
-  
+
   @@index([category])
   @@index([featured])
   @@index([isActive])
@@ -172,43 +166,43 @@ model BlogPost {
 }
 
 model FAQ {
-  id          String   @id @default(cuid())
-  questionEn  String
-  questionBn  String
-  answerEn    String
-  answerBn    String
-  category    String
-  order       Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   String?
-  updatedBy   String?
-  
+  id         String   @id @default(cuid())
+  questionEn String
+  questionBn String
+  answerEn   String
+  answerBn   String
+  category   String
+  order      Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  createdBy  String?
+  updatedBy  String?
+
   @@index([category])
   @@index([isActive])
   @@index([order])
 }
 
 model Notice {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   titleEn     String
   titleBn     String
   contentEn   String
   contentBn   String
   type        NoticeType @default(INFORMATION)
-  priority    Priority @default(MEDIUM)
+  priority    Priority   @default(MEDIUM)
   category    String
-  publishedAt DateTime @default(now())
+  publishedAt DateTime   @default(now())
   expiresAt   DateTime?
-  isActive    Boolean  @default(true)
-  isPinned    Boolean  @default(false)
-  attachments String[] // Array of file URLs
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isActive    Boolean    @default(true)
+  isPinned    Boolean    @default(false)
+  attachments String[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   createdBy   String?
   updatedBy   String?
-  
+
   @@index([type])
   @@index([priority])
   @@index([category])
@@ -218,28 +212,151 @@ model Notice {
 }
 
 model ContactInfo {
-  id          String   @id @default(cuid())
-  type        ContactType @default(OFFICE)
-  nameEn      String
-  nameBn      String
+  id            String      @id @default(cuid())
+  type          ContactType @default(OFFICE)
+  nameEn        String
+  nameBn        String
   descriptionEn String?
   descriptionBn String?
-  addressEn   String?
-  addressBn   String?
-  phone       String?
-  email       String?
-  website     String?
-  hoursEn     String?
-  hoursBn     String?
-  order       Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   String?
-  updatedBy   String?
-  
+  addressEn     String?
+  addressBn     String?
+  phone         String?
+  email         String?
+  website       String?
+  hoursEn       String?
+  hoursBn       String?
+  order         Int         @default(0)
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  createdBy     String?
+  updatedBy     String?
+
   @@index([type])
   @@index([isActive])
+  @@index([order])
+}
+
+model CommissionMember {
+  id                  String   @id @default(cuid())
+  image               String?
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  createdBy           String?
+  updatedBy           String?
+  description_english String?
+  designation_english String   @default("")
+  name_english        String   @default("")
+  serial_no           Int      @default(1)
+  department_bengali  String?
+  department_english  String?
+  description_bengali String?
+  designation_bengali String   @default("")
+  email               String?
+  name_bengali        String   @default("")
+  phone               String?
+  role_type           String   @default("commission_member")
+
+  @@index([serial_no])
+  @@index([isActive])
+  @@index([role_type])
+}
+
+model CommissionOfficial {
+  id                  String   @id @default(cuid())
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  createdBy           String?
+  updatedBy           String?
+  department          String   @default("")
+  designation_bangla  String   @default("")
+  designation_english String   @default("")
+  mobile              String   @default("")
+  name_bangla         String   @default("")
+  name_english        String   @default("")
+  room_no             String?
+  serial_no           Int      @default(1)
+  telephone           String?
+  category            String   @default("Chief_and_Members")
+  image               String?
+
+  @@index([category])
+  @@index([isActive])
+  @@index([serial_no])
+}
+
+model CommissionTerm {
+  id            String    @id @default(cuid())
+  titleEn       String
+  titleBn       String
+  descriptionEn String
+  descriptionBn String
+  category      String
+  section       String
+  order         Int       @default(0)
+  effectiveFrom DateTime
+  effectiveTo   DateTime?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  createdBy     String?
+  updatedBy     String?
+
+  @@index([category])
+  @@index([section])
+  @@index([order])
+  @@index([isActive])
+  @@index([effectiveFrom])
+}
+
+model Gazette {
+  id            String   @id @default(cuid())
+  titleEn       String
+  titleBn       String
+  gazetteNumber String   @unique
+  category      String
+  priority      Priority @default(MEDIUM)
+  publishedAt   DateTime
+  downloadUrl   String
+  description   String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdBy     String?
+  updatedBy     String?
+
+  @@index([gazetteNumber])
+  @@index([category])
+  @@index([priority])
+  @@index([publishedAt])
+  @@index([isActive])
+}
+
+model Gallery {
+  id            String   @id @default(cuid())
+  titleEn       String
+  titleBn       String
+  descriptionEn String?
+  descriptionBn String?
+  imageUrl      String
+  imageKey      String
+  category      String   @default("general")
+  tags          String[] @default([])
+  featured      Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  order         Int      @default(0)
+  publishedAt   DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdBy     String?
+  updatedBy     String?
+
+  @@index([category])
+  @@index([featured])
+  @@index([isActive])
+  @@index([publishedAt])
   @@index([order])
 }
 
@@ -269,128 +386,3 @@ enum ContactType {
   PERSON
   HOTLINE
 }
-
-model CommissionMember {
-  id                    String   @id @default(cuid())
-  serial_no             Int      @default(1)
-  name_english          String   @default("")
-  name_bengali          String   @default("")
-  role_type             String   @default("commission_member")
-  designation_english   String   @default("")
-  designation_bengali   String   @default("")
-  department_english    String?
-  department_bengali    String?
-  image                 String?
-  email                 String?
-  phone                 String?
-  description_english   String?
-  description_bengali   String?
-  isActive              Boolean  @default(true)
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  createdBy             String?
-  updatedBy             String?
-  
-  @@index([serial_no])
-  @@index([isActive])
-  @@index([role_type])
-}
-
-model CommissionOfficial {
-  id                  String   @id @default(cuid())
-  serial_no           Int      @default(1)
-  name_english        String   @default("")
-  name_bangla         String   @default("")
-  designation_english String   @default("")
-  designation_bangla  String   @default("")
-  department          String   @default("")
-  telephone           String?
-  mobile              String   @default("")
-  room_no             String?
-  category            String   @default("Chief_and_Members")
-  image               String?
-  isActive            Boolean  @default(true)
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  createdBy           String?
-  updatedBy           String?
-  
-  @@index([category])
-  @@index([isActive])
-  @@index([serial_no])
-}
-
-model CommissionTerm {
-  id            String   @id @default(cuid())
-  titleEn       String
-  titleBn       String
-  descriptionEn String
-  descriptionBn String
-  category      String
-  section       String
-  order         Int      @default(0)
-  effectiveFrom DateTime
-  effectiveTo   DateTime?
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  createdBy     String?
-  updatedBy     String?
-  
-  @@index([category])
-  @@index([section])
-  @@index([order])
-  @@index([isActive])
-  @@index([effectiveFrom])
-}
-
-model Gazette {
-  id            String   @id @default(cuid())
-  titleEn       String
-  titleBn       String
-  gazetteNumber String   @unique
-  category      String
-  priority      Priority @default(MEDIUM)
-  publishedAt   DateTime
-  downloadUrl   String
-  description   String?
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  createdBy     String?
-  updatedBy     String?
-  
-  @@index([gazetteNumber])
-  @@index([category])
-  @@index([priority])
-  @@index([publishedAt])
-  @@index([isActive])
-}
-
-// Gallery system for images and media
-model Gallery {
-  id            String   @id @default(cuid())
-  titleEn       String
-  titleBn       String
-  descriptionEn String?
-  descriptionBn String?
-  imageUrl      String   // S3 URL
-  imageKey      String   // S3 key for deletion
-  category      String   @default("general")
-  tags          String[] @default([])
-  featured      Boolean  @default(false)
-  isActive      Boolean  @default(true)
-  order         Int      @default(0)
-  publishedAt   DateTime @default(now())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  createdBy     String?
-  updatedBy     String?
-  
-  @@index([category])
-  @@index([featured])
-  @@index([isActive])
-  @@index([publishedAt])
-  @@index([order])
-}
-

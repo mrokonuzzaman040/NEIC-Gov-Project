@@ -44,6 +44,8 @@ export async function POST(req: NextRequest) {
         name: formData.get('name') as string,
         phone: formData.get('phone') as string,
         email: formData.get('email') as string,
+        district: formData.get('district') as string,
+        seatName: formData.get('seatName') as string,
         shareName: shareNameValue === 'true' || shareNameValue === 'on',
         message: formData.get('message') as string,
         honeypot: formData.get('website') as string
@@ -132,8 +134,10 @@ export async function POST(req: NextRequest) {
     const record = await prisma.submission.create({
       data: {
         name: parsed.data.shareName ? (parsed.data.name || null) : null,
-        contact: parsed.data.phone,
+        contact: parsed.data.phone || null,
         email: parsed.data.email || null,
+        district: parsed.data.district,
+        seatName: parsed.data.seatName,
         message: parsed.data.message,
         ipHash: hashIp(ip),
         locale,
