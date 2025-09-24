@@ -204,23 +204,6 @@ export default function GalleryPage() {
           </div>
         )}
 
-        {/* Gallery Description */}
-        {!isLoading && !error && (
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
-            <div className="text-center">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                {isEnglish ? 'Photo Gallery' : 'ফটো গ্যালারি'}
-              </h2>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                {isEnglish 
-                  ? 'Explore our collection of images showcasing the activities, events, and achievements of the National Elections Inquiry Commission.'
-                  : 'জাতীয় নির্বাচন তদন্ত কমিশনের কার্যক্রম, ইভেন্ট এবং অর্জনের ছবির সংগ্রহ দেখুন।'
-                }
-              </p>
-            </div>
-          </div>
-        )}
-
         {/* Gallery Grid */}
         {!isLoading && !error && (
           <div className="mb-6 sm:mb-8">
@@ -324,29 +307,6 @@ export default function GalleryPage() {
                 ))}
               </div>
             )}
-          </div>
-        )}
-
-        {/* Call to Action */}
-        {!isLoading && !error && items.length > 0 && (
-          <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg p-4 sm:p-6 lg:p-8 text-white">
-            <div className="text-center">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4">
-                {isEnglish ? 'Stay Connected' : 'যোগাযোগে থাকুন'}
-              </h3>
-              <p className="text-green-100 mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base">
-                {isEnglish 
-                  ? 'Follow our activities and stay updated with the latest developments from the Commission.'
-                  : 'আমাদের কার্যক্রম অনুসরণ করুন এবং কমিশনের সর্বশেষ উন্নয়নের সাথে আপডেট থাকুন।'
-                }
-              </p>
-              <Link
-                href={`/${locale}`}
-                className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm sm:text-base"
-              >
-                {isEnglish ? 'Back to Home' : 'হোমে ফিরুন'}
-              </Link>
-            </div>
           </div>
         )}
 
