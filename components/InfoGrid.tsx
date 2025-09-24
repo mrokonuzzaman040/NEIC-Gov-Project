@@ -55,7 +55,7 @@ export function InfoGrid() {
               </div>
               <h4 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 dark:text-white">{t(section.titleKey as any)}</h4>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">{t(section.textKey as any)}</p>
+
             
             {/* Section Items (for how to participate) */}
             {section.items && (

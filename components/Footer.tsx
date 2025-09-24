@@ -22,10 +22,7 @@ export function Footer() {
             </div>
             <div className="min-w-0">
               <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white break-words">
-                {data.footer.title[locale as keyof typeof data.footer.title]}
-              </p>
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
-                {data.footer.subtitle[locale as keyof typeof data.footer.subtitle]}
+              জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন
               </p>
             </div>
           </div>
