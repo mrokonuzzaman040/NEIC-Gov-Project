@@ -186,7 +186,7 @@ export default function ContactPage() {
           title={data.title?.[langKey] || (isEnglish ? 'Contact Us' : 'যোগাযোগ')}
           // subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
           portal={isEnglish ? 'Official Contact Information' : ' যোগাযোগের তথ্য'}
-          tagline={isEnglish ? 'Last Updated: September 2024' : 'সর্বশেষ আপডেট: সেপ্টেম্বর ২০২৪'}
+          tagline={isEnglish ? 'Last Updated: September 2025' : 'সর্বশেষ আপডেট: সেপ্টেম্বর ২০২৫'}
           borderColor="green"
           iconColor="green"
         />

@@ -23,7 +23,7 @@
         },
         "bn": {
           "organization": "জাতীয়  নির্বাচন (২০১৪, ২০১৮ এবং ২০২৪) তদন্ত কমিশন",
-          "location": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয় সংসদ ভবন",
+          "location": "ব্লক-২,জাতীয় সংসদ ভবন এলাকা, শের-ই-বাংলা নগর, ঢাকা-১২০৭",
           "area": "শের-ই-বাংলা নগর",
           "city": "ঢাকা-১২০৭",
           "country": "বাংলাদেশ"
@@ -129,8 +129,8 @@
           "bn": "জাতীয় জাতীয়  নির্বাচন তদন্ত কমিশন"
         },
         "info": {
-          "en": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban<br>Sher-e-Bangla Nagar, Dhaka-1000",
-          "bn": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম), জাতীয়  ভবন<br>শের-ই-বাংলা নগর, ঢাকা"
+          "en": "Block-2, 2nd Floor (West), Jatiya Sangsad Bhaban<br>Sher-e-Bangla Nagar, Dhaka-1207",
+          "bn": "ব্লক-২,জাতীয় সংসদ ভবন এলাকা শের-ই-বাংলা নগর, ঢাকা-1207"
         }
       }
     },
@@ -148,7 +148,7 @@
           },
           "value": {
             "en": "Jatiya Sangsad Bhaban (National Parliament Building)",
-            "bn": "জাতীয় সংসদ ভবন"
+            "bn": "জাতীয় সংসদ ভবন "
           }
         },
         {
@@ -159,7 +159,7 @@
           },
           "value": {
             "en": "Block-2, 2nd Floor (West Wing)",
-            "bn": "ব্লক-২, দ্বিতীয় তলা (পশ্চিম অংশ)"
+            "bn": "ব্লক-২,জাতীয় সংসদ ভবন এলাকা"
           }
         },
         {
@@ -170,7 +170,7 @@
           },
           "value": {
             "en": "Sher-e-Bangla Nagar, Dhaka",
-            "bn": "শের-ই-বাংলা নগর, ঢাকা"
+            "bn": "শের-ই-বাংলা নগর, ঢাকা-১২০৭"
           }
         }
       ]
@@ -251,7 +251,7 @@
             "en": "Website",
             "bn": "ওয়েবসাইট"
           },
-          "value": "www.neic.ecs.gov.bd",
+          "value": "www.neic-bd.org",
           "description": {
             "en": "Visit our official website for more information",
             "bn": "আরও তথ্যের জন্য আমাদের ওয়েবসাইট দেখুন"
@@ -304,7 +304,7 @@
       },
       "contact": {
         "phone": "+880-1711-123456",
-        "email": "emergency@neic.ecs.gov.bd"
+        "email": "emergency@neic-bd.org"
       }
     }
   }

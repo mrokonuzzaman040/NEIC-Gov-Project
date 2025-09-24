@@ -20,11 +20,11 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
         {/* Government Header */}
         <GovernmentHeader
           title={isBengali ? 'জাতীয়  নির্বাচন তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
-          subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
-          portal={isBengali ? 'কমিশন সম্পর্কে' : 'About the Commission'}
-          tagline={isBengali ? 'আমাদের অঙ্গীকার ও লক্ষ্য' : 'Our Mission & Commitment'}
-          borderColor="blue"
-          iconColor="blue"
+          // subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
+          // portal={isBengali ? 'কমিশন সম্পর্কে' : 'About the Commission'}
+          // tagline={isBengali ? 'আমাদের অঙ্গীকার ও লক্ষ্য' : 'Our Mission & Commitment'}
+          borderColor="green"
+          iconColor="green"
         />
 
         {/* Introduction */}

@@ -221,30 +221,6 @@ export default function GalleryPage() {
           </div>
         )}
 
-        {/* Category Filter */}
-        {!isLoading && !error && categories.length > 1 && (
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              {isEnglish ? 'Categories' : 'বিভাগসমূহ'}
-            </h3>
-            <div className="flex flex-wrap gap-2 sm:gap-3">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-3 sm:px-4 py-1.5 sm:py-2 border rounded-lg transition-colors duration-200 font-medium text-xs sm:text-sm ${
-                    selectedCategory === category
-                      ? 'bg-green-600 text-white border-green-600'
-                      : 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30'
-                  }`}
-                >
-                  {getCategoryName(category)}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Gallery Grid */}
         {!isLoading && !error && (
           <div className="mb-6 sm:mb-8">
