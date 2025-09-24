@@ -16,7 +16,7 @@ const notoSansBengali = Noto_Sans_Bengali({
   subsets: ['bengali'], 
   weight: ['400','500','600','700'],
   display: 'swap',
-  fallback: ['Kalpurush', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
   preload: true,
   adjustFontFallback: false
 });
