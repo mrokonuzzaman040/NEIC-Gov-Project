@@ -37,13 +37,15 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
           </h2> */}
           <div className="space-y-3 sm:space-y-4">
             {commissionScopeData.commission_scope.map((scope, index) => (
-              <div key={index} className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 sm:p-4">
+              <div key={index} className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
-                    {index + 1}
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-green-600 text-white rounded-full flex items-center justify-center">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs sm:text-sm lg:text-base text-blue-800 dark:text-blue-200 leading-relaxed break-words">
+                    <p className="text-xs sm:text-sm lg:text-base text-green-800 dark:text-green-200 leading-relaxed break-words">
                       {scope[langKey]}
                     </p>
                   </div>
@@ -67,13 +69,15 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
         <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <div className="space-y-3 sm:space-y-4">
             {commissionScopeData.powers.map((power, index) => (
-              <div key={index} className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 sm:p-4">
+              <div key={index} className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
-                    {index + 1}
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-green-600 text-white rounded-full flex items-center justify-center">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs sm:text-sm lg:text-base text-blue-800 dark:text-blue-200 leading-relaxed break-words">
+                    <p className="text-xs sm:text-sm lg:text-base text-green-800 dark:text-green-200 leading-relaxed break-words">
                       {power[langKey]}
                     </p>
                   </div>

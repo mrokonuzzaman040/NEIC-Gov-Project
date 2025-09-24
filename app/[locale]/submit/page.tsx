@@ -234,18 +234,6 @@ export default function SubmitPage() {
           </Link>
         </div>
 
-        {/* Description Section */}
-        {/* <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-              {isEnglish ? 'Submit Your Opinion' : 'আপনার অভিমত জমা দিন'}
-            </h2>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-              {t('form.pageDescription')}
-            </p>
-          </div>
-        </div> */}
-
         {/* Form Container */}
         <div className="max-w-4xl mx-auto">
           <div className="bg-white dark:bg-slate-800 shadow-lg">
@@ -367,9 +355,6 @@ export default function SubmitPage() {
                       <label htmlFor="shareName" className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer break-words">
                         {t('form.shareName')}
                       </label>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 break-words">
-                        {t('form.shareNameDesc')}
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -547,16 +532,6 @@ export default function SubmitPage() {
                     {t('form.reset')}
                   </button>
                 </div>
-
-                {/* Privacy Notice */}
-                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 sm:p-4">
-                  <div className="flex items-start space-x-2 sm:space-x-3">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 break-words">{t('form.privacy')}</p>
-                  </div>
-                </div>
               </form>
 
               {/* Status Messages */}
@@ -581,40 +556,6 @@ export default function SubmitPage() {
                   </div>
                 </div>
               )}
-            </div>
-          </div>
-        </div>
-
-        {/* Important Notice */}
-        <div className="mt-6 sm:mt-8 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 sm:p-6">
-          <div className="flex items-start space-x-3">
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600 dark:text-yellow-400 mt-0.5 sm:mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-            </svg>
-            <div className="min-w-0">
-              <h4 className="text-sm sm:text-base lg:text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-1 sm:mb-2">
-                {isEnglish ? 'Important Guidelines' : 'গুরুত্বপূর্ণ নির্দেশিকা'}
-              </h4>
-              <div className="text-yellow-800 dark:text-yellow-200 text-xs sm:text-sm leading-relaxed space-y-1.5 sm:space-y-2">
-                <p className="break-words">
-                  {isEnglish 
-                    ? '• Please provide factual and constructive feedback about election-related matters'
-                    : '• অনুগ্রহ করে নির্বাচন সংক্রান্ত বিষয়ে তথ্যভিত্তিক ও গঠনমূলক মতামত প্রদান করুন'
-                  }
-                </p>
-                <p className="break-words">
-                  {isEnglish 
-                    ? '• All submissions are confidential and will be reviewed by the commission'
-                    : '• সকল জমাদান গোপনীয় এবং কমিশন কর্তৃক পর্যালোচিত হবে'
-                  }
-                </p>
-                <p className="break-words">
-                  {isEnglish 
-                    ? '• Avoid sharing sensitive personal information in your submission'
-                    : '• আপনার জমাদানে সংবেদনশীল ব্যক্তিগত তথ্য শেয়ার করা এড়িয়ে চলুন'
-                  }
-                </p>
-              </div>
             </div>
           </div>
         </div>

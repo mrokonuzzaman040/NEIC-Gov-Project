@@ -147,10 +147,6 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                         ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' 
                         : 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300'
                     }`}>
-                      {member.role_type === 'commission_member' 
-                        ? (isEnglish ? 'Member' : 'সদস্য') 
-                        : (isEnglish ? 'Support' : 'সহায়তা')
-                      }
                     </span>
                   </div>
                   <p className="text-xs sm:text-sm text-green-600 dark:text-green-400 font-medium mb-1 break-words">

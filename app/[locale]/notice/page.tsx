@@ -125,87 +125,9 @@ export default function NoticePage() {
                   </p>
                 </div>
               </div>
-              <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  {isEnglish ? 'Official Notices & Announcements' : 'বিজ্ঞপ্তি ও ঘোষণা'}
-                </p>
-                <p className="text-xs text-gray-400 dark:text-gray-500">
-                  {isEnglish ? `Last Updated: ${new Date().toLocaleDateString('en-US').replace(/\//g, '-')}` : `সর্বশেষ আপডেট: ${new Date().toLocaleDateString('bn-BD').replace(/\//g, '-')}`}
-                </p>
-              </div>
             </div>
           </div>
         </div>
-
-        {/* Description Section */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-              {isEnglish ? 'Official Notices & Announcements' : 'বিজ্ঞপ্তি ও ঘোষণা'}
-            </h2>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-              {t('description')}
-            </p>
-          </div>
-        </div>
-
-        {/* Statistics Cards */}
-        {/* <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 border-l-4 border-blue-600">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <div className="ml-3 sm:ml-4 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {isEnglish ? 'Total Notices' : 'মোট বিজ্ঞপ্তি'}
-                </p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white">
-                  {transformedNotices.length}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 border-l-4 border-red-600">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                </svg>
-              </div>
-              <div className="ml-3 sm:ml-4 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {isEnglish ? 'High Priority' : 'উচ্চ অগ্রাধিকার'}
-                </p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white">
-                  {transformedNotices.filter(n => n.priority === 'high').length}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 border-l-4 border-green-600">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div className="ml-3 sm:ml-4 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {isEnglish ? 'This Month' : 'এই মাসে'}
-                </p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white">
-                  {transformedNotices.filter(n => new Date(n.publishedAt).getMonth() === new Date().getMonth()).length}
-                </p>
-              </div>
-            </div>
-          </div> */}
-        
-
         {/* Loading State */}
         {isLoading && (
           <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg">
@@ -253,9 +175,6 @@ export default function NoticePage() {
                 </svg>
                 <span className="truncate">{t('allNotices')}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">
-                {isEnglish ? 'Official notices and announcements from the National Elections Inquiry Commission' : 'জাতীয়  নির্বাচন তদন্ত কমিশনের  বিজ্ঞপ্তি ও ঘোষণা'}
-              </p>
             </div>
             
             <div className="p-3 sm:p-4 lg:p-6 xl:p-8">
@@ -265,7 +184,7 @@ export default function NoticePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {isEnglish ? 'No notices available' : 'কোন বিজ্ঞপ্তি উপলব্ধ নেই'}
+                    {isEnglish ? 'No notices available' : 'কোন বিজ্ঞপ্তি উপলব্ধ নেই।'}
                   </h3>
                   <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                     {isEnglish ? 'Check back later for new notices and announcements.' : 'নতুন বিজ্ঞপ্তি ও ঘোষণার জন্য পরে আবার দেখুন।'}
@@ -448,23 +367,6 @@ export default function NoticePage() {
             </div>
           </div>
         )}
-
-        {/* Important Notice */}
-        <div className="mt-6 sm:mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6">
-          <div className="flex items-start space-x-3">
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400 mt-0.5 sm:mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div className="min-w-0">
-              <h4 className="text-sm sm:text-base lg:text-lg font-semibold text-blue-900 dark:text-blue-100 mb-1 sm:mb-2">
-                {t('importantNote')}
-              </h4>
-              <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 leading-relaxed break-words">
-                {t('noteDescription')}
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

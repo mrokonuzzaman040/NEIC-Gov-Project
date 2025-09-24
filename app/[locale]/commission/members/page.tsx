@@ -59,7 +59,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
   
   // Commission name - using a default since we don't have this in the API
   const commissionNameEnglish = "National Elections Inquiry Commission";
-  const commissionNameBengali = "জাতীয় নির্বাচন তদন্ত কমিশন";
+  const commissionNameBengali = "জাতীয় নির্বাচন তদন্ত কমিশন (২০১৪, ২০১৮, ২০২৪)";
   
   return (
     <div className="min-h-screen py-4 sm:py-6 lg:py-8">
@@ -67,9 +67,6 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
         {/* Government Header with Official Seal */}
         <GovernmentHeader
           title={isEnglish ? commissionNameEnglish : commissionNameBengali}
-          // subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-          portal={isEnglish ? 'Official Website' : ' ওয়েবসাইট'}
-          tagline={isEnglish ? 'Last Updated: September 2024' : 'সর্বশেষ আপডেট: সেপ্টেম্বর ২০২৪'}
           borderColor="green"
           iconColor="green"
         />
@@ -119,9 +116,6 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                 </svg>
                 <span className="truncate">{t('commissionMembers')}</span>
               </h2>
-              {/* <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">
-                {isEnglish ? 'Distinguished members appointed to conduct the inquiry' : 'তদন্ত পরিচালনার জন্য নিযুক্ত বিশিষ্ট সদস্যগণ'}
-              </p> */}
             </div>
             
             <div className="p-4 sm:p-6 lg:p-8">
@@ -163,40 +157,13 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                                   {isEnglish ? member.name_english : member.name_bengali}
                                 </h3>
                               </div>
-                              {/* <p className="text-green-600 dark:text-green-400 font-semibold text-sm sm:text-base lg:text-lg mb-2 break-words">
-                                {isEnglish 
-                                  ? (member.designation_english || member.designation_bengali)
-                                  : member.designation_bengali
-                                }
-                              </p> */}
                               {member.designation_bengali === 'চেয়ারম্যান' && (
                                 <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs sm:text-sm font-medium rounded-full">
                                   {isEnglish ? 'Chairman' : 'চেয়ারম্যান'}
                                 </span>
                               )}
                             </div>
-                            
-                            {/* Official Badge */}
-                            <div className="text-left sm:text-right flex-shrink-0">
-                              <div className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-2 bg-white dark:bg-slate-600 border border-gray-300 dark:border-slate-500 rounded-lg">
-                                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-green-600 mr-1 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
-                                  {isEnglish ? 'Commission Member' : 'কমিশন সদস্য'}
-                                </span>
-                              </div>
-                            </div>
                           </div>
-                          
-                          {/* Description */}
-                          {/* {(member.description_english || member.description_bengali) && (
-                            <div className="mb-3 sm:mb-4">
-                              <p className="text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-                                {isEnglish ? (member.description_english || member.description_bengali) : (member.description_bengali || member.description_english)}
-                              </p>
-                            </div>
-                          )} */}
                           
                           {/* Contact Information */}
                           <div className="space-y-1.5 sm:space-y-2">
@@ -214,21 +181,6 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                                 </a>
                               </div>
                             )}
-                            
-                            {/* Phone Contact */}
-                            {/* {member.phone && (
-                              <div className="flex items-center space-x-2">
-                                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                                <a 
-                                  href={`tel:${member.phone}`}
-                                  className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium text-xs sm:text-sm transition-colors"
-                                >
-                                  {member.phone}
-                                </a>
-                              </div>
-                            )} */}
                           </div>
                         </div>
                       </div>

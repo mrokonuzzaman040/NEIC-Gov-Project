@@ -184,9 +184,6 @@ export default function ContactPage() {
         {/* Government Header with Official Seal */}
         <GovernmentHeader
           title={data.title?.[langKey] || (isEnglish ? 'Contact Us' : 'যোগাযোগ')}
-          // subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-          portal={isEnglish ? 'Official Contact Information' : ' যোগাযোগের তথ্য'}
-          tagline={isEnglish ? 'Last Updated: September 2025' : 'সর্বশেষ আপডেট: সেপ্টেম্বর ২০২৫'}
           borderColor="green"
           iconColor="green"
         />
@@ -210,16 +207,16 @@ export default function ContactPage() {
                     </h3>
                     <div className="space-y-1 sm:space-y-2">
                       <div className="text-sm sm:text-base text-gray-800 dark:text-gray-200 font-medium">
-                        {data.contactInfo?.address?.[langKey]?.organization || (isEnglish ? 'National Elections Inquiry Commission' : 'জাতীয় নির্বাচন তদন্ত কমিশন')}
+                      জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                        {data.contactInfo?.address?.[langKey]?.location || (isEnglish ? 'Block-2, 6th Floor (West), Jatiya Sangsad Bhaban' : 'ব্লক-২, (পশ্চিম), জাতীয় সংসদ ভবন')}
+                      ব্লক-২,জাতীয় সংসদ ভবন এলাকা
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                        {data.contactInfo?.address?.[langKey]?.area || (isEnglish ? 'Sher-e-Bangla Nagar' : 'শের-ই-বাংলা নগর')}
+                      শের-ই-বাংলা নগর
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                        {data.contactInfo?.address?.[langKey]?.city || (isEnglish ? 'Dhaka-1000' : 'ঢাকা-১০০০')}
+                      ঢাকা-১২০৭
                       </div>
                     </div>
                   </div>
@@ -243,15 +240,8 @@ export default function ContactPage() {
                         href={`mailto:${data.contactInfo?.email || 'feedback@neic.ecs.gov.bd'}`}
                         className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors duration-200 font-medium text-xs sm:text-sm w-full sm:w-auto"
                       >
-                        {/* <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg> */}
                         <span className="truncate">{data.contactInfo?.email || 'feedback@neic.ecs.gov.bd'}</span>
                       </a>
-                      <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
-                        {data.contactMethods?.methods?.[0]?.description?.[langKey] || 
-                         (isEnglish ? 'Send us an email for general inquiries and feedback' : 'সাধারণ জিজ্ঞাসা ও মতামতের জন্য আমাদের ইমেইল করুন')}
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -267,20 +257,19 @@ export default function ContactPage() {
                     <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                       {isEnglish ? 'Phone' : 'ফোন'}
                     </h3>
-                    <div className="space-y-2 sm:space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                       <a 
-                        href={`tel:${data.contactInfo?.phone || '+880-2-12345678'}`}
-                        className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors duration-200 font-medium text-xs sm:text-sm w-full sm:w-auto"
+                        href="tel:+8801550-042060"
+                        className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors duration-200 font-medium text-xs sm:text-sm"
                       >
-                        {/* <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg> */}
-                        <span className="break-all">{data.contactInfo?.phone || '+880-2-12345678'}</span>
+                        <span className="break-all">+8801550-042060</span>
                       </a>
-                      <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
-                        {data.contactMethods?.methods?.[1]?.description?.[langKey] || 
-                         (isEnglish ? 'Call us during office hours for immediate assistance' : 'তাত্ক্ষণিক সহায়তার জন্য অফিস সময়ে আমাদের ফোন করুন')}
-                      </p>
+                      <a 
+                        href="tel:+880222215647"
+                        className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors duration-200 font-medium text-xs sm:text-sm"
+                      >
+                        <span className="break-all">+880222215647</span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -305,142 +294,17 @@ export default function ContactPage() {
           </div>
           
           <div className="p-4 sm:p-6 lg:p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-              {/* Map Container */}
-              <div className="space-y-3 sm:space-y-4">
-                <div 
-                  ref={mapRef}
-                  className="w-full h-64 sm:h-80 lg:h-96 rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm"
-                  style={{ minHeight: '300px' }}
-                />
-                <div className="text-center">
-                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                    {isEnglish ? 'Click on the marker for more information' : 'আরও তথ্যের জন্য মার্কারে ক্লিক করুন'}
-                  </p>
-                </div>
+            <div className="space-y-3 sm:space-y-4">
+              <div 
+                ref={mapRef}
+                className="w-full h-80 sm:h-96 lg:h-[500px] rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm"
+                style={{ minHeight: '400px' }}
+              />
+              <div className="text-center">
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  {isEnglish ? 'Click on the marker for more information' : 'আরও তথ্যের জন্য মার্কারে ক্লিক করুন'}
+                </p>
               </div>
-
-              {/* Location Details */}
-              <div className="space-y-4 sm:space-y-6">
-                <div className="bg-gray-50 dark:bg-slate-700 rounded-lg p-4 sm:p-6">
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                    {data.locationDetails?.title?.[langKey] || (isEnglish ? 'Office Location Details' : 'অফিস অবস্থানের বিবরণ')}
-                  </h3>
-                  <div className="space-y-2 sm:space-y-3">
-                    {data.locationDetails?.details?.map((detail: any, index: number) => (
-                      <div key={index} className="flex items-start">
-                        <svg className={`w-4 h-4 sm:w-5 sm:h-5 mt-0.5 mr-2 sm:mr-3 flex-shrink-0 ${
-                          detail.icon === 'building' ? 'text-green-600' :
-                          detail.icon === 'floor' ? 'text-blue-600' :
-                          'text-purple-600'
-                        }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          {detail.icon === 'building' ? (
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                          ) : detail.icon === 'floor' ? (
-                            <>
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
-                            </>
-                          ) : (
-                            <>
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </>
-                          )}
-                        </svg>
-                        <div className="min-w-0">
-                          <p className="text-sm sm:text-base font-medium text-gray-900 dark:text-white break-words">
-                            {detail.label[langKey]}
-                          </p>
-                          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
-                            {detail.value[langKey]}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Directions */}
-                {/* <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 sm:p-6">
-                  <h3 className="text-base sm:text-lg font-semibold text-green-900 dark:text-green-100 mb-3 sm:mb-4">
-                    {data.directions?.title?.[langKey] || (isEnglish ? 'How to Reach' : 'কিভাবে যাবেন')}
-                  </h3>
-                  <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-green-800 dark:text-green-200">
-                    {data.directions?.instructions?.map((instruction: any, index: number) => (
-                      <div key={index} className="flex items-start">
-                        <span className="font-medium mr-1.5 sm:mr-2 flex-shrink-0">•</span>
-                        <span className="break-words">{instruction[langKey]}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Office Hours and Response Time */}
-        {/* <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white flex items-center">
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="truncate">{isEnglish ? 'Office Hours & Response Time' : 'অফিস সময় ও প্রতিক্রিয়া সময়'}</span>
-            </h2>
-          </div>
-          
-          <div className="p-4 sm:p-6 lg:p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-              <div className="space-y-3 sm:space-y-4">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-                  {data.officeHours?.title?.[langKey] || (isEnglish ? 'Office Hours' : 'অফিস সময়')}
-                </h3>
-                <div className="space-y-1.5 sm:space-y-2 text-gray-600 dark:text-gray-400">
-                  {data.officeHours?.schedule?.map((schedule: any, index: number) => (
-                    <div key={index} className="flex justify-between text-xs sm:text-sm">
-                      <span className="break-words">{schedule.days[langKey]}:</span>
-                      <span className={`font-medium ml-2 ${
-                        schedule.status === 'closed' ? 'text-red-600 dark:text-red-400' : ''
-                      }`}>
-                        {schedule.time[langKey]}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="space-y-3 sm:space-y-4">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-                  {data.responseTime?.title?.[langKey] || (isEnglish ? 'Response Time' : 'প্রতিক্রিয়া সময়')}
-                </h3>
-                <div className="space-y-1.5 sm:space-y-2 text-gray-600 dark:text-gray-400">
-                  {data.responseTime?.timelines?.map((timeline: any, index: number) => (
-                    <div key={index} className="flex justify-between text-xs sm:text-sm">
-                      <span className="break-words">{timeline.type[langKey]}:</span>
-                      <span className="font-medium ml-2">{timeline.duration[langKey]}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
-        {/* Important Notice */}
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-3">
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0 mx-auto sm:mx-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div className="text-center sm:text-left min-w-0">
-              <h4 className="text-base sm:text-lg font-semibold text-blue-900 dark:text-blue-100 mb-1 sm:mb-2">
-                {data.importantNotice?.title?.[langKey] || (isEnglish ? 'Important Notice' : 'গুরুত্বপূর্ণ বিজ্ঞপ্তি')}
-              </h4>
-              <p className="text-blue-800 dark:text-blue-200 text-xs sm:text-sm leading-relaxed break-words">
-                {data.importantNotice?.description?.[langKey] || (isEnglish ? 'For security and confidentiality reasons, all communications are monitored and recorded.' : 'নিরাপত্তা ও গোপনীয়তার কারণে সকল যোগাযোগ পর্যবেক্ষণ ও রেকর্ড করা হয়।')}
-              </p>
             </div>
           </div>
         </div>

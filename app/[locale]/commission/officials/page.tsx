@@ -86,9 +86,6 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
         {/* Government Header */}
         <GovernmentHeader
           title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
-          // subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
-          portal={isBengali ? 'কমিশন কর্মকর্তা' : 'Commission Officials'}
-          // tagline={isBengali ? 'কর্মচারী তালিকা' : 'Staff Directory'}
           borderColor="green"
           iconColor="green"
         />
@@ -230,56 +227,6 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
             </div>
           );
         })}
-
-        {/* Contact Information */}
-        {!loading && !error && (
-          <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8">
-            <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
-              <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gray-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
-                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="truncate">{isBengali ? 'যোগাযোগের তথ্য' : 'Contact Information'}</span>
-            </h2>
-            <div className="grid gap-4 sm:gap-6 sm:grid-cols-1 md:grid-cols-2">
-              <div className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg p-4 sm:p-6">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                  {isBengali ? 'কমিশন সম্পর্কে' : 'About the Commission'}
-                </h3>
-                <p className="text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-                  {isBengali 
-                    ? 'জাতীয়  নির্বাচন তদন্ত কমিশন একটি স্বাধীন ও নিরপেক্ষ প্রতিষ্ঠান যা নির্বাচনী প্রক্রিয়ার স্বচ্ছতা ও ন্যায়বিচার নিশ্চিত করার জন্য কাজ করে।'
-                    : 'The National Elections Inquiry Commission is an independent and impartial institution working to ensure transparency and justice in the electoral process.'
-                  }
-                </p>
-              </div>
-              <div className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg p-4 sm:p-6">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                  {isBengali ? 'যোগাযোগের তথ্য' : 'Contact Details'}
-                </h3>
-                <div className="space-y-2 sm:space-y-3">
-                  <div className="flex items-center">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-                      {isBengali ? 'সকল প্রশ্নের জন্য উপরের কর্মকর্তাদের সাথে যোগাযোগ করুন' : 'Contact the above officials for any inquiries'}
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-                      {isBengali ? 'অফিস সময়: সকাল ৯টা থেকে বিকাল ৫টা (রবিবার বন্ধ)' : 'Office Hours: 9:00 AM to 5:00 PM (Closed on Sundays)'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
