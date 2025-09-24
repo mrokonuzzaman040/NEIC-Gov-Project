@@ -126,7 +126,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
             </div>
           </section>
           {/* <InfoGrid />         */}
-          <Footer />
+          {/* <Footer /> */}
         </main>
       </div>
     </div>
