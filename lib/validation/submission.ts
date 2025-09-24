@@ -41,10 +41,13 @@ export const submissionSchema = z.object({
     }, 'Name contains invalid characters. Only letters, spaces, and basic punctuation are allowed'),
     
   phone: z
-    .string({ required_error: 'Phone number is required' })
+    .string()
     .trim()
-    .min(1, 'Phone number is required')
-    .regex(phoneRegex, 'Please enter a valid Bangladesh phone number (e.g., +8801xxxxxxxxx or 01xxxxxxxxx)'),
+    .optional()
+    .refine((val) => {
+      if (!val || val === '') return true;
+      return phoneRegex.test(val);
+    }, 'Please enter a valid Bangladesh phone number (e.g., +8801xxxxxxxxx or 01xxxxxxxxx)'),
     
   email: z
     .string()
@@ -55,18 +58,28 @@ export const submissionSchema = z.object({
       return emailRegex.test(val);
     }, 'Please enter a valid email address'),
     
+  district: z
+    .string({ required_error: 'District is required' })
+    .trim()
+    .min(1, 'District is required'),
+    
+  seatName: z
+    .string({ required_error: 'Seat name is required' })
+    .trim()
+    .min(1, 'Seat name is required'),
+    
   shareName: z.boolean().optional().default(false),
   
   message: z
     .string({ required_error: 'Message is required' })
     .trim()
     .min(10, 'Message must be at least 10 characters long')
-    .max(500, 'Message must be less than 500 characters')
+    .max(2500, 'Message must be less than 2500 characters')
     .refine(validateMessage, 'Message contains inappropriate content or spam patterns')
 });
 
 // File validation schema for client-side
-const MAX_FILE_SIZE_MB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '25');
+const MAX_FILE_SIZE_MB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '512');
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 export const fileValidationSchema = z.object({

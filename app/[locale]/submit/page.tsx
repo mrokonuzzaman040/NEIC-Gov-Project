@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { submissionSchema } from '@/lib/validation/submission';
@@ -19,10 +19,42 @@ export default function SubmitPage() {
   const recaptchaRef = useRef<ReCAPTCHAInstance | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState<string | null>(null);
+  const [districtData, setDistrictData] = useState<any[]>([]);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const [seatOptions, setSeatOptions] = useState<string[]>([]);
   const captchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_KEY;
   const captchaRequired = Boolean(captchaSiteKey) && process.env.NODE_ENV === 'production';
-  const maxFileSizeMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '25');
+  const maxFileSizeMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '512');
   const maxFileSizeBytes = Math.max(1, maxFileSizeMb) * 1024 * 1024;
+
+  // Load district data on component mount
+  useEffect(() => {
+    const loadDistrictData = async () => {
+      try {
+        // Import the election area data directly
+        const data = await import(`@/data/election_area/distict_election_area_${locale}.json`);
+        setDistrictData(data.default);
+      } catch (error) {
+        console.error('Error loading district data:', error);
+      }
+    };
+    loadDistrictData();
+  }, [locale]);
+
+  // Update seat options when district changes
+  useEffect(() => {
+    if (selectedDistrict && districtData.length > 0) {
+      const district = districtData.find(d => 
+        isEnglish ? d['Constituency Name'] === selectedDistrict : d['নির্বাচনী এলাকার নাম'] === selectedDistrict
+      );
+      if (district) {
+        const seats = isEnglish ? district['Seat Names'] : district['নির্বাচনী আসনের নাম'];
+        setSeatOptions(seats || []);
+      }
+    } else {
+      setSeatOptions([]);
+    }
+  }, [selectedDistrict, districtData, isEnglish]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -48,6 +80,8 @@ export default function SubmitPage() {
       name: formData.get('name') as string,
       phone: formData.get('phone') as string,
       email: formData.get('email') as string,
+      district: formData.get('district') as string,
+      seatName: formData.get('seatName') as string,
       shareName: formData.get('shareName') === 'on',
       message: formData.get('message') as string,
       honeypot: formData.get('website') as string
@@ -78,8 +112,10 @@ export default function SubmitPage() {
         // Send as FormData when file is attached
         const submitFormData = new FormData();
         submitFormData.append('name', parsed.data.name || '');
-        submitFormData.append('phone', parsed.data.phone);
+        submitFormData.append('phone', parsed.data.phone || '');
         submitFormData.append('email', parsed.data.email || '');
+        submitFormData.append('district', parsed.data.district);
+        submitFormData.append('seatName', parsed.data.seatName);
         submitFormData.append('shareName', parsed.data.shareName ? 'true' : 'false');
         submitFormData.append('message', parsed.data.message);
         submitFormData.append('website', formData.get('website') as string || '');
@@ -113,6 +149,8 @@ export default function SubmitPage() {
         setErrorMsg(null);
         setCaptchaToken(null);
         setCaptchaError(null);
+        setSelectedDistrict('');
+        setSeatOptions([]);
         recaptchaRef.current?.reset();
         // Clear the file input
         const fileInput = document.getElementById('attachment') as HTMLInputElement;
@@ -292,13 +330,12 @@ export default function SubmitPage() {
                 {/* Phone Field */}
                 <div className="space-y-1.5 sm:space-y-2">
                   <label htmlFor="phone" className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    {t('form.phone')} <span className="text-red-500">*</span>
+                    {t('form.phone')}
                   </label>
                   <input
                     id="phone"
                     name="phone"
                     type="tel"
-                    required
                     className={`w-full border rounded-lg px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm focus:ring-2 transition-colors bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 ${
                       fieldErrors.phone
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
@@ -342,6 +379,76 @@ export default function SubmitPage() {
                   )}
                 </div>
 
+                {/* District and Seat Name Fields - In One Line */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  {/* District Field */}
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label htmlFor="district" className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {isEnglish ? 'District' : 'জেলা'} <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="district"
+                      name="district"
+                      required
+                      value={selectedDistrict}
+                      onChange={(e) => setSelectedDistrict(e.target.value)}
+                      className={`w-full border rounded-lg px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm focus:ring-2 transition-colors bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 ${
+                        fieldErrors.district
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
+                          : 'border-gray-300 dark:border-slate-600 focus:border-green-500 focus:ring-green-200'
+                      }`}
+                    >
+                      <option value="">{isEnglish ? 'Select District' : 'জেলা নির্বাচন করুন'}</option>
+                      {districtData.map((district, index) => (
+                        <option key={index} value={isEnglish ? district['Constituency Name'] : district['নির্বাচনী এলাকার নাম']}>
+                          {isEnglish ? district['Constituency Name'] : district['নির্বাচনী এলাকার নাম']}
+                        </option>
+                      ))}
+                    </select>
+                    {fieldErrors.district && (
+                      <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 flex items-center">
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {fieldErrors.district}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Seat Name Field */}
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label htmlFor="seatName" className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {isEnglish ? 'Seat Name' : 'আসনের নাম'} <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="seatName"
+                      name="seatName"
+                      required
+                      disabled={!selectedDistrict}
+                      className={`w-full border rounded-lg px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm focus:ring-2 transition-colors bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 ${
+                        fieldErrors.seatName
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
+                          : 'border-gray-300 dark:border-slate-600 focus:border-green-500 focus:ring-green-200'
+                      } ${!selectedDistrict ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      <option value="">{isEnglish ? 'Select Seat Name' : 'আসনের নাম নির্বাচন করুন'}</option>
+                      {seatOptions.map((seat, index) => (
+                        <option key={index} value={seat}>
+                          {seat}
+                        </option>
+                      ))}
+                    </select>
+                    {fieldErrors.seatName && (
+                      <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 flex items-center">
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {fieldErrors.seatName}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
                 {/* Name Sharing Consent */}
                 <div className="space-y-1.5 sm:space-y-2">
                   <div className="flex items-start space-x-2 sm:space-x-3">
@@ -368,7 +475,7 @@ export default function SubmitPage() {
                     id="message"
                     name="message"
                     required
-                    maxLength={500}
+                    maxLength={2500}
                     rows={5}
                     className={`w-full border rounded-lg px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm focus:ring-2 transition-colors resize-y bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 ${
                       fieldErrors.message
@@ -389,7 +496,7 @@ export default function SubmitPage() {
                       )}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {isEnglish ? 'Max 500 characters' : 'সর্বোচ্চ ৫০০ অক্ষর'}
+                      {isEnglish ? 'Max 2500 characters' : 'সর্বোচ্চ ২৫০০ অক্ষর'}
                     </div>
                   </div>
                 </div>
@@ -418,11 +525,6 @@ export default function SubmitPage() {
                         </span>
                         <span className="text-xs text-gray-500 dark:text-gray-400">
                           {selectedFile ? `Size: ${formatFileSize(selectedFile.size)}` : t('form.uploadHint')}
-                        </span>
-                        <span className="text-xs text-gray-400 dark:text-gray-500 text-center break-words px-2">
-                          {isEnglish
-                            ? `Max size: ${maxFileSizeMb}MB | Supported: Images, Documents, Archives, Audio, Video`
-                            : `সর্বোচ্চ আকার: ${maxFileSizeMb}MB | সমর্থিত: ছবি, ডকুমেন্ট, আর্কাইভ, অডিও, ভিডিও`}
                         </span>
                       </div>
                     </label>
@@ -523,6 +625,8 @@ export default function SubmitPage() {
                       setFieldErrors({});
                       setErrorMsg(null);
                       setStatus('idle');
+                      setSelectedDistrict('');
+                      setSeatOptions([]);
                       // Clear the file input
                       const fileInput = document.getElementById('attachment') as HTMLInputElement;
                       if (fileInput) fileInput.value = '';
