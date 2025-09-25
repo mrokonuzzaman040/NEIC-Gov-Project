@@ -21,6 +21,18 @@ const PauseIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const SpeedUpIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+  </svg>
+);
+
+const SpeedDownIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+  </svg>
+);
+
 interface Slide {
   id: number;
   title: {
@@ -63,6 +75,7 @@ export default function ImageSlider({
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [isHovered, setIsHovered] = useState(false);
   const [animationProgress, setAnimationProgress] = useState(0);
+  const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
   const pausedProgressRef = useRef<number>(0);
@@ -76,8 +89,8 @@ export default function ImageSlider({
     }
 
     const elapsed = timestamp - startTimeRef.current;
-    // Slow down the animation by increasing the duration (multiply by 3 for slower speed)
-    const totalDuration = autoplayInterval * slides.length * 3;
+    // Adjust speed based on speedMultiplier (higher multiplier = faster)
+    const totalDuration = (autoplayInterval * slides.length * 3) / speedMultiplier;
     const progress = (elapsed % totalDuration) / totalDuration;
     
     setAnimationProgress(progress);
@@ -85,7 +98,7 @@ export default function ImageSlider({
     if (isPlaying && !isHovered) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  }, [isPlaying, isHovered, autoplayInterval, slides.length]);
+  }, [isPlaying, isHovered, autoplayInterval, slides.length, speedMultiplier]);
 
   // Auto-play functionality for marquee effect
   useEffect(() => {
@@ -110,6 +123,14 @@ export default function ImageSlider({
 
   const toggleAutoplay = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const increaseSpeed = () => {
+    setSpeedMultiplier(prev => Math.min(prev + 0.5, 3)); // Max speed 3x
+  };
+
+  const decreaseSpeed = () => {
+    setSpeedMultiplier(prev => Math.max(prev - 0.5, 0.5)); // Min speed 0.5x
   };
 
   const handleMouseEnter = () => {
@@ -180,17 +201,6 @@ export default function ImageSlider({
               {showText && (
                 <div className="absolute inset-0 flex items-center">
                   <div className="max-w-5xl px-6 sm:px-8 lg:px-16">
-                    {/* Category Badge */}
-                    <div className="mb-3">
-                      <span className="inline-block px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-full">
-                        {slide.category[langKey]}
-                      </span>
-                      {slide.featured && (
-                        <span className="ml-2 inline-block px-2 py-1 bg-yellow-500 text-white text-xs font-medium rounded-full">
-                          {isEnglish ? 'Featured' : 'বিশেষ'}
-                        </span>
-                      )}
-                    </div>
 
                     {/* Title */}
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
@@ -198,16 +208,9 @@ export default function ImageSlider({
                     </h2>
 
                     {/* Description */}
-                    <p className="text-sm sm:text-base lg:text-lg text-gray-200 mb-4 sm:mb-6 leading-relaxed max-w-2xl">
+                    {/* <p className="text-sm sm:text-base lg:text-lg text-gray-200 mb-4 sm:mb-6 leading-relaxed max-w-2xl">
                       {slide.description[langKey]}
-                    </p>
-
-                    {/* Date */}
-                    <div className="mb-6">
-                      <span className="text-xs text-gray-300">
-                        {formatDate(slide.date)}
-                      </span>
-                    </div>
+                    </p> */}
 
                     {/* CTA Button */}
                     <Link
@@ -224,19 +227,55 @@ export default function ImageSlider({
           ))}
         </div>
 
-        {/* Play/Pause Button */}
+        {/* Control Buttons */}
         {slides.length > 1 && (
-          <button
-            onClick={toggleAutoplay}
-            className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200 z-20"
-            aria-label={isPlaying ? (isEnglish ? 'Pause slideshow' : 'স্লাইডশো বিরতি') : (isEnglish ? 'Play slideshow' : 'স্লাইডশো চালান')}
-          >
-            {isPlaying ? (
-              <PauseIcon className="w-4 h-4" />
-            ) : (
-              <PlayIcon className="w-4 h-4" />
-            )}
-          </button>
+          <div className="absolute top-3 right-3 z-20">
+            {/* Main Controls Row */}
+            <div className="flex items-center gap-2 mb-2">
+              {/* Play/Pause Button */}
+              <button
+                onClick={toggleAutoplay}
+                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200"
+                aria-label={isPlaying ? (isEnglish ? 'Pause slideshow' : 'স্লাইডশো বিরতি') : (isEnglish ? 'Play slideshow' : 'স্লাইডশো চালান')}
+              >
+                {isPlaying ? (
+                  <PauseIcon className="w-4 h-4" />
+                ) : (
+                  <PlayIcon className="w-4 h-4" />
+                )}
+              </button>
+
+              {/* Speed Indicator */}
+              <div className="bg-black/70 text-white text-xs px-2 py-1 rounded-full text-center min-w-[32px]">
+                {speedMultiplier}x
+              </div>
+            </div>
+
+            {/* Speed Control Buttons */}
+            <div className="flex items-center gap-1">
+              {/* Speed Down Button */}
+              <button
+                onClick={decreaseSpeed}
+                disabled={speedMultiplier <= 0.5}
+                className="bg-black/50 hover:bg-black/70 disabled:bg-black/30 disabled:cursor-not-allowed text-white p-1.5 rounded-full transition-colors duration-200"
+                aria-label={isEnglish ? 'Decrease speed' : 'গতি কমান'}
+                title={`${isEnglish ? 'Speed' : 'গতি'}: ${speedMultiplier}x`}
+              >
+                <SpeedDownIcon className="w-3 h-3" />
+              </button>
+
+              {/* Speed Up Button */}
+              <button
+                onClick={increaseSpeed}
+                disabled={speedMultiplier >= 3}
+                className="bg-black/50 hover:bg-black/70 disabled:bg-black/30 disabled:cursor-not-allowed text-white p-1.5 rounded-full transition-colors duration-200"
+                aria-label={isEnglish ? 'Increase speed' : 'গতি বাড়ান'}
+                title={`${isEnglish ? 'Speed' : 'গতি'}: ${speedMultiplier}x`}
+              >
+                <SpeedUpIcon className="w-3 h-3" />
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>

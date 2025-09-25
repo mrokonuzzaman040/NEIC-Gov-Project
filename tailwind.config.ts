@@ -11,8 +11,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'kalpurush': ['Kalpurush', 'sans-serif'],
-        'sans': ['Kalpurush', 'ui-sans-serif', 'system-ui', 'sans-serif']
+        'sans': ['var(--font-noto-sans)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'bengali': ['SolaimanLipi', 'Kalpurush', 'var(--font-noto-sans-bengali)', 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', 'sans-serif'],
+        'english': ['var(--font-noto-sans)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'mixed': ['SolaimanLipi', 'Kalpurush', 'var(--font-noto-sans-bengali)', 'var(--font-noto-sans)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif']
       },
       colors: {
         primary: {
