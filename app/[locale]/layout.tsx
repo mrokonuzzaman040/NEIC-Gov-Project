@@ -36,9 +36,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <div className="container-max">
             <div className="flex items-center justify-between h-12 sm:h-14">
               {/* Logo/Brand */}
-              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
-                <Logo size="xs" />
-                <div className="text-xs sm:text-sm lg:text-base font-bold text-green-800 dark:text-slate-100 truncate leading-tight">
+              <div className="flex items-center space-x-3 sm:space-x-4 lg:space-x-6 min-w-0 flex-1">
+                <Logo size="sm" />
+                <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-green-800 dark:text-slate-100 truncate leading-tight">
                   {locale === 'bn' ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
                 </div>
               </div>
@@ -73,7 +73,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                       <a 
                         key={item.id}
                         href={`/${locale}${item.href}`} 
-                        className="group relative px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors duration-200"
+                        className="group relative px-4 py-3 text-base text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors duration-200"
                       >
                         {item.label[locale as keyof typeof item.label]}
                         <div className="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 dark:bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></div>
@@ -82,7 +82,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                   } else if (item.type === 'dropdown') {
                     return (
                       <div key={item.id} className="group relative">
-                        <button className="flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors duration-200">
+                        <button className="flex items-center px-4 py-3 text-base text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors duration-200">
                           {item.label[locale as keyof typeof item.label]}
                           <svg className="ml-1 w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

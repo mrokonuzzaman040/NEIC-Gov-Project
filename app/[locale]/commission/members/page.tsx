@@ -61,6 +61,43 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
   const commissionNameEnglish = "National Elections Inquiry Commission";
   const commissionNameBengali = "জাতীয় নির্বাচন তদন্ত কমিশন (২০১৪, ২০১৮, ২০২৪)";
   
+  // Function to get member tag based on designation
+  const getMemberTag = (member: CommissionMember) => {
+    const designation = isEnglish ? member.designation_english : member.designation_bengali;
+    
+    if (designation?.includes('চেয়ারম্যান') || designation?.includes('Chairman')) {
+      return {
+        text: isEnglish ? 'Chairman' : 'চেয়ারম্যান',
+        className: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+      };
+    } else if (designation?.includes('সদস্য') || designation?.includes('Member')) {
+      return {
+        text: isEnglish ? 'Member' : 'সদস্য',
+        className: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
+      };
+    } else if (designation?.includes('সচিব') || designation?.includes('Secretary')) {
+      return {
+        text: isEnglish ? 'Secretary' : 'সচিব',
+        className: 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200'
+      };
+    } else if (designation?.includes('উপ-সচিব') || designation?.includes('Deputy Secretary')) {
+      return {
+        text: isEnglish ? 'Deputy Secretary' : 'উপ-সচিব',
+        className: 'bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200'
+      };
+    } else if (designation?.includes('সহকারী সচিব') || designation?.includes('Assistant Secretary')) {
+      return {
+        text: isEnglish ? 'Assistant Secretary' : 'সহকারী সচিব',
+        className: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
+      };
+    } else {
+      return {
+        text: designation || (isEnglish ? 'Member' : 'সদস্য'),
+        className: 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+      };
+    }
+  };
+  
   return (
     <div className="min-h-screen py-4 sm:py-6 lg:py-8">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
@@ -157,11 +194,14 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                                   {isEnglish ? member.name_english : member.name_bengali}
                                 </h3>
                               </div>
-                              {member.designation_bengali === 'চেয়ারম্যান' && (
-                                <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs sm:text-sm font-medium rounded-full">
-                                  {isEnglish ? 'Chairman' : 'চেয়ারম্যান'}
-                                </span>
-                              )}
+                              {(() => {
+                                const tag = getMemberTag(member);
+                                return (
+                                  <span className={`inline-block px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-full ${tag.className}`}>
+                                    {tag.text}
+                                  </span>
+                                );
+                              })()}
                             </div>
                           </div>
                           
