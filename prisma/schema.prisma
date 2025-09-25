@@ -273,12 +273,12 @@ model CommissionOfficial {
   department          String   @default("")
   designation_bangla  String   @default("")
   designation_english String   @default("")
-  mobile              String   @default("")
+  email               String?
+  mobile              String?
   name_bangla         String   @default("")
   name_english        String   @default("")
   room_no             String?
   serial_no           Int      @default(1)
-  telephone           String?
   category            String   @default("Chief_and_Members")
   image               String?
 

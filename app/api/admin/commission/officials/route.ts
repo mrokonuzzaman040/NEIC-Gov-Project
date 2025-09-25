@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
         { designation_bangla: { contains: search, mode: 'insensitive' } },
         { department: { contains: search, mode: 'insensitive' } },
         { mobile: { contains: search, mode: 'insensitive' } },
-        { telephone: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
       ];
     }
 
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
       designation_english,
       designation_bangla,
       department,
-      telephone,
+      email,
       mobile,
       room_no,
       category,
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Validate required fields
-    if (!name_english || !name_bangla || !designation_english || !designation_bangla || !department || !mobile) {
+    if (!name_english || !name_bangla || !designation_english || !designation_bangla || !department) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
         designation_english,
         designation_bangla,
         department,
-        telephone,
+        email,
         mobile,
         room_no,
         category: category || 'Chief_and_Members',
@@ -154,10 +154,13 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Commission official not found' }, { status: 404 });
     }
 
+    // Filter out invalid fields and prepare update data
+    const { telephone, ...validUpdateData } = updateData;
+    
     const official = await prisma.commissionOfficial.update({
       where: { id },
       data: {
-        ...updateData,
+        ...validUpdateData,
         serial_no: updateData.serial_no ? parseInt(updateData.serial_no) : undefined,
         updatedBy: session.user.email,
       },

@@ -12,8 +12,8 @@ interface CommissionOfficial {
   designation_english: string;
   designation_bangla: string;
   department: string;
-  telephone?: string;
-  mobile: string;
+  email?: string;
+  mobile?: string;
   room_no?: string;
   category: string;
   image?: string;
@@ -169,10 +169,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                         </th>
                       )}
                       <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
-                        {isBengali ? 'টেলিফোন' : 'Telephone'}
-                      </th>
-                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
-                        {isBengali ? 'মোবাইল' : 'Mobile'}
+                        {isBengali ? 'ইমেইল ও মোবাইল' : 'Email & Mobile'}
                       </th>
                     </tr>
                   </thead>
@@ -211,18 +208,25 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                           </td>
                         )}
                         <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm">
-                          {official.telephone ? (
-                            <a href={`tel:${official.telephone}`} className="text-blue-600 dark:text-blue-400 hover:underline">
-                              {official.telephone}
-                            </a>
-                          ) : (
-                            <span className="text-gray-400 dark:text-gray-500">-</span>
-                          )}
-                        </td>
-                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm">
-                          <a href={`tel:${official.mobile}`} className="text-blue-600 dark:text-blue-400 hover:underline">
-                            {official.mobile}
-                          </a>
+                          <div className="space-y-1">
+                            {official.email && (
+                              <div>
+                                <a href={`mailto:${official.email}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                                  {official.email}
+                                </a>
+                              </div>
+                            )}
+                            {official.mobile && (
+                              <div>
+                                <a href={`tel:${official.mobile}`} className="text-green-600 dark:text-green-400 hover:underline">
+                                  {official.mobile}
+                                </a>
+                              </div>
+                            )}
+                            {!official.email && !official.mobile && (
+                              <span className="text-gray-400 dark:text-gray-500">-</span>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -276,19 +280,21 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                       
                       {/* Contact Information */}
                       <div className="space-y-1">
-                        {official.telephone && (
+                        {official.email && (
                           <div className="flex items-center space-x-2">
-                            <a href={`tel:${official.telephone}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium">
-                              {official.telephone}
+                            <a href={`mailto:${official.email}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium">
+                              {official.email}
                             </a>
                           </div>
                         )}
                         
-                        <div className="flex items-center space-x-2">
-                          <a href={`tel:${official.mobile}`} className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 text-sm font-medium">
-                            {official.mobile}
-                          </a>
-                        </div>
+                        {official.mobile && (
+                          <div className="flex items-center space-x-2">
+                            <a href={`tel:${official.mobile}`} className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 text-sm font-medium">
+                              {official.mobile}
+                            </a>
+                          </div>
+                        )}
 
                         {official.room_no && (
                           <div className="flex items-center space-x-2">
@@ -306,19 +312,19 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
           </div>
         )}
 
-        {/* Side by Side Layout for Law and Justice Division and Election Commission Secretariat */}
+        {/* Side by Side Layout for Law Officers and Election Commission Secretariat */}
         {!loading && !error && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
-            {/* Law and Justice Division - Left Side */}
+            {/* Law Officers - Left Side */}
             {groupedOfficials['Law and Justice Division'] && groupedOfficials['Law and Justice Division'].length > 0 && (
-              <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8">
+              <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 order-1">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
                   <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-purple-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
                     <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <span className="truncate">{isBengali ? departmentNames['Law and Justice Division'].bn : departmentNames['Law and Justice Division'].en}</span>
+                  <span className="truncate">{isBengali ? 'আইন বিষয়ক কর্মকর্তা' : 'Law Officers'}</span>
                 </h2>
                 
                 <div className="overflow-x-auto">
@@ -335,7 +341,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                           {isBengali ? 'পদবি' : 'Designation'}
                         </th>
                         <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
-                          {isBengali ? 'মোবাইল' : 'Mobile'}
+                          {isBengali ? 'ইমেইল ও মোবাইল' : 'Email & Mobile'}
                         </th>
                       </tr>
                     </thead>
@@ -369,9 +375,25 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                             <span className="truncate">{isBengali ? official.designation_bangla : official.designation_english}</span>
                           </td>
                           <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs">
-                            <a href={`tel:${official.mobile}`} className="text-blue-600 dark:text-blue-400 hover:underline">
-                              {official.mobile}
-                            </a>
+                            <div className="space-y-1">
+                              {official.email && (
+                                <div>
+                                  <a href={`mailto:${official.email}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                                    {official.email}
+                                  </a>
+                                </div>
+                              )}
+                              {official.mobile && (
+                                <div>
+                                  <a href={`tel:${official.mobile}`} className="text-green-600 dark:text-green-400 hover:underline">
+                                    {official.mobile}
+                                  </a>
+                                </div>
+                              )}
+                              {!official.email && !official.mobile && (
+                                <span className="text-gray-400 dark:text-gray-500">-</span>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -383,7 +405,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
 
             {/* Election Commission Secretariat - Right Side */}
             {groupedOfficials['Election Commission Secretariat'] && groupedOfficials['Election Commission Secretariat'].length > 0 && (
-              <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8">
+              <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 order-2">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
                   <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-teal-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
                     <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -407,7 +429,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                           {isBengali ? 'পদবি' : 'Designation'}
                         </th>
                         <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
-                          {isBengali ? 'মোবাইল' : 'Mobile'}
+                          {isBengali ? 'ইমেইল ও মোবাইল' : 'Email & Mobile'}
                         </th>
                       </tr>
                     </thead>
@@ -441,9 +463,25 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                             <span className="truncate">{isBengali ? official.designation_bangla : official.designation_english}</span>
                           </td>
                           <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs">
-                            <a href={`tel:${official.mobile}`} className="text-blue-600 dark:text-blue-400 hover:underline">
-                              {official.mobile}
-                            </a>
+                            <div className="space-y-1">
+                              {official.email && (
+                                <div>
+                                  <a href={`mailto:${official.email}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                                    {official.email}
+                                  </a>
+                                </div>
+                              )}
+                              {official.mobile && (
+                                <div>
+                                  <a href={`tel:${official.mobile}`} className="text-green-600 dark:text-green-400 hover:underline">
+                                    {official.mobile}
+                                  </a>
+                                </div>
+                              )}
+                              {!official.email && !official.mobile && (
+                                <span className="text-gray-400 dark:text-gray-500">-</span>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       ))}
