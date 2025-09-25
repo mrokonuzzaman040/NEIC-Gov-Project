@@ -34,8 +34,8 @@ export async function generateMetadata({ params: { locale } }: ReportingProps): 
   const t = await getTranslations({ locale, namespace: 'reporting' });
   
   return {
-    title: `${locale === 'en' ? 'Service Process' : 'সেবা গ্রহণের প্রক্রিয়া'} - Bangladesh National Elections Inquiry Commission`,
-    description: locale === 'en' ? 'Learn about our service delivery process and how to access commission services' : 'আমাদের সেবা প্রদানের প্রক্রিয়া এবং কমিশনের সেবা কীভাবে পাওয়া যায় তা জানুন',
+    title: `${locale === 'en' ? 'Service Process' : 'তথ্য/অভিযোগ জমা দান প্রক্রিয়া'} - Bangladesh National Elections Inquiry Commission`,
+    description: locale === 'en' ? 'Learn about our service delivery process and how to access commission services' : 'আমাদের তথ্য/অভিযোগ জমা দান প্রক্রিয়া এবং কমিশনের সেবা কীভাবে পাওয়া যায় তা জানুন',
   };
 }
 
@@ -104,7 +104,7 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            {isEnglish ? 'Back to Home' : 'হোমপেজে ফিরুন'}
+            {isEnglish ? 'Back to Home' : 'হোম'}
           </Link>
         </div>
 
@@ -114,12 +114,9 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
           <section className="bg-white dark:bg-slate-800 shadow-xl rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-700">
             <div className="bg-gradient-to-r from-green-600 via-green-700 to-green-800 px-6 sm:px-8 lg:px-10 py-6 sm:py-8">
               <div className="flex items-center">
-                <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-2xl font-bold text-white">1</span>
-                </div>
                 <div>
                   <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">
-                    {isEnglish ? 'Service Request Submission' : 'সেবা অনুরোধ জমা'}
+                    {isEnglish ? 'Service Request Submission' : 'তথ্য/অভিযোগ জমা দান প্রক্রিয়া'}
                   </h2>
                   <p className="text-green-100 text-sm sm:text-base">
                     {isEnglish 
@@ -144,7 +141,7 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
                     <div className="mb-6">
                       <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                       </div>
                     </div>
@@ -154,7 +151,7 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
                     <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
                       {isEnglish 
                         ? 'Submit your service request through our secure online portal with detailed information and supporting documents. Available 24/7 for your convenience.'
-                        : 'বিস্তারিত তথ্য এবং সহায়ক নথি সহ আমাদের নিরাপদ অনলাইন পোর্টালের মাধ্যমে আপনার সেবা অনুরোধ জমা দিন। আপনার সুবিধার জন্য ২৪/৭ উপলব্ধ।'
+                        : 'বিস্তারিত তথ্য এবং সহায়ক নথিসহ আমাদের নিরাপদ অনলাইন পোর্টালের মাধ্যমে আপনার তথ্য/অভিযোগ জমা দিন।'
                       }
                     </p>
                     <div className="flex items-center justify-center space-x-2 text-blue-600 dark:text-blue-400 text-sm font-medium">
@@ -194,7 +191,7 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
                     <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
                       {isEnglish 
                         ? 'Visit our office during business hours for face-to-face consultation and document submission. Our staff will assist you personally.'
-                        : 'সাক্ষাৎকার এবং নথি জমা দেওয়ার জন্য অফিস সময়ে আমাদের অফিসে আসুন। আমাদের কর্মীরা আপনাকে ব্যক্তিগতভাবে সহায়তা করবে।'
+                        : 'সাক্ষাৎকার এবং নথি জমা দেওয়ার জন্য অফিস সময়ে আমাদের অফিসে আসুন। আমাদের কর্মকর্তা-কর্মচারী বৃন্দ সহায়তা করবে। '
                       }
                     </p>
                     <div className="flex items-center justify-center space-x-2 text-orange-600 dark:text-orange-400 text-sm font-medium">

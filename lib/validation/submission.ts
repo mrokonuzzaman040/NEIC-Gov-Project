@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
-// Phone validation regex for Bangladesh phone numbers
-// Supports formats: +8801xxxxxxxxx, 8801xxxxxxxxx, 01xxxxxxxxx
-const phoneRegex = /^(\+880|880|0)?1[3-9]\d{8}$/;
+// Phone validation regex for international phone numbers
+// Supports international formats: +1234567890, +1234567890123, etc.
+// Follows ITU-T E.164 standard: 7-15 digits, optional + prefix
+const phoneRegex = /^\+?[1-9]\d{6,14}$/;
 
 // Email validation - more comprehensive
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -47,7 +48,7 @@ export const submissionSchema = z.object({
     .refine((val) => {
       if (!val || val === '') return true;
       return phoneRegex.test(val);
-    }, 'Please enter a valid Bangladesh phone number (e.g., +8801xxxxxxxxx or 01xxxxxxxxx)'),
+    }, 'Please enter a valid international phone number (e.g., +1234567890 or 1234567890)'),
     
   email: z
     .string()
