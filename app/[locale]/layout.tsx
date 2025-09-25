@@ -39,7 +39,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
               <div className="flex items-center space-x-3 sm:space-x-4 lg:space-x-6 min-w-0 flex-1">
                 <Logo size="sm" />
                 <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-green-800 dark:text-slate-100 truncate leading-tight">
-                  {locale === 'bn' ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections Inquiry Commission'}
+                  {locale === 'bn' ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
                 </div>
               </div>
 

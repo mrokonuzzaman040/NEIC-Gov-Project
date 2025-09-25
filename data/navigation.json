@@ -14,7 +14,7 @@
       {
         "id": "commission-details",
         "label": {
-          "en": "Commission Details",
+          "en": "Commission Misson",
           "bn": "কমিশনের মিশন"
         },
         "href": "/commission/info",
@@ -80,7 +80,7 @@
           {
             "id": "commission-terms",
             "label": {
-              "en": "Commission's Terms of Reference",
+              "en": "Scope of Works",
               "bn": "কমিশনের কার্যপরিধি"
             },
             "href": "/commission/terms",

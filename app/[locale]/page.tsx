@@ -98,8 +98,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
         
         {/* Government Header with Official Seal */}
         <GovernmentHeader
-          title="জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন"
-          // title={data.header.title[locale as keyof typeof data.header.title]}
+          // title="জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন"
+          title={data.header.title[locale as keyof typeof data.header.title]}
           // subtitle={data.header.subtitle[locale as keyof typeof data.header.subtitle]}
           // portal={data.header.portal[locale as keyof typeof data.header.portal]}
           // tagline={data.header.tagline[locale as keyof typeof data.header.tagline]}

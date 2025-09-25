@@ -5,15 +5,15 @@
   },
   "banner": {
     "subtitle": "National Parliament Elections (2014, 2018, 2024)",
-    "title": "Speak up — we are listening and verifying.",
-    "lead": "The commission is formed to collect your experiences and views about the elections of 2014, 2018 & 2024. Your voice shapes policies & recommendations."
+    "title": "Speak up — we are listening.",
+    "lead": "The commission is formed to collect your experiences and views about the elections of 2014, 2018, 2024. Your voice will shape policies & recommendations."
   },
   "cta": {
     "opinion": "Submit Opinion",
     "reporting": "Reporting Flow"
   },
   "slogans": {
-    "title": "Commission Messages",
+    "title": "Commission's Messages",
     "list": [
       "Raise your voice — the commission stands with you.",
       "Participate in impartial inquiry — shape the future.",
@@ -66,7 +66,7 @@
   },
   "form": {
     "title": "Share what you want to say",
-    "desc": "Briefly write your experience, expectations or complaint. The commission will verify and produce relevant recommendations.",
+    "desc": "Briefly write your experience, expectations or complaint.",
     "pageTitle": "Submit Your Opinion",
     "pageDescription": "Share your experiences and views about the national elections. Your voice matters in shaping future recommendations.",
     "backToHome": "Back to Home",
@@ -78,7 +78,7 @@
     "emailPlaceholder": "Enter your email address",
     "shareName": "I agree to share my name",
     "shareNameDesc": "Check this box if you want to share your name",
-    "message": "Your opinion / incident description *",
+    "message": "Your opinion / description of incident ",
     "placeholder": "Summarize — what happened, when, where, and mention evidence if any",
     "attachment": "Attachment (optional)",
     "uploadText": "Click to upload file or drag and drop",
