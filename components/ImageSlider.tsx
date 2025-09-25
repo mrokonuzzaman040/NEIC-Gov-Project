@@ -180,17 +180,6 @@ export default function ImageSlider({
               {showText && (
                 <div className="absolute inset-0 flex items-center">
                   <div className="max-w-5xl px-6 sm:px-8 lg:px-16">
-                    {/* Category Badge */}
-                    <div className="mb-3">
-                      <span className="inline-block px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-full">
-                        {slide.category[langKey]}
-                      </span>
-                      {slide.featured && (
-                        <span className="ml-2 inline-block px-2 py-1 bg-yellow-500 text-white text-xs font-medium rounded-full">
-                          {isEnglish ? 'Featured' : 'বিশেষ'}
-                        </span>
-                      )}
-                    </div>
 
                     {/* Title */}
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
@@ -198,16 +187,9 @@ export default function ImageSlider({
                     </h2>
 
                     {/* Description */}
-                    <p className="text-sm sm:text-base lg:text-lg text-gray-200 mb-4 sm:mb-6 leading-relaxed max-w-2xl">
+                    {/* <p className="text-sm sm:text-base lg:text-lg text-gray-200 mb-4 sm:mb-6 leading-relaxed max-w-2xl">
                       {slide.description[langKey]}
-                    </p>
-
-                    {/* Date */}
-                    <div className="mb-6">
-                      <span className="text-xs text-gray-300">
-                        {formatDate(slide.date)}
-                      </span>
-                    </div>
+                    </p> */}
 
                     {/* CTA Button */}
                     <Link

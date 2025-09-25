@@ -146,10 +146,7 @@ export default function GalleryPage() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isEnglish ? 'Photo Gallery' : 'ফটো গ্যালারি'}
-          subtitle={isEnglish ? 'Government of the People\'s Republic of Bangladesh' : 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার'}
-          portal={isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission' : 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন'}
-          tagline={isEnglish ? `Last Updated: ${new Date().toLocaleDateString('en-US').replace(/\//g, '-')}` : `সর্বশেষ আপডেট: ${new Date().toLocaleDateString('bn-BD').replace(/\//g, '-')}`}
+          title={isEnglish ? 'Photo Gallery' : 'ফটো গ্যালারি'}      
           borderColor="green"
           iconColor="green"
         />
@@ -279,11 +276,11 @@ export default function GalleryPage() {
                       )}
 
                       {/* Date */}
-                      <div className="text-xs text-gray-400 dark:text-gray-500 mb-2">
+                      {/* <div className="text-xs text-gray-400 dark:text-gray-500 mb-2">
                         {new Date(item.publishedAt).toLocaleDateString(
                           locale === 'en' ? 'en-US' : 'bn-BD'
                         ).replace(/\//g, '-')}
-                      </div>
+                      </div> */}
 
                       {/* Share Buttons */}
                       <ShareButtons
