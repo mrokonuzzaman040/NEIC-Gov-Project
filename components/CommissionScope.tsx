@@ -87,7 +87,7 @@ export default function CommissionScope({ className = '' }: CommissionScopeProps
       id: 'scope' as const,
       label: isEnglish ? 'Commission Scope' : 'কমিশনের কার্যপরিধি',
       icon: (
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       )
@@ -123,7 +123,7 @@ export default function CommissionScope({ className = '' }: CommissionScopeProps
               }`}
             >
               {tab.icon}
-              <span className="ml-1 sm:ml-2">{tab.label}</span>
+              <span className={`ml-1 sm:ml-2 font-bold ${!isEnglish ? 'bengali-tab' : ''}`}>{tab.label}</span>
             </button>
           ))}
         </nav>
@@ -131,18 +131,18 @@ export default function CommissionScope({ className = '' }: CommissionScopeProps
 
       {/* Content */}
       <div className="p-2 sm:p-6">
-        <div className="space-y-2 sm:space-y-4">
+        <div className="space-y-3 sm:space-y-5">
           {getCurrentData().map((item, index) => (
             <div
               key={index}
-              className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-4 bg-gray-50 dark:bg-slate-700/50 rounded-lg border-l-4 border-green-500"
+              className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-5 bg-gray-50 dark:bg-slate-700/50 rounded-lg border-l-4 border-green-500"
             >
               <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 bg-green-600 text-white rounded-full flex items-center justify-center mt-1 sm:mt-1.5">
                 <svg className="w-2 h-2 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed break-words">
+              <p className={`text-sm sm:text-base lg:text-lg font-bold text-gray-700 dark:text-gray-300 leading-relaxed break-words ${!isEnglish ? 'font-bengali' : ''}`}>
                 {isEnglish ? item.en : item.bn}
               </p>
             </div>

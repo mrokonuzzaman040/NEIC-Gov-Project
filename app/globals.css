@@ -90,7 +90,43 @@ div[lang="bn"] {
 /* Specific rules for different Bengali text elements */
 h1[lang="bn"], h2[lang="bn"], h3[lang="bn"], h4[lang="bn"], h5[lang="bn"], h6[lang="bn"] {
   font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+/* Bold Bengali text for titles and headings */
+.bengali-title,
+.bengali-heading,
+.font-bengali-bold {
+  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-weight: 700 !important;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* Bold Bengali text for specific sections */
+.bengali-section-title {
+  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* Bold Bengali text for navigation and tabs */
+.bengali-nav,
+.bengali-tab {
+  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Bold Bengali text for buttons */
+.bengali-button {
+  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem;
+  line-height: 1.4;
 }
 
 p[lang="bn"], span[lang="bn"], div[lang="bn"] {

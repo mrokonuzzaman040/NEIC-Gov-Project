@@ -62,11 +62,11 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
   
   const departmentNames: Record<string, { en: string; bn: string }> = {
     'Chief_and_Members': { en: 'Commission Chairman & Members', bn: 'কমিশনের প্রধান ও সদস্যবৃন্দ' },
-    'Cabinet Division': { en: 'Cabinet Division', bn: 'কর্মকর্তাবৃন্দ' },
+    'Cabinet Division': { en: 'Cabinet Division', bn: 'কমিশন সচিব' },
     'Law and Justice Division': { en: 'Law and Justice Division', bn: 'আইন বিষয়ক কর্মকর্তা' },
     'National Parliament Secretariat': { en: 'National Parliament Secretariat', bn: 'জাতীয়  সচিবালয়' },
     'Statistics and Information Management Division': { en: 'Statistics and Information Management Division', bn: 'পরিসংখ্যান ও তথ্য ব্যবস্থাপনা বিভাগ' },
-    'Election Commission Secretariat': { en: 'Election Commission Secretariat', bn: 'নির্বাচন কমিশন সচিবালয়' }
+    'Election Commission Secretariat': { en: 'Election Commission Secretariat', bn: 'কর্মকর্তাবৃন্দ' }
   };
 
   const categoryOrder = [

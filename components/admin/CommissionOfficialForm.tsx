@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { 
   UserIcon,
   BriefcaseIcon,
-  BuildingOfficeIcon,
   PhoneIcon,
   DocumentTextIcon,
   CheckIcon,
@@ -40,7 +39,7 @@ const CATEGORIES = [
   'Law and Justice Division',
   'National Parliament Secretariat',
   'Statistics and Information Management Division',
-  'Election Commission Secretariat'
+  'Commission Officers'
 ];
 
 export default function CommissionOfficialForm({ officialId }: CommissionOfficialFormProps) {

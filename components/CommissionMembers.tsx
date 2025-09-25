@@ -84,10 +84,10 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
           <svg className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
-          <h3 className="mt-2 text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">
+          <h3 className={`mt-2 text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100 ${!isEnglish ? 'font-bengali' : ''}`}>
             {isEnglish ? 'No members found' : 'কোন সদস্য পাওয়া যায়নি'}
           </h3>
-          <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          <p className={`mt-1 text-sm sm:text-base text-gray-500 dark:text-gray-400 ${!isEnglish ? 'font-bengali' : ''}`}>
             {isEnglish ? 'Commission members will be displayed here.' : 'কমিশনের সদস্যদের এখানে প্রদর্শিত হবে।'}
           </p>
         </div>
@@ -101,11 +101,11 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-green-600 to-green-700 px-2 sm:px-4 py-2 sm:py-3">
-          <h2 className="text-sm sm:text-sm font-bold text-white flex items-center">
+          <h2 className="text-base sm:text-lg lg:text-xl font-bold text-white flex items-center">
             <svg className="w-4 h-4 sm:w-4 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            {isEnglish ? 'Commission Members' : 'কমিশনের সদস্যবৃন্দ'}
+            <span className={!isEnglish ? 'font-bengali' : ''}>{isEnglish ? 'Commission Members' : 'কমিশনের সদস্যবৃন্দ'}</span>
           </h2>
         </div>
 
@@ -139,7 +139,7 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                 {/* Member Details */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white break-words">
+                    <h3 className={`text-sm sm:text-base lg:text-lg font-bold text-gray-900 dark:text-white break-words ${!isEnglish ? 'font-bengali' : ''}`}>
                       {isEnglish ? member.name_english : member.name_bengali}
                     </h3>
                     <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium ${
@@ -149,11 +149,11 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                     }`}>
                     </span>
                   </div>
-                  <p className="text-xs sm:text-sm text-green-600 dark:text-green-400 font-medium mb-1 break-words">
+                  <p className={`text-sm sm:text-base lg:text-lg text-green-600 dark:text-green-400 font-bold mb-1 break-words ${!isEnglish ? 'font-bengali' : ''}`}>
                     {isEnglish ? member.designation_english : member.designation_bengali}
                   </p>
                   {(member.department_english || member.department_bengali) && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1 break-words">
+                    <p className={`text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-1 break-words ${!isEnglish ? 'font-bengali' : ''}`}>
                       {isEnglish ? member.department_english : member.department_bengali}
                     </p>
                   )}
