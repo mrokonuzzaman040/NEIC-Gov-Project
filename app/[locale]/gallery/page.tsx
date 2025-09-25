@@ -348,7 +348,7 @@ export default function GalleryPage() {
             )}
 
             {/* Modal content */}
-            <div className="max-w-7xl max-h-full w-full h-full flex flex-col items-center justify-center">
+            <div className="max-w-7xl max-h-full w-full h-full flex flex-col items-center justify-center relative z-50">
               {/* Image */}
               <div className="relative max-w-full max-h-[70vh] sm:max-h-[80vh] w-auto h-auto">
                 <Image
@@ -362,7 +362,7 @@ export default function GalleryPage() {
               </div>
 
               {/* Image info */}
-              <div className="mt-3 sm:mt-6 max-w-2xl text-center px-2 sm:px-0">
+              <div className="mt-3 sm:mt-6 max-w-2xl text-center px-2 sm:px-0 relative z-50">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1 sm:mb-2 break-words">
                   {isEnglish ? selectedImage.titleEn : selectedImage.titleBn}
                 </h2>
@@ -418,16 +418,18 @@ export default function GalleryPage() {
                 )}
 
                 {/* Share Buttons in Modal */}
-                <div className="mt-4 sm:mt-6 flex justify-center">
-                  <ShareButtons
-                    title={isEnglish ? selectedImage.titleEn : selectedImage.titleBn}
-                    description={isEnglish ? selectedImage.descriptionEn || '' : selectedImage.descriptionBn || ''}
-                    image={selectedImage.imageUrl}
-                    hashtags={['Gallery', 'ElectionCommission', 'Bangladesh', getCategoryName(selectedImage.category), ...selectedImage.tags.slice(0, 2)]}
-                    size="sm"
-                    orientation="horizontal"
-                    className="justify-center bg-black bg-opacity-50 rounded-lg p-2 scale-90"
-                  />
+                <div className="mt-4 sm:mt-6 flex justify-center relative z-50" onClick={(e) => e.stopPropagation()}>
+                  <div className="bg-black bg-opacity-50 rounded-lg p-2 scale-90">
+                    <ShareButtons
+                      title={isEnglish ? selectedImage.titleEn : selectedImage.titleBn}
+                      description={isEnglish ? selectedImage.descriptionEn || '' : selectedImage.descriptionBn || ''}
+                      image={selectedImage.imageUrl}
+                      hashtags={['Gallery', 'ElectionCommission', 'Bangladesh', getCategoryName(selectedImage.category), ...selectedImage.tags.slice(0, 2)]}
+                      size="sm"
+                      orientation="horizontal"
+                      className="justify-center"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
