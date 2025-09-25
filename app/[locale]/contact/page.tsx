@@ -207,16 +207,18 @@ export default function ContactPage() {
                     </h3>
                     <div className="space-y-1 sm:space-y-2">
                       <div className="text-sm sm:text-base text-gray-800 dark:text-gray-200 font-medium">
-                      জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন
+                        {
+                          isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission' : 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন'
+                        }
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      ব্লক-২,জাতীয় সংসদ ভবন এলাকা
+                      {isEnglish ? 'Block-2, Jatiya Sangsad Bhaban' : 'ব্লক-২,জাতীয় সংসদ ভবন এলাকা'}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      শের-ই-বাংলা নগর
+                      {isEnglish ? 'Sher-e-Bangla Nagar': 'শের-ই-বাংলা নগর'}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      ঢাকা-১২০৭
+                      {isEnglish ? 'Dhaka-1207' : 'ঢাকা-১২০৭'}
                       </div>
                     </div>
                   </div>

@@ -18,7 +18,7 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 lg:py-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের কার্যপরিধি' : 'National Elections Inquiry Commission'}
+          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের কার্যপরিধি' : 'National Elections (2014, 2018, 2024) Inquiry Commission Scope Of Works'}
           // subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           // portal={isBengali ? 'কমিশনের কার্যপরিধি ও ক্ষমতা' : 'Commission Scope & Powers'}
           // tagline={isBengali ? 'আদেশ ও নির্দেশনা' : 'Terms & Directives'}
@@ -57,7 +57,7 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
 
           {/* Government Header */}
           <GovernmentHeader
-          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের ক্ষমতা' : 'National Elections Inquiry Commission'}
+          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের ক্ষমতা' : 'Powers National Elections (2014, 2018, 2024) Inquiry Commissions'}
           // subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           // portal={isBengali ? 'কমিশনের কার্যপরিধি ও ক্ষমতা' : 'Commission Scope & Powers'}
           // tagline={isBengali ? 'আদেশ ও নির্দেশনা' : 'Terms & Directives'}
