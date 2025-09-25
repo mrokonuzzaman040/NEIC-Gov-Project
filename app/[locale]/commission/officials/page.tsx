@@ -63,10 +63,10 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
   const departmentNames: Record<string, { en: string; bn: string }> = {
     'Chief_and_Members': { en: 'Commission Chairman & Members', bn: 'কমিশনের প্রধান ও সদস্যবৃন্দ' },
     'Cabinet Division': { en: '', bn: '' },
-    'Law and Justice Division': { en: 'Law and Justice Division', bn: 'আইন বিষয়ক কর্মকর্তা' },
+    'Law and Justice Division': { en: 'Law Officers', bn: 'আইন বিষয়ক কর্মকর্তা' },
     'National Parliament Secretariat': { en: 'National Parliament Secretariat', bn: 'জাতীয়  সচিবালয়' },
     'Statistics and Information Management Division': { en: 'Statistics and Information Management Division', bn: 'পরিসংখ্যান ও তথ্য ব্যবস্থাপনা বিভাগ' },
-    'Election Commission Secretariat': { en: 'Election Commission Secretariat', bn: 'কর্মকর্তাবৃন্দ' }
+    'Election Commission Secretariat': { en: 'List of Officers', bn: 'কর্মকর্তাবৃন্দ' }
   };
 
   const categoryOrder = [
@@ -132,6 +132,11 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
 
           const departmentName = departmentNames[category] || { en: category, bn: category };
           const color = colors[index % colors.length];
+
+          // Special layout for Law and Justice Division, Election Commission Secretariat, and Cabinet Division
+          if (category === 'Law and Justice Division' || category === 'Election Commission Secretariat' || category === 'Cabinet Division') {
+            return null; // We'll handle these separately
+          }
 
           return (
             <div key={category} className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
@@ -227,6 +232,228 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
             </div>
           );
         })}
+
+        {/* Cabinet Division Simple Card */}
+        {!loading && !error && groupedOfficials['Cabinet Division'] && groupedOfficials['Cabinet Division'].length > 0 && (
+          <div className="mb-6 sm:mb-8">
+            <div className="max-w-sm mx-auto">
+              {groupedOfficials['Cabinet Division'].map((official) => (
+                <div key={official.id} className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-4 shadow-md border border-blue-100 dark:border-blue-800">
+                  <div className="flex items-center space-x-4">
+                    {/* Profile Image */}
+                    <div className="flex-shrink-0">
+                      {official.image ? (
+                        <div className="w-16 h-16 rounded-full overflow-hidden bg-white dark:bg-slate-700 shadow-md border-2 border-blue-200 dark:border-blue-700">
+                          <Image 
+                            src={official.image} 
+                            alt={isBengali ? official.name_bangla : official.name_english}
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center shadow-md border-2 border-blue-200 dark:border-blue-700">
+                          <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Information */}
+                    <div className="flex-grow min-w-0">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
+                        {isBengali ? official.name_bangla : official.name_english}
+                      </h3>
+                      <p className="text-blue-700 dark:text-blue-300 font-semibold text-sm mb-2 truncate">
+                        {isBengali ? official.designation_bangla : official.designation_english}
+                      </p>
+                      
+                      {/* Contact Information */}
+                      <div className="space-y-1">
+                        {official.telephone && (
+                          <div className="flex items-center space-x-2">
+                            <a href={`tel:${official.telephone}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium">
+                              {official.telephone}
+                            </a>
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center space-x-2">
+                          <a href={`tel:${official.mobile}`} className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 text-sm font-medium">
+                            {official.mobile}
+                          </a>
+                        </div>
+
+                        {official.room_no && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+                              {isBengali ? 'কক্ষ নং' : 'Room'}: {official.room_no}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Side by Side Layout for Law and Justice Division and Election Commission Secretariat */}
+        {!loading && !error && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
+            {/* Law and Justice Division - Left Side */}
+            {groupedOfficials['Law and Justice Division'] && groupedOfficials['Law and Justice Division'].length > 0 && (
+              <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-purple-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="truncate">{isBengali ? departmentNames['Law and Justice Division'].bn : departmentNames['Law and Justice Division'].en}</span>
+                </h2>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-purple-50 dark:bg-purple-900/20">
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'ক্রমিক নং' : 'Serial No'}
+                        </th>
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'নাম' : 'Name'}
+                        </th>
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'পদবি' : 'Designation'}
+                        </th>
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'মোবাইল' : 'Mobile'}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {groupedOfficials['Law and Justice Division'].map((official) => (
+                        <tr key={official.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs text-gray-700 dark:text-gray-300">
+                            {official.serial_no}
+                          </td>
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs text-gray-900 dark:text-white font-medium">
+                            <div className="flex items-center space-x-2">
+                              {official.image && (
+                                <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-700">
+                                  <Image 
+                                    src={official.image} 
+                                    alt={isBengali ? official.name_bangla : official.name_english}
+                                    width={24}
+                                    height={24}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement;
+                                      target.style.display = 'none';
+                                    }}
+                                  />
+                                </div>
+                              )}
+                              <span className="truncate">{isBengali ? official.name_bangla : official.name_english}</span>
+                            </div>
+                          </td>
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs text-purple-700 dark:text-purple-400 font-semibold">
+                            <span className="truncate">{isBengali ? official.designation_bangla : official.designation_english}</span>
+                          </td>
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs">
+                            <a href={`tel:${official.mobile}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                              {official.mobile}
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* Election Commission Secretariat - Right Side */}
+            {groupedOfficials['Election Commission Secretariat'] && groupedOfficials['Election Commission Secretariat'].length > 0 && (
+              <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 sm:p-6 lg:p-8">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-teal-600 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="truncate">{isBengali ? departmentNames['Election Commission Secretariat'].bn : departmentNames['Election Commission Secretariat'].en}</span>
+                </h2>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-teal-50 dark:bg-teal-900/20">
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'ক্রমিক নং' : 'Serial No'}
+                        </th>
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'নাম' : 'Name'}
+                        </th>
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'পদবি' : 'Designation'}
+                        </th>
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                          {isBengali ? 'মোবাইল' : 'Mobile'}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {groupedOfficials['Election Commission Secretariat'].map((official) => (
+                        <tr key={official.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs text-gray-700 dark:text-gray-300">
+                            {official.serial_no}
+                          </td>
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs text-gray-900 dark:text-white font-medium">
+                            <div className="flex items-center space-x-2">
+                              {official.image && (
+                                <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-700">
+                                  <Image 
+                                    src={official.image} 
+                                    alt={isBengali ? official.name_bangla : official.name_english}
+                                    width={24}
+                                    height={24}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement;
+                                      target.style.display = 'none';
+                                    }}
+                                  />
+                                </div>
+                              )}
+                              <span className="truncate">{isBengali ? official.name_bangla : official.name_english}</span>
+                            </div>
+                          </td>
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs text-teal-700 dark:text-teal-400 font-semibold">
+                            <span className="truncate">{isBengali ? official.designation_bangla : official.designation_english}</span>
+                          </td>
+                          <td className="border border-gray-300 dark:border-gray-600 px-2 py-2 text-xs">
+                            <a href={`tel:${official.mobile}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                              {official.mobile}
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
