@@ -172,7 +172,7 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                           <span className="break-all text-xs">{member.email}</span>
                         </a>
                       )}
-                      {member.phone && (
+                      {/* {member.phone && (
                         <a
                           href={`tel:${member.phone}`}
                           className="flex items-center text-xs text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
@@ -182,7 +182,7 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                           </svg>
                           <span className="break-all text-xs">{member.phone}</span>
                         </a>
-                      )}
+                      )} */}
                     </div>
                   )}
                 </div>
