@@ -101,6 +101,30 @@ export async function requireManagementSession() {
 }
 
 /**
+ * Check if user has support role or higher
+ */
+export async function requireSupportSession() {
+  const session = await getServerSessionSafe();
+  
+  // CRITICAL: Immediate redirect for unauthenticated users
+  if (!session) {
+    redirect('/bn/login?error=AuthenticationRequired');
+  }
+  
+  // Check if user is active
+  if (!(session as any).user?.isActive) {
+    redirect('/bn/login?error=AccountDeactivated');
+  }
+  
+  // Check support, management, or admin role
+  if (!['ADMIN', 'MANAGEMENT', 'SUPPORT'].includes((session as any).user?.role)) {
+    redirect('/admin/unauthorized');
+  }
+  
+  return session;
+}
+
+/**
  * Check if user has any authenticated role
  */
 export async function requireAuthenticatedSession() {

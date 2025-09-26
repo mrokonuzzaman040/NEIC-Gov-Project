@@ -11,9 +11,14 @@ interface Submission {
   name: string | null;
   contact: string;
   email?: string;
+  district?: string | null;
+  seatName?: string | null;
   message: string;
   status: string;
+  source?: string;
+  locale?: string;
   createdAt: string;
+  updatedAt?: string;
   attachmentUrl?: string | null;
   attachmentName?: string;
   attachmentSize?: number | null;
@@ -29,23 +34,43 @@ export default function ManagementSubmissions() {
 
   useEffect(() => {
     fetchSubmissions();
-  }, []);
+  }, [filter]); // Refetch when filter changes
 
   const fetchSubmissions = async () => {
     try {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('/api/admin/submissions');
+      // Build query parameters for filtering
+      const params = new URLSearchParams();
+      if (filter !== 'all') {
+        params.append('status', filter);
+      }
+      params.append('limit', '100'); // Reasonable limit for management view
+      
+      const response = await fetch(`/api/management/submissions?${params.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for authentication
+      });
+
       if (!response.ok) {
-        throw new Error('Failed to fetch submissions');
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
       
-      const data = await response.json();
-      setSubmissions(data);
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        setSubmissions(result.data);
+      } else {
+        throw new Error(result.message || 'Invalid response format');
+      }
     } catch (error) {
       console.error('Error fetching submissions:', error);
-      setError('Failed to load submissions');
+      setError(error instanceof Error ? error.message : 'Failed to load submissions');
     } finally {
       setLoading(false);
     }
@@ -53,24 +78,32 @@ export default function ManagementSubmissions() {
 
   const updateStatus = async (id: string, status: string) => {
     try {
-      const response = await fetch(`/api/admin/submissions/${id}`, {
+      const response = await fetch(`/api/management/submissions/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Include cookies for authentication
         body: JSON.stringify({ status }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update submission status');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update submission status');
       }
 
-      setSubmissions(prev => 
-        prev.map(sub => sub.id === id ? { ...sub, status } : sub)
-      );
+      const result = await response.json();
+      
+      if (result.success) {
+        setSubmissions(prev => 
+          prev.map(sub => sub.id === id ? { ...sub, status } : sub)
+        );
+      } else {
+        throw new Error(result.message || 'Update failed');
+      }
     } catch (error) {
       console.error('Error updating submission status:', error);
-      alert('Failed to update submission status');
+      alert(error instanceof Error ? error.message : 'Failed to update submission status');
     }
   };
 
@@ -145,10 +178,21 @@ export default function ManagementSubmissions() {
     <div className="space-y-4 max-w-7xl">
       {/* Header */}
       <div className="border-l-4 border-green-600 bg-white dark:bg-slate-800 pl-4 py-3">
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Submission Review</h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {filteredSubmissions.length} submissions for review
-        </p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Submission Review</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {filteredSubmissions.length} submissions for review
+            </p>
+          </div>
+          <button
+            onClick={fetchSubmissions}
+            disabled={loading}
+            className="px-3 py-1 text-sm bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 rounded transition-colors"
+          >
+            {loading ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -217,8 +261,21 @@ export default function ManagementSubmissions() {
                   </div>
                 )}
                 
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  {new Date(submission.createdAt).toLocaleString()}
+                <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                  <span>{new Date(submission.createdAt).toLocaleString()}</span>
+                  {submission.district && (
+                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">
+                      {submission.district}
+                    </span>
+                  )}
+                  {submission.seatName && (
+                    <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">
+                      {submission.seatName}
+                    </span>
+                  )}
+                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
+                    {submission.source || 'web'}
+                  </span>
                 </div>
               </div>
               
@@ -309,6 +366,30 @@ export default function ManagementSubmissions() {
                     <p className="text-slate-900 dark:text-slate-100">{selectedSubmission.email}</p>
                   </div>
                 )}
+                
+                {selectedSubmission.district && (
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">District</label>
+                    <p className="text-slate-900 dark:text-slate-100">{selectedSubmission.district}</p>
+                  </div>
+                )}
+                
+                {selectedSubmission.seatName && (
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Seat Name</label>
+                    <p className="text-slate-900 dark:text-slate-100">{selectedSubmission.seatName}</p>
+                  </div>
+                )}
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Source</label>
+                  <p className="text-slate-900 dark:text-slate-100">{selectedSubmission.source || 'web'}</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Language</label>
+                  <p className="text-slate-900 dark:text-slate-100">{selectedSubmission.locale || 'en'}</p>
+                </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Message</label>

@@ -33,37 +33,48 @@ export default function ManagementDashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      // For now, use mock data. In production, this would fetch from API
-      const mockStats: DashboardStats = {
-        totalSubmissions: 3,
-        pendingReview: 3,
-        reviewedToday: 0,
-        flaggedItems: 0,
-        recentSubmissions: [
-          {
-            id: '1',
-            name: 'John Doe',
-            contact: '01712345678',
-            message: 'Testing file upload functionality with local storage properly configured.',
-            status: 'PENDING',
-            createdAt: new Date().toISOString(),
-            attachmentUrl: '/uploads/submissions/test.txt'
-          },
-          {
-            id: '2',
-            name: null,
-            contact: '01798765432',
-            message: 'Another test submission for the management dashboard.',
-            status: 'PENDING',
-            createdAt: new Date(Date.now() - 86400000).toISOString(),
-            attachmentUrl: null
-          }
-        ]
-      };
+      setLoading(true);
       
-      setStats(mockStats);
+      const response = await fetch('/api/management/dashboard', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for authentication
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        // Transform API data to match component interface
+        const apiData = result.data;
+        const transformedStats: DashboardStats = {
+          totalSubmissions: apiData.totalSubmissions || 0,
+          pendingReview: apiData.pendingReview || 0,
+          reviewedToday: apiData.reviewedToday || 0,
+          flaggedItems: apiData.flaggedItems || 0,
+          recentSubmissions: apiData.recentSubmissions || []
+        };
+        
+        setStats(transformedStats);
+      } else {
+        throw new Error(result.message || 'Invalid response format');
+      }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
+      
+      // Fallback to empty state instead of mock data for security
+      setStats({
+        totalSubmissions: 0,
+        pendingReview: 0,
+        reviewedToday: 0,
+        flaggedItems: 0,
+        recentSubmissions: []
+      });
     } finally {
       setLoading(false);
     }
@@ -83,7 +94,15 @@ export default function ManagementDashboard() {
   if (!stats) {
     return (
       <div className="border-l-4 border-red-600 bg-white dark:bg-slate-800 p-4">
-        <div className="text-sm text-red-600 dark:text-red-400">Failed to load dashboard data</div>
+        <div className="text-sm text-red-600 dark:text-red-400">
+          Failed to load dashboard data. Please refresh the page or contact system administrator.
+        </div>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="mt-2 px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
+        >
+          Retry
+        </button>
       </div>
     );
   }

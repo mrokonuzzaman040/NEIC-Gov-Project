@@ -11,11 +11,18 @@ interface Submission {
   name: string | null;
   contact: string;
   email?: string;
+  district?: string | null;
+  seatName?: string | null;
   message: string;
   status: string;
+  source?: string;
+  locale?: string;
   createdAt: string;
+  updatedAt?: string;
   attachmentUrl?: string | null;
   attachmentName?: string;
+  attachmentSize?: number | null;
+  attachmentType?: string | null;
 }
 
 export default function SupportSubmissions() {
@@ -24,28 +31,49 @@ export default function SupportSubmissions() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Mock data for demonstration
-    setSubmissions([
-      {
-        id: '1',
-        name: 'John Doe',
-        contact: '01712345678',
-        email: 'john@example.com',
-        message: 'Testing file upload functionality with local storage properly configured.',
-        status: 'PENDING',
-        createdAt: new Date().toISOString(),
-        attachmentUrl: '/uploads/submissions/test.txt',
-        attachmentName: 'test-upload.txt'
-      }
-    ] as any);
-    setLoading(false);
+    fetchSubmissions();
   }, []);
+
+  const fetchSubmissions = async () => {
+    try {
+      setLoading(true);
+      
+      const response = await fetch('/api/support/submissions', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for authentication
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        setSubmissions(result.data);
+      } else {
+        throw new Error(result.message || 'Invalid response format');
+      }
+    } catch (error) {
+      console.error('Error fetching submissions:', error);
+      setSubmissions([]); // Fallback to empty array
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredSubmissions = submissions.filter(sub => 
     !searchTerm || 
     sub.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
     sub.contact?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    sub.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    sub.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    sub.district?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    sub.seatName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    sub.source?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
@@ -63,17 +91,28 @@ export default function SupportSubmissions() {
     <div className="space-y-4 max-w-7xl">
       {/* Header */}
       <div className="border-l-4 border-green-600 bg-white dark:bg-slate-800 pl-4 py-3">
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">View Submissions</h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {filteredSubmissions.length} submissions (read-only access)
-        </p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">View Submissions</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {filteredSubmissions.length} submissions (read-only access)
+            </p>
+          </div>
+          <button
+            onClick={fetchSubmissions}
+            disabled={loading}
+            className="px-3 py-1 text-sm bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 rounded transition-colors"
+          >
+            {loading ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
       </div>
 
       {/* Search */}
       <div className="bg-gray-50 dark:bg-slate-700 p-4 border">
         <input
           type="text"
-          placeholder="Search submissions..."
+          placeholder="Search by name, contact, message, district, seat, or source..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="block w-full max-w-sm px-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
@@ -116,8 +155,21 @@ export default function SupportSubmissions() {
                 <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
                   {submission.message}
                 </p>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Submitted: {new Date(submission.createdAt).toLocaleString()}
+                <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                  <span>Submitted: {new Date(submission.createdAt).toLocaleString()}</span>
+                  {submission.district && (
+                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">
+                      {submission.district}
+                    </span>
+                  )}
+                  {submission.seatName && (
+                    <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">
+                      {submission.seatName}
+                    </span>
+                  )}
+                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
+                    {submission.source || 'web'}
+                  </span>
                 </div>
               </div>
               
@@ -151,8 +203,8 @@ export default function SupportSubmissions() {
       {/* Note about permissions */}
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
         <div className="text-sm text-blue-800 dark:text-blue-200">
-          <strong>Note:</strong> As a Management user, you can review and approve submissions. 
-          Contact an Administrator for advanced features.
+          <strong>Note:</strong> As a Support staff member, you have read-only access to submissions. 
+          Contact Management or Administrator for approval actions.
         </div>
       </div>
     </div>
