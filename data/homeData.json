@@ -22,7 +22,10 @@
       "stats": [
         {
           "id": "electionYears",
-          "value": "২০১৪-২০১৮-২০২৪",
+          "value": {
+            "en": "2014, 2018, 2024",
+            "bn": "২০১৪, ২০১৮, ২০২৪"
+          },
           "label": {
             "en": "Election Years",
             "bn": "নির্বাচনের বছর"
