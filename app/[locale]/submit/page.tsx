@@ -80,8 +80,8 @@ export default function SubmitPage() {
       name: formData.get('name') as string,
       phone: formData.get('phone') as string,
       email: formData.get('email') as string,
-      district: formData.get('district') as string,
-      seatName: formData.get('seatName') as string,
+      district: formData.get('district') as string || '',
+      seatName: formData.get('seatName') as string || '',
       shareName: formData.get('shareName') === 'on',
       message: formData.get('message') as string,
       honeypot: formData.get('website') as string
@@ -114,8 +114,8 @@ export default function SubmitPage() {
         submitFormData.append('name', parsed.data.name || '');
         submitFormData.append('phone', parsed.data.phone || '');
         submitFormData.append('email', parsed.data.email || '');
-        submitFormData.append('district', parsed.data.district);
-        submitFormData.append('seatName', parsed.data.seatName);
+        submitFormData.append('district', parsed.data.district || '');
+        submitFormData.append('seatName', parsed.data.seatName || '');
         submitFormData.append('shareName', parsed.data.shareName ? 'true' : 'false');
         submitFormData.append('message', parsed.data.message);
         submitFormData.append('website', formData.get('website') as string || '');

@@ -1,71 +1,167 @@
 const bcrypt = require('bcryptjs');
-const { PrismaClient } = require('@prisma/client');
+const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+const { PrismaClient, UserRole } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function createAdminUser() {
+// Generate secure random password
+function generateSecurePassword(length = 16) {
+  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+  let password = '';
+  
+  // Ensure at least one character from each category
+  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+  const numbers = '0123456789';
+  const symbols = '!@#$%^&*';
+  
+  password += uppercase[Math.floor(Math.random() * uppercase.length)];
+  password += lowercase[Math.floor(Math.random() * lowercase.length)];
+  password += numbers[Math.floor(Math.random() * numbers.length)];
+  password += symbols[Math.floor(Math.random() * symbols.length)];
+  
+  // Fill the rest with random characters
+  for (let i = 4; i < length; i++) {
+    password += charset[Math.floor(Math.random() * charset.length)];
+  }
+  
+  // Shuffle the password
+  return password.split('').sort(() => Math.random() - 0.5).join('');
+}
+
+// Create JSON file with user credentials
+async function createCredentialsFile(users) {
   try {
-    // Check if admin already exists
-    const existingAdmin = await prisma.user.findFirst({
-      where: {
-        role: 'ADMIN'
-      }
-    });
+    const credentials = {
+      generatedAt: new Date().toISOString(),
+      totalUsers: users.length,
+      users: users.map(user => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        password: user.password,
+        isActive: user.isActive,
+        createdAt: user.createdAt
+      }))
+    };
 
-    if (existingAdmin) {
-      console.log('Admin user already exists:', existingAdmin.email);
-      return;
-    }
-
-    // Get admin credentials from environment or use defaults
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@election-commission.gov.bd';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'SecureAdmin2024!';
-    const adminName = process.env.ADMIN_NAME || 'System Administrator';
-
-    // Validate password strength
-    if (adminPassword.length < 12) {
-      throw new Error('Admin password must be at least 12 characters long');
-    }
-
-    // Hash password
-    const saltRounds = 12;
-    const passwordHash = await bcrypt.hash(adminPassword, saltRounds);
-
-    // Create admin user
-    const admin = await prisma.user.create({
-      data: {
-        email: adminEmail.toLowerCase(),
-        name: adminName,
-        passwordHash,
-        role: 'ADMIN',
-        isActive: true,
-        createdBy: 'system'
-      }
-    });
-
-    console.log('✅ Admin user created successfully!');
-    console.log('📧 Email:', admin.email);
-    console.log('👤 Name:', admin.name);
-    console.log('🔑 Role:', admin.role);
-    console.log('🆔 ID:', admin.id);
+    const filePath = path.join(__dirname, '..', 'user-credentials.json');
+    await fs.promises.writeFile(filePath, JSON.stringify(credentials, null, 2));
+    
     console.log('');
-    console.log('⚠️  IMPORTANT: Please change the default password after first login!');
-    console.log('🔒 Default password:', adminPassword);
+    console.log('📄 Credentials saved to: user-credentials.json');
+    console.log('🔐 File contains all user credentials for reference');
+    console.log('⚠️  Keep this file secure and delete after noting credentials!');
+    
+  } catch (error) {
+    console.error('❌ Error creating credentials file:', error);
+  }
+}
 
-    // Log admin creation
-    await prisma.userAuditLog.create({
-      data: {
-        userId: admin.id,
-        action: 'ADMIN_CREATED',
-        details: JSON.stringify({
-          createdBy: 'system',
-          timestamp: new Date().toISOString()
-        })
+async function createUsers() {
+  try {
+    // Define users to create
+    const users = [
+      {
+        email: 'admin@neic-bd.org',
+        name: 'System Administrator',
+        role: UserRole.ADMIN
+      },
+      {
+        email: 'manager@neic-bd.org',
+        name: 'Management User',
+        role: UserRole.MANAGEMENT
+      },
+      {
+        email: 'support@neic-bd.org',
+        name: 'Support Staff',
+        role: UserRole.SUPPORT
       }
-    });
+    ];
+
+    const createdUsers = [];
+
+    for (const userData of users) {
+      // Check if user already exists
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          email: userData.email
+        }
+      });
+
+      if (existingUser) {
+        console.log(`⚠️  User already exists: ${userData.email}`);
+        continue;
+      }
+
+      // Generate secure password
+      const password = generateSecurePassword(16);
+      const saltRounds = 12;
+      const passwordHash = await bcrypt.hash(password, saltRounds);
+
+      // Create user
+      const user = await prisma.user.create({
+        data: {
+          email: userData.email.toLowerCase(),
+          name: userData.name,
+          passwordHash,
+          role: userData.role,
+          isActive: true,
+          createdBy: 'system'
+        }
+      });
+
+      createdUsers.push({
+        ...user,
+        password: password
+      });
+
+      console.log(`✅ ${userData.role} user created successfully!`);
+      console.log(`📧 Email: ${user.email}`);
+      console.log(`👤 Name: ${user.name}`);
+      console.log(`🔑 Role: ${user.role}`);
+      console.log(`🆔 ID: ${user.id}`);
+      console.log(`🔒 Password: ${password}`);
+      console.log('');
+
+      // Log user creation
+      await prisma.userAuditLog.create({
+        data: {
+          userId: user.id,
+          action: 'USER_CREATED',
+          details: JSON.stringify({
+            createdBy: 'system',
+            role: userData.role,
+            timestamp: new Date().toISOString()
+          })
+        }
+      });
+    }
+
+    if (createdUsers.length > 0) {
+      console.log('🎉 All users created successfully!');
+      console.log('');
+      console.log('📋 USER CREDENTIALS SUMMARY:');
+      console.log('================================');
+      createdUsers.forEach(user => {
+        console.log(`👤 ${user.name} (${user.role})`);
+        console.log(`📧 ${user.email}`);
+        console.log(`🔒 ${user.password}`);
+        console.log('');
+      });
+      console.log('⚠️  IMPORTANT: Please change all default passwords after first login!');
+      
+      // Create JSON file with credentials
+      await createCredentialsFile(createdUsers);
+    } else {
+      console.log('ℹ️  All users already exist. No new users created.');
+    }
 
   } catch (error) {
-    console.error('❌ Error creating admin user:', error);
+    console.error('❌ Error creating users:', error);
     process.exit(1);
   } finally {
     await prisma.$disconnect();
@@ -73,9 +169,9 @@ async function createAdminUser() {
 }
 
 // Run the script
-createAdminUser();
+createUsers();
 
 
-// 👨‍💼 ADMIN: admin@election-commission.gov.bd / NewSecurePassword2024!
-// 👩‍💼 MANAGEMENT: manager@election-commission.gov.bd / Manager2024!
-// 🧑‍💻 SUPPORT: support@election-commission.gov.bd / Support2024!
+// 👨‍💼 ADMIN: admin@neic-bd.org / [Random Secure Password]
+// 👩‍💼 MANAGEMENT: manager@neic-bd.org / [Random Secure Password]
+// 🧑‍💻 SUPPORT: support@neic-bd.org / [Random Secure Password]

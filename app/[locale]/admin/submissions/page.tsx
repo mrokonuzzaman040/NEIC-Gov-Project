@@ -20,10 +20,14 @@ interface Submission {
   name: string | null;
   contact: string | null;
   email: string | null;
+  district: string | null;
+  seatName: string | null;
   message: string;
   locale: string;
   status: string;
+  source: string;
   createdAt: string;
+  updatedAt: string;
   attachmentUrl: string | null;
   attachmentKey: string | null;
   attachmentName: string | null;
@@ -84,7 +88,9 @@ export default function SubmissionsPage() {
       submission.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
       submission.contact?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       submission.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      submission.name?.toLowerCase().includes(searchTerm.toLowerCase());
+      submission.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      submission.district?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      submission.seatName?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
@@ -152,7 +158,7 @@ export default function SubmissionsPage() {
           <div className="flex-1 max-w-sm">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search by name, contact, district, seat..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="block w-full px-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
@@ -173,10 +179,16 @@ export default function SubmissionsPage() {
                 Contact
               </th>
               <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
+                Location
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
                 Message
               </th>
               <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
                 File
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
+                Source
               </th>
               <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
                 Status
@@ -209,6 +221,19 @@ export default function SubmissionsPage() {
                   </div>
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
+                  <div className="text-xs">
+                    {submission.district && (
+                      <div className="font-medium text-blue-600 dark:text-blue-400">{submission.district}</div>
+                    )}
+                    {submission.seatName && (
+                      <div className="text-gray-500 dark:text-gray-400">{submission.seatName}</div>
+                    )}
+                    {!submission.district && !submission.seatName && (
+                      <span className="text-gray-400">—</span>
+                    )}
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
                   <div className="max-w-xs">
                     <p className="text-xs truncate" title={submission.message}>
                       {submission.message.length > 80 
@@ -228,6 +253,11 @@ export default function SubmissionsPage() {
                   ) : (
                     <span className="text-gray-400 text-xs">—</span>
                   )}
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
+                  <span className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">
+                    {submission.source}
+                  </span>
                 </td>
                 <td className="px-4 py-3">
                   <span className={`inline-block px-2 py-1 text-xs border ${
@@ -264,7 +294,7 @@ export default function SubmissionsPage() {
             ))}
             {filteredSubmissions.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center">
+                <td colSpan={8} className="px-4 py-8 text-center">
                   <div className="text-gray-500 dark:text-gray-400">
                     <div className="text-sm">No submissions found</div>
                     <div className="text-xs mt-1">
@@ -298,7 +328,7 @@ export default function SubmissionsPage() {
             {/* Content */}
             <div className="space-y-4 text-sm">
               {/* Basic Info */}
-              <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 dark:bg-slate-700">
+              <div className="grid grid-cols-3 gap-4 p-3 bg-gray-50 dark:bg-slate-700">
                 <div>
                   <div className="font-medium text-gray-600 dark:text-gray-300">Submitted</div>
                   <div className="text-gray-900 dark:text-gray-100">{formatDate(selectedSubmission.createdAt)}</div>
@@ -306,6 +336,14 @@ export default function SubmissionsPage() {
                 <div>
                   <div className="font-medium text-gray-600 dark:text-gray-300">Language</div>
                   <div className="text-gray-900 dark:text-gray-100">{selectedSubmission.locale.toUpperCase()}</div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-600 dark:text-gray-300">Source</div>
+                  <div className="text-gray-900 dark:text-gray-100">
+                    <span className="inline-block px-2 py-1 text-xs bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded">
+                      {selectedSubmission.source}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -328,6 +366,24 @@ export default function SubmissionsPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Location Info */}
+              {(selectedSubmission.district || selectedSubmission.seatName) && (
+                <div className="grid grid-cols-2 gap-4 p-3 border border-gray-200 dark:border-slate-600">
+                  {selectedSubmission.district && (
+                    <div>
+                      <div className="font-medium text-gray-600 dark:text-gray-300">District</div>
+                      <div className="text-blue-600 dark:text-blue-400 font-medium">{selectedSubmission.district}</div>
+                    </div>
+                  )}
+                  {selectedSubmission.seatName && (
+                    <div>
+                      <div className="font-medium text-gray-600 dark:text-gray-300">Seat Name</div>
+                      <div className="text-gray-900 dark:text-gray-100">{selectedSubmission.seatName}</div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Message */}
               <div>
