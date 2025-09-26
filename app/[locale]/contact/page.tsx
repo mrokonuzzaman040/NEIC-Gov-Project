@@ -212,7 +212,7 @@ export default function ContactPage() {
                         }
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      {isEnglish ? 'Block-2, Jatiya Sangsad Bhaban' : 'ব্লক-২,জাতীয় সংসদ ভবন এলাকা'}
+                      {isEnglish ? 'Block-2, Jatiya Sangsad Bhaban' : 'ব্লক-২, এলডি হল, জাতীয় সংসদ ভবন এলাকা'}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       {isEnglish ? 'Sher-e-Bangla Nagar': 'শের-ই-বাংলা নগর'}

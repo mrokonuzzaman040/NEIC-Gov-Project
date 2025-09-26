@@ -73,13 +73,13 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
           icon: 'text-blue-600',
           dot: 'bg-blue-600'
         };
-      case 'orange':
+      case 'yellow':
         return {
-          gradient: 'from-orange-600 to-orange-700',
-          bg: 'bg-orange-50 dark:bg-orange-900/20',
-          border: 'border-orange-200 dark:border-orange-800',
-          icon: 'text-orange-600',
-          dot: 'bg-orange-600'
+          gradient: 'from-yellow-600 to-yellow-700',
+          bg: 'bg-yellow-50 dark:bg-yellow-900/20',
+          border: 'border-yellow-200 dark:border-yellow-800',
+          icon: 'text-yellow-600',
+          dot: 'bg-yellow-600'
         };
       default:
         return {
@@ -172,14 +172,14 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
                 {/* In-Person Visit Card */}
                 <Link 
                   href={`/${locale}/contact`}
-                  className="group relative bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-2 border-orange-200 dark:border-orange-800 rounded-xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105 block"
+                  className="group relative bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/10 border-2 border-yellow-200 dark:border-yellow-300/50 rounded-xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105 block"
                 >
                   <div className="absolute top-4 right-4">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
                   </div>
                   <div className="text-center">
                     <div className="mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full flex items-center justify-center mx-auto shadow-lg">
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
@@ -194,13 +194,13 @@ export default async function ReportingPage({ params: { locale } }: ReportingPro
                         : 'সাক্ষাৎকার এবং নথি জমা দেওয়ার জন্য অফিস সময়ে আমাদের অফিসে আসুন। আমাদের কর্মকর্তা-কর্মচারী বৃন্দ সহায়তা করবে। '
                       }
                     </p>
-                    <div className="flex items-center justify-center space-x-2 text-orange-600 dark:text-orange-400 text-sm font-medium">
+                    <div className="flex items-center justify-center space-x-2 text-yellow-500 dark:text-yellow-300 text-sm font-medium">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span>{isEnglish ? 'Business Hours: 9AM-5PM' : 'অফিস সময়: সকাল ৯টা-বিকাল ৫টা'}</span>
+                      <span>{isEnglish ? 'Business Hours: 9AM-5PM' : 'অফিস সময়: সকাল ১০টা-বিকাল ৪টা'}</span>
                     </div>
-                    <div className="mt-4 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm font-medium">
+                    <div className="mt-4 flex items-center justify-center text-yellow-500 dark:text-yellow-300 text-sm font-medium">
                       <span>{isEnglish ? 'Click to Contact Us' : 'যোগাযোগ করতে ক্লিক করুন'}</span>
                       <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
