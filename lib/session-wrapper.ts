@@ -28,7 +28,7 @@ export async function getServerSessionSafe() {
         error?.message?.includes('decryption operation failed') ||
         error?.message?.includes('JWT')) {
       // Clear session cookies and redirect to signin
-      redirect('/api/auth/clear-session?redirect=/admin/login');
+      redirect('/api/auth/clear-session?redirect=/bn/login');
     }
     
     // For other errors, re-throw
@@ -42,8 +42,19 @@ export async function getServerSessionSafe() {
 export async function requireAdminSession() {
   const session = await getServerSessionSafe();
   
-  if (!session || (session as any).user?.role !== 'ADMIN') {
-    redirect('/api/auth/signin');
+  // CRITICAL: Immediate redirect for unauthenticated users
+  if (!session) {
+    redirect('/bn/login?error=AuthenticationRequired');
+  }
+  
+  // Check if user is active
+  if (!(session as any).user?.isActive) {
+    redirect('/bn/login?error=AccountDeactivated');
+  }
+  
+  // Check admin role
+  if ((session as any).user?.role !== 'ADMIN') {
+    redirect('/admin/unauthorized');
   }
   
   return session;
@@ -55,9 +66,19 @@ export async function requireAdminSession() {
 export async function requireManagementSession() {
   const session = await getServerSessionSafe();
   
-  if (!session || 
-      !['ADMIN', 'MANAGEMENT'].includes((session as any).user?.role)) {
-    redirect('/api/auth/signin');
+  // CRITICAL: Immediate redirect for unauthenticated users
+  if (!session) {
+    redirect('/bn/login?error=AuthenticationRequired');
+  }
+  
+  // Check if user is active
+  if (!(session as any).user?.isActive) {
+    redirect('/bn/login?error=AccountDeactivated');
+  }
+  
+  // Check management or admin role
+  if (!['ADMIN', 'MANAGEMENT'].includes((session as any).user?.role)) {
+    redirect('/admin/unauthorized');
   }
   
   return session;
@@ -69,9 +90,19 @@ export async function requireManagementSession() {
 export async function requireAuthenticatedSession() {
   const session = await getServerSessionSafe();
   
-  if (!session || 
-      !['ADMIN', 'MANAGEMENT', 'SUPPORT'].includes((session as any).user?.role)) {
-    redirect('/api/auth/signin');
+  // CRITICAL: Immediate redirect for unauthenticated users
+  if (!session) {
+    redirect('/bn/login?error=AuthenticationRequired');
+  }
+  
+  // Check if user is active
+  if (!(session as any).user?.isActive) {
+    redirect('/bn/login?error=AccountDeactivated');
+  }
+  
+  // Check any authenticated role
+  if (!['ADMIN', 'MANAGEMENT', 'SUPPORT'].includes((session as any).user?.role)) {
+    redirect('/admin/unauthorized');
   }
   
   return session;

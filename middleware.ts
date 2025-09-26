@@ -12,19 +12,29 @@ const intlMiddleware = createMiddleware({
 });
 
 export default async function middleware(request: NextRequest) {
-  // Apply rate limiting first
+  const { pathname } = request.nextUrl;
+  
+  // CRITICAL SECURITY: Handle admin routes FIRST to prevent any content exposure
+  if (pathname.startsWith('/admin')) {
+    // Apply authentication middleware for admin routes IMMEDIATELY
+    const authResponse = await authMiddleware(request);
+    if (!authResponse.headers.get('x-middleware-next')) {
+      return securityHeadersMiddleware(request, authResponse);
+    }
+    
+    // If authenticated, apply internationalization middleware
+    const intlResponse = intlMiddleware(request);
+    const resolvedResponse = intlResponse instanceof Promise ? await intlResponse : intlResponse;
+    return securityHeadersMiddleware(request, resolvedResponse);
+  }
+
+  // Apply rate limiting for non-admin routes
   const rateLimitResponse = rateLimitMiddleware(request, 100, 15 * 60 * 1000);
   if (!rateLimitResponse.headers.get('x-middleware-next')) {
     return securityHeadersMiddleware(request, rateLimitResponse);
   }
 
-  // Apply authentication middleware for admin routes
-  const authResponse = await authMiddleware(request);
-  if (!authResponse.headers.get('x-middleware-next')) {
-    return securityHeadersMiddleware(request, authResponse);
-  }
-
-  // Apply internationalization middleware
+  // Apply internationalization middleware for public routes
   const intlResponse = intlMiddleware(request);
   const resolvedResponse = intlResponse instanceof Promise ? await intlResponse : intlResponse;
   return securityHeadersMiddleware(request, resolvedResponse);
