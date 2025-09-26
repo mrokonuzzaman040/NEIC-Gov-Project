@@ -100,11 +100,18 @@ const RECAPTCHA_DOMAINS = [
   'https://www.recaptcha.net/recaptcha/'
 ];
 
+const MAPS_DOMAINS = [
+  'https://maps.googleapis.com',
+  'https://maps.gstatic.com',
+  'https://maps.google.com'
+];
+
 function buildContentSecurityPolicy() {
   const scriptSrc = [
     "'self'",
     "'unsafe-inline'",
-    ...RECAPTCHA_DOMAINS
+    ...RECAPTCHA_DOMAINS,
+    ...MAPS_DOMAINS
   ];
 
   if (!isProduction) {
@@ -113,14 +120,16 @@ function buildContentSecurityPolicy() {
 
   const connectSrc = [
     "'self'",
-    ...RECAPTCHA_DOMAINS
+    ...RECAPTCHA_DOMAINS,
+    ...MAPS_DOMAINS
   ];
 
   const imgSrc = [
     "'self'",
     'data:',
     'blob:',
-    ...RECAPTCHA_DOMAINS
+    ...RECAPTCHA_DOMAINS,
+    ...MAPS_DOMAINS
   ];
 
   const directives = [
@@ -130,7 +139,7 @@ function buildContentSecurityPolicy() {
     `img-src ${imgSrc.join(' ')}`,
     "font-src 'self' https://fonts.gstatic.com data:",
     `connect-src ${connectSrc.join(' ')}`,
-    `frame-src 'self' ${RECAPTCHA_DOMAINS.join(' ')}`,
+    `frame-src 'self' ${[...RECAPTCHA_DOMAINS, ...MAPS_DOMAINS].join(' ')}`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",

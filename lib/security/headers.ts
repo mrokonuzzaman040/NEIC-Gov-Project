@@ -1,12 +1,19 @@
+const MAPS_DOMAINS = [
+  'https://maps.googleapis.com',
+  'https://maps.gstatic.com',
+  'https://maps.google.com'
+];
+
 export function buildCsp(nonce: string) {
   // Adjust CSP as needed (remove 'unsafe-inline' once all inline styles/scripts gone).
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'nonce-" + nonce + "' https://maps.googleapis.com https://www.gstatic.com",
+    `script-src 'self' 'nonce-${nonce}' ${MAPS_DOMAINS.join(' ')}`,
     "style-src 'self' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
-    "img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com https://www.gstatic.com",
-    "connect-src 'self' https://maps.googleapis.com",
+    `img-src 'self' data: ${MAPS_DOMAINS.join(' ')} https://www.gstatic.com`,
+    `connect-src 'self' ${MAPS_DOMAINS.join(' ')}`,
+    `frame-src 'self' ${MAPS_DOMAINS.join(' ')}`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'"

@@ -2,7 +2,7 @@
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import GovernmentHeader from '@/components/GovernmentHeader';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 // Force dynamic rendering to ensure fresh data from APIs
 export const dynamic = 'force-dynamic';
@@ -22,56 +22,85 @@ export default function ContactPage() {
   const isEnglish = locale === 'en';
   const langKey = isEnglish ? 'en' : 'bn';
   const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const scriptLoadingRef = useRef(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapError, setMapError] = useState<string | null>(null);
+  const [useFallbackMap, setUseFallbackMap] = useState(false);
 
   // Fetch contact data from API
-  useEffect(() => {
-    const fetchContactData = async () => {
-      try {
-        const response = await fetch('/api/public/contact');
-        if (!response.ok) {
-          throw new Error('Failed to fetch contact data');
-        }
-        const data = await response.json();
-        setContactData(data);
-      } catch (error) {
-        console.error('Error fetching contact data:', error);
-        // Fallback to static data
-        import('@/data/contact_page/contact.json').then(data => {
-          setContactData(data.default);
-        });
-      } finally {
-        setLoading(false);
+  const fetchContactData = useCallback(async () => {
+    try {
+      const response = await fetch('/api/public/contact');
+      if (!response.ok) {
+        throw new Error('Failed to fetch contact data');
       }
-    };
-
-    fetchContactData();
+      const data = await response.json();
+      setContactData(data);
+    } catch (error) {
+      console.error('Error fetching contact data:', error);
+      // Fallback to static data
+      import('@/data/contact_page/contact.json').then(data => {
+        setContactData(data.default);
+      });
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchContactData();
+  }, [fetchContactData]);
 
   // Google Maps initialization
   useEffect(() => {
-    // Safety check for data
     if (!contactData?.contactPage) {
       return;
     }
+
     const data = contactData.contactPage;
-    // Safety check for location data
-    if (!data?.location?.coordinates) {
-      console.warn('Location coordinates not available');
+    const coordinates = data?.location?.coordinates;
+
+    if (!coordinates || typeof coordinates.lat !== 'number' || typeof coordinates.lng !== 'number') {
+      setMapLoaded(false);
+      setUseFallbackMap(false);
+      setMapError(isEnglish ? 'Location details are currently unavailable.' : 'অবস্থান সংক্রান্ত তথ্য বর্তমানে অনুপলব্ধ।');
       return;
     }
 
-    // Google Maps coordinates from JSON data
-    const mapCenter = { lat: data.location.coordinates.lat, lng: data.location.coordinates.lng };
-    const mapZoom = data.location.zoom || 16;
+    const mapCenter = { lat: coordinates.lat, lng: coordinates.lng };
+    const zoomValue = Number(data.location?.zoom ?? 16);
+    const mapZoom = Number.isFinite(zoomValue) ? zoomValue : 16;
+    const fallbackMessage = isEnglish
+      ? 'Interactive map is unavailable. Showing an embedded map instead.'
+      : 'ইন্টারেকটিভ মানচিত্রটি প্রদর্শিত হচ্ছে না। বিকল্প মানচিত্র দেখানো হচ্ছে।';
 
-    // Load Google Maps script
-    const loadGoogleMaps = () => {
-      console.log('loadGoogleMaps called, google:', !!window.google, 'maps:', !!(window.google && window.google.maps), 'mapRef:', !!mapRef.current);
-      if (window.google && window.google.maps && mapRef.current) {
+    setMapLoaded(false);
+    setUseFallbackMap(false);
+    setMapError(null);
+
+    if (mapRef.current) {
+      mapRef.current.innerHTML = '';
+    }
+    mapInstanceRef.current = null;
+
+    const initializeMap = () => {
+      if (!mapRef.current) {
+        return;
+      }
+
+      if (!(window.google && window.google.maps)) {
+        setUseFallbackMap(true);
+        setMapLoaded(false);
+        setMapError(fallbackMessage);
+        return;
+      }
+
+      try {
         const map = new window.google.maps.Map(mapRef.current, {
           center: mapCenter,
           zoom: mapZoom,
-          mapTypeId: window.google.maps.MapTypeId.ROADMAP,
+          mapTypeId: window.google.maps.MapTypeId?.ROADMAP ?? 'roadmap',
           styles: [
             {
               featureType: 'poi',
@@ -81,24 +110,43 @@ export default function ContactPage() {
           ]
         });
 
-        // Add marker
-        const marker = new window.google.maps.Marker({
-          position: mapCenter,
-          map: map,
-          title: data.location?.marker?.title?.[langKey] || (isEnglish ? 'National Elections Inquiry Commission' : 'জাতীয় নির্বাচন তদন্ত কমিশন'),
-          icon: {
-            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-              <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="18" fill="#16a34a" stroke="#ffffff" stroke-width="2"/>
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="#ffffff" transform="translate(10, 10) scale(1.2)"/>
-              </svg>
-            `),
-            scaledSize: new window.google.maps.Size(40, 40),
-            anchor: new window.google.maps.Point(20, 20)
-          }
-        });
+        const primaryTitle = data.location?.marker?.title?.[langKey] || (isEnglish ? 'National Elections Inquiry Commission' : 'জাতীয় নির্বাচন তদন্ত কমিশন');
+        let marker: any = null;
+        const advancedMarkerCtor = window.google?.maps?.marker?.AdvancedMarkerElement;
 
-        // Add info window
+        if (advancedMarkerCtor) {
+          const markerContent = document.createElement('div');
+          markerContent.innerHTML = `
+            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="#16a34a" stroke="#ffffff" stroke-width="2"/>
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="#ffffff" transform="translate(10, 10) scale(1.2)"/>
+            </svg>
+          `;
+
+          marker = new advancedMarkerCtor({
+            map,
+            position: mapCenter,
+            title: primaryTitle,
+            content: markerContent
+          });
+        } else {
+          marker = new window.google.maps.Marker({
+            position: mapCenter,
+            map,
+            title: primaryTitle,
+            icon: {
+              url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="20" cy="20" r="18" fill="#16a34a" stroke="#ffffff" stroke-width="2"/>
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="#ffffff" transform="translate(10, 10) scale(1.2)"/>
+                </svg>
+              `),
+              scaledSize: new window.google.maps.Size(40, 40),
+              anchor: new window.google.maps.Point(20, 20)
+            }
+          });
+        }
+
         const infoWindow = new window.google.maps.InfoWindow({
           content: `
             <div style="padding: 10px; max-width: 300px;">
@@ -112,41 +160,80 @@ export default function ContactPage() {
           `
         });
 
-        marker.addListener('click', () => {
-          infoWindow.open(map, marker);
-        });
+        if (marker?.addListener) {
+          marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+          });
+        }
+
+        mapInstanceRef.current = map;
+        setUseFallbackMap(false);
+        setMapLoaded(true);
+        setMapError(null);
+      } catch (error) {
+        console.error('Map initialization error:', error);
+        setUseFallbackMap(true);
+        setMapLoaded(false);
+        setMapError(fallbackMessage);
       }
     };
 
-    // Check if Google Maps is already loaded
+    const handleScriptLoad = () => {
+      scriptLoadingRef.current = false;
+      initializeMap();
+    };
+
+    const handleScriptError = () => {
+      scriptLoadingRef.current = false;
+      setUseFallbackMap(true);
+      setMapLoaded(false);
+      setMapError(fallbackMessage);
+    };
+
     if (window.google && window.google.maps) {
-      loadGoogleMaps();
-    } else {
-      // Load Google Maps script
-      const script = document.createElement('script');
-      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-      
-      if (!apiKey) {
-        console.warn('Google Maps API key not found. Map will not be displayed.');
-        console.log('Available env vars:', Object.keys(process.env).filter(key => key.includes('GOOGLE')));
-        return;
-      }
-      
-      console.log('Loading Google Maps with API key:', apiKey);
-      
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-      script.async = true;
-      script.defer = true;
-      script.onload = loadGoogleMaps;
-      script.onerror = (error) => {
-        console.error('Failed to load Google Maps API. Please check your API key and domain restrictions.');
-        console.error('Error details:', error);
-        console.error('API Key:', apiKey ? `${apiKey.substring(0, 10)}...` : 'Not found');
-        console.error('Current domain:', window.location.hostname);
-      };
-      document.head.appendChild(script);
+      initializeMap();
+      return;
     }
-  }, [isEnglish, contactData, langKey]);
+
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    if (!apiKey) {
+      setUseFallbackMap(true);
+      setMapLoaded(false);
+      setMapError(fallbackMessage);
+      return;
+    }
+
+    const existingScript = document.querySelector('script[data-google-maps-loader="true"]') as HTMLScriptElement | null;
+    if (existingScript) {
+      existingScript.addEventListener('load', handleScriptLoad);
+      existingScript.addEventListener('error', handleScriptError);
+
+      return () => {
+        existingScript.removeEventListener('load', handleScriptLoad);
+        existingScript.removeEventListener('error', handleScriptError);
+      };
+    }
+
+    if (scriptLoadingRef.current) {
+      return;
+    }
+
+    scriptLoadingRef.current = true;
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&v=weekly&loading=async`;
+    script.async = true;
+    script.defer = true;
+    script.dataset.googleMapsLoader = 'true';
+    script.addEventListener('load', handleScriptLoad);
+    script.addEventListener('error', handleScriptError);
+    document.head.appendChild(script);
+
+    return () => {
+      script.removeEventListener('load', handleScriptLoad);
+      script.removeEventListener('error', handleScriptError);
+    };
+  }, [contactData, isEnglish, langKey]);
 
   if (loading) {
     return (
@@ -178,6 +265,15 @@ export default function ContactPage() {
     );
   }
   
+  const coordinates = data.location?.coordinates;
+  const zoomForEmbedRaw = Number(data.location?.zoom ?? 16);
+  const zoomForEmbed = Number.isFinite(zoomForEmbedRaw)
+    ? Math.min(Math.max(Math.round(zoomForEmbedRaw), 3), 21)
+    : 16;
+  const fallbackEmbedUrl = coordinates
+    ? `https://maps.google.com/maps?q=${coordinates.lat},${coordinates.lng}&z=${zoomForEmbed}&hl=${isEnglish ? 'en' : 'bn'}&output=embed`
+    : null;
+
   return (
     <div className="min-h-screen py-4 sm:py-6 lg:py-8">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
@@ -298,13 +394,60 @@ export default function ContactPage() {
           <div className="p-4 sm:p-6 lg:p-8">
             <div className="space-y-3 sm:space-y-4">
               <div 
-                ref={mapRef}
-                className="w-full h-80 sm:h-96 lg:h-[500px] rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm"
+                className="relative w-full h-80 sm:h-96 lg:h-[500px] rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm overflow-hidden"
                 style={{ minHeight: '400px' }}
-              />
+              >
+                {!useFallbackMap && (
+                  <>
+                    {!mapLoaded && (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800">
+                        <div className="h-8 w-8 rounded-full border-2 border-green-600 border-t-transparent animate-spin" />
+                        <p className="mt-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                          {isEnglish ? 'Loading interactive map...' : 'ইন্টারেকটিভ মানচিত্র লোড হচ্ছে...'}
+                        </p>
+                      </div>
+                    )}
+                    <div ref={mapRef} className="h-full w-full" />
+                  </>
+                )}
+
+                {useFallbackMap && fallbackEmbedUrl && (
+                  <iframe
+                    title={isEnglish ? 'Office location map' : 'অফিসের অবস্থান মানচিত্র'}
+                    src={fallbackEmbedUrl}
+                    className="absolute inset-0 h-full w-full border-0"
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                )}
+
+                {useFallbackMap && !fallbackEmbedUrl && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800 text-center">
+                    <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2a10 10 0 00-10 10v0.5A3.5 3.5 0 005.5 16h2.086a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H18.5A3.5 3.5 0 0022 12.5V12a10 10 0 00-10-10z" />
+                    </svg>
+                    <p className="mt-3 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                      {mapError || (isEnglish ? 'Map data is unavailable right now.' : 'মানচিত্রের তথ্য বর্তমানে অনুপলব্ধ।')}
+                    </p>
+                  </div>
+                )}
+
+                {mapError && !useFallbackMap && (
+                  <div className="absolute inset-x-0 bottom-0 bg-white/90 dark:bg-slate-900/80 px-3 py-2 text-center text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                    {mapError}
+                  </div>
+                )}
+              </div>
               <div className="text-center">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  {isEnglish ? 'Click on the marker for more information' : 'আরও তথ্যের জন্য মার্কারে ক্লিক করুন'}
+                  {useFallbackMap
+                    ? (mapError || (isEnglish
+                        ? 'The interactive map could not be loaded. A basic embedded map is shown instead.'
+                        : 'ইন্টারেকটিভ মানচিত্র লোড করা যায়নি। বিকল্প এমবেডেড মানচিত্র প্রদর্শন করা হচ্ছে।'))
+                    : (isEnglish
+                        ? 'Click on the marker for more information'
+                        : 'আরও তথ্যের জন্য মার্কারে ক্লিক করুন')}
                 </p>
               </div>
             </div>
