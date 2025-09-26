@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireManagementSession } from '@/lib/session-wrapper';
+import { requireManagementSession, isAuthRedirectError } from '@/lib/session-wrapper';
 import { prisma } from '@/lib/db';
 
 export async function GET(
@@ -19,7 +19,7 @@ export async function GET(
     }
 
     // Security: Additional role validation
-    if (session.user.role !== 'MANAGEMENT' && session.user.role !== 'ADMIN') {
+    if ((session.user as any).role !== 'MANAGEMENT' && (session.user as any).role !== 'ADMIN') {
       return NextResponse.json(
         { success: false, error: 'Insufficient permissions' },
         { status: 403 }
@@ -71,7 +71,7 @@ export async function GET(
     try {
       await prisma.userAuditLog.create({
         data: {
-          userId: session.user.id,
+          userId: (session.user as any).id,
           action: 'SUBMISSION_VIEW',
           details: JSON.stringify({
             submissionId: submissionId,
@@ -96,6 +96,13 @@ export async function GET(
     });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Management submission view error:', error);
     
     return NextResponse.json(
@@ -126,7 +133,7 @@ export async function PUT(
     }
 
     // Security: Additional role validation
-    if (session.user.role !== 'MANAGEMENT' && session.user.role !== 'ADMIN') {
+    if ((session.user as any).role !== 'MANAGEMENT' && (session.user as any).role !== 'ADMIN') {
       return NextResponse.json(
         { success: false, error: 'Insufficient permissions' },
         { status: 403 }
@@ -178,7 +185,7 @@ export async function PUT(
     try {
       await prisma.userAuditLog.create({
         data: {
-          userId: session.user.id,
+          userId: (session.user as any).id,
           action: 'SUBMISSION_STATUS_UPDATE',
           details: JSON.stringify({
             submissionId: submissionId,
@@ -205,6 +212,13 @@ export async function PUT(
     });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Management submission update error:', error);
     
     return NextResponse.json(

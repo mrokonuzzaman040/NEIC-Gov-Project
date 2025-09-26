@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireSupportSession } from '@/lib/session-wrapper';
+import { requireSupportSession, isAuthRedirectError } from '@/lib/session-wrapper';
 import { prisma } from '@/lib/db';
 
 export async function GET(request: NextRequest) {
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Security: Additional role validation
-    if (session.user.role !== 'SUPPORT' && session.user.role !== 'MANAGEMENT' && session.user.role !== 'ADMIN') {
+    if ((session.user as any).role !== 'SUPPORT' && (session.user as any).role !== 'MANAGEMENT' && (session.user as any).role !== 'ADMIN') {
       return NextResponse.json(
         { success: false, error: 'Insufficient permissions' },
         { status: 403 }
@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
     try {
       await prisma.userAuditLog.create({
         data: {
-          userId: session.user.id,
+          userId: (session.user as any).id,
           action: 'SUPPORT_DASHBOARD_ACCESS',
           details: JSON.stringify({
             endpoint: 'support/dashboard',
@@ -144,6 +144,13 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Support dashboard error:', error);
     
     // Security: Don't expose internal errors

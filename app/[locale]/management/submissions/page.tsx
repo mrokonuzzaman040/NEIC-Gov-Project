@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // Force dynamic rendering to prevent build-time API calls
 export const dynamic = 'force-dynamic';
@@ -30,13 +30,10 @@ export default function ManagementSubmissions() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'pending' | 'flagged' | 'reviewed'>('pending');
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
 
-  useEffect(() => {
-    fetchSubmissions();
-  }, [filter]); // Refetch when filter changes
-
-  const fetchSubmissions = async () => {
+  const fetchSubmissions = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -74,7 +71,11 @@ export default function ManagementSubmissions() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
+
+  useEffect(() => {
+    fetchSubmissions();
+  }, [fetchSubmissions]);
 
   const updateStatus = async (id: string, status: string) => {
     try {
@@ -137,9 +138,19 @@ export default function ManagementSubmissions() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-  const filteredSubmissions = submissions.filter(sub => 
-    filter === 'all' || sub.status.toLowerCase() === filter
-  );
+  const filteredSubmissions = submissions.filter(sub => {
+    const matchesFilter = filter === 'all' || sub.status.toLowerCase() === filter;
+    const matchesSearch = !searchTerm || 
+      (sub.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       sub.contact?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       sub.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       sub.message?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       sub.district?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       sub.seatName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       sub.source?.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    return matchesFilter && matchesSearch;
+  });
 
   if (loading) {
     return (
