@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-config';
 import { prisma } from '@/lib/db';
-import { uploadToS3, deleteFromS3 } from '@/lib/s3';
+import { uploadFile, deleteFile } from '@/lib/s3';
 
 export const dynamic = 'force-dynamic';
 
@@ -145,9 +145,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Gazette number already exists' }, { status: 400 });
     }
 
-    // Upload file to S3 or local storage
+    // Upload file to local storage
     const fileBuffer = Buffer.from(await file.arrayBuffer());
-    const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'gazettes');
+    const uploadResult = await uploadFile(fileBuffer, file.name, file.type, 'gazettes');
 
     const gazette = await prisma.gazette.create({
       data: {
@@ -230,11 +230,11 @@ export async function PUT(request: NextRequest) {
 
       // Upload new file
       const fileBuffer = Buffer.from(await file.arrayBuffer());
-      const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'gazettes');
+      const uploadResult = await uploadFile(fileBuffer, file.name, file.type, 'gazettes');
       
       downloadUrl = uploadResult.url;
 
-      // Note: We could delete the old file here if we had the S3 key
+      // Note: We could delete the old file here if we had the file key
       // This would require adding a fileKey field to the Gazette model
     }
 

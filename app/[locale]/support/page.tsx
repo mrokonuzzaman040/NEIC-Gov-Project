@@ -41,7 +41,7 @@ export default function SupportDashboard() {
             id: '1',
             name: 'John Doe',
             contact: '01712345678',
-            message: 'Testing S3 file upload functionality with AWS environment properly configured.',
+            message: 'Testing file upload functionality with local storage properly configured.',
             status: 'PENDING',
             createdAt: new Date().toISOString()
           },

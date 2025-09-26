@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-config';
-import { uploadToS3, validateImageFile } from '@/lib/s3';
+import { uploadFile, validateImageFile } from '@/lib/s3';
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Upload to S3 or local storage
-    const result = await uploadToS3(buffer, file.name, file.type, folder);
+    // Upload to local storage
+    const result = await uploadFile(buffer, file.name, file.type, folder);
 
     return NextResponse.json({
       url: result.url,

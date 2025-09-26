@@ -168,9 +168,9 @@ export async function DELETE(
       );
     }
 
-    // TODO: If there's an attachment, delete it from S3
+    // TODO: If there's an attachment, delete it from local storage
     // if (submission.attachmentKey) {
-    //   await deleteFileFromS3(submission.attachmentKey);
+    //   await deleteFile(submission.attachmentKey);
     // }
 
     // Delete the submission

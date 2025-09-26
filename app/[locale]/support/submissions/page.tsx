@@ -31,10 +31,10 @@ export default function SupportSubmissions() {
         name: 'John Doe',
         contact: '01712345678',
         email: 'john@example.com',
-        message: 'Testing S3 file upload functionality with AWS environment properly configured.',
+        message: 'Testing file upload functionality with local storage properly configured.',
         status: 'PENDING',
         createdAt: new Date().toISOString(),
-        attachmentUrl: 'https://rokon-neic.s3.ap-southeast-1.amazonaws.com/submissions/test.txt',
+        attachmentUrl: '/uploads/submissions/test.txt',
         attachmentName: 'test-upload.txt'
       }
     ] as any);

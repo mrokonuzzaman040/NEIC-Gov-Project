@@ -1,5 +1,5 @@
 // Simple email service for development
-// In production, you would integrate with services like SendGrid, AWS SES, etc.
+// In production, you would integrate with services like SendGrid, etc.
 
 export interface EmailOptions {
   to: string;

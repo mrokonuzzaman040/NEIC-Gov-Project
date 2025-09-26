@@ -294,7 +294,7 @@ export default function ReportsPage() {
             <div className="p-3 border border-gray-200 dark:border-slate-600">
               <div className="font-medium text-gray-600 dark:text-gray-300">Total Storage Used</div>
               <div className="text-lg font-bold text-blue-600">{formatFileSize(stats.totalFileSize)}</div>
-              <div className="text-xs text-gray-500">Stored in S3</div>
+              <div className="text-xs text-gray-500">Stored locally</div>
             </div>
             <div className="p-3 border border-gray-200 dark:border-slate-600">
               <div className="font-medium text-gray-600 dark:text-gray-300">Average File Size</div>
@@ -360,7 +360,7 @@ export default function ReportsPage() {
             </div>
             <div className="p-3 border border-gray-200 dark:border-slate-600">
               <div className="font-medium text-gray-600 dark:text-gray-300">File Storage</div>
-              <div className="text-green-600 dark:text-green-400">✓ S3 Active</div>
+              <div className="text-green-600 dark:text-green-400">✓ Local Storage Active</div>
             </div>
             <div className="p-3 border border-gray-200 dark:border-slate-600">
               <div className="font-medium text-gray-600 dark:text-gray-300">Last Updated</div>

@@ -44,10 +44,10 @@ export default function ManagementDashboard() {
             id: '1',
             name: 'John Doe',
             contact: '01712345678',
-            message: 'Testing S3 file upload functionality with AWS environment properly configured.',
+            message: 'Testing file upload functionality with local storage properly configured.',
             status: 'PENDING',
             createdAt: new Date().toISOString(),
-            attachmentUrl: 'https://rokon-neic.s3.ap-southeast-1.amazonaws.com/submissions/test.txt'
+            attachmentUrl: '/uploads/submissions/test.txt'
           },
           {
             id: '2',

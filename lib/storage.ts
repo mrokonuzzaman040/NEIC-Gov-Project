@@ -198,68 +198,12 @@ export async function storeFileLocally(file: File, validated?: ValidatedFile): P
   };
 }
 
-/**
- * Store file in S3
- */
-export async function storeFileInS3(file: File, validated?: ValidatedFile): Promise<StoredFileInfo> {
-  const validatedFile = validated ?? await validateFile(file);
-
-  try {
-    const { S3Client, PutObjectCommand } = await import('@aws-sdk/client-s3');
-    
-    const s3Client = new S3Client({
-      region: process.env.AWS_REGION || 'ap-southeast-1',
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
-      }
-    });
-    
-    const safeFilename = generateSafeFilename(file.name);
-    const s3Key = `submissions/${safeFilename}`;
-    
-    const uploadCommand = new PutObjectCommand({
-      Bucket: process.env.AWS_S3_BUCKET_NAME!,
-      Key: s3Key,
-      Body: validatedFile.buffer,
-      ContentType: validatedFile.mimeType,
-      ContentLength: validatedFile.size,
-      ContentDisposition: 'attachment',
-      ACL: 'private'
-    });
-    
-    await s3Client.send(uploadCommand);
-    
-    const bucketRegion = process.env.AWS_REGION || 'ap-southeast-1';
-    const s3Url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${bucketRegion}.amazonaws.com/${s3Key}`;
-    
-    return {
-      url: s3Url,
-      key: s3Key,
-      originalName: file.name,
-      size: validatedFile.size,
-      mimeType: validatedFile.mimeType
-    };
-  } catch (error) {
-    console.error('S3 upload failed:', error);
-    throw new Error(`Failed to upload file to S3: ${error}`);
-  }
-}
 
 /**
- * Main file storage function
- * Chooses storage method based on configuration
+ * Main file storage function - uses local storage
  */
 export async function storeFile(file: File): Promise<StoredFileInfo> {
   const validated = await validateFile(file);
-
-  if (process.env.AWS_S3_BUCKET_NAME && 
-      process.env.AWS_ACCESS_KEY_ID && 
-      process.env.AWS_SECRET_ACCESS_KEY) {
-    return storeFileInS3(file, validated);
-  }
-
-  console.warn('S3 not fully configured, using local storage. Configure AWS_S3_BUCKET_NAME, AWS_ACCESS_KEY_ID, and AWS_SECRET_ACCESS_KEY to use S3.');
   return storeFileLocally(file, validated);
 }
 
