@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-config';
-import { uploadFile, validateImageFile } from '@/lib/s3';
+import { uploadFile, validateFile } from '@/lib/s3';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,13 +13,14 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const folder = (formData.get('folder') as string) || 'gallery';
+    const category = (formData.get('category') as string) || folder;
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Validate file
-    const validation = validateImageFile(file.type, file.size);
+    // Validate file based on category
+    const validation = validateFile(file.type, file.size, category);
     if (!validation.isValid) {
       return NextResponse.json({ error: validation.error }, { status: 400 });
     }

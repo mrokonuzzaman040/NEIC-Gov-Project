@@ -85,3 +85,44 @@ export function validateImageFile(contentType: string, fileSize: number): { isVa
 
   return { isValid: true };
 }
+
+/**
+ * Validate PDF file for uploads
+ */
+export function validatePdfFile(contentType: string, fileSize: number): { isValid: boolean; error?: string } {
+  const allowedTypes = ['application/pdf'];
+
+  const maxSize = 10 * 1024 * 1024; // 10MB
+
+  if (!allowedTypes.includes(contentType)) {
+    return {
+      isValid: false,
+      error: 'Invalid file type. Only PDF files are allowed.',
+    };
+  }
+
+  if (fileSize > maxSize) {
+    return {
+      isValid: false,
+      error: 'File size too large. Maximum size is 10MB.',
+    };
+  }
+
+  return { isValid: true };
+}
+
+/**
+ * Validate file based on category
+ */
+export function validateFile(contentType: string, fileSize: number, category: string): { isValid: boolean; error?: string } {
+  switch (category) {
+    case 'notices':
+      return validatePdfFile(contentType, fileSize);
+    case 'gallery':
+    case 'slider':
+    case 'blog':
+      return validateImageFile(contentType, fileSize);
+    default:
+      return validateImageFile(contentType, fileSize);
+  }
+}
