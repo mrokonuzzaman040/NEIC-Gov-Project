@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { requireManagementSession } from '@/lib/session-wrapper';
+import { requireManagementSession, isAuthRedirectError } from '@/lib/session-wrapper';
 
 export const dynamic = 'force-dynamic';
 
@@ -93,6 +93,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(reportData);
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Error fetching report data:', error);
     return NextResponse.json(
       { error: 'Failed to fetch report data' },

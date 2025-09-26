@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdminSession } from '@/lib/session-wrapper';
+import { requireAdminSession, isAuthRedirectError } from '@/lib/session-wrapper';
 import { prisma } from '@/lib/db';
 
 export async function GET(request: NextRequest) {
@@ -84,6 +84,13 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Error fetching audit logs:', error);
     return NextResponse.json(
       { error: 'Failed to fetch audit logs' },

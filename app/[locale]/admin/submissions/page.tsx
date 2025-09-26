@@ -2,6 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { 
+  MagnifyingGlassIcon,
+  FunnelIcon,
+  CalendarIcon,
+  DocumentArrowDownIcon,
+  CheckIcon,
+  XMarkIcon
+} from '@heroicons/react/24/outline';
 
 // Force dynamic rendering to prevent build-time API calls
 export const dynamic = 'force-dynamic';
@@ -42,6 +50,17 @@ export default function SubmissionsPage() {
   const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
   const [filter, setFilter] = useState<'all' | 'pending' | 'flagged' | 'reviewed'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Advanced filtering states
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [districtFilter, setDistrictFilter] = useState('');
+  const [sourceFilter, setSourceFilter] = useState('');
+  
+  // Bulk selection states
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
     fetchSubmissions();
@@ -91,8 +110,102 @@ export default function SubmissionsPage() {
       submission.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       submission.district?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       submission.seatName?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
+    
+    // Advanced filters
+    const matchesDateFrom = !dateFrom || new Date(submission.createdAt) >= new Date(dateFrom);
+    const matchesDateTo = !dateTo || new Date(submission.createdAt) <= new Date(dateTo + 'T23:59:59');
+    const matchesDistrict = !districtFilter || submission.district?.toLowerCase().includes(districtFilter.toLowerCase());
+    const matchesSource = !sourceFilter || submission.source.toLowerCase().includes(sourceFilter.toLowerCase());
+    
+    return matchesFilter && matchesSearch && matchesDateFrom && matchesDateTo && matchesDistrict && matchesSource;
   });
+
+  // Get unique districts and sources for filter dropdowns
+  const uniqueDistricts = [...new Set(submissions.map(s => s.district).filter(Boolean))] as string[];
+  const uniqueSources = [...new Set(submissions.map(s => s.source))];
+
+  // Bulk selection handlers
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedIds(new Set());
+      setSelectAll(false);
+    } else {
+      const allIds = new Set(filteredSubmissions.map(s => s.id));
+      setSelectedIds(allIds);
+      setSelectAll(true);
+    }
+  };
+
+  const handleSelectSubmission = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+    setSelectAll(newSelected.size === filteredSubmissions.length);
+  };
+
+  // CSV download functionality
+  const downloadCSV = () => {
+    const selectedSubmissions = filteredSubmissions.filter(s => selectedIds.has(s.id));
+    
+    if (selectedSubmissions.length === 0) {
+      alert('Please select at least one submission to download.');
+      return;
+    }
+
+    const csvHeaders = [
+      'ID',
+      'Name',
+      'Contact',
+      'Email',
+      'District',
+      'Seat Name',
+      'Message',
+      'Status',
+      'Source',
+      'Language',
+      'Created At',
+      'Updated At',
+      'Attachment Name',
+      'Attachment Size',
+      'Attachment Type'
+    ];
+
+    const csvData = selectedSubmissions.map(submission => [
+      submission.id,
+      submission.name || '',
+      submission.contact || '',
+      submission.email || '',
+      submission.district || '',
+      submission.seatName || '',
+      `"${submission.message.replace(/"/g, '""')}"`, // Escape quotes in message
+      submission.status,
+      submission.source,
+      submission.locale,
+      submission.createdAt,
+      submission.updatedAt,
+      submission.attachmentName || '',
+      submission.attachmentSize || '',
+      submission.attachmentType || ''
+    ]);
+
+    const csvContent = [csvHeaders, ...csvData]
+      .map(row => row.join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `submissions_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -136,34 +249,136 @@ export default function SubmissionsPage() {
 
       {/* Filters and Search */}
       <div className="bg-gray-50 dark:bg-slate-700 p-4 rounded border">
-        <div className="flex flex-col sm:flex-row gap-3">
-          {/* Status Filter */}
-          <div className="flex space-x-1">
-            {['all', 'pending', 'flagged', 'reviewed'].map((status) => (
-              <button
-                key={status}
-                onClick={() => setFilter(status as any)}
-                className={`px-3 py-1 text-sm border transition-colors ${
-                  filter === status
-                    ? 'bg-green-600 text-white border-green-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100 dark:bg-slate-600 dark:text-gray-300 dark:border-slate-500 dark:hover:bg-slate-500'
-                }`}
-              >
-                {status.charAt(0).toUpperCase() + status.slice(1)}
-              </button>
-            ))}
+        <div className="flex flex-col gap-4">
+          {/* Basic Filters Row */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            {/* Status Filter */}
+            <div className="flex space-x-1">
+              {['all', 'pending', 'flagged', 'reviewed'].map((status) => (
+                <button
+                  key={status}
+                  onClick={() => setFilter(status as any)}
+                  className={`px-3 py-1 text-sm border transition-colors ${
+                    filter === status
+                      ? 'bg-green-600 text-white border-green-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100 dark:bg-slate-600 dark:text-gray-300 dark:border-slate-500 dark:hover:bg-slate-500'
+                  }`}
+                >
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </button>
+              ))}
+            </div>
+
+            {/* Search */}
+            <div className="flex-1 max-w-sm">
+              <div className="relative">
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search by name, contact, district, seat..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="block w-full pl-10 pr-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
+                />
+              </div>
+            </div>
+
+            {/* Advanced Filters Toggle */}
+            <button
+              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+              className="flex items-center space-x-2 px-3 py-1 text-sm border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:bg-slate-600 dark:text-gray-300 dark:border-slate-500 dark:hover:bg-slate-500"
+            >
+              <FunnelIcon className="h-4 w-4" />
+              <span>Advanced</span>
+            </button>
+
+            {/* Bulk Actions */}
+            {selectedIds.size > 0 && (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  {selectedIds.size} selected
+                </span>
+                <button
+                  onClick={downloadCSV}
+                  className="flex items-center space-x-1 px-3 py-1 text-sm bg-green-600 text-white hover:bg-green-700 rounded"
+                >
+                  <DocumentArrowDownIcon className="h-4 w-4" />
+                  <span>Download CSV</span>
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Search */}
-          <div className="flex-1 max-w-sm">
-            <input
-              type="text"
-              placeholder="Search by name, contact, district, seat..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full px-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
-            />
-          </div>
+          {/* Advanced Filters */}
+          {showAdvancedFilters && (
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-3 border-t border-gray-200 dark:border-slate-600">
+              {/* Date From */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                  From Date
+                </label>
+                <div className="relative">
+                  <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <input
+                    type="date"
+                    value={dateFrom}
+                    onChange={(e) => setDateFrom(e.target.value)}
+                    className="block w-full pl-10 pr-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              {/* Date To */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                  To Date
+                </label>
+                <div className="relative">
+                  <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <input
+                    type="date"
+                    value={dateTo}
+                    onChange={(e) => setDateTo(e.target.value)}
+                    className="block w-full pl-10 pr-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              {/* District Filter */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                  District
+                </label>
+                <select
+                  value={districtFilter}
+                  onChange={(e) => setDistrictFilter(e.target.value)}
+                  className="block w-full px-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
+                >
+                  <option value="">All Districts</option>
+                  {uniqueDistricts.map(district => (
+                    <option key={district} value={district}>{district}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Source Filter */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                  Source
+                </label>
+                <select
+                  value={sourceFilter}
+                  onChange={(e) => setSourceFilter(e.target.value)}
+                  className="block w-full px-3 py-1 border border-gray-300 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 dark:bg-slate-600 dark:border-slate-500 dark:text-white"
+                >
+                  <option value="">All Sources</option>
+                  {uniqueSources.map(source => (
+                    <option key={source} value={source}>{source}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -172,6 +387,14 @@ export default function SubmissionsPage() {
         <table className="min-w-full">
           <thead className="bg-gray-100 dark:bg-slate-700 border-b border-gray-200 dark:border-slate-600">
             <tr>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
+                <input
+                  type="checkbox"
+                  checked={selectAll}
+                  onChange={handleSelectAll}
+                  className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                />
+              </th>
               <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
                 Date
               </th>
@@ -201,6 +424,14 @@ export default function SubmissionsPage() {
           <tbody className="bg-white dark:bg-slate-800">
             {filteredSubmissions.map((submission) => (
               <tr key={submission.id} className="border-b border-gray-100 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700">
+                <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.has(submission.id)}
+                    onChange={() => handleSelectSubmission(submission.id)}
+                    className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                  />
+                </td>
                 <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
                   <div className="text-xs">
                     {formatDate(submission.createdAt)}
@@ -294,7 +525,7 @@ export default function SubmissionsPage() {
             ))}
             {filteredSubmissions.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-8 text-center">
+                <td colSpan={9} className="px-4 py-8 text-center">
                   <div className="text-gray-500 dark:text-gray-400">
                     <div className="text-sm">No submissions found</div>
                     <div className="text-xs mt-1">

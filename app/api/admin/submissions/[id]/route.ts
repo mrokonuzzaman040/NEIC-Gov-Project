@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { requireManagementSession } from '@/lib/session-wrapper';
+import { requireManagementSession, isAuthRedirectError } from '@/lib/session-wrapper';
 
 export async function GET(
   req: NextRequest,
@@ -43,6 +43,13 @@ export async function GET(
     return NextResponse.json({ submission });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Error fetching submission:', error);
     return NextResponse.json(
       { error: 'Failed to fetch submission' },
@@ -91,6 +98,13 @@ export async function PUT(
     });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Error updating submission:', error);
     return NextResponse.json(
       { error: 'Failed to update submission' },
@@ -139,6 +153,13 @@ export async function PATCH(
     });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Error updating submission:', error);
     return NextResponse.json(
       { error: 'Failed to update submission' },
@@ -187,6 +208,13 @@ export async function DELETE(
     });
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     console.error('Error deleting submission:', error);
     return NextResponse.json(
       { error: 'Failed to delete submission' },

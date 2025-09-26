@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuthenticatedSession } from '@/lib/session-wrapper';
+import { requireAuthenticatedSession, isAuthRedirectError } from '@/lib/session-wrapper';
 import { prisma } from '@/lib/db';
 import { hashPassword } from '@/lib/crypto/hash';
 import bcrypt from 'bcryptjs';
@@ -31,6 +31,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(user);
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     console.error('Profile fetch error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
@@ -123,6 +127,10 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(updatedUser);
 
   } catch (error) {
+    if (isAuthRedirectError(error)) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     console.error('Profile update error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

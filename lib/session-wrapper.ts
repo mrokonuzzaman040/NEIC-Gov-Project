@@ -2,6 +2,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from './auth-config';
 import { redirect } from 'next/navigation';
 
+function isRedirectErrorDigest(value: unknown): value is string {
+  return typeof value === 'string' && value.startsWith('NEXT_REDIRECT');
+}
+
 /**
  * Wrapper for getServerSession that handles JWT decryption errors gracefully
  * This prevents the application from crashing when NEXTAUTH_SECRET changes
@@ -58,6 +62,18 @@ export async function requireAdminSession() {
   }
   
   return session;
+}
+
+/**
+ * Type guard for redirect errors thrown by Next's redirect() helper
+ */
+export function isAuthRedirectError(error: unknown): boolean {
+  if (typeof error !== 'object' || error === null) {
+    return false;
+  }
+
+  const digest = (error as { digest?: unknown }).digest;
+  return isRedirectErrorDigest(digest);
 }
 
 /**
