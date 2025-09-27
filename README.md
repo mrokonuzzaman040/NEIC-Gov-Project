@@ -14,7 +14,7 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 - **Role-based Access Control**: Admin, Management, Support, and Viewer roles
 - **Session Hardening**: Signed JWT sessions with forced logout for deactivated users
 - **Security Headers**: Strict CSP with Google reCAPTCHA allow-list, HSTS, X-Frame-Options, COOP/CORP, and more
-- **Rate Limiting**: Upstash Redis-backed sliding window throttling for abusive requests plus edge-level middleware guard rails
+- **Rate Limiting**: Redis-backed sliding window throttling for abusive requests plus edge-level middleware guard rails
 - **Audit Logging**: Pino-based structured logging for submissions, auth, and administrative actions
 - **Input & Upload Validation**: Zod validation everywhere, MIME-sniffing file inspection, size/extension allow-lists, and secure local file uploads
 - **Bot Mitigation**: Google reCAPTCHA v2 challenge on public submissions and hidden honeypot fields
@@ -59,7 +59,7 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 | **Styling** | Tailwind CSS | Utility-first CSS framework |
 | **Validation** | Zod | Schema validation |
 | **File Storage** | Local Storage | Secure file uploads |
-| **Rate Limiting** | Upstash Redis | Distributed API protection with sliding window |
+| **Rate Limiting** | Self-hosted Redis | Distributed API protection with sliding window |
 | **Icons** | Heroicons + Lucide | Consistent iconography |
 | **Deployment** | Docker | Containerized deployment |
 
@@ -68,7 +68,7 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 This portal is designed for a high-assurance government environment. Key defensive layers include:
 
 - **Authentication & Authorization**: NextAuth.js with Prisma adapter, JWT sessions, enforced role hierarchy, and activity locking for inactive users.
-- **Request Protection**: Google reCAPTCHA v2 challenge on public submission endpoints, honeypot fields, sliding-window rate limiting (Upstash Redis + edge middleware), and password-reset throttling.
+- **Request Protection**: Google reCAPTCHA v2 challenge on public submission endpoints, honeypot fields, sliding-window rate limiting (Redis + edge middleware), and password-reset throttling.
 - **Transport & Browser Security**: Middleware-enforced HSTS, X-Content-Type-Options, X-Frame-Options, COOP/CORP, Permissions-Policy, and a restrictive Content-Security-Policy that only whitelists required Google reCAPTCHA assets.
 - **Data & File Safety**: SHA-256 IP hashing, detailed submission/audit logging, secure local file uploads, UUID file naming, MIME signature checking via `file-type`, strict extension allow-list, and configurable size limits (`NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB`).
 - **Code Integrity**: Shared Zod schemas, spam heuristics for submissions, Prisma schema-level constraints, and centralized logging for observability.
@@ -105,12 +105,13 @@ ADMIN_EMAIL="admin@election-commission.gov.bd"
 ADMIN_PASSWORD="SecureAdmin2024!"
 ADMIN_NAME="System Administrator"
 
-# Upstash Redis (for rate limiting)
-KV_URL="rediss://default:your_token@your-instance.upstash.io:6379"
-KV_REST_API_URL="https://your-instance.upstash.io"
-KV_REST_API_TOKEN="your_rest_api_token"
-KV_REST_API_READ_ONLY_TOKEN="your_readonly_token"
-REDIS_URL="rediss://default:your_token@your-instance.upstash.io:6379"
+# Redis (for rate limiting)
+REDIS_URL="redis://:YourStrongRedisPassword@localhost:6379"
+REDIS_HOST="localhost"
+REDIS_PORT=6379
+REDIS_USERNAME=""
+REDIS_PASSWORD="YourStrongRedisPassword"
+REDIS_TLS=false
 
 # Rate Limiting Configuration
 RATE_LIMIT_WINDOW_SECONDS=60
@@ -376,7 +377,7 @@ docker compose exec app node scripts/master-seed.js
 - Reference `.env.docker.example` for the complete list expected by the Docker stack.
 - Always generate strong values for `NEXTAUTH_SECRET`, `HASH_SALT`, database passwords, and admin credentials.
 - Set `NEXTAUTH_URL` to the public HTTPS domain used on the government infrastructure.
-- Configure reCAPTCHA, SendGrid/SMTP, and optional Upstash/Redis credentials before going live.
+- Configure reCAPTCHA, SendGrid/SMTP, and Redis credentials before going live.
 
 ### Security Checklist
 - [ ] Change all default passwords
@@ -469,8 +470,8 @@ ls -la uploads/
 
 #### Rate Limiting Issues
 ```bash
-# Check Upstash Redis connection
-curl -H "Authorization: Bearer $KV_REST_API_TOKEN" $KV_REST_API_URL/ping
+# Check Redis connection
+redis-cli -u "$REDIS_URL" --no-auth-warning PING
 
 # Verify rate limiting configuration
 echo "Rate limit window: $RATE_LIMIT_WINDOW_SECONDS seconds"
@@ -526,7 +527,7 @@ Government project for the National Elections Inquiry Commission of Bangladesh. 
 - Docker deployment setup
 - Database seeding system
 - **Full mobile responsiveness across all pages**
-- **Production-ready rate limiting with Upstash Redis**
+- **Production-ready rate limiting with self-managed Redis**
 
 🚧 **In Development**
 - Advanced analytics dashboard
@@ -559,7 +560,7 @@ Government project for the National Elections Inquiry Commission of Bangladesh. 
 - **Button Optimization**: Full-width buttons on mobile with proper touch targets
 
 ### ⚡ **Rate Limiting System Upgrade** *(Latest)*
-- **Production-Ready**: Upgraded to use Upstash Redis for distributed rate limiting
+- **Production-Ready**: Upgraded to use dedicated Redis for distributed rate limiting
 - **Sliding Window**: Implemented sliding window rate limiting (10 requests per 60 seconds)
 - **High Availability**: Distributed rate limiting across multiple server instances
 - **Fallback System**: Graceful degradation to in-memory rate limiting if Redis fails

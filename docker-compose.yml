@@ -19,8 +19,12 @@ services:
       NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:-}
       SENDGRID_API_KEY: ${SENDGRID_API_KEY:-}
       FROM_EMAIL: ${FROM_EMAIL:-}
-      KV_REST_API_URL: ${KV_REST_API_URL:-}
-      KV_REST_API_TOKEN: ${KV_REST_API_TOKEN:-}
+      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:-change_me_redis}@redis:6379}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      REDIS_USERNAME: ${REDIS_USERNAME:-}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-change_me_redis}
+      REDIS_TLS: ${REDIS_TLS:-false}
       RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-20}
       RATE_LIMIT_WINDOW_SECONDS: ${RATE_LIMIT_WINDOW_SECONDS:-60}
       SEED_DATABASE: ${SEED_DATABASE:-false}
@@ -59,7 +63,13 @@ services:
 
   redis:
     image: redis:7-alpine
-    command: ["redis-server", "--appendonly", "yes"]
+    command: [
+      "redis-server",
+      "--appendonly", "yes",
+      "--requirepass", "${REDIS_PASSWORD:-change_me_redis}"
+    ]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-change_me_redis}
     volumes:
       - redis_data:/data
     restart: unless-stopped
