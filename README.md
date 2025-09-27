@@ -356,24 +356,27 @@ Referrer-Policy: strict-origin-when-cross-origin
 
 ### Docker Deployment
 ```bash
-# Build and start services
-docker-compose up -d
+# 1. Copy and configure environment variables
+cp .env.docker.example .env.docker
+vim .env.docker  # update secrets, database passwords, domain, etc.
 
-# Run migrations
-docker exec election_app npm run db:migrate
+# 2. Build images and start the stack
+docker compose --env-file .env.docker up -d --build
 
-# Seed initial data
-docker exec election_app npm run db:seed
+# 3. Follow logs during first boot (migrations + health checks)
+docker compose logs -f app
+
+# 4. (Optional) Rerun baseline seed script when needed
+docker compose exec app node scripts/master-seed.js
 ```
+
+> The application container runs Prisma migrations automatically on startup. It retries until PostgreSQL is ready, then launches the Next.js server on the port defined by `APP_HTTP_PORT` (defaults to `3000`).
 
 ### Environment Variables (Production)
-```bash
-NODE_ENV=production
-DATABASE_URL="postgresql://user:pass@db:5432/election_commission"
-NEXTAUTH_SECRET="production-secret-key"
-NEXTAUTH_URL="https://your-domain.gov.bd"
-REDIS_URL="redis://redis:6379"
-```
+- Reference `.env.docker.example` for the complete list expected by the Docker stack.
+- Always generate strong values for `NEXTAUTH_SECRET`, `HASH_SALT`, database passwords, and admin credentials.
+- Set `NEXTAUTH_URL` to the public HTTPS domain used on the government infrastructure.
+- Configure reCAPTCHA, SendGrid/SMTP, and optional Upstash/Redis credentials before going live.
 
 ### Security Checklist
 - [ ] Change all default passwords
