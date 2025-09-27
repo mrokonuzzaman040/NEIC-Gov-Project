@@ -19,7 +19,6 @@ APP_NAME="election-portal"
 APP_USER="election"
 APP_DIR="/opt/election-portal"
 NGINX_DIR="/etc/nginx"
-SSL_DIR="/etc/letsencrypt"
 SERVICE_NAME="election-portal"
 
 # Function to print colored output
@@ -55,7 +54,8 @@ command_exists() {
 # Function to update system packages
 update_system() {
     print_status "Updating system packages..."
-    sudo apt update && sudo apt upgrade -y
+    sudo apt update
+    sudo apt upgrade -y
     print_success "System packages updated"
 }
 
@@ -95,7 +95,7 @@ install_postgresql() {
     fi
     
     # Add PostgreSQL official repository
-    sudo wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
     sudo apt update
     
@@ -127,9 +127,6 @@ install_redis() {
     
     # Restart Redis to apply configuration
     sudo systemctl restart redis-server
-    
-    # Start and enable Redis
-    sudo systemctl start redis-server
     sudo systemctl enable redis-server
     
     print_success "Redis installed and configured"
@@ -163,12 +160,7 @@ install_pm2() {
     fi
     
     sudo npm install -g pm2
-    
-    # Setup PM2 startup (commented out as we'll use systemd service instead)
-    # sudo pm2 startup systemd -u $USER --hp $HOME
-    # sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER --hp $HOME
-    
-    print_success "PM2 installed and configured"
+    print_success "PM2 installed"
 }
 
 # Function to create application user
@@ -189,29 +181,22 @@ setup_app_directory() {
     
     sudo mkdir -p $APP_DIR
     sudo mkdir -p $APP_DIR/uploads
+    sudo mkdir -p /var/log/election-portal
     sudo chown -R $USER:$APP_USER $APP_DIR
+    sudo chown -R $APP_USER:$APP_USER /var/log/election-portal
     sudo chmod 755 $APP_DIR
     sudo chmod 755 $APP_DIR/uploads
+    sudo chmod 755 /var/log/election-portal
     
     print_success "Application directory setup complete"
-}
-
-# Function to install application dependencies
-install_app_dependencies() {
-    print_status "Installing application dependencies..."
-    
-    if [ -d "$APP_DIR" ] && [ -f "$APP_DIR/package.json" ]; then
-        cd $APP_DIR
-        sudo -u $APP_USER npm ci --production
-        print_success "Application dependencies installed"
-    else
-        print_warning "package.json not found in $APP_DIR. Please ensure the application files are copied first."
-    fi
 }
 
 # Function to setup PostgreSQL database
 setup_database() {
     print_status "Setting up PostgreSQL database..."
+    
+    # Wait for PostgreSQL to be ready
+    sleep 3
     
     # Create database and user
     sudo -u postgres psql << EOF
@@ -222,9 +207,6 @@ ALTER USER election_user CREATEDB;
 \q
 EOF
     
-    # Wait a moment for database to be ready
-    sleep 2
-    
     print_success "PostgreSQL database and user created"
 }
 
@@ -232,7 +214,10 @@ EOF
 create_env_file() {
     print_status "Creating production environment file..."
     
-    cat > $APP_DIR/.env.production << EOF
+    # Generate secure secrets
+    NEXTAUTH_SECRET=$(openssl rand -base64 32)
+    
+    sudo tee $APP_DIR/.env.production > /dev/null << EOF
 # Production Environment Configuration
 NODE_ENV=production
 
@@ -244,7 +229,7 @@ REDIS_URL="redis://localhost:6379"
 
 # Next.js Configuration
 NEXTAUTH_URL="https://neic-bd.org"
-NEXTAUTH_SECRET="$(openssl rand -base64 32)"
+NEXTAUTH_SECRET="$NEXTAUTH_SECRET"
 
 # Application Configuration
 APP_NAME="BD Election Commission Portal"
@@ -288,87 +273,41 @@ EOF
 create_nginx_config() {
     print_status "Creating Nginx configuration..."
     
-    sudo tee $NGINX_DIR/sites-available/$DOMAIN > /dev/null << EOF
+    sudo tee $NGINX_DIR/sites-available/$DOMAIN > /dev/null << 'EOF'
 server {
     listen 80;
     server_name neic-bd.org www.neic-bd.org;
     
-    # Redirect HTTP to HTTPS
-    return 301 https://\$server_name\$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name neic-bd.org www.neic-bd.org;
+    # Redirect HTTP to HTTPS (will be enabled after SSL setup)
+    # return 301 https://$server_name$request_uri;
     
-    # SSL Configuration (will be updated by certbot)
-    ssl_certificate /etc/letsencrypt/live/neic-bd.org/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/neic-bd.org/privkey.pem;
-    
-    # SSL Security Settings
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384;
-    ssl_prefer_server_ciphers off;
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
-    
-    # Security Headers
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-    add_header X-XSS-Protection "1; mode=block";
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    add_header Referrer-Policy "strict-origin-when-cross-origin";
-    
-    # Gzip Compression
-    gzip on;
-    gzip_vary on;
-    gzip_min_length 1024;
-    gzip_proxied expired no-cache no-store private must-revalidate auth;
-    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
-    
-    # Rate Limiting
-    limit_req_zone \$binary_remote_addr zone=api:10m rate=10r/s;
-    limit_req_zone \$binary_remote_addr zone=login:10m rate=5r/m;
-    
-    # Main Application
+    # Temporary: serve HTTP until SSL is configured
     location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_cache_bypass \$http_upgrade;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
         proxy_read_timeout 86400;
     }
     
     # API Rate Limiting
     location /api/ {
-        limit_req zone=api burst=20 nodelay;
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-    }
-    
-    # Login Rate Limiting
-    location /api/auth/ {
-        limit_req zone=login burst=5 nodelay;
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
     
     # Static Files
     location /uploads/ {
-        alias $APP_DIR/uploads/;
+        alias /opt/election-portal/uploads/;
         expires 1y;
         add_header Cache-Control "public, immutable";
         add_header X-Content-Type-Options nosniff;
@@ -394,10 +333,14 @@ EOF
     sudo ln -sf $NGINX_DIR/sites-available/$DOMAIN $NGINX_DIR/sites-enabled/
     sudo rm -f $NGINX_DIR/sites-enabled/default
     
-    # Test Nginx configuration
-    sudo nginx -t && sudo systemctl reload nginx
-    
-    print_success "Nginx configuration created"
+    # Test and reload Nginx configuration
+    if sudo nginx -t; then
+        sudo systemctl reload nginx
+        print_success "Nginx configuration created and reloaded"
+    else
+        print_error "Nginx configuration test failed"
+        exit 1
+    fi
 }
 
 # Function to create systemd service
@@ -416,7 +359,7 @@ User=$APP_USER
 WorkingDirectory=$APP_DIR
 Environment=NODE_ENV=production
 EnvironmentFile=$APP_DIR/.env.production
-ExecStart=/usr/bin/node start
+ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=10
 StandardOutput=syslog
@@ -428,7 +371,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=$APP_DIR
+ReadWritePaths=$APP_DIR /var/log/election-portal
 
 [Install]
 WantedBy=multi-user.target
@@ -450,27 +393,7 @@ install_certbot() {
     fi
     
     sudo apt install -y certbot python3-certbot-nginx
-    
     print_success "Certbot installed"
-}
-
-# Function to setup SSL certificate
-setup_ssl() {
-    print_status "Setting up SSL certificate..."
-    
-    # Stop Nginx temporarily
-    sudo systemctl stop nginx
-    
-    # Obtain SSL certificate
-    sudo certbot --nginx -d neic-bd.org -d www.neic-bd.org --non-interactive --agree-tos --email admin@neic-bd.org --redirect
-    
-    # Setup auto-renewal
-    (crontab -l 2>/dev/null; echo "0 12 * * * /usr/bin/certbot renew --quiet") | crontab -
-    
-    # Start Nginx
-    sudo systemctl start nginx
-    
-    print_success "SSL certificate setup complete"
 }
 
 # Function to setup log rotation
@@ -491,9 +414,6 @@ setup_log_rotation() {
     endscript
 }
 EOF
-    
-    sudo mkdir -p /var/log/election-portal
-    sudo chown $APP_USER:$APP_USER /var/log/election-portal
     
     print_success "Log rotation configured"
 }
@@ -526,13 +446,15 @@ APP_DIR="/opt/election-portal"
 mkdir -p $BACKUP_DIR
 
 # Backup database
-pg_dump -h localhost -U election_user -d election_portal > $BACKUP_DIR/db_backup_$DATE.sql
+PGPASSWORD=election_secure_password_2024 pg_dump -h localhost -U election_user -d election_portal > $BACKUP_DIR/db_backup_$DATE.sql
 
 # Backup uploads
-tar -czf $BACKUP_DIR/uploads_backup_$DATE.tar.gz -C $APP_DIR uploads/
+if [ -d "$APP_DIR/uploads" ]; then
+    tar -czf $BACKUP_DIR/uploads_backup_$DATE.tar.gz -C $APP_DIR uploads/
+fi
 
 # Backup application files (excluding node_modules)
-tar -czf $BACKUP_DIR/app_backup_$DATE.tar.gz -C $APP_DIR --exclude=node_modules --exclude=.next .
+tar -czf $BACKUP_DIR/app_backup_$DATE.tar.gz -C $APP_DIR --exclude=node_modules --exclude=.next --exclude=.env.production .
 
 # Keep only last 7 days of backups
 find $BACKUP_DIR -name "*.sql" -mtime +7 -delete
@@ -596,10 +518,12 @@ display_final_instructions() {
     echo -e "${BLUE}Next Steps:${NC}"
     echo "1. Copy your application files to $APP_DIR"
     echo "2. Update the .env.production file with your actual configuration"
-    echo "3. Run database migrations: cd $APP_DIR && npm run db:migrate"
-    echo "4. Seed the database: cd $APP_DIR && npm run db:seed"
-    echo "5. Start the application: sudo systemctl start $SERVICE_NAME"
-    echo "6. Check application status: sudo systemctl status $SERVICE_NAME"
+    echo "3. Install dependencies: cd $APP_DIR && sudo -u $APP_USER npm ci --production"
+    echo "4. Build the application: cd $APP_DIR && sudo -u $APP_USER npm run build"
+    echo "5. Run database migrations: cd $APP_DIR && sudo -u $APP_USER npm run db:migrate"
+    echo "6. Seed the database: cd $APP_DIR && sudo -u $APP_USER npm run db:seed"
+    echo "7. Start the application: sudo systemctl start $SERVICE_NAME"
+    echo "8. Check application status: sudo systemctl status $SERVICE_NAME"
     echo ""
     echo -e "${BLUE}Important Files:${NC}"
     echo "- Application directory: $APP_DIR"
@@ -613,16 +537,15 @@ display_final_instructions() {
     echo "- View logs: sudo journalctl -u $SERVICE_NAME -f"
     echo "- Restart service: sudo systemctl restart $SERVICE_NAME"
     echo "- Check Nginx status: sudo systemctl status nginx"
-    echo "- Test SSL: sudo certbot certificates"
+    echo "- Test Nginx config: sudo nginx -t"
     echo ""
     echo -e "${YELLOW}Security Notes:${NC}"
     echo "- Change default database password in .env.production"
-    echo "- Update NEXTAUTH_SECRET with a secure random string"
     echo "- Configure SMTP settings for email functionality"
     echo "- Add your reCAPTCHA keys"
-    echo "- Consider setting up fail2ban for additional security"
+    echo "- Setup SSL after DNS is configured: sudo certbot --nginx -d neic-bd.org -d www.neic-bd.org"
     echo ""
-    echo -e "${GREEN}Your application will be available at: https://neic-bd.org${NC}"
+    echo -e "${GREEN}Your application will be available at: http://neic-bd.org (HTTPS after SSL setup)${NC}"
 }
 
 # Main execution
@@ -676,10 +599,6 @@ main() {
     
     # Install Certbot
     install_certbot
-    
-    # Setup SSL (commented out - requires domain to be pointing to server)
-    # setup_ssl
-    print_warning "SSL setup skipped. Run 'sudo certbot --nginx -d neic-bd.org -d www.neic-bd.org' after domain DNS is configured."
     
     # Setup log rotation
     setup_log_rotation
