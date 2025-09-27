@@ -47,6 +47,19 @@ check_root() {
     fi
 }
 
+# Function to check current directory and fix permissions
+check_working_directory() {
+    print_status "Checking working directory..."
+    
+    # Get the directory where the script is located
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    
+    # Change to script directory to avoid permission issues
+    cd "$SCRIPT_DIR"
+    
+    print_success "Working in directory: $(pwd)"
+}
+
 # Function to check if command exists
 command_exists() {
     command -v "$1" >/dev/null 2>&1
@@ -213,10 +226,23 @@ install_app_dependencies() {
 setup_database() {
     print_status "Setting up PostgreSQL database..."
     
-    # Create database and user
+    # Create database and user with error handling
     sudo -u postgres psql << EOF
-CREATE DATABASE election_portal;
-CREATE USER election_user WITH ENCRYPTED PASSWORD 'election_secure_password_2024';
+DO \$\$
+BEGIN
+    -- Create database if it doesn't exist
+    IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'election_portal') THEN
+        CREATE DATABASE election_portal;
+    END IF;
+    
+    -- Create user if it doesn't exist
+    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'election_user') THEN
+        CREATE USER election_user WITH ENCRYPTED PASSWORD 'election_secure_password_2024';
+    END IF;
+END
+\$\$;
+
+-- Grant privileges
 GRANT ALL PRIVILEGES ON DATABASE election_portal TO election_user;
 ALTER USER election_user CREATEDB;
 \q
@@ -395,7 +421,14 @@ EOF
     sudo rm -f $NGINX_DIR/sites-enabled/default
     
     # Test Nginx configuration
-    sudo nginx -t && sudo systemctl reload nginx
+    if sudo nginx -t; then
+        # Start nginx if not running, then reload
+        sudo systemctl start nginx
+        sudo systemctl reload nginx
+    else
+        print_error "Nginx configuration test failed"
+        exit 1
+    fi
     
     print_success "Nginx configuration created"
 }
@@ -634,6 +667,9 @@ main() {
     
     # Check if running as root
     check_root
+    
+    # Check working directory
+    check_working_directory
     
     # Update system
     update_system
