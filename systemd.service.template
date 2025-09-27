@@ -1,0 +1,30 @@
+# Systemd Service Template for Election Portal
+# This file is automatically created by the setup script
+
+[Unit]
+Description=Election Portal Application
+After=network.target postgresql.service redis.service
+Requires=postgresql.service redis.service
+
+[Service]
+Type=simple
+User=election
+WorkingDirectory=/opt/election-portal
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/election-portal/.env.production
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=election-portal
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/election-portal
+
+[Install]
+WantedBy=multi-user.target
