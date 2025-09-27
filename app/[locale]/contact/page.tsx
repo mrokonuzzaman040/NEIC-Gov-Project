@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import GovernmentHeader from '@/components/GovernmentHeader';
 import { useEffect, useRef, useState, useCallback } from 'react';
+import Image from 'next/image';
 
 // Force dynamic rendering to ensure fresh data from APIs
 export const dynamic = 'force-dynamic';
@@ -308,7 +309,7 @@ export default function ContactPage() {
                         }
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      {isEnglish ? 'Block-2, Jatiya Sangsad Bhaban' : 'ব্লক-২, এলডি হল, জাতীয় সংসদ ভবন এলাকা'}
+                      {isEnglish ? 'Block-2,LD Hall, Jatiya Sangsad Bhaban' : 'ব্লক-২, এলডি হল, জাতীয় সংসদ ভবন এলাকা'}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       {isEnglish ? 'Sher-e-Bangla Nagar': 'শের-ই-বাংলা নগর'}
@@ -376,7 +377,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Google Map Section */}
+        {/* Map Section with Interactive Map and Location Image */}
         <div className="bg-white dark:bg-slate-800 shadow-lg mb-6 sm:mb-8">
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200 dark:border-slate-700">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white flex items-center">
@@ -392,63 +393,116 @@ export default function ContactPage() {
           </div>
           
           <div className="p-4 sm:p-6 lg:p-8">
-            <div className="space-y-3 sm:space-y-4">
-              <div 
-                className="relative w-full h-80 sm:h-96 lg:h-[500px] rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm overflow-hidden"
-                style={{ minHeight: '400px' }}
-              >
-                {!useFallbackMap && (
-                  <>
-                    {!mapLoaded && (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800">
-                        <div className="h-8 w-8 rounded-full border-2 border-green-600 border-t-transparent animate-spin" />
-                        <p className="mt-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                          {isEnglish ? 'Loading interactive map...' : 'ইন্টারেকটিভ মানচিত্র লোড হচ্ছে...'}
-                        </p>
-                      </div>
-                    )}
-                    <div ref={mapRef} className="h-full w-full" />
-                  </>
-                )}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+              {/* Interactive Google Map */}
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white flex items-center">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  {isEnglish ? 'Interactive Map' : 'ইন্টারেকটিভ মানচিত্র'}
+                </h3>
+                <div 
+                  className="relative w-full h-80 sm:h-96 lg:h-[400px] rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm overflow-hidden"
+                  style={{ minHeight: '320px' }}
+                >
+                  {!useFallbackMap && (
+                    <>
+                      {!mapLoaded && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800">
+                          <div className="h-8 w-8 rounded-full border-2 border-green-600 border-t-transparent animate-spin" />
+                          <p className="mt-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                            {isEnglish ? 'Loading interactive map...' : 'ইন্টারেকটিভ মানচিত্র লোড হচ্ছে...'}
+                          </p>
+                        </div>
+                      )}
+                      <div ref={mapRef} className="h-full w-full" />
+                    </>
+                  )}
 
-                {useFallbackMap && fallbackEmbedUrl && (
-                  <iframe
-                    title={isEnglish ? 'Office location map' : 'অফিসের অবস্থান মানচিত্র'}
-                    src={fallbackEmbedUrl}
-                    className="absolute inset-0 h-full w-full border-0"
+                  {useFallbackMap && fallbackEmbedUrl && (
+                    <iframe
+                      title={isEnglish ? 'Office location map' : 'অফিসের অবস্থান মানচিত্র'}
+                      src={fallbackEmbedUrl}
+                      className="absolute inset-0 h-full w-full border-0"
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  )}
+
+                  {useFallbackMap && !fallbackEmbedUrl && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800 text-center">
+                      <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2a10 10 0 00-10 10v0.5A3.5 3.5 0 005.5 16h2.086a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H18.5A3.5 3.5 0 0022 12.5V12a10 10 0 00-10-10z" />
+                      </svg>
+                      <p className="mt-3 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                        {mapError || (isEnglish ? 'Map data is unavailable right now.' : 'মানচিত্রের তথ্য বর্তমানে অনুপলব্ধ।')}
+                      </p>
+                    </div>
+                  )}
+
+                  {mapError && !useFallbackMap && (
+                    <div className="absolute inset-x-0 bottom-0 bg-white/90 dark:bg-slate-900/80 px-3 py-2 text-center text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                      {mapError}
+                    </div>
+                  )}
+                </div>
+                <div className="text-center">
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                    {useFallbackMap
+                      ? (mapError || (isEnglish
+                          ? 'The interactive map could not be loaded. A basic embedded map is shown instead.'
+                          : 'ইন্টারেকটিভ মানচিত্র লোড করা যায়নি। বিকল্প এমবেডেড মানচিত্র প্রদর্শন করা হচ্ছে।'))
+                      : (isEnglish
+                          ? 'Click on the marker for more information'
+                          : 'আরও তথ্যের জন্য মার্কারে ক্লিক করুন')}
+                  </p>
+                </div>
+              </div>
+
+              {/* Location Image */}
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white flex items-center">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {isEnglish ? 'Location Overview' : 'অবস্থানের সারসংক্ষেপ'}
+                </h3>
+                <div className="relative w-full h-80 sm:h-96 lg:h-[400px] rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm overflow-hidden bg-gray-50 dark:bg-slate-700">
+                  <Image
+                    src="/map-location.png"
+                    alt={isEnglish ? 'National Elections Inquiry Commission Building Location' : 'জাতীয় নির্বাচন তদন্ত কমিশন ভবনের অবস্থান'}
+                    className="w-full h-full object-cover object-center"
+                    width={1000}
+                    height={1000}
                     loading="lazy"
-                    allowFullScreen
-                    referrerPolicy="no-referrer-when-downgrade"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
                   />
-                )}
-
-                {useFallbackMap && !fallbackEmbedUrl && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800 text-center">
-                    <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2a10 10 0 00-10 10v0.5A3.5 3.5 0 005.5 16h2.086a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H18.5A3.5 3.5 0 0022 12.5V12a10 10 0 00-10-10z" />
+                  <div 
+                    className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 dark:bg-slate-700 text-center"
+                    style={{ display: 'none' }}
+                  >
+                    <svg className="w-12 h-12 text-gray-400 dark:text-gray-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p className="mt-3 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                      {mapError || (isEnglish ? 'Map data is unavailable right now.' : 'মানচিত্রের তথ্য বর্তমানে অনুপলব্ধ।')}
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                      {isEnglish ? 'Location image could not be loaded' : 'অবস্থানের ছবি লোড করা যায়নি'}
                     </p>
                   </div>
-                )}
-
-                {mapError && !useFallbackMap && (
-                  <div className="absolute inset-x-0 bottom-0 bg-white/90 dark:bg-slate-900/80 px-3 py-2 text-center text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                    {mapError}
-                  </div>
-                )}
-              </div>
-              <div className="text-center">
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  {useFallbackMap
-                    ? (mapError || (isEnglish
-                        ? 'The interactive map could not be loaded. A basic embedded map is shown instead.'
-                        : 'ইন্টারেকটিভ মানচিত্র লোড করা যায়নি। বিকল্প এমবেডেড মানচিত্র প্রদর্শন করা হচ্ছে।'))
-                    : (isEnglish
-                        ? 'Click on the marker for more information'
-                        : 'আরও তথ্যের জন্য মার্কারে ক্লিক করুন')}
-                </p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                    {isEnglish 
+                      ? 'Aerial view of the Jatiya Sangsad Bhaban area where our office is located'
+                      : 'জাতীয় সংসদ ভবন এলাকার আকাশ থেকে তোলা দৃশ্য যেখানে আমাদের অফিস অবস্থিত'}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

@@ -58,8 +58,8 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
   const secretarialSupport = members.filter(member => member.role_type === 'secretarial_support' && member.isActive);
   
   // Commission name - using a default since we don't have this in the API
-  const commissionNameEnglish = "National Elections Inquiry Commission";
-  const commissionNameBengali = "জাতীয় নির্বাচন তদন্ত কমিশন (২০১৪, ২০১৮, ২০২৪)";
+  const commissionNameEnglish = "National Elections (2014, 2018, 2024) Inquiry Commission Members";
+  const commissionNameBengali = "জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন সদস্যবৃন্দ";
   
   // Function to get member tag based on designation
   const getMemberTag = (member: CommissionMember) => {
