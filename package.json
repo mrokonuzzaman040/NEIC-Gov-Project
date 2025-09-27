@@ -20,7 +20,16 @@
     "db:seed-admin": "node scripts/create-admin.js",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "docker:logs": "docker-compose logs -f"
+    "docker:logs": "docker-compose logs -f",
+    "docker:build": "docker-compose build",
+    "docker:restart": "docker-compose restart",
+    "docker:setup": "./scripts/docker-setup.sh",
+    "docker:dev": "docker-compose --profile dev-tools -f docker-compose.dev.yml up -d",
+    "docker:prod": "docker-compose --profile production up -d",
+    "docker:clean": "docker-compose down -v && docker system prune -f",
+    "docker:db:migrate": "docker-compose exec app npx prisma migrate deploy",
+    "docker:db:seed": "docker-compose exec app npm run db:seed",
+    "docker:db:studio": "docker-compose exec app npx prisma studio"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "0.5.4",
@@ -34,6 +43,7 @@
     "file-type": "^18.7.0",
     "form-data": "^4.0.4",
     "gray-matter": "4.0.3",
+    "ioredis": "^5.3.2",
     "lucide-react": "^0.544.0",
     "negotiator": "0.6.3",
     "next": "14.2.5",
