@@ -114,11 +114,11 @@ export default async function HomePage({ params }: { params: { locale: string } 
             {/* Horizental Line */}
             <div className="h-0.5 bg-gray-200 dark:bg-gray-700 my-6"></div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 sm:gap-8">
-              <div className="xl:col-span-3">
+            <div className="grid grid-cols-1 xl:grid-cols-6 gap-6 sm:gap-8">
+              <div className="xl:col-span-4">
                 <CommissionScope />
               </div>
-              <div className="xl:col-span-1">
+              <div className="xl:col-span-2">
                 <CommissionMembers />
               </div>
             </div>

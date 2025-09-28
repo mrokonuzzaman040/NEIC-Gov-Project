@@ -43,13 +43,23 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                 </div>
               </div>
 
-              {/* Right side: Controls (Language, Theme, Mobile Menu) */}
+              {/* Right side: Controls (Language, Login, Theme, Mobile Menu) */}
               <div className="flex items-center space-x-1 sm:space-x-2 relative flex-shrink-0">
                 <div className="hidden sm:block">
                   <ErrorBoundary>
                     <LanguageSwitcher />
                   </ErrorBoundary>
                 </div>
+                {/* Login Button */}
+                <a 
+                  href={`/${locale}/login`}
+                  className="hidden sm:flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md transition-colors duration-200"
+                >
+                  <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  </svg>
+                  {locale === 'bn' ? 'লগইন' : 'Login'}
+                </a>
                 <ErrorBoundary>
                   <ThemeToggle />
                 </ErrorBoundary>
