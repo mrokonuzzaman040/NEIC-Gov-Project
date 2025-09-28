@@ -23,7 +23,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   unstable_setRequestLocale(locale);
   const messages = await getMessages({ locale });
   
-  if (!['en', 'bn'].includes(locale)) {
+  if (!['bn'].includes(locale)) {
     // Not strictly necessary (middleware handles) but safe fallback
     return null;
   }
