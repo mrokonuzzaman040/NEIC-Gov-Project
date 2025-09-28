@@ -14,6 +14,7 @@ interface AuditLog {
   userId: string;
   userName: string;
   userEmail: string;
+  userRole: string;
   action: string;
   details: string;
   ipAddress: string;
@@ -27,72 +28,54 @@ export default function AuditLogsViewer() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterAction, setFilterAction] = useState('');
   const [filterUser, setFilterUser] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
-  // Mock audit log data
-  useEffect(() => {
-    const mockLogs: AuditLog[] = [
-      {
-        id: '1',
-        userId: '1',
-        userName: 'System Administrator',
-        userEmail: 'admin@election-commission.gov.bd',
-        action: 'LOGIN',
-        details: 'User logged in successfully',
-        ipAddress: '192.168.1.100',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: '2',
-        userId: '1',
-        userName: 'System Administrator',
-        userEmail: 'admin@election-commission.gov.bd',
-        action: 'PROFILE_UPDATE',
-        details: 'Updated profile information: name=System Administrator, email=admin@election-commission.gov.bd',
-        ipAddress: '192.168.1.100',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        createdAt: new Date(Date.now() - 3600000).toISOString(),
-      },
-      {
-        id: '3',
-        userId: '2',
-        userName: 'John Doe',
-        userEmail: 'john.doe@election-commission.gov.bd',
-        action: 'PASSWORD_CHANGE',
-        details: 'Password changed successfully',
-        ipAddress: '192.168.1.101',
-        userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-        createdAt: new Date(Date.now() - 7200000).toISOString(),
-      },
-      {
-        id: '4',
-        userId: '1',
-        userName: 'System Administrator',
-        userEmail: 'admin@election-commission.gov.bd',
-        action: 'USER_CREATE',
-        details: 'Created new user: jane.smith@election-commission.gov.bd',
-        ipAddress: '192.168.1.100',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        createdAt: new Date(Date.now() - 86400000).toISOString(),
-      },
-      {
-        id: '5',
-        userId: '3',
-        userName: 'Jane Smith',
-        userEmail: 'jane.smith@election-commission.gov.bd',
-        action: 'LOGIN_FAILED',
-        details: 'Failed login attempt - incorrect password',
-        ipAddress: '192.168.1.102',
-        userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36',
-        createdAt: new Date(Date.now() - 172800000).toISOString(),
-      },
-    ];
+  // Fetch audit logs from API
+  const fetchAuditLogs = async (page = 1, search = '', action = '', userId = '') => {
+    try {
+      setIsLoading(true);
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: '50',
+        ...(search && { search }),
+        ...(action && { action }),
+        ...(userId && { userId })
+      });
 
-    setTimeout(() => {
-      setAuditLogs(mockLogs);
+      const response = await fetch(`/api/admin/audit-logs?${params}`);
+      if (response.ok) {
+        const data = await response.json();
+        setAuditLogs(data.auditLogs);
+        setTotalPages(data.pagination.pages);
+        setTotalCount(data.pagination.total);
+      } else {
+        console.error('Failed to fetch audit logs');
+        setAuditLogs([]);
+      }
+    } catch (error) {
+      console.error('Error fetching audit logs:', error);
+      setAuditLogs([]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
+  };
+
+  // Initial load
+  useEffect(() => {
+    fetchAuditLogs();
   }, []);
+
+  // Refetch when filters change
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setCurrentPage(1);
+      fetchAuditLogs(1, searchTerm, filterAction, filterUser);
+    }, 300); // Debounce search
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, filterAction, filterUser]);
 
   const getActionBadgeColor = (action: string) => {
     switch (action) {
@@ -113,18 +96,29 @@ export default function AuditLogsViewer() {
     }
   };
 
-  const filteredLogs = auditLogs.filter(log => {
-    const matchesSearch = log.details.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         log.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         log.userEmail.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesAction = !filterAction || log.action === filterAction;
-    const matchesUser = !filterUser || log.userId === filterUser;
-    
-    return matchesSearch && matchesAction && matchesUser;
-  });
+  // Handle pagination
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchAuditLogs(page, searchTerm, filterAction, filterUser);
+  };
 
+  // Get unique actions and users for filters (we'll need to fetch these separately)
   const uniqueActions = [...new Set(auditLogs.map(log => log.action))];
   const uniqueUsers = [...new Set(auditLogs.map(log => ({ id: log.userId, name: log.userName })))];
+
+  // Get role badge color
+  const getRoleBadgeColor = (role: string) => {
+    switch (role) {
+      case 'ADMIN':
+        return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300';
+      case 'MANAGEMENT':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
+      case 'SUPPORT':
+        return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300';
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300';
+    }
+  };
 
   if (isLoading) {
     return (
@@ -196,7 +190,7 @@ export default function AuditLogsViewer() {
       <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
           <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-            Audit Logs ({filteredLogs.length})
+            Audit Logs ({totalCount})
           </h3>
         </div>
 
@@ -222,7 +216,7 @@ export default function AuditLogsViewer() {
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
-              {filteredLogs.map((log) => (
+              {auditLogs.map((log) => (
                 <tr key={log.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -235,6 +229,11 @@ export default function AuditLogsViewer() {
                         </div>
                         <div className="text-sm text-slate-500 dark:text-slate-400">
                           {log.userEmail}
+                        </div>
+                        <div className="mt-1">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${getRoleBadgeColor(log.userRole)}`}>
+                            {log.userRole}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -267,9 +266,39 @@ export default function AuditLogsViewer() {
           </table>
         </div>
 
-        {filteredLogs.length === 0 && (
+        {auditLogs.length === 0 && !isLoading && (
           <div className="p-8 text-center">
             <p className="text-slate-500 dark:text-slate-400">No audit logs found matching your criteria.</p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/50">
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-slate-700 dark:text-slate-300">
+                Showing page {currentPage} of {totalPages} ({totalCount} total logs)
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 text-sm border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                <span className="px-3 py-1 text-sm bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-md">
+                  {currentPage}
+                </span>
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 text-sm border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

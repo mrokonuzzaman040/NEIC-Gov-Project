@@ -53,17 +53,12 @@ export default function AdminSidebar() {
 
   const settingsNavigation: NavItem[] = [
     { name: 'Slider Management', href: `/${locale}/admin/settings/sliders`, icon: PhotoIcon },
-    { name: 'Blog Management', href: `/${locale}/admin/settings/blog`, icon: DocumentTextIcon },
-    { name: 'FAQ Management', href: `/${locale}/admin/settings/faq`, icon: QuestionMarkCircleIcon },
     { name: 'Notice Management', href: `/${locale}/admin/settings/notices`, icon: MegaphoneIcon },
-    { name: 'Contact Management', href: `/${locale}/admin/settings/contact`, icon: PhoneIcon },
-    { name: 'System Settings', href: `/${locale}/admin/settings/system`, icon: CogIcon },
   ];
 
   const commissionNavigation: NavItem[] = [
     { name: 'Commission Members', href: `/${locale}/admin/commission/members`, icon: UserGroupIcon },
     { name: 'Commission Officials', href: `/${locale}/admin/commission/officials`, icon: UsersIcon },
-    { name: 'Terms of Reference', href: `/${locale}/admin/commission/terms`, icon: DocumentCheckIcon },
     { name: 'Gazettes', href: `/${locale}/admin/commission/gazettes`, icon: NewspaperIcon },
   ];
 

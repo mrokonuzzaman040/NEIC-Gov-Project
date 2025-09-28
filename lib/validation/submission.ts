@@ -62,12 +62,14 @@ export const submissionSchema = z.object({
   district: z
     .string({ required_error: 'District is required' })
     .trim()
-    .min(1, 'District is required'),
+    .min(1, 'District is required')
+    .refine((val) => val && val.trim().length > 0, 'District is required'),
     
   seatName: z
     .string({ required_error: 'Seat name is required' })
     .trim()
-    .min(1, 'Seat name is required'),
+    .min(1, 'Seat name is required')
+    .refine((val) => val && val.trim().length > 0, 'Seat name is required'),
     
   shareName: z.boolean().optional().default(false),
   

@@ -16,6 +16,9 @@ interface SupportStats {
     contact: string;
     message: string;
     status: string;
+    district?: string | null;
+    seatName?: string | null;
+    source?: string;
     createdAt: string;
   }>;
 }
@@ -31,34 +34,47 @@ export default function SupportDashboard() {
 
   const fetchSupportData = async () => {
     try {
-      // For now, use mock data. In production, this would fetch from API
-      const mockStats: SupportStats = {
-        totalSubmissions: 3,
-        pendingItems: 3,
-        myAssignments: 1,
-        recentActivity: [
-          {
-            id: '1',
-            name: 'John Doe',
-            contact: '01712345678',
-            message: 'Testing S3 file upload functionality with AWS environment properly configured.',
-            status: 'PENDING',
-            createdAt: new Date().toISOString()
-          },
-          {
-            id: '2',
-            name: null,
-            contact: '01798765432',
-            message: 'Another test submission for the support dashboard.',
-            status: 'PENDING',
-            createdAt: new Date(Date.now() - 86400000).toISOString()
-          }
-        ]
-      };
+      setLoading(true);
       
-      setStats(mockStats);
+      const response = await fetch('/api/support/dashboard', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for authentication
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        // Transform API data to match component interface
+        const apiData = result.data;
+        const transformedStats: SupportStats = {
+          totalSubmissions: apiData.totalSubmissions || 0,
+          pendingItems: apiData.pendingItems || 0,
+          myAssignments: apiData.myAssignments || 0,
+          recentActivity: apiData.recentActivity || []
+        };
+        
+        setStats(transformedStats);
+      } else {
+        throw new Error(result.message || 'Invalid response format');
+      }
     } catch (error) {
       console.error('Failed to fetch support data:', error);
+      
+      // Fallback to empty state instead of mock data for security
+      setStats({
+        totalSubmissions: 0,
+        pendingItems: 0,
+        myAssignments: 0,
+        recentActivity: []
+      });
     } finally {
       setLoading(false);
     }
@@ -78,7 +94,15 @@ export default function SupportDashboard() {
   if (!stats) {
     return (
       <div className="border-l-4 border-red-600 bg-white dark:bg-slate-800 p-4">
-        <div className="text-sm text-red-600 dark:text-red-400">Failed to load dashboard data</div>
+        <div className="text-sm text-red-600 dark:text-red-400">
+          Failed to load dashboard data. Please refresh the page or contact system administrator.
+        </div>
+        <button 
+          onClick={fetchSupportData} 
+          className="mt-2 px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
+        >
+          Retry
+        </button>
       </div>
     );
   }
@@ -87,12 +111,23 @@ export default function SupportDashboard() {
     <div className="space-y-4 max-w-7xl">
       {/* Welcome Header */}
       <div className="border-l-4 border-green-600 bg-white dark:bg-slate-800 pl-4 py-3">
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-          Support Dashboard
-        </h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Welcome back, {session?.user?.name || 'Support Staff'}
-        </p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Support Dashboard
+            </h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Welcome back, {session?.user?.name || 'Support Staff'}
+            </p>
+          </div>
+          <button
+            onClick={fetchSupportData}
+            disabled={loading}
+            className="px-3 py-1 text-sm bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 rounded transition-colors"
+          >
+            {loading ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
       </div>
 
       {/* Statistics Cards */}
@@ -165,8 +200,16 @@ export default function SupportDashboard() {
                       <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
                         {item.message.substring(0, 60)}...
                       </p>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {new Date(item.createdAt).toLocaleString()}
+                      <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                        <span>{new Date(item.createdAt).toLocaleString()}</span>
+                        {item.district && (
+                          <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">
+                            {item.district}
+                          </span>
+                        )}
+                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
+                          {item.source || 'web'}
+                        </span>
                       </div>
                     </div>
                     <span className={`px-2 py-1 text-xs border ${

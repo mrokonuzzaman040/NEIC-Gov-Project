@@ -24,8 +24,8 @@ interface CommissionOfficial {
   designation_english: string;
   designation_bangla: string;
   department: string;
-  telephone?: string;
-  mobile: string;
+  email?: string;
+  mobile?: string;
   room_no?: string;
   category: 'Chief_and_Members' | 'Cabinet Division' | 'Law and Justice Division' | 'National Parliament Secretariat' | 'Statistics and Information Management Division' | 'Election Commission Secretariat';
   image?: string;
@@ -144,8 +144,8 @@ export default function CommissionOfficialsManagement() {
       official.designation_english.toLowerCase().includes(searchTerm.toLowerCase()) ||
       official.designation_bangla.includes(searchTerm) ||
       official.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      official.mobile.includes(searchTerm) ||
-      (official.telephone && official.telephone.includes(searchTerm));
+      (official.mobile && official.mobile.includes(searchTerm)) ||
+      (official.email && official.email.includes(searchTerm));
     
     const matchesCategory = selectedCategory === 'all' || official.category === selectedCategory;
     
@@ -297,7 +297,7 @@ export default function CommissionOfficialsManagement() {
                           Room
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
-                          Contact
+                          Email & Mobile
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
                           Status
@@ -371,18 +371,23 @@ export default function CommissionOfficialsManagement() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="space-y-1">
-                              {official.telephone && (
+                              {official.email && (
                                 <div className="text-sm">
-                                  <a href={`tel:${official.telephone}`} className="text-slate-600 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400">
-                                    📞 {official.telephone}
+                                  <a href={`mailto:${official.email}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-600">
+                                    ✉️ {official.email}
                                   </a>
                                 </div>
                               )}
-                              <div className="text-sm">
-                                <a href={`tel:${official.mobile}`} className="text-slate-600 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400">
-                                  📱 {official.mobile}
-                                </a>
-                              </div>
+                              {official.mobile && (
+                                <div className="text-sm">
+                                  <a href={`tel:${official.mobile}`} className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-600">
+                                    📱 {official.mobile}
+                                  </a>
+                                </div>
+                              )}
+                              {!official.email && !official.mobile && (
+                                <span className="text-slate-400 dark:text-slate-500 text-sm">-</span>
+                              )}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">

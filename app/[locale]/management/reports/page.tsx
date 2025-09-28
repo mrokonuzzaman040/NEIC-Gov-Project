@@ -11,12 +11,36 @@ interface ReportStats {
   pendingReview: number;
   reviewedToday: number;
   flaggedItems: number;
+  reviewedInPeriod: number;
   averageProcessingTime: string;
   topCategories: Array<{
     category: string;
     count: number;
     percentage: number;
   }>;
+  sourceDistribution: Array<{
+    source: string;
+    count: number;
+    percentage: number;
+  }>;
+  submissionsByStatus: Array<{
+    status: string;
+    count: number;
+  }>;
+  recentActivity: Array<{
+    id: string;
+    name: string | null;
+    status: string;
+    district: string | null;
+    createdAt: string;
+    updatedAt: string;
+  }>;
+  dateRange: {
+    start: string;
+    end: string;
+    days: number;
+  };
+  lastUpdated: string;
 }
 
 export default function ManagementReportsPage() {
@@ -35,26 +59,44 @@ export default function ManagementReportsPage() {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`/api/admin/reports?days=${dateRange}`);
+      const response = await fetch(`/api/management/reports?days=${dateRange}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for authentication
+      });
+
       if (!response.ok) {
-        throw new Error('Failed to fetch report data');
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
       
-      const data = await response.json();
-      setStats(data);
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        setStats(result.data);
+      } else {
+        throw new Error(result.message || 'Invalid response format');
+      }
     } catch (error) {
       console.error('Error fetching report data:', error);
-      setError('Failed to load report data');
+      setError(error instanceof Error ? error.message : 'Failed to load report data');
     } finally {
       setLoading(false);
     }
   };
 
-  const downloadReport = async (format: 'csv' | 'pdf') => {
+  const downloadReport = async (format: 'csv' | 'json') => {
     try {
-      const response = await fetch(`/api/admin/reports/generate?format=${format}&days=${dateRange}`);
+      const response = await fetch(`/api/management/reports/generate?format=${format}&days=${dateRange}`, {
+        method: 'GET',
+        credentials: 'include', // Include cookies for authentication
+      });
+
       if (!response.ok) {
-        throw new Error('Failed to generate report');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to generate report');
       }
       
       const blob = await response.blob();
@@ -68,7 +110,7 @@ export default function ManagementReportsPage() {
       document.body.removeChild(a);
     } catch (error) {
       console.error('Error downloading report:', error);
-      alert('Failed to download report');
+      alert(error instanceof Error ? error.message : 'Failed to download report');
     }
   };
 
@@ -125,8 +167,24 @@ export default function ManagementReportsPage() {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Management Reports</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1">
             Overview of submission statistics and trends
+            {stats && (
+              <span className="ml-2 text-sm text-slate-500 dark:text-slate-500">
+                (Last updated: {new Date(stats.lastUpdated).toLocaleString()})
+              </span>
+            )}
           </p>
         </div>
+        
+        <button
+          onClick={fetchReportData}
+          disabled={loading}
+          className="px-4 py-2 bg-slate-600 hover:bg-slate-700 disabled:bg-gray-400 text-white text-sm font-medium rounded-md transition-colors flex items-center gap-2"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          {loading ? 'Refreshing...' : 'Refresh'}
+        </button>
         
         <div className="flex flex-col sm:flex-row gap-3">
           <select
@@ -149,6 +207,15 @@ export default function ManagementReportsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               Download CSV
+            </button>
+            <button
+              onClick={() => downloadReport('json')}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+              Download JSON
             </button>
           </div>
         </div>
@@ -229,10 +296,10 @@ export default function ManagementReportsPage() {
             </div>
           </div>
 
-          {/* Top Categories */}
+          {/* Top Districts */}
           {stats.topCategories && stats.topCategories.length > 0 && (
             <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Top Submission Categories</h3>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Top Districts by Submissions</h3>
               <div className="space-y-4">
                 {stats.topCategories.map((category, index) => (
                   <div key={index} className="flex items-center justify-between">
@@ -244,6 +311,50 @@ export default function ManagementReportsPage() {
                       <span className="text-slate-600 dark:text-slate-400">{category.count} submissions</span>
                       <span className="text-sm text-slate-500 dark:text-slate-500">({category.percentage}%)</span>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Source Distribution */}
+          {stats.sourceDistribution && stats.sourceDistribution.length > 0 && (
+            <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Submission Sources</h3>
+              <div className="space-y-4">
+                {stats.sourceDistribution.map((source, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="text-slate-900 dark:text-slate-100 font-medium capitalize">{source.source}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-slate-600 dark:text-slate-400">{source.count} submissions</span>
+                      <span className="text-sm text-slate-500 dark:text-slate-500">({source.percentage}%)</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Status Distribution */}
+          {stats.submissionsByStatus && stats.submissionsByStatus.length > 0 && (
+            <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Status Distribution</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {stats.submissionsByStatus.map((status, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${
+                        status.status === 'PENDING' ? 'bg-yellow-500' :
+                        status.status === 'REVIEWED' ? 'bg-green-500' :
+                        status.status === 'FLAGGED' ? 'bg-red-500' :
+                        'bg-gray-500'
+                      }`}></div>
+                      <span className="text-slate-900 dark:text-slate-100 font-medium">{status.status}</span>
+                    </div>
+                    <span className="text-slate-600 dark:text-slate-400 font-semibold">{status.count}</span>
                   </div>
                 ))}
               </div>

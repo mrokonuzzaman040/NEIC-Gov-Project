@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-config';
 import { prisma } from '@/lib/db';
-import { uploadToS3, deleteFromS3, validateImageFile } from '@/lib/s3';
+import { uploadFile, deleteFile, validateImageFile } from '@/lib/s3';
 
 export const dynamic = 'force-dynamic';
 
@@ -106,9 +106,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: validation.error }, { status: 400 });
     }
 
-    // Upload file to S3 or local storage
+    // Upload file to local storage
     const fileBuffer = Buffer.from(await file.arrayBuffer());
-    const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'slider');
+    const uploadResult = await uploadFile(fileBuffer, file.name, file.type, 'slider');
 
     // Create new slider in database
     const newSlider = await prisma.slider.create({
@@ -215,7 +215,7 @@ export async function PUT(request: NextRequest) {
       // TODO: Uncomment after migration
       // if (existingSlider.imageKey) {
       //   try {
-      //     await deleteFromS3(existingSlider.imageKey);
+      //     await deleteFile(existingSlider.imageKey);
       //   } catch (error) {
       //     console.warn('Failed to delete old image:', error);
       //   }
@@ -223,7 +223,7 @@ export async function PUT(request: NextRequest) {
 
       // Upload new file
       const fileBuffer = Buffer.from(await file.arrayBuffer());
-      const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'slider');
+      const uploadResult = await uploadFile(fileBuffer, file.name, file.type, 'slider');
       
       imageUrl = uploadResult.url;
       // imageKey = uploadResult.key; // TODO: Uncomment after migration
@@ -303,13 +303,13 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Slider not found' }, { status: 404 });
     }
 
-    // Delete associated image from S3 if it exists
+    // Delete associated image from local storage if it exists
     // TODO: Uncomment after migration
     // if (existingSlider.imageKey) {
     //   try {
-    //     await deleteFromS3(existingSlider.imageKey);
+    //     await deleteFile(existingSlider.imageKey);
     //   } catch (error) {
-    //     console.warn('Failed to delete image from S3:', error);
+    //     console.warn('Failed to delete image from local storage:', error);
     //   }
     // }
 

@@ -14,9 +14,9 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 - **Role-based Access Control**: Admin, Management, Support, and Viewer roles
 - **Session Hardening**: Signed JWT sessions with forced logout for deactivated users
 - **Security Headers**: Strict CSP with Google reCAPTCHA allow-list, HSTS, X-Frame-Options, COOP/CORP, and more
-- **Rate Limiting**: Upstash Redis-backed sliding window throttling for abusive requests plus edge-level middleware guard rails
+- **Rate Limiting**: Redis-backed sliding window throttling for abusive requests plus edge-level middleware guard rails
 - **Audit Logging**: Pino-based structured logging for submissions, auth, and administrative actions
-- **Input & Upload Validation**: Zod validation everywhere, MIME-sniffing file inspection, size/extension allow-lists, and S3 private ACL uploads
+- **Input & Upload Validation**: Zod validation everywhere, MIME-sniffing file inspection, size/extension allow-lists, and secure local file uploads
 - **Bot Mitigation**: Google reCAPTCHA v2 challenge on public submissions and hidden honeypot fields
 
 ### 🏛️ **Public Features**
@@ -58,8 +58,8 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 | **Internationalization** | next-intl | Multi-language support |
 | **Styling** | Tailwind CSS | Utility-first CSS framework |
 | **Validation** | Zod | Schema validation |
-| **File Storage** | AWS S3 | Secure file uploads |
-| **Rate Limiting** | Upstash Redis | Distributed API protection with sliding window |
+| **File Storage** | Local Storage | Secure file uploads |
+| **Rate Limiting** | Self-hosted Redis | Distributed API protection with sliding window |
 | **Icons** | Heroicons + Lucide | Consistent iconography |
 | **Deployment** | Docker | Containerized deployment |
 
@@ -68,9 +68,9 @@ A comprehensive, secure, multilingual Next.js application for the National Elect
 This portal is designed for a high-assurance government environment. Key defensive layers include:
 
 - **Authentication & Authorization**: NextAuth.js with Prisma adapter, JWT sessions, enforced role hierarchy, and activity locking for inactive users.
-- **Request Protection**: Google reCAPTCHA v2 challenge on public submission endpoints, honeypot fields, sliding-window rate limiting (Upstash Redis + edge middleware), and password-reset throttling.
+- **Request Protection**: Google reCAPTCHA v2 challenge on public submission endpoints, honeypot fields, sliding-window rate limiting (Redis + edge middleware), and password-reset throttling.
 - **Transport & Browser Security**: Middleware-enforced HSTS, X-Content-Type-Options, X-Frame-Options, COOP/CORP, Permissions-Policy, and a restrictive Content-Security-Policy that only whitelists required Google reCAPTCHA assets.
-- **Data & File Safety**: SHA-256 IP hashing, detailed submission/audit logging, S3 private ACL uploads, UUID file naming, MIME signature checking via `file-type`, strict extension allow-list, and configurable size limits (`NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB`).
+- **Data & File Safety**: SHA-256 IP hashing, detailed submission/audit logging, secure local file uploads, UUID file naming, MIME signature checking via `file-type`, strict extension allow-list, and configurable size limits (`NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB`).
 - **Code Integrity**: Shared Zod schemas, spam heuristics for submissions, Prisma schema-level constraints, and centralized logging for observability.
 
 ## 🚀 Quick Start
@@ -79,7 +79,7 @@ This portal is designed for a high-assurance government environment. Key defensi
 - Node.js 18+ 
 - Docker & Docker Compose
 - PostgreSQL (for production)
-- AWS S3 (for file uploads)
+- Local file storage (uploads stored in uploads/ directory)
 
 ### 1. Clone and Install
 ```bash
@@ -105,22 +105,19 @@ ADMIN_EMAIL="admin@election-commission.gov.bd"
 ADMIN_PASSWORD="SecureAdmin2024!"
 ADMIN_NAME="System Administrator"
 
-# Upstash Redis (for rate limiting)
-KV_URL="rediss://default:your_token@your-instance.upstash.io:6379"
-KV_REST_API_URL="https://your-instance.upstash.io"
-KV_REST_API_TOKEN="your_rest_api_token"
-KV_REST_API_READ_ONLY_TOKEN="your_readonly_token"
-REDIS_URL="rediss://default:your_token@your-instance.upstash.io:6379"
+# Redis (for rate limiting)
+REDIS_URL="redis://:YourStrongRedisPassword@localhost:6379"
+REDIS_HOST="localhost"
+REDIS_PORT=6379
+REDIS_USERNAME=""
+REDIS_PASSWORD="YourStrongRedisPassword"
+REDIS_TLS=false
 
 # Rate Limiting Configuration
 RATE_LIMIT_WINDOW_SECONDS=60
 RATE_LIMIT_MAX=10
 
-# AWS S3 (for file uploads)
-AWS_REGION="us-east-1"
-AWS_ACCESS_KEY_ID="your_access_key_here"
-AWS_SECRET_ACCESS_KEY="your_secret_access_key_here"
-AWS_S3_BUCKET_NAME="your_bucket_name_here"
+# File uploads are now stored locally in the uploads/ directory
 
 # Upload constraints
 NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB="25"
@@ -360,26 +357,27 @@ Referrer-Policy: strict-origin-when-cross-origin
 
 ### Docker Deployment
 ```bash
-# Build and start services
-docker-compose up -d
+# 1. Copy and configure environment variables
+cp .env.docker.example .env.docker
+vim .env.docker  # update secrets, database passwords, domain, etc.
 
-# Run migrations
-docker exec election_app npm run db:migrate
+# 2. Build images and start the stack
+docker compose --env-file .env.docker up -d --build
 
-# Seed initial data
-docker exec election_app npm run db:seed
+# 3. Follow logs during first boot (migrations + health checks)
+docker compose logs -f app
+
+# 4. (Optional) Rerun baseline seed script when needed
+docker compose exec app node scripts/master-seed.js
 ```
+
+> The application container runs Prisma migrations automatically on startup. It retries until PostgreSQL is ready, then launches the Next.js server on the port defined by `APP_HTTP_PORT` (defaults to `3000`).
 
 ### Environment Variables (Production)
-```bash
-NODE_ENV=production
-DATABASE_URL="postgresql://user:pass@db:5432/election_commission"
-NEXTAUTH_SECRET="production-secret-key"
-NEXTAUTH_URL="https://your-domain.gov.bd"
-REDIS_URL="redis://redis:6379"
-AWS_REGION="ap-southeast-1"
-AWS_S3_BUCKET_NAME="production-bucket"
-```
+- Reference `.env.docker.example` for the complete list expected by the Docker stack.
+- Always generate strong values for `NEXTAUTH_SECRET`, `HASH_SALT`, database passwords, and admin credentials.
+- Set `NEXTAUTH_URL` to the public HTTPS domain used on the government infrastructure.
+- Configure reCAPTCHA, SendGrid/SMTP, and Redis credentials before going live.
 
 ### Security Checklist
 - [ ] Change all default passwords
@@ -465,17 +463,15 @@ npm run db:seed-admin
 
 #### File Upload Issues
 ```bash
-# Verify AWS credentials
-aws s3 ls s3://your-bucket-name
-
-# Check S3 permissions
+# Verify local storage directory
+ls -la uploads/
 # Review IAM policy and bucket CORS
 ```
 
 #### Rate Limiting Issues
 ```bash
-# Check Upstash Redis connection
-curl -H "Authorization: Bearer $KV_REST_API_TOKEN" $KV_REST_API_URL/ping
+# Check Redis connection
+redis-cli -u "$REDIS_URL" --no-auth-warning PING
 
 # Verify rate limiting configuration
 echo "Rate limit window: $RATE_LIMIT_WINDOW_SECONDS seconds"
@@ -526,12 +522,12 @@ Government project for the National Elections Inquiry Commission of Bangladesh. 
 - Public submission system with file uploads
 - Commission information management
 - Blog and content management system
-- Gallery with AWS S3 integration
+- Gallery with local file storage
 - Comprehensive audit logging
 - Docker deployment setup
 - Database seeding system
 - **Full mobile responsiveness across all pages**
-- **Production-ready rate limiting with Upstash Redis**
+- **Production-ready rate limiting with self-managed Redis**
 
 🚧 **In Development**
 - Advanced analytics dashboard
@@ -564,7 +560,7 @@ Government project for the National Elections Inquiry Commission of Bangladesh. 
 - **Button Optimization**: Full-width buttons on mobile with proper touch targets
 
 ### ⚡ **Rate Limiting System Upgrade** *(Latest)*
-- **Production-Ready**: Upgraded to use Upstash Redis for distributed rate limiting
+- **Production-Ready**: Upgraded to use dedicated Redis for distributed rate limiting
 - **Sliding Window**: Implemented sliding window rate limiting (10 requests per 60 seconds)
 - **High Availability**: Distributed rate limiting across multiple server instances
 - **Fallback System**: Graceful degradation to in-memory rate limiting if Redis fails

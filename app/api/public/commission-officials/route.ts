@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
         designation_english: true,
         designation_bangla: true,
         department: true,
-        telephone: true,
+        email: true,
         mobile: true,
         room_no: true,
         category: true,

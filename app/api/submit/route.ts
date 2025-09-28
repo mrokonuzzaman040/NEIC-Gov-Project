@@ -84,8 +84,10 @@ export async function POST(req: NextRequest) {
   if (body && typeof body === 'object' && ((body as any).hp_field || (body as any).honeypot)) {
     return json({ ok: false, error: { code: 'SPAM', message: 'Rejected' } }, 400);
   }
+  console.log('Received body:', body);
   const parsed = submissionSchema.safeParse(body);
   if (!parsed.success) {
+    console.error('Validation failed:', parsed.error.issues);
     return json({ ok: false, error: { code: 'VALIDATION', message: 'Validation failed', issues: parsed.error.issues } }, 422);
   }
   const locale = req.nextUrl.pathname.split('/')[1] || 'bn';

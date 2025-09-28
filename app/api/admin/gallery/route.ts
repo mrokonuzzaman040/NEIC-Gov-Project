@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-config';
 import { prisma } from '@/lib/db';
-import { uploadToS3, deleteFromS3, validateImageFile } from '@/lib/s3';
+import { uploadFile, deleteFile, validateImageFile } from '@/lib/s3';
 
 export const dynamic = 'force-dynamic';
 
@@ -116,8 +116,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: validation.error }, { status: 400 });
     }
 
-    // Upload to S3
-    const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'gallery');
+    // Upload to local storage
+    const uploadResult = await uploadFile(fileBuffer, file.name, file.type, 'gallery');
 
     // Save to database
     const newItem = await prisma.gallery.create({
@@ -201,15 +201,15 @@ export async function PUT(request: NextRequest) {
         return NextResponse.json({ error: validation.error }, { status: 400 });
       }
 
-      // Delete old file from S3
+      // Delete old file from local storage
       try {
-        await deleteFromS3(existingItem.imageKey);
+        await deleteFile(existingItem.imageKey);
       } catch (error) {
-        console.warn('Could not delete old file from S3:', error);
+        console.warn('Could not delete old file from local storage:', error);
       }
 
       // Upload new file
-      const uploadResult = await uploadToS3(fileBuffer, file.name, file.type, 'gallery');
+      const uploadResult = await uploadFile(fileBuffer, file.name, file.type, 'gallery');
       imageUrl = uploadResult.url;
       imageKey = uploadResult.key;
     }
@@ -273,11 +273,11 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Gallery item not found' }, { status: 404 });
     }
 
-    // Delete file from S3
+    // Delete file from local storage
     try {
-      await deleteFromS3(existingItem.imageKey);
+      await deleteFile(existingItem.imageKey);
     } catch (error) {
-      console.warn('Could not delete file from S3:', error);
+      console.warn('Could not delete file from local storage:', error);
     }
 
     // Delete from database

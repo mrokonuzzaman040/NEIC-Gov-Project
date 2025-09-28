@@ -82,6 +82,8 @@ export default function NoticeForm({ noticeId }: NoticeFormProps) {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [attachmentInput, setAttachmentInput] = useState('');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [uploadingFiles, setUploadingFiles] = useState<boolean>(false);
 
   // Load existing notice data if editing
   useEffect(() => {
@@ -152,6 +154,54 @@ export default function NoticeForm({ noticeId }: NoticeFormProps) {
     }));
   };
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const pdfFiles = files.filter(file => file.type === 'application/pdf');
+    
+    if (pdfFiles.length !== files.length) {
+      setMessage({ type: 'error', text: 'Only PDF files are allowed for attachments.' });
+      return;
+    }
+
+    // Check file sizes (max 10MB per file)
+    const oversizedFiles = pdfFiles.filter(file => file.size > 10 * 1024 * 1024);
+    if (oversizedFiles.length > 0) {
+      setMessage({ type: 'error', text: 'File size must be less than 10MB.' });
+      return;
+    }
+
+    setSelectedFiles(prev => [...prev, ...pdfFiles]);
+    setMessage(null);
+  };
+
+  const handleRemoveFile = (fileToRemove: File) => {
+    setSelectedFiles(prev => prev.filter(file => file !== fileToRemove));
+  };
+
+  const uploadFiles = async (files: File[]): Promise<string[]> => {
+    const uploadPromises = files.map(async (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('category', 'notices');
+      formData.append('folder', 'notices');
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Failed to upload ${file.name}`);
+      }
+
+      const data = await response.json();
+      return data.url;
+    });
+
+    return Promise.all(uploadPromises);
+  };
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
@@ -175,10 +225,28 @@ export default function NoticeForm({ noticeId }: NoticeFormProps) {
     setMessage(null);
 
     try {
+      let finalAttachments = [...formData.attachments];
+
+      // Upload selected files if any
+      if (selectedFiles.length > 0) {
+        setUploadingFiles(true);
+        try {
+          const uploadedUrls = await uploadFiles(selectedFiles);
+          finalAttachments = [...finalAttachments, ...uploadedUrls];
+        } catch (uploadError) {
+          setMessage({ type: 'error', text: 'Failed to upload files. Please try again.' });
+          return;
+        } finally {
+          setUploadingFiles(false);
+        }
+      }
+
       const url = noticeId === 'new' ? '/api/admin/notices' : '/api/admin/notices';
       const method = noticeId === 'new' ? 'POST' : 'PUT';
       
-      const payload = noticeId === 'new' ? formData : { id: noticeId, ...formData };
+      const payload = noticeId === 'new' 
+        ? { ...formData, attachments: finalAttachments }
+        : { id: noticeId, ...formData, attachments: finalAttachments };
 
       const response = await fetch(url, {
         method,
@@ -431,43 +499,108 @@ export default function NoticeForm({ noticeId }: NoticeFormProps) {
             </div>
 
             {/* Attachments */}
-            <div className="space-y-2">
+            <div className="space-y-4">
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                 Attachments
               </label>
-              <div className="flex flex-wrap gap-2 mb-2">
-                {formData.attachments.map((attachment) => (
-                  <span
-                    key={attachment}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300"
-                  >
-                    {attachment}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveAttachment(attachment)}
-                      className="ml-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200"
-                    >
-                      ×
-                    </button>
-                  </span>
-                ))}
+              
+              {/* File Upload Section */}
+              <div className="space-y-3">
+                <div className="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-6 text-center hover:border-green-400 transition-colors bg-slate-50 dark:bg-slate-700">
+                  <input
+                    type="file"
+                    id="pdf-upload"
+                    accept=".pdf"
+                    multiple
+                    onChange={handleFileSelect}
+                    className="hidden"
+                  />
+                  <label htmlFor="pdf-upload" className="cursor-pointer">
+                    <div className="flex flex-col items-center space-y-2">
+                      <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      <span className="text-sm text-slate-600 dark:text-slate-300">
+                        Click to upload PDF files
+                      </span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">
+                        Max 10MB per file
+                      </span>
+                    </div>
+                  </label>
+                </div>
+
+                {/* Selected Files */}
+                {selectedFiles.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">Selected Files:</h4>
+                    <div className="space-y-2">
+                      {selectedFiles.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+                          <div className="flex items-center space-x-3">
+                            <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                            </svg>
+                            <div>
+                              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{file.name}</p>
+                              <p className="text-xs text-slate-500 dark:text-slate-400">
+                                {(file.size / 1024 / 1024).toFixed(2)} MB
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveFile(file)}
+                            className="text-red-500 hover:text-red-700 transition-colors"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="flex space-x-2">
-                <input
-                  type="text"
-                  value={attachmentInput}
-                  onChange={(e) => setAttachmentInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddAttachment())}
-                  className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  placeholder="Add attachment URL and press Enter"
-                />
-                <button
-                  type="button"
-                  onClick={handleAddAttachment}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Add
-                </button>
+
+              {/* URL Attachments */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">URL Attachments:</h4>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {formData.attachments.map((attachment) => (
+                    <span
+                      key={attachment}
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300"
+                    >
+                      {attachment}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveAttachment(attachment)}
+                        className="ml-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    value={attachmentInput}
+                    onChange={(e) => setAttachmentInput(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddAttachment())}
+                    className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    placeholder="Add attachment URL and press Enter"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddAttachment}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Add URL
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -511,10 +644,15 @@ export default function NoticeForm({ noticeId }: NoticeFormProps) {
             </button>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || uploadingFiles}
               className="bg-green-600 hover:bg-green-700 disabled:bg-slate-400 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:cursor-not-allowed flex items-center space-x-2"
             >
-              {isLoading ? (
+              {uploadingFiles ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <span>Uploading files...</span>
+                </>
+              ) : isLoading ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                   <span>Saving...</span>

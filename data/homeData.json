@@ -3,7 +3,7 @@
     "header": {
       "title": {
         "en": "National Elections (2014, 2018, 2024) Inquiry Commission",
-        "bn": "জাতীয়  নির্বাচন (২০১৪, ২০১৮ এবং ২০২৪) তদন্ত কমিশন"
+        "bn": "জাতীয়  নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন"
       },
       "subtitle": {
         "en": "Government of the People's Republic of Bangladesh",
@@ -22,7 +22,10 @@
       "stats": [
         {
           "id": "electionYears",
-          "value": "২০১৪-২০১৮-২০২৪",
+          "value": {
+            "en": "2014, 2018, 2024",
+            "bn": "২০১৪, ২০১৮, ২০২৪"
+          },
           "label": {
             "en": "Election Years",
             "bn": "নির্বাচনের বছর"

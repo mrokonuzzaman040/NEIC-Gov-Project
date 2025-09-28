@@ -138,7 +138,7 @@ export default function FAQForm({ faqId }: FAQFormProps) {
       if (response.ok) {
         setMessage({ type: 'success', text: data.message || 'FAQ saved successfully!' });
         setTimeout(() => {
-          router.push('/en/admin/settings/faq');
+          router.push('/en/admin/settings/faq' as any);
         }, 1500);
       } else {
         setMessage({ type: 'error', text: data.error || 'Failed to save FAQ' });
@@ -166,7 +166,7 @@ export default function FAQForm({ faqId }: FAQFormProps) {
       {/* Back Button */}
       <div className="flex items-center space-x-4">
         <button
-          onClick={() => router.push('/en/admin/settings/faq')}
+          onClick={() => router.push('/en/admin/settings/faq' as any)}
           className="flex items-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors"
         >
           <ArrowLeftIcon className="h-5 w-5" />
@@ -356,7 +356,7 @@ export default function FAQForm({ faqId }: FAQFormProps) {
           <div className="flex items-center justify-end space-x-4 pt-6 border-t border-slate-200 dark:border-slate-700">
             <button
               type="button"
-              onClick={() => router.push('/en/admin/settings/faq')}
+              onClick={() => router.push('/en/admin/settings/faq' as any)}
               className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-medium py-2 px-6 rounded-lg transition-colors"
             >
               Cancel

@@ -19,7 +19,7 @@ export default async function CommissionInfoPage({ params }: CommissionInfoPageP
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 lg:py-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের মিশন' : 'National Elections Inquiry Commission (2014, 2018, 2024)'}
+          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের মিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commissions Mission'}
           borderColor="green"
           iconColor="green"
         />

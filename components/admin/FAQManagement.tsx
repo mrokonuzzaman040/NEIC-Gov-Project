@@ -84,7 +84,7 @@ export default function FAQManagementNew() {
   };
 
   const handleEditFAQ = (faqId: string) => {
-    router.push(`/en/admin/settings/faq/${faqId}`);
+    router.push(`/en/admin/settings/faq/${faqId}` as any);
   };
 
   const handleDeleteFAQ = async (faqId: string) => {
@@ -174,7 +174,7 @@ export default function FAQManagementNew() {
           </div>
         </div>
         <button
-          onClick={() => router.push('/en/admin/settings/faq/new')}
+          onClick={() => router.push('/en/admin/settings/faq/new' as any)}
           className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center space-x-2"
         >
           <PlusIcon className="h-4 w-4" />
@@ -349,7 +349,7 @@ export default function FAQManagementNew() {
           {(!searchTerm && selectedCategory === 'all') && (
             <div className="mt-6">
               <button
-                onClick={() => router.push('/en/admin/settings/faq/new')}
+                onClick={() => router.push('/en/admin/settings/faq/new' as any)}
                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
                 <PlusIcon className="h-4 w-4 mr-2" />

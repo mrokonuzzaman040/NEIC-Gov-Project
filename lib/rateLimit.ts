@@ -1,23 +1,66 @@
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+import type Redis from 'ioredis';
+import { getRedisClient } from './redis';
 
 interface Bucket { count: number; expires: number; }
 const windowSeconds = parseInt(process.env.RATE_LIMIT_WINDOW_SECONDS || '60', 10);
 const max = parseInt(process.env.RATE_LIMIT_MAX || '10', 10);
 const windowMs = windowSeconds * 1000;
-const store = new Map<string, Bucket>();
+const inMemoryBuckets = new Map<string, Bucket>();
 
-let upstash: Ratelimit | null = null;
+let redisClient: Redis | null = null;
 try {
-  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
-    const redis = new Redis({
-      url: process.env.KV_REST_API_URL,
-      token: process.env.KV_REST_API_TOKEN
-    });
-    upstash = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(max, `${windowSeconds} s`) });
-  }
+  redisClient = getRedisClient();
 } catch {
-  upstash = null;
+  redisClient = null;
+}
+
+async function checkRedisRateLimit(identifier: string) {
+  if (!redisClient) {
+    try {
+      redisClient = getRedisClient();
+    } catch {
+      redisClient = null;
+    }
+  }
+
+  const client = redisClient;
+  if (!client) {
+    return null;
+  }
+
+  const key = `ratelimit:${identifier}`;
+
+  try {
+    const current = await client.incr(key);
+
+    if (current === 1) {
+      await client.pexpire(key, windowMs);
+    }
+
+    if (current > max) {
+      return { allowed: false, remaining: 0 };
+    }
+
+    return { allowed: true, remaining: Math.max(0, max - current) };
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('Redis rate limit error:', error);
+    }
+
+    return null;
+  }
+}
+
+function checkInMemoryRateLimit(identifier: string) {
+  const now = Date.now();
+  const bucket = inMemoryBuckets.get(identifier);
+  if (!bucket || bucket.expires < now) {
+    inMemoryBuckets.set(identifier, { count: 1, expires: now + windowMs });
+    return { allowed: true, remaining: max - 1 };
+  }
+  if (bucket.count >= max) return { allowed: false, remaining: 0 };
+  bucket.count++;
+  return { allowed: true, remaining: max - bucket.count };
 }
 
 export async function checkRateLimit(identifier: string) {
@@ -26,22 +69,10 @@ export async function checkRateLimit(identifier: string) {
     return { allowed: true, remaining: max };
   }
 
-  if (upstash) {
-    try {
-      const { success, remaining } = await upstash.limit(identifier);
-      return { allowed: success, remaining };
-    } catch {
-      // fall through to in-memory
-    }
+  const redisResult = await checkRedisRateLimit(identifier);
+  if (redisResult) {
+    return redisResult;
   }
-  const now = Date.now();
-  const bucket = store.get(identifier);
-  if (!bucket || bucket.expires < now) {
-    store.set(identifier, { count: 1, expires: now + windowMs });
-    return { allowed: true, remaining: max - 1 };
-  }
-  if (bucket.count >= max) return { allowed: false, remaining: 0 };
-  bucket.count++;
-  return { allowed: true, remaining: max - bucket.count };
-}
 
+  return checkInMemoryRateLimit(identifier);
+}

@@ -35,58 +35,57 @@ const routePermissions: Record<string, UserRole> = {
 export async function authMiddleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Skip middleware for public routes
-  if (
-    pathname.startsWith('/api/auth') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/favicon') ||
-    pathname.startsWith('/public') ||
-    pathname === '/' ||
-    pathname.startsWith('/bn') ||
-    pathname.startsWith('/en') ||
-    pathname.startsWith('/submit') ||
-    pathname.startsWith('/blog') ||
-    pathname.startsWith('/contact') ||
-    pathname.startsWith('/faq') ||
-    pathname.startsWith('/privacy') ||
-    pathname.startsWith('/reporting') ||
-    pathname.startsWith('/commission') ||
-    pathname.startsWith('/notice') ||
-    pathname === '/login' ||
-    pathname === '/admin/unauthorized'
-  ) {
+  // CRITICAL: Only handle admin routes - this middleware should ONLY be called for admin routes
+  if (!pathname.startsWith('/admin')) {
     return NextResponse.next();
   }
 
-  // Check if it's an admin route
-  if (pathname.startsWith('/admin')) {
-    const token = await getToken({ 
-      req: request, 
-      secret: process.env.NEXTAUTH_SECRET 
-    });
-
-    // Redirect to login if not authenticated
-    if (!token) {
-      const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('callbackUrl', pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-
-    // Check if user is active
-    if (!token.isActive) {
-      const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('error', 'AccountDeactivated');
-      return NextResponse.redirect(loginUrl);
-    }
-
-    // Check permissions for specific routes
-    const requiredRole = routePermissions[pathname];
-    if (requiredRole && !hasPermission(token.role as UserRole, requiredRole)) {
-      return NextResponse.redirect(new URL('/admin/unauthorized', request.url));
-    }
+  // Skip authentication for admin login and unauthorized pages
+  if (pathname === '/admin/login' || pathname === '/admin/unauthorized') {
+    return NextResponse.next();
   }
 
-  return NextResponse.next();
+  // SECURITY: Get token with strict validation
+  const token = await getToken({ 
+    req: request, 
+    secret: process.env.NEXTAUTH_SECRET,
+    secureCookie: process.env.NODE_ENV === 'production'
+  });
+
+  // IMMEDIATE redirect if not authenticated - no content exposure
+  if (!token) {
+    const loginUrl = new URL('/bn/login', request.url);
+    loginUrl.searchParams.set('callbackUrl', pathname);
+    loginUrl.searchParams.set('error', 'AuthenticationRequired');
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Check if user is active - immediate redirect if inactive
+  if (!token.isActive) {
+    const loginUrl = new URL('/bn/login', request.url);
+    loginUrl.searchParams.set('error', 'AccountDeactivated');
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Validate token structure
+  if (!token.role || !token.email) {
+    const loginUrl = new URL('/bn/login', request.url);
+    loginUrl.searchParams.set('error', 'InvalidToken');
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Check permissions for specific routes
+  const requiredRole = routePermissions[pathname];
+  if (requiredRole && !hasPermission(token.role as UserRole, requiredRole)) {
+    return NextResponse.redirect(new URL('/admin/unauthorized', request.url));
+  }
+
+  // Add security headers for authenticated admin requests
+  const response = NextResponse.next();
+  response.headers.set('X-Admin-Access', 'authenticated');
+  response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+  
+  return response;
 }
 
 // Security headers middleware
@@ -101,11 +100,18 @@ const RECAPTCHA_DOMAINS = [
   'https://www.recaptcha.net/recaptcha/'
 ];
 
+const MAPS_DOMAINS = [
+  'https://maps.googleapis.com',
+  'https://maps.gstatic.com',
+  'https://maps.google.com'
+];
+
 function buildContentSecurityPolicy() {
   const scriptSrc = [
     "'self'",
     "'unsafe-inline'",
-    ...RECAPTCHA_DOMAINS
+    ...RECAPTCHA_DOMAINS,
+    ...MAPS_DOMAINS
   ];
 
   if (!isProduction) {
@@ -114,14 +120,16 @@ function buildContentSecurityPolicy() {
 
   const connectSrc = [
     "'self'",
-    ...RECAPTCHA_DOMAINS
+    ...RECAPTCHA_DOMAINS,
+    ...MAPS_DOMAINS
   ];
 
   const imgSrc = [
     "'self'",
     'data:',
     'blob:',
-    ...RECAPTCHA_DOMAINS
+    ...RECAPTCHA_DOMAINS,
+    ...MAPS_DOMAINS
   ];
 
   const directives = [
@@ -131,7 +139,7 @@ function buildContentSecurityPolicy() {
     `img-src ${imgSrc.join(' ')}`,
     "font-src 'self' https://fonts.gstatic.com data:",
     `connect-src ${connectSrc.join(' ')}`,
-    `frame-src 'self' ${RECAPTCHA_DOMAINS.join(' ')}`,
+    `frame-src 'self' ${[...RECAPTCHA_DOMAINS, ...MAPS_DOMAINS].join(' ')}`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -148,6 +156,9 @@ function buildContentSecurityPolicy() {
 }
 
 export function securityHeadersMiddleware(request: NextRequest, response: NextResponse) {
+  const { pathname } = request.nextUrl;
+  
+  // Enhanced security headers
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -158,6 +169,18 @@ export function securityHeadersMiddleware(request: NextRequest, response: NextRe
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
   response.headers.set('Cross-Origin-Resource-Policy', 'same-site');
   response.headers.set('Content-Security-Policy', buildContentSecurityPolicy());
+
+  // CRITICAL: Additional security for admin routes
+  if (pathname.startsWith('/admin')) {
+    // Prevent caching of admin pages
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    // Additional security headers for admin
+    response.headers.set('X-Admin-Security', 'enabled');
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, nosnippet, noarchive');
+  }
 
   if (request.nextUrl.protocol === 'https:') {
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');

@@ -146,7 +146,7 @@ export default function GalleryPage() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isEnglish ? 'Photo Gallery' : 'ফটো গ্যালারি'}      
+          title={isEnglish ? 'National Elections (2014, 2018, 2024) Inquiry Commission Photo Gallery' : 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন ফটো গ্যালারি'}      
           borderColor="green"
           iconColor="green"
         />

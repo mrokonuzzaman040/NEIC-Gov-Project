@@ -25,8 +25,8 @@ interface CommissionOfficial {
   designation_english: string;
   designation_bangla: string;
   department: string;
-  telephone?: string;
-  mobile: string;
+  email?: string;
+  mobile?: string;
   room_no?: string;
   category: string;
   image?: string;
@@ -57,7 +57,7 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
     designation_english: '',
     designation_bangla: '',
     department: '',
-    telephone: '',
+    email: '',
     mobile: '',
     room_no: '',
     category: 'Chief_and_Members',
@@ -181,7 +181,7 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
             designation_english: '',
             designation_bangla: '',
             department: '',
-            telephone: '',
+            email: '',
             mobile: '',
             room_no: '',
             category: 'Chief_and_Members',
@@ -443,12 +443,12 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                  Telephone
+                  Email
                 </label>
                 <input
-                  type="tel"
-                  name="telephone"
-                  value={formData.telephone}
+                  type="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
@@ -456,7 +456,7 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
               
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                  Mobile *
+                  Mobile
                 </label>
                 <input
                   type="tel"
@@ -464,7 +464,6 @@ export default function CommissionOfficialForm({ officialId }: CommissionOfficia
                   value={formData.mobile}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  required
                 />
               </div>
             </div>
