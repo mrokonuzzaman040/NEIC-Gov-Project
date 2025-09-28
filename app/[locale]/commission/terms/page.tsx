@@ -18,7 +18,7 @@ export default async function CommissionTermsPage({ params }: CommissionTermsPag
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 lg:py-8">
         {/* Government Header */}
         <GovernmentHeader
-          title={isBengali ? 'জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশনের দায়িত্বাবলি' : 'National Elections (2014, 2018, 2024) Inquiry Commission Responsibilities'}
+          title={isBengali ? 'The Commissions of Inquiry Act, 1956 (Act No.VI of 1956) এর আওতায় গঠিত এই কমিশনের দায়িত্বাবলী নিম্নরূপঃ' : 'The Commissions of Inquiry Act, 1956 (Act No.VI of 1956) Responsibilities'}
           // subtitle={isBengali ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮ ও ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
           // portal={isBengali ? 'কমিশনের কার্যপরিধি ও ক্ষমতা' : 'Commission Scope & Powers'}
           // tagline={isBengali ? 'আদেশ ও নির্দেশনা' : 'Terms & Directives'}

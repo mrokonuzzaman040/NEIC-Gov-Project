@@ -166,14 +166,41 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                         {isBengali ? official.designation_bangla : official.designation_english}
                       </p>
                       
-                      {/* Room Information */}
-                      {official.room_no && (
-                        <div className="flex items-center space-x-2">
-                          <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                            {isBengali ? 'কক্ষ নং' : 'Room'}: {official.room_no}
-                          </span>
-                        </div>
-                      )}
+                      {/* Contact Information */}
+                      <div className="space-y-1">
+                        {/* Room Information */}
+                        {official.room_no && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+                              {isBengali ? 'কক্ষ নং' : 'Room'}: {official.room_no}
+                            </span>
+                          </div>
+                        )}
+                        
+                        {/* Email Information */}
+                        {official.email && (
+                          <div className="flex items-center space-x-2">
+                            <svg className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span className="text-blue-600 dark:text-blue-400 text-sm font-medium">
+                              {official.email}
+                            </span>
+                          </div>
+                        )}
+                        
+                        {/* Phone Information */}
+                        {official.mobile && (
+                          <div className="flex items-center space-x-2">
+                            <svg className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span className="text-green-600 dark:text-green-400 text-sm font-medium">
+                              {official.mobile}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -208,23 +235,23 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
               
               {/* Table for Officials */}
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
+                <table className="w-full border-collapse table-fixed">
                   <thead>
                     <tr className={`bg-${color}-50 dark:bg-${color}-900/20`}>
-                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center text-xs sm:text-sm font-semibold text-gray-900 dark:text-white w-16">
                         {isBengali ? 'ক্রমিক নং' : 'Serial No'}
                       </th>
-                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center text-xs sm:text-sm font-semibold text-gray-900 dark:text-white w-20">
                         {isBengali ? 'ছবি' : 'Image'}
                       </th>
-                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
                         {isBengali ? 'নাম' : 'Name'}
                       </th>
-                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                      <th className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
                         {isBengali ? 'পদবি' : 'Designation'}
                       </th>
                       {category === 'Chief_and_Members' && (
-                        <th className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
+                        <th className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center text-xs sm:text-sm font-semibold text-gray-900 dark:text-white w-24">
                           {isBengali ? 'কক্ষ নং' : 'Room No'}
                         </th>
                       )}
@@ -233,7 +260,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                   <tbody>
                     {officialsInCategory.map((official) => (
                       <tr key={official.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
-                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium">
                           {official.serial_no}
                         </td>
                         <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center">
@@ -259,14 +286,14 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                             </div>
                           )}
                         </td>
-                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-900 dark:text-white font-medium">
+                        <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-xs sm:text-sm text-gray-900 dark:text-white font-medium">
                           {isBengali ? official.name_bangla : official.name_english}
                         </td>
-                        <td className={`border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-${color}-700 dark:text-${color}-400 font-semibold`}>
+                        <td className={`border border-gray-300 dark:border-gray-600 px-3 py-3 text-xs sm:text-sm text-${color}-700 dark:text-${color}-400 font-semibold`}>
                           {isBengali ? official.designation_bangla : official.designation_english}
                         </td>
                         {category === 'Chief_and_Members' && (
-                          <td className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                          <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium">
                             {official.room_no || '-'}
                           </td>
                         )}
