@@ -124,7 +124,7 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                         src={member.image}
                         alt={isEnglish ? member.name_english : member.name_bengali}
                         fill
-                        className="object-cover rounded-full border-2 border-green-200 dark:border-green-800"
+                        className="object-cover border-2 border-green-200 dark:border-green-800"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center">
@@ -142,12 +142,12 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
                     <h3 className={`text-sm sm:text-base lg:text-lg font-bold text-gray-900 dark:text-white break-words ${!isEnglish ? 'font-bengali' : ''}`}>
                       {isEnglish ? member.name_english : member.name_bengali}
                     </h3>
-                    <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                    {/* <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium ${
                       member.role_type === 'commission_member' 
                         ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' 
                         : 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300'
                     }`}>
-                    </span>
+                    </span> */}
                   </div>
                   <p className={`text-sm sm:text-base lg:text-lg text-green-600 dark:text-green-400 font-bold mb-1 break-words ${!isEnglish ? 'font-bengali' : ''}`}>
                     {isEnglish ? member.designation_english : member.designation_bengali}

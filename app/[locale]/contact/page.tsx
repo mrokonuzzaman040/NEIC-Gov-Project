@@ -309,7 +309,7 @@ export default function ContactPage() {
                         }
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      {isEnglish ? 'Block-2,LD Hall, Jatiya Sangsad Bhaban (Nare by Gate-6)' : 'ব্লক-২, এলডি হল, জাতীয় সংসদ ভবন এলাকা (গেট-৬ গেটের কাছে)'}
+                      {isEnglish ? 'Block-2,LD Hall, Jatiya Sangsad Bhaban (Nare by Gate-6)' : 'ব্লক-২, এলডি হল, জাতীয় সংসদ ভবন (৬ নম্বর গেট সংলগ্ন )'}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       {isEnglish ? 'Sher-e-Bangla Nagar': 'শের-ই-বাংলা নগর'}

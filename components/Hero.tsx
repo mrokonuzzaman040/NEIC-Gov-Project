@@ -66,7 +66,7 @@ export function Hero() {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-gray-200 dark:border-slate-700">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-gray-200 dark:border-slate-700">
               {data.hero.stats.map((stat) => (
                 <div key={stat.id} className="text-center">
                   <div className="text-lg sm:text-xl lg:text-2xl font-bold text-green-600 dark:text-green-400">
@@ -80,7 +80,7 @@ export function Hero() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Commission Messages */}

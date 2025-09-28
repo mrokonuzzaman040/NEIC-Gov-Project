@@ -208,7 +208,7 @@ export default function GalleryPage() {
               <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 sm:p-8 lg:p-12 text-center">
                 <PhotoIcon className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" />
                 <h3 className="mt-2 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100">
-                  {isEnglish ? 'No images available' : 'কোন ছবি উপলব্ধ নেই'}
+                  {isEnglish ? 'No images available' : 'কোন ছবি নেই'}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   {selectedCategory !== 'all' 
