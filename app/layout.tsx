@@ -1,30 +1,92 @@
 import type { Metadata } from 'next';
-import { Noto_Sans, Noto_Sans_Bengali, Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import Script from 'next/script';
 import './globals.css';
 
-const notoSans = Noto_Sans({ 
-  subsets: ['latin'], 
-  weight: ['400','500','600','700'],
+const notoSans = localFont({
+  src: [
+    {
+      path: '../public/fonts/Noto_Sans/static/NotoSans-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Noto_Sans/static/NotoSans-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Noto_Sans/static/NotoSans-SemiBold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Noto_Sans/static/NotoSans-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
   display: 'swap',
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
   preload: true,
   variable: '--font-noto-sans'
 });
 
-const notoSansBengali = Noto_Sans_Bengali({ 
-  subsets: ['bengali'], 
-  weight: ['400','500','600','700'],
+const notoSansBengali = localFont({
+  src: [
+    {
+      path: '../public/fonts/Noto_Sans_Bengali/static/NotoSansBengali-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Noto_Sans_Bengali/static/NotoSansBengali-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Noto_Sans_Bengali/static/NotoSansBengali-SemiBold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Noto_Sans_Bengali/static/NotoSansBengali-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
   display: 'swap',
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
   preload: true,
   variable: '--font-noto-sans-bengali'
 });
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+const inter = localFont({
+  src: [
+    {
+      path: '../public/fonts/Inter/static/Inter_18pt-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Inter/static/Inter_18pt-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Inter/static/Inter_18pt-SemiBold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Inter/static/Inter_18pt-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
   display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+  preload: true,
   variable: '--font-inter'
 });
 
