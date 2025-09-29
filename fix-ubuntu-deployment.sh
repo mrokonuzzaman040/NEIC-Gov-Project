@@ -12,15 +12,15 @@ if [ ! -f ".env.local" ]; then
     
     cat > .env.local << 'EOF'
 # Database Configuration
-DATABASE_URL="postgresql://election:SecureElectionDB2024!@db:5432/election"
+DATABASE_URL=postgresql://election:SecureElectionDB2024!@db:5432/election
 POSTGRES_DB=election
 POSTGRES_USER=election
 POSTGRES_PASSWORD=SecureElectionDB2024!
 
 # NextAuth Configuration
-NEXTAUTH_SECRET="tKAHqkJashMMQU73d8xjsQRV3aQ0N0DsxldhedGa7yo="
-NEXTAUTH_URL="http://localhost:3000"
-HASH_SALT="replace-with-long-random-secret"
+NEXTAUTH_SECRET=tKAHqkJashMMQU73d8xjsQRV3aQ0N0DsxldhedGa7yo=
+NEXTAUTH_URL=http://localhost:3000
+HASH_SALT=replace-with-long-random-secret
 
 # Application Configuration
 NODE_ENV=production
@@ -29,18 +29,18 @@ UPLOAD_DIR=/app/uploads/submissions
 SEED_DATABASE=false
 
 # Public Configuration
-NEXT_PUBLIC_APP_NAME="BD Election Commission Portal"
+NEXT_PUBLIC_APP_NAME=BD Election Commission Portal
 NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB=25
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=AIzaSyB2Ao953YsjaZPlN_H1QR9yd0W60UP7uLE
 NEXT_PUBLIC_RECAPTCHA_KEY=6LdjsNArAAAAAEWKWxEGhg_Dbq9T_JmdOvPtA8_j
 NEXT_PUBLIC_RECAPTCHA_KEY_SECRET=6LdjsNArAsAAAAAM7WiOdCW0PIlLw3gkkEgxzemxQ
 
 # Redis Configuration
-REDIS_URL="redis://:SecureRedis2024!@redis:6379"
+REDIS_URL=redis://:SecureRedis2024!@redis:6379
 REDIS_HOST=redis
 REDIS_PORT=6379
 REDIS_USERNAME=neic
-REDIS_PASSWORD=SecureRedis2024!
+REDIS_PASSWORD=SecureRedis2024
 REDIS_TLS=false
 
 # Rate Limiting
