@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Ubuntu Server Deployment Fix Script
-# This script fixes common issues when deploying to Ubuntu server
+# Ubuntu Server Deployment Fix Script v2
+# This script fixes the specific issues with environment variables and docker-compose
 
-echo "🔧 Fixing Ubuntu Server Deployment Issues..."
+echo "🔧 Fixing Ubuntu Server Deployment Issues v2..."
 
-# 1. Check if .env.local exists
+# 1. Check if .env.local exists, if not create it
 if [ ! -f ".env.local" ]; then
     echo "❌ .env.local file not found!"
     echo "📝 Creating .env.local file..."
@@ -33,14 +33,14 @@ NEXT_PUBLIC_APP_NAME=BD Election Commission Portal
 NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB=25
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=AIzaSyB2Ao953YsjaZPlN_H1QR9yd0W60UP7uLE
 NEXT_PUBLIC_RECAPTCHA_KEY=6LdjsNArAAAAAEWKWxEGhg_Dbq9T_JmdOvPtA8_j
-NEXT_PUBLIC_RECAPTCHA_KEY_SECRET=6LdjsNArAsAAAAAM7WiOdCW0PIlLw3gkkEgxzemxQ
+NEXT_PUBLIC_RECAPTCHA_KEY_SECRET=6LdjsNArAAAAAAM7WiOdCW0PIlLw3gkkEgxzemxQ
 
 # Redis Configuration
 REDIS_URL=redis://:SecureRedis2024!@redis:6379
 REDIS_HOST=redis
 REDIS_PORT=6379
-REDIS_USERNAME=neic
-REDIS_PASSWORD=SecureRedis2024
+REDIS_USERNAME=
+REDIS_PASSWORD=SecureRedis2024!
 REDIS_TLS=false
 
 # Rate Limiting
@@ -59,7 +59,7 @@ SUPPORT_PASSWORD=NewSecurePassword2024!
 SUPPORT_NAME=Support Staff
 
 # Email Configuration (optional)
-SENDGRID_API_KEY=SG.9310000000000000000000000000000000000000
+SENDGRID_API_KEY=
 FROM_EMAIL=
 
 # Server Configuration
@@ -71,60 +71,68 @@ else
     echo "✅ .env.local file exists"
 fi
 
-# 2. Make scripts executable
+# 2. Test environment variables
+echo "🔍 Testing environment variables..."
+source .env.local
+
+if [ -z "$DATABASE_URL" ]; then
+    echo "❌ DATABASE_URL not set in .env.local"
+    exit 1
+fi
+
+if [ -z "$NEXTAUTH_URL" ]; then
+    echo "❌ NEXTAUTH_URL not set in .env.local"
+    exit 1
+fi
+
+echo "✅ Environment variables loaded correctly"
+
+# 3. Make scripts executable
 echo "🔧 Making scripts executable..."
 chmod +x docker/entrypoint.sh
 chmod +x docker/uploads-backup.sh
 
-# 3. Stop existing containers
+# 4. Test docker-compose configuration
+echo "🔍 Testing docker-compose configuration..."
+docker-compose config --quiet
+if [ $? -ne 0 ]; then
+    echo "❌ Docker Compose configuration is invalid!"
+    echo "🔧 Fixing docker-compose.yml..."
+    
+    # Fix the BACKUP_ON_START issue
+    sed -i 's/BACKUP_ON_START: TRUE/BACKUP_ON_START: "TRUE"/g' docker-compose.yml
+    echo "✅ Fixed BACKUP_ON_START in docker-compose.yml"
+fi
+
+# 5. Stop existing containers
 echo "🛑 Stopping existing containers..."
 docker-compose down
 
-# 4. Clean up any issues
+# 6. Clean up any issues
 echo "🧹 Cleaning up..."
 docker system prune -f
 
-# 5. Validate environment file
-echo "🔍 Validating environment file..."
-if [ -f ".env.local" ]; then
-    echo "✅ .env.local file found"
-    echo "📋 Checking key variables..."
-    if grep -q "DATABASE_URL=" .env.local; then
-        echo "✅ DATABASE_URL found"
-    else
-        echo "❌ DATABASE_URL missing"
-    fi
-    if grep -q "NEXTAUTH_URL=" .env.local; then
-        echo "✅ NEXTAUTH_URL found"
-    else
-        echo "❌ NEXTAUTH_URL missing"
-    fi
-else
-    echo "❌ .env.local file not found!"
-    exit 1
-fi
-
-# 6. Build and start services
+# 7. Build and start services
 echo "🚀 Building and starting services..."
 docker-compose up --build -d
 
-# 6. Wait for services to be ready
+# 8. Wait for services to be ready
 echo "⏳ Waiting for services to be ready..."
 sleep 30
 
-# 7. Check if database is ready
+# 9. Check if database is ready
 echo "🗄️ Setting up database..."
 docker-compose exec app npx prisma db push
 
-# 8. Create admin users
+# 10. Create admin users
 echo "👤 Creating admin users..."
 docker-compose exec app node scripts/create-admin.js
 
-# 9. Restart application
+# 11. Restart application
 echo "🔄 Restarting application..."
 docker-compose restart app
 
-# 10. Check status
+# 12. Check status
 echo "📊 Checking service status..."
 docker-compose ps
 
@@ -140,3 +148,5 @@ echo "🔑 Check user-credentials.json for login details"
 echo ""
 echo "📝 To view logs: docker-compose logs app -f"
 echo "🛠️ To check status: docker-compose ps"
+echo ""
+echo "🔍 To test environment: ./test-env.sh"
