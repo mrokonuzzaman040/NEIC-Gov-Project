@@ -160,7 +160,7 @@ export default function GalleryPage() {
             <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            {isEnglish ? 'Back to Home' : 'হোমে ফিরুন'}
+            {isEnglish ? 'Back to Home' : 'হোমে'}
           </Link>
         </div>
 
@@ -208,7 +208,7 @@ export default function GalleryPage() {
               <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 sm:p-8 lg:p-12 text-center">
                 <PhotoIcon className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" />
                 <h3 className="mt-2 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100">
-                  {isEnglish ? 'No images available' : 'কোন ছবি উপলব্ধ নেই'}
+                  {isEnglish ? 'No images available' : 'কোন ছবি নেই'}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   {selectedCategory !== 'all' 

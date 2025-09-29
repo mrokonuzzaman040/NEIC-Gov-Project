@@ -5,7 +5,7 @@ import { authMiddleware, securityHeadersMiddleware, rateLimitMiddleware } from '
 // Create the internationalization middleware
 const intlMiddleware = createMiddleware({
   // A list of all locales that are supported
-  locales: ['en', 'bn'],
+  locales: ['bn'],
 
   // Used when no locale matches
   defaultLocale: 'bn'
@@ -13,6 +13,17 @@ const intlMiddleware = createMiddleware({
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  
+  // Redirect all /en/* routes to /bn/* routes
+  if (pathname.startsWith('/en/')) {
+    const newPath = pathname.replace('/en/', '/bn/');
+    return NextResponse.redirect(new URL(newPath, request.url));
+  }
+  
+  // Redirect /en (without trailing slash) to /bn
+  if (pathname === '/en') {
+    return NextResponse.redirect(new URL('/bn', request.url));
+  }
   
   // CRITICAL SECURITY: Handle admin routes FIRST to prevent any content exposure
   if (pathname.startsWith('/admin')) {

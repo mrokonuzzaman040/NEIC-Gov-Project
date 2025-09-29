@@ -63,7 +63,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
   const departmentNames: Record<string, { en: string; bn: string }> = {
     'Chief_and_Members': { en: 'Commission Chairman & Members', bn: 'কমিশনের প্রধান ও সদস্যবৃন্দ' },
     'Cabinet Division': { en: '', bn: '' },
-    'Law and Justice Division': { en: 'Law Officers', bn: 'আইন বিষয়ক কর্মকর্তাগণ' },
+    'Law and Justice Division': { en: 'Law Officers', bn: 'আইন বিষয়ক কর্মকর্তাবৃন্দ' },
     'National Parliament Secretariat': { en: 'National Parliament Secretariat', bn: 'জাতীয়  সচিবালয়' },
     'Statistics and Information Management Division': { en: 'Statistics and Information Management Division', bn: 'পরিসংখ্যান ও তথ্য ব্যবস্থাপনা বিভাগ' },
     'Election Commission Secretariat': { en: 'List of Officers', bn: 'কর্মকর্তাবৃন্দ' }
@@ -135,7 +135,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                     {/* Profile Image */}
                     <div className="flex-shrink-0">
                       {official.image ? (
-                        <div className="w-16 h-16 rounded-full overflow-hidden bg-white dark:bg-slate-700 shadow-md border-2 border-blue-200 dark:border-blue-700">
+                        <div className="w-16 h-16 overflow-hidden bg-white dark:bg-slate-700 shadow-md border-2 border-blue-200 dark:border-blue-700">
                           <Image 
                             src={official.image} 
                             alt={isBengali ? official.name_bangla : official.name_english}
@@ -265,7 +265,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                         </td>
                         <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center">
                           {official.image ? (
-                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-700 mx-auto shadow-md border-2 border-gray-200 dark:border-gray-600">
+                            <div className="w-12 h-12 sm:w-14 sm:h-14  overflow-hidden bg-slate-100 dark:bg-slate-700 mx-auto shadow-md border-2 border-gray-200 dark:border-gray-600">
                               <Image 
                                 src={official.image} 
                                 alt={isBengali ? official.name_bangla : official.name_english}

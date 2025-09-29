@@ -35,7 +35,7 @@ export async function GET() {
         navigation: {
           backToHome: {
             en: "Back to Home",
-            bn: "হোমে ফিরুন"
+            bn: "হোমে"
           }
         },
         faqs: faqs.map((faq, index) => ({
@@ -124,7 +124,7 @@ function getColorForCategory(category: string): string {
         navigation: {
           backToHome: {
             en: "Back to Home",
-            bn: "হোমে ফিরুন"
+            bn: "হোমে"
           }
         },
         faqs: [],
