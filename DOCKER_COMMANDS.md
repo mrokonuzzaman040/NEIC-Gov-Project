@@ -258,26 +258,32 @@ docker-compose logs --tail=50
 
 
 
-🔧 Making scripts executable...
-🛑 Stopping existing containers...
-WARNING: The DATABASE_URL variable is not set. Defaulting to a blank string.
-WARNING: The NEXTAUTH_URL variable is not set. Defaulting to a blank string.
-WARNING: The NEXTAUTH_SECRET variable is not set. Defaulting to a blank string.
-WARNING: The HASH_SALT variable is not set. Defaulting to a blank string.
-WARNING: The REDIS_URL variable is not set. Defaulting to a blank string.
-WARNING: The REDIS_PASSWORD variable is not set. Defaulting to a blank string.
-ERROR: The Compose file './docker-compose.yml' is invalid because:
-services.db_backup.environment.BACKUP_ON_START contains true, which is an invalid type, it should be a string, number, or a null
-🧹 Cleaning up...
-Total reclaimed space: 0B
-🚀 Building and starting services...
-WARNING: The DATABASE_URL variable is not set. Defaulting to a blank string.
-WARNING: The NEXTAUTH_URL variable is not set. Defaulting to a blank string.
-WARNING: The NEXTAUTH_SECRET variable is not set. Defaulting to a blank string.
-WARNING: The HASH_SALT variable is not set. Defaulting to a blank string.
-WARNING: The REDIS_URL variable is not set. Defaulting to a blank string.
-WARNING: The REDIS_PASSWORD variable is not set. Defaulting to a blank string.
-ERROR: The Compose file './docker-compose.yml' is invalid because:
-services.db_backup.environment.BACKUP_ON_START contains true, which is an invalid type, it should be a string, number, or a null
-⏳ Waiting for services to be ready...
+🗄️ Setting up database...
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "election", schema "public" at "db:5432"
+
+Error: P1000: Authentication failed against database server, the provided database credentials for `election` are not valid.
+
+Please make sure to provide valid database credentials for the database server at the configured address.
+👤 Creating admin users...
+❌ Error creating users: PrismaClientInitializationError:
+Invalid `prisma.user.findFirst()` invocation:
+
+
+Authentication failed against database server, the provided database credentials for `election` are not valid.
+
+Please make sure to provide valid database credentials for the database server at the configured address.
+    at ei.handleRequestError (/app/node_modules/@prisma/client/runtime/library.js:121:7568)
+    at ei.handleAndLogRequestError (/app/node_modules/@prisma/client/runtime/library.js:121:6593)
+    at ei.request (/app/node_modules/@prisma/client/runtime/library.js:121:6300)
+    at async a (/app/node_modules/@prisma/client/runtime/library.js:130:9551)
+    at async createUsers (/app/scripts/create-admin.js:89:28) {
+  clientVersion: '6.16.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+🔄 Restarting application...
+Restarting neic-gov-project_app_1 ... done
+📊 Checking service status...
+
 
