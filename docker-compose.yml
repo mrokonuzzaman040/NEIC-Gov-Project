@@ -3,43 +3,41 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env.local
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      DATABASE_URL: ${DATABASE_URL}
-      NEXTAUTH_URL: ${NEXTAUTH_URL}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      HASH_SALT: ${HASH_SALT}
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      UPLOAD_DIR: ${UPLOAD_DIR:-/app/uploads/submissions}
-      NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB: ${NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB:-25}
-      NEXT_PUBLIC_RECAPTCHA_KEY: ${NEXT_PUBLIC_RECAPTCHA_KEY:-}
-      RECAPTCHA_SECRET_KEY: ${NEXT_PUBLIC_RECAPTCHA_KEY_SECRET:-}
-      NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:-}
-      NEXT_PUBLIC_APP_NAME: ${NEXT_PUBLIC_APP_NAME:-}
-      SENDGRID_API_KEY: ${SENDGRID_API_KEY:-}
-      FROM_EMAIL: ${FROM_EMAIL:-}
-      REDIS_URL: ${REDIS_URL}
-      REDIS_HOST: ${REDIS_HOST:-redis}
-      REDIS_PORT: ${REDIS_PORT:-6379}
-      REDIS_USERNAME: ${REDIS_USERNAME:-}
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
-      REDIS_TLS: ${REDIS_TLS:-false}
-      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-20}
-      RATE_LIMIT_WINDOW_SECONDS: ${RATE_LIMIT_WINDOW_SECONDS:-60}
-      SEED_DATABASE: ${SEED_DATABASE:-false}
-      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
-      ADMIN_NAME: ${ADMIN_NAME:-}
-      MANAGER_EMAIL: ${MANAGER_EMAIL:-}
-      MANAGER_PASSWORD: ${MANAGER_PASSWORD:-}
-      MANAGER_NAME: ${MANAGER_NAME:-}
-      SUPPORT_EMAIL: ${SUPPORT_EMAIL:-}
-      SUPPORT_PASSWORD: ${SUPPORT_PASSWORD:-}
-      SUPPORT_NAME: ${SUPPORT_NAME:-}
+      NODE_ENV: production
+      DATABASE_URL: postgresql://election:change_me@db:5432/election
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: your-nextauth-secret-key-here
+      HASH_SALT: your-hash-salt-here
+      LOG_LEVEL: info
+      UPLOAD_DIR: /app/uploads/submissions
+      NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB: 25
+      NEXT_PUBLIC_RECAPTCHA_KEY: 
+      RECAPTCHA_SECRET_KEY: 
+      NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: 
+      NEXT_PUBLIC_APP_NAME: Election Commission
+      SENDGRID_API_KEY: 
+      FROM_EMAIL: 
+      REDIS_URL: redis://redis:6379
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_USERNAME: 
+      REDIS_PASSWORD: change_me_redis
+      REDIS_TLS: false
+      RATE_LIMIT_MAX: 20
+      RATE_LIMIT_WINDOW_SECONDS: 60
+      SEED_DATABASE: false
+      ADMIN_EMAIL: admin@election.gov
+      ADMIN_PASSWORD: admin123
+      ADMIN_NAME: Admin User
+      MANAGER_EMAIL: manager@election.gov
+      MANAGER_PASSWORD: manager123
+      MANAGER_NAME: Manager User
+      SUPPORT_EMAIL: support@election.gov
+      SUPPORT_PASSWORD: support123
+      SUPPORT_NAME: Support User
     ports:
-      - "${APP_HTTP_PORT:-3000}:3000"
+      - "3000:3000"
     depends_on:
       db:
         condition: service_healthy
@@ -50,13 +48,13 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-election}
-      POSTGRES_USER: ${POSTGRES_USER:-election}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+      POSTGRES_DB: election
+      POSTGRES_USER: election
+      POSTGRES_PASSWORD: change_me
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-election} -d ${POSTGRES_DB:-election}"]
+      test: ["CMD-SHELL", "pg_isready -U election -d election"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -67,10 +65,10 @@ services:
     command: [
       "redis-server",
       "--appendonly", "yes",
-      "--requirepass", "${REDIS_PASSWORD:-change_me_redis}"
+      "--requirepass", "change_me_redis"
     ]
     environment:
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-change_me_redis}
+      REDIS_PASSWORD: change_me_redis
     volumes:
       - redis_data:/data
     restart: unless-stopped
@@ -95,16 +93,16 @@ services:
     image: prodrigestivill/postgres-backup-local:16
     environment:
       POSTGRES_HOST: db
-      POSTGRES_DB: ${POSTGRES_DB:-election}
-      POSTGRES_USER: ${POSTGRES_USER:-election}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
-      POSTGRES_EXTRA_OPTS: ${POSTGRES_EXTRA_OPTS:---schema=public --blobs}
-      SCHEDULE: ${POSTGRES_BACKUP_SCHEDULE:-@daily}
-      BACKUP_ON_START: ${POSTGRES_BACKUP_ON_START:-TRUE}
-      BACKUP_KEEP_DAYS: ${POSTGRES_BACKUP_KEEP_DAYS:-7}
-      BACKUP_KEEP_WEEKS: ${POSTGRES_BACKUP_KEEP_WEEKS:-4}
-      BACKUP_KEEP_MONTHS: ${POSTGRES_BACKUP_KEEP_MONTHS:-6}
-      TZ: ${TZ:-UTC}
+      POSTGRES_DB: election
+      POSTGRES_USER: election
+      POSTGRES_PASSWORD: change_me
+      POSTGRES_EXTRA_OPTS: --schema=public --blobs
+      SCHEDULE: "@daily"
+      BACKUP_ON_START: TRUE
+      BACKUP_KEEP_DAYS: 7
+      BACKUP_KEEP_WEEKS: 4
+      BACKUP_KEEP_MONTHS: 6
+      TZ: UTC
     depends_on:
       db:
         condition: service_healthy
@@ -116,9 +114,9 @@ services:
     image: alpine:3.20
     entrypoint: ["/bin/sh", "/opt/backup/uploads-backup.sh"]
     environment:
-      UPLOADS_BACKUP_INTERVAL_SECONDS: ${UPLOADS_BACKUP_INTERVAL_SECONDS:-86400}
-      UPLOADS_BACKUP_RETENTION_DAYS: ${UPLOADS_BACKUP_RETENTION_DAYS:-7}
-      TZ: ${TZ:-UTC}
+      UPLOADS_BACKUP_INTERVAL_SECONDS: 86400
+      UPLOADS_BACKUP_RETENTION_DAYS: 7
+      TZ: UTC
     depends_on:
       app:
         condition: service_started
