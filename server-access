@@ -1,0 +1,42 @@
+✅ ADMIN user created successfully!
+📧 Email: admin@neic-bd.org
+👤 Name: System Administrator
+🔑 Role: ADMIN
+🆔 ID: cmg529v9500003x660xernsho
+🔒 Password: XxLXkDaP36h5fJ%4
+
+✅ MANAGEMENT user created successfully!
+📧 Email: manager@neic-bd.org
+👤 Name: Management User
+🔑 Role: MANAGEMENT
+🆔 ID: cmg529vjs00033x66u1wklmtg
+🔒 Password: J7g6HkhYwA*6k&Pf
+
+✅ SUPPORT user created successfully!
+📧 Email: support@neic-bd.org
+👤 Name: Support Staff
+🔑 Role: SUPPORT
+🆔 ID: cmg529vue00063x66tprg6ont
+🔒 Password: Gduvd1sdWJxMxi$w
+
+🎉 All users created successfully!
+
+📋 USER CREDENTIALS SUMMARY:
+================================
+👤 System Administrator (ADMIN)
+📧 admin@neic-bd.org
+🔒 XxLXkDaP36h5fJ%4
+
+👤 Management User (MANAGEMENT)
+📧 manager@neic-bd.org
+🔒 J7g6HkhYwA*6k&Pf
+
+👤 Support Staff (SUPPORT)
+📧 support@neic-bd.org
+🔒 Gduvd1sdWJxMxi$w
+
+⚠️  IMPORTANT: Please change all default passwords after first login!
+
+📄 Credentials saved to: user-credentials.json
+🔐 File contains all user credentials for reference
+⚠️  Keep this file secure and delete after noting credentials!
