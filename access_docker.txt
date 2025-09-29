@@ -1,12 +1,43 @@
-Admin User:
-URL: http://localhost:3000/en/login
-Email: admin@neic-bd.org
-Password: 9pB5hUuv1Pnm218!
+👤 Step 19: Creating admin users...
+✅ ADMIN user created successfully!
+📧 Email: admin@neic-bd.org
+👤 Name: System Administrator
+🔑 Role: ADMIN
+🆔 ID: cmg55bzfk0000pd7aen18vgly
+🔒 Password: !cS7s1uO!l6^zA2O
 
-Management User:
-Email: manager@neic-bd.org
-Password: !Ju$V7e8iIsq5taJ
+✅ MANAGEMENT user created successfully!
+📧 Email: manager@neic-bd.org
+👤 Name: Management User
+🔑 Role: MANAGEMENT
+🆔 ID: cmg55bzqg0003pd7ajn7kjo9v
+🔒 Password: #7^8&!$YU0l900or
 
-Support User:
-Email: support@neic-bd.org
-Password: Gn$!l8FLsvf@LdBg
+✅ SUPPORT user created successfully!
+📧 Email: support@neic-bd.org
+👤 Name: Support Staff
+🔑 Role: SUPPORT
+🆔 ID: cmg55c0180006pd7aoi92betg
+🔒 Password: ^N3i#Wrl1Li4moN2
+
+🎉 All users created successfully!
+
+📋 USER CREDENTIALS SUMMARY:
+================================
+👤 System Administrator (ADMIN)
+📧 admin@neic-bd.org
+🔒 !cS7s1uO!l6^zA2O
+
+👤 Management User (MANAGEMENT)
+📧 manager@neic-bd.org
+🔒 #7^8&!$YU0l900or
+
+👤 Support Staff (SUPPORT)
+📧 support@neic-bd.org
+🔒 ^N3i#Wrl1Li4moN2
+
+⚠️  IMPORTANT: Please change all default passwords after first login!
+
+📄 Credentials saved to: user-credentials.json
+🔐 File contains all user credentials for reference
+⚠️  Keep this file secure and delete after noting credentials!
