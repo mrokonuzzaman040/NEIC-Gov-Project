@@ -1,9 +1,3 @@
-/* Import SolaimanLipi for better Bengali typography */
-@import url('https://fonts.googleapis.com/css2?family=SolaimanLipi:wght@400;500;600;700&display=swap');
-
-/* Import Kalpurush as fallback */
-@import url('https://fonts.googleapis.com/css2?family=Kalpurush:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -47,12 +41,12 @@ body {
 }
 
 :lang(bn) {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 /* Bengali text styling with better fallbacks */
 [lang="bn"] {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   line-height: 1.6;
   letter-spacing: 0.01em;
   font-feature-settings: "liga", "kern";
@@ -70,7 +64,7 @@ html[lang="bn"] h3,
 html[lang="bn"] h4,
 html[lang="bn"] h5,
 html[lang="bn"] h6 {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
 }
 
 /* Additional specificity for div with lang attribute */
@@ -82,14 +76,14 @@ div[lang="bn"] {
 .bengali-text,
 [data-lang="bn"],
 .bn-text {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   line-height: 1.6;
   letter-spacing: 0.01em;
 }
 
 /* Specific rules for different Bengali text elements */
 h1[lang="bn"], h2[lang="bn"], h3[lang="bn"], h4[lang="bn"], h5[lang="bn"], h6[lang="bn"] {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   font-weight: 700;
 }
 
@@ -97,7 +91,7 @@ h1[lang="bn"], h2[lang="bn"], h3[lang="bn"], h4[lang="bn"], h5[lang="bn"], h6[la
 .bengali-title,
 .bengali-heading,
 .font-bengali-bold {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   font-weight: 700 !important;
   line-height: 1.4;
   letter-spacing: 0.02em;
@@ -105,49 +99,49 @@ h1[lang="bn"], h2[lang="bn"], h3[lang="bn"], h4[lang="bn"], h5[lang="bn"], h6[la
 
 /* Bold Bengali text for specific sections */
 .bengali-section-title {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   font-weight: 700 !important;
   font-size: 1.25rem;
   line-height: 1.3;
   letter-spacing: 0.01em;
 }
 
-/* Bold Bengali text for navigation and tabs */
+/* Bengali text for navigation and tabs */
 .bengali-nav,
 .bengali-tab {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   font-weight: 700 !important;
   font-size: 1rem;
   line-height: 1.5;
 }
 
-/* Bold Bengali text for buttons */
+/* Bengali text for buttons */
 .bengali-button {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
   font-weight: 700 !important;
   font-size: 0.875rem;
   line-height: 1.4;
 }
 
 p[lang="bn"], span[lang="bn"], div[lang="bn"] {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
 }
 
 /* Override any conflicting font classes */
 .font-bangla {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
 }
 
 /* Test class to verify Bengali font is working */
 .font-test {
-  font-family: 'SolaimanLipi', 'Kalpurush', Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', Arial, sans-serif !important;
   font-size: 18px;
   line-height: 1.6;
 }
 
 /* Debug class to check which font is being used */
 .font-debug {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', Arial, sans-serif !important;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', Arial, sans-serif !important;
   font-size: 16px;
   line-height: 1.5;
   border: 1px solid #ccc;
@@ -169,11 +163,11 @@ p[lang="bn"], span[lang="bn"], div[lang="bn"] {
 }
 
 .font-bengali {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: var(--font-noto-sans-bengali), 'Noto Sans Bengali', 'Mukti', 'Lohit Bengali', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .font-mixed {
-  font-family: 'SolaimanLipi', 'Kalpurush', var(--font-noto-sans-bengali), var(--font-noto-sans), var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: var(--font-noto-sans-bengali), var(--font-noto-sans), var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .container-max {
