@@ -253,5 +253,31 @@ docker-compose logs --tail=50
 ---
 
 **Generated on**: $(date)  
-**Total Space Freed**: 24.44GB  
 **Status**: ✅ All services running successfully
+**Total Space Freed**: 24.44GB  
+
+
+
+🔧 Making scripts executable...
+🛑 Stopping existing containers...
+WARNING: The DATABASE_URL variable is not set. Defaulting to a blank string.
+WARNING: The NEXTAUTH_URL variable is not set. Defaulting to a blank string.
+WARNING: The NEXTAUTH_SECRET variable is not set. Defaulting to a blank string.
+WARNING: The HASH_SALT variable is not set. Defaulting to a blank string.
+WARNING: The REDIS_URL variable is not set. Defaulting to a blank string.
+WARNING: The REDIS_PASSWORD variable is not set. Defaulting to a blank string.
+ERROR: The Compose file './docker-compose.yml' is invalid because:
+services.db_backup.environment.BACKUP_ON_START contains true, which is an invalid type, it should be a string, number, or a null
+🧹 Cleaning up...
+Total reclaimed space: 0B
+🚀 Building and starting services...
+WARNING: The DATABASE_URL variable is not set. Defaulting to a blank string.
+WARNING: The NEXTAUTH_URL variable is not set. Defaulting to a blank string.
+WARNING: The NEXTAUTH_SECRET variable is not set. Defaulting to a blank string.
+WARNING: The HASH_SALT variable is not set. Defaulting to a blank string.
+WARNING: The REDIS_URL variable is not set. Defaulting to a blank string.
+WARNING: The REDIS_PASSWORD variable is not set. Defaulting to a blank string.
+ERROR: The Compose file './docker-compose.yml' is invalid because:
+services.db_backup.environment.BACKUP_ON_START contains true, which is an invalid type, it should be a string, number, or a null
+⏳ Waiting for services to be ready...
+
