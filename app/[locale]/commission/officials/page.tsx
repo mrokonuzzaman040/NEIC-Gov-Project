@@ -22,6 +22,16 @@ interface CommissionOfficial {
   updatedAt: string;
 }
 
+// Function to convert English digits to Bangla digits
+const convertToBanglaDigits = (number: number | string): string => {
+  const englishDigits = '0123456789';
+  const banglaDigits = '০১২৩৪৫৬৭৮৯';
+  
+  return number.toString().replace(/[0-9]/g, (digit) => {
+    return banglaDigits[englishDigits.indexOf(digit)];
+  });
+};
+
 export default function CommissionOfficialsPage({ params }: { params: { locale: string } }) {
   const t = useTranslations('commission');
   const { locale } = params;
@@ -172,7 +182,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                         {official.room_no && (
                           <div className="flex items-center space-x-2">
                             <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                              {isBengali ? 'কক্ষ নং' : 'Room'}: {official.room_no}
+                              {isBengali ? 'কক্ষ নং' : 'Room'}: {isBengali ? convertToBanglaDigits(official.room_no) : official.room_no}
                             </span>
                           </div>
                         )}
@@ -261,7 +271,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                     {officialsInCategory.map((official) => (
                       <tr key={official.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
                         <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium">
-                          {official.serial_no}
+                          {isBengali ? convertToBanglaDigits(official.serial_no) : official.serial_no}
                         </td>
                         <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center">
                           {official.image ? (
@@ -294,7 +304,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
                         </td>
                         {category === 'Chief_and_Members' && (
                           <td className="border border-gray-300 dark:border-gray-600 px-3 py-3 text-center text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium">
-                            {official.room_no || '-'}
+                            {official.room_no ? (isBengali ? convertToBanglaDigits(official.room_no) : official.room_no) : '-'}
                           </td>
                         )}
                       </tr>
