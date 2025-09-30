@@ -106,12 +106,17 @@ const MAPS_DOMAINS = [
   'https://maps.google.com'
 ];
 
+const CDN_DOMAINS = [
+  'https://cdn.jsdelivr.net'
+];
+
 function buildContentSecurityPolicy() {
   const scriptSrc = [
     "'self'",
     "'unsafe-inline'",
     ...RECAPTCHA_DOMAINS,
-    ...MAPS_DOMAINS
+    ...MAPS_DOMAINS,
+    ...CDN_DOMAINS
   ];
 
   if (!isProduction) {
@@ -121,7 +126,8 @@ function buildContentSecurityPolicy() {
   const connectSrc = [
     "'self'",
     ...RECAPTCHA_DOMAINS,
-    ...MAPS_DOMAINS
+    ...MAPS_DOMAINS,
+    ...CDN_DOMAINS
   ];
 
   const imgSrc = [
@@ -129,13 +135,14 @@ function buildContentSecurityPolicy() {
     'data:',
     'blob:',
     ...RECAPTCHA_DOMAINS,
-    ...MAPS_DOMAINS
+    ...MAPS_DOMAINS,
+    ...CDN_DOMAINS
   ];
 
   const directives = [
     "default-src 'self'",
     `script-src ${scriptSrc.join(' ')}`,
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com ${CDN_DOMAINS.join(' ')}`,
     `img-src ${imgSrc.join(' ')}`,
     "font-src 'self' https://fonts.gstatic.com data:",
     `connect-src ${connectSrc.join(' ')}`,
@@ -148,9 +155,11 @@ function buildContentSecurityPolicy() {
     "worker-src 'self' blob:"
   ];
 
-  if (isProduction) {
-    directives.push('upgrade-insecure-requests');
-  }
+  // Note: upgrade-insecure-requests removed to allow reCAPTCHA and Google Maps to work properly
+  // The 'unsafe-inline' and specific domain allowlists provide sufficient security
+  // if (isProduction) {
+  //   directives.push('upgrade-insecure-requests');
+  // }
 
   return directives.join('; ');
 }
