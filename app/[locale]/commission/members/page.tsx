@@ -164,7 +164,7 @@ export default function CommissionMembersPage({ params }: { params: { locale: st
                         {/* Member Image */}
                         {member.image && (
                           <div className="flex-shrink-0">
-                            <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-700 border-2 border-green-200 dark:border-green-800">
+                            <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-700 border-2 border-green-200 dark:border-green-800">
                               <Image 
                                 src={member.image} 
                                 alt={isEnglish ? member.name_english : member.name_bengali}

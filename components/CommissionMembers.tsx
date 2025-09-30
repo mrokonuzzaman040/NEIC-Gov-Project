@@ -58,14 +58,14 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
           <div className="h-4 sm:h-6 bg-gray-200 dark:bg-slate-700 rounded w-1/3 mb-2 sm:mb-4"></div>
           <div className="space-y-2 sm:space-y-3">
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-200 dark:bg-slate-700 rounded-full"></div>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gray-200 dark:bg-slate-700 rounded-full"></div>
               <div className="flex-1 space-y-2">
                 <div className="h-3 sm:h-4 bg-gray-200 dark:bg-slate-700 rounded w-3/4"></div>
                 <div className="h-2 sm:h-3 bg-gray-200 dark:bg-slate-700 rounded w-1/2"></div>
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-200 dark:bg-slate-700 rounded-full"></div>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gray-200 dark:bg-slate-700 rounded-full"></div>
               <div className="flex-1 space-y-2">
                 <div className="h-3 sm:h-4 bg-gray-200 dark:bg-slate-700 rounded w-3/4"></div>
                 <div className="h-2 sm:h-3 bg-gray-200 dark:bg-slate-700 rounded w-1/2"></div>
@@ -110,25 +110,26 @@ export default function CommissionMembers({ className = '' }: CommissionMembersP
         </div>
 
         {/* Members List - All Members Visible */}
-        <div className="p-2 sm:p-4 space-y-3 sm:space-y-4">
+        <div className="p-3 sm:p-4 space-y-4 sm:space-y-5">
             {members.map((member, index) => (
               <div
                 key={member.id}
-                className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 bg-gray-50 dark:bg-slate-700/50 rounded-lg border-l-4 border-green-500 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 bg-gray-50 dark:bg-slate-700/50 rounded-lg border-l-4 border-green-500 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
               >
                 {/* Member Image */}
                 <div className="flex-shrink-0">
-                  <div className="relative w-10 h-10 sm:w-12 sm:h-12">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24">
                     {member.image ? (
                       <Image
                         src={member.image}
                         alt={isEnglish ? member.name_english : member.name_bengali}
                         fill
-                        className="object-cover border-2 border-green-200 dark:border-green-800"
+                        className="object-contain rounded-lg border-3 border-green-200 dark:border-green-800 shadow-md"
+                        sizes="(max-width: 640px) 64px, (max-width: 1024px) 80px, 96px"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center">
-                        <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-full h-full bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-md">
+                        <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                       </div>
