@@ -23,7 +23,7 @@ export default function SubmitPage() {
   const [selectedDistrict, setSelectedDistrict] = useState<string>('');
   const [seatOptions, setSeatOptions] = useState<string[]>([]);
   const captchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_KEY;
-  const captchaRequired = Boolean(captchaSiteKey) && process.env.NODE_ENV === 'production';
+  const captchaRequired = Boolean(captchaSiteKey);
   const maxFileSizeMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB ?? '512');
   const maxFileSizeBytes = Math.max(1, maxFileSizeMb) * 1024 * 1024;
 
