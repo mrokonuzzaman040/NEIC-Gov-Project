@@ -3,6 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_RECAPTCHA_KEY: ${NEXT_PUBLIC_RECAPTCHA_KEY:-6LdjsNArAAAAAEWKWxEGhg_Dbq9T_JmdOvPtA8_j}
+        NEXT_PUBLIC_RECAPTCHA_KEY_SECRET: ${NEXT_PUBLIC_RECAPTCHA_KEY_SECRET:-6LdjsNArAAAAAAM7WiOdCW0PIlLw3gkkEgxzemxQ}
+        NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB: ${NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB:-25}
     env_file:
       - .env.local
       - .env

@@ -584,12 +584,6 @@ export default function SubmitPage() {
                           setCaptchaError(message);
                         }}
                       />
-                    ) : process.env.NODE_ENV === 'development' ? (
-                      <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                        <p className="text-blue-800 dark:text-blue-200 text-xs">
-                          <strong>Development Mode:</strong> {isEnglish ? 'reCAPTCHA is disabled for easier testing.' : 'পরীক্ষার সুবিধার জন্য reCAPTCHA নিষ্ক্রিয় করা হয়েছে।'}
-                        </p>
-                      </div>
                     ) : (
                       <p className="text-xs text-yellow-600">
                         {isEnglish ? 'Captcha protection is not configured. Please contact the administrator.' : 'ক্যাপচা সুরক্ষা কনফিগার করা হয়নি। অনুগ্রহ করে প্রশাসকের সাথে যোগাযোগ করুন।'}
