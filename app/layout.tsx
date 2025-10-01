@@ -91,8 +91,29 @@ const inter = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Bangladesh National Elections Inquiry Commission',
-  description: 'Official portal for election investigations and public submissions',
+  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
+  title: 'জাতীয় নির্বাচন তদন্ত কমিশন',
+  description: 'বাংলাদেশের জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) সম্পর্কে অভিমত ও ঘটনা আমাদের সাথে শেয়ার করুন',
+  openGraph: {
+    title: 'জাতীয় নির্বাচন তদন্ত কমিশন',
+    description: 'বাংলাদেশের জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) সম্পর্কে অভিমত ও ঘটনা আমাদের সাথে শেয়ার করুন',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'জাতীয় নির্বাচন তদন্ত কমিশনের লোগো',
+      },
+    ],
+    locale: 'bn_BD',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'জাতীয় নির্বাচন তদন্ত কমিশন',
+    description: 'বাংলাদেশের জাতীয় নির্বাচন (২০১৪, ২০১৮, ২০২৪) সম্পর্কে অভিমত ও ঘটনা আমাদের সাথে শেয়ার করুন',
+    images: ['/og-image.png'],
+  },
 };
 
 export default function RootLayout({

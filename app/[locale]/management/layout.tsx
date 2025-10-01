@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import SessionProvider from '@/components/providers/SessionProvider';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/ThemeToggle';
+import { Footer } from '@/components/Footer';
 import { useParams } from 'next/navigation';
 
 // Management Sidebar Component
@@ -166,6 +167,7 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
               <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 dark:bg-slate-900 p-6">
                 {children}
               </main>
+              <Footer />
             </div>
           </div>
         </div>

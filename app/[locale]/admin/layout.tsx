@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import AdminHeader from '@/components/admin/AdminHeader';
 import SessionProvider from '@/components/providers/SessionProvider';
+import { Footer } from '@/components/Footer';
 import { useParams } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 
@@ -119,6 +120,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     {children}
                   </div>
                 </main>
+                <Footer />
               </div>
             </div>
           </div>

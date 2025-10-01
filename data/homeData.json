@@ -117,9 +117,21 @@
         "en": "Government of Bangladesh",
         "bn": "বাংলাদেশ সরকার"
       },
+      "technicalSupport": {
+        "en": "Technical Support by:",
+        "bn": "প্রযুক্তিগত সহায়তা:"
+      },
+      "technicalProvider": {
+        "en": "GenAI BD LTD",
+        "bn": "জেনএআই বিডি লিমিটেড"
+      },
+      "developer": {
+        "en": "Developer: Md Rokon Uzzaman",
+        "bn": "ডেভেলপার: মোঃ রোকন উজ্জামান"
+      },
       "copyright": {
-        "en": "© 2025 All rights reserved",
-        "bn": "© ২০২৫ সকল অধিকার সংরক্ষিত"
+        "en": "© 2025 National Elections Inquiry Commission. All rights reserved.",
+        "bn": "© ২০২৫ জাতীয় নির্বাচন তদন্ত কমিশন। সকল অধিকার সংরক্ষিত।"
       }
     }
   }

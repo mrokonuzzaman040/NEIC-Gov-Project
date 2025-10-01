@@ -49,6 +49,9 @@ export interface HomePageSection {
 export interface HomePageFooter {
   title: LocalizedText;
   subtitle: LocalizedText;
+  technicalSupport: LocalizedText;
+  technicalProvider: LocalizedText;
+  developer: LocalizedText;
   copyright: LocalizedText;
 }
 

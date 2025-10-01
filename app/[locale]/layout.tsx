@@ -7,6 +7,7 @@ import ThemeToggle from '@/components/ThemeToggle';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import MobileMenu from '@/components/MobileMenu';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { Footer } from '@/components/Footer';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
 
@@ -118,6 +119,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           </div>
         </nav>
         {children}
+        <Footer />
       </NextIntlClientProvider>
     </div>
   );
