@@ -98,7 +98,7 @@ DATABASE_URL="postgresql://election_admin:SecureElectionDB2024!@localhost:5432/e
 NEXTAUTH_SECRET="YourSuperSecretKeyForElectionCommission2024!"
 NEXTAUTH_URL="http://localhost:3000"
 NEXT_PUBLIC_RECAPTCHA_KEY="your_recaptcha_v2_site_key"
-RECAPTCHA_SECRET_KEY="your_recaptcha_v2_secret_key"
+NEXT_PUBLIC_RECAPTCHA_KEY_SECRET="your_recaptcha_v2_secret_key"
 
 # Admin User (for initial setup)
 ADMIN_EMAIL="admin@election-commission.gov.bd"
@@ -126,7 +126,7 @@ NEXT_PUBLIC_MAX_UPLOAD_FILE_SIZE_MB="25"
 POSTGRES_PASSWORD="SecureElectionDB2024!"
 ```
 
-> ℹ️  Use Google reCAPTCHA **v2 (checkbox or invisible)** keys and list your development/production domains in the reCAPTCHA admin console. The API reads `RECAPTCHA_SECRET_KEY` for verification and will fall back to `NEXT_PUBLIC_RECAPTCHA_KEY_SECRET` if necessary.
+> ℹ️  Use Google reCAPTCHA **v2 (checkbox or invisible)** keys and list your development/production domains in the reCAPTCHA admin console. The API reads `NEXT_PUBLIC_RECAPTCHA_KEY_SECRET` for verification and will fall back to `NEXT_PUBLIC_RECAPTCHA_KEY_SECRET` if necessary.
 
 ### 3. Database Setup
 ```bash
