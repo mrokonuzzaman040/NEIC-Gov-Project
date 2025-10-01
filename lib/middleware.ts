@@ -89,80 +89,7 @@ export async function authMiddleware(request: NextRequest) {
 }
 
 // Security headers middleware
-const isProduction = process.env.NODE_ENV === 'production';
-
-const RECAPTCHA_DOMAINS = [
-  'https://www.google.com',
-  'https://www.gstatic.com',
-  'https://www.google.com/recaptcha/',
-  'https://www.gstatic.com/recaptcha/',
-  'https://www.recaptcha.net',
-  'https://www.recaptcha.net/recaptcha/'
-];
-
-const MAPS_DOMAINS = [
-  'https://maps.googleapis.com',
-  'https://maps.gstatic.com',
-  'https://maps.google.com'
-];
-
-const CDN_DOMAINS = [
-  'https://cdn.jsdelivr.net'
-];
-
-function buildContentSecurityPolicy() {
-  const scriptSrc = [
-    "'self'",
-    "'unsafe-inline'",
-    ...RECAPTCHA_DOMAINS,
-    ...MAPS_DOMAINS,
-    ...CDN_DOMAINS
-  ];
-
-  if (!isProduction) {
-    scriptSrc.push("'unsafe-eval'");
-  }
-
-  const connectSrc = [
-    "'self'",
-    ...RECAPTCHA_DOMAINS,
-    ...MAPS_DOMAINS,
-    ...CDN_DOMAINS
-  ];
-
-  const imgSrc = [
-    "'self'",
-    'data:',
-    'blob:',
-    ...RECAPTCHA_DOMAINS,
-    ...MAPS_DOMAINS,
-    ...CDN_DOMAINS
-  ];
-
-  const directives = [
-    "default-src 'self'",
-    `script-src ${scriptSrc.join(' ')}`,
-    `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com ${CDN_DOMAINS.join(' ')}`,
-    `img-src ${imgSrc.join(' ')}`,
-    "font-src 'self' https://fonts.gstatic.com data:",
-    `connect-src ${connectSrc.join(' ')}`,
-    `frame-src 'self' ${[...RECAPTCHA_DOMAINS, ...MAPS_DOMAINS].join(' ')}`,
-    "frame-ancestors 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "object-src 'none'",
-    "media-src 'self' blob:",
-    "worker-src 'self' blob:"
-  ];
-
-  // Note: upgrade-insecure-requests removed to allow reCAPTCHA and Google Maps to work properly
-  // The 'unsafe-inline' and specific domain allowlists provide sufficient security
-  // if (isProduction) {
-  //   directives.push('upgrade-insecure-requests');
-  // }
-
-  return directives.join('; ');
-}
+// CSP configuration moved to server-level (nginx/apache)
 
 export function securityHeadersMiddleware(request: NextRequest, response: NextResponse) {
   const { pathname } = request.nextUrl;
@@ -177,7 +104,7 @@ export function securityHeadersMiddleware(request: NextRequest, response: NextRe
   response.headers.set('X-Permitted-Cross-Domain-Policies', 'none');
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
   response.headers.set('Cross-Origin-Resource-Policy', 'same-site');
-  response.headers.set('Content-Security-Policy', buildContentSecurityPolicy());
+  // CSP handled by server-level configuration
 
   // CRITICAL: Additional security for admin routes
   if (pathname.startsWith('/admin')) {
