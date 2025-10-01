@@ -6,7 +6,6 @@ import type { Metadata } from 'next';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import MobileMenu from '@/components/MobileMenu';
-import Logo from '@/components/Logo';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
@@ -35,9 +34,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <header className="w-full border-b border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-sm relative z-30">
           <div className="container-max">
             <div className="flex items-center justify-between h-12 sm:h-14">
-              {/* Logo/Brand */}
+              {/* Brand */}
               <div className="flex items-center space-x-3 sm:space-x-4 lg:space-x-6 min-w-0 flex-1">
-                <Logo size="sm" />
                 <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-green-800 dark:text-slate-100 truncate leading-tight">
                   {locale === 'bn' ? 'জাতীয়  নির্বাচন (২০১৪, ২০১৮, ২০২৪) তদন্ত কমিশন' : 'National Elections (2014, 2018, 2024) Inquiry Commission'}
                 </div>
