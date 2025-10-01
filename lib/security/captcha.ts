@@ -12,7 +12,7 @@ export interface CaptchaVerificationResult {
 let configurationWarningLogged = false;
 
 function getSecretKey() {
-  return process.env.RECAPTCHA_SECRET_KEY || process.env.NEXT_PUBLIC_RECAPTCHA_KEY_SECRET;
+  return process.env.NEXT_PUBLIC_RECAPTCHA_KEY_SECRET;
 }
 
 function getSiteKey() {
@@ -36,7 +36,7 @@ export async function verifyCaptcha(
   if (!secret) {
     if (process.env.NODE_ENV !== 'production') {
       if (!configurationWarningLogged) {
-        logger.warn('RECAPTCHA_SECRET_KEY missing. Skipping captcha verification in non-production environment.');
+        logger.warn('NEXT_PUBLIC_RECAPTCHA_KEY_SECRET missing. Skipping captcha verification in non-production environment.');
         configurationWarningLogged = true;
       }
       return { success: true, status: 'skipped', message: 'Captcha verification skipped (secret not configured).' };
