@@ -13,7 +13,7 @@ export function Footer() {
   
   return (
     <footer className="bg-white dark:bg-slate-800 shadow-lg border-t border-gray-200 dark:border-slate-700 mt-6 sm:mt-8" role="contentinfo">
-      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="container-max py-6 sm:py-8">
         {/* Main footer content */}
         <div className="flex flex-col lg:flex-row items-center justify-between space-y-6 lg:space-y-0 mb-6">
           <div className="flex items-center space-x-3 sm:space-x-4">
