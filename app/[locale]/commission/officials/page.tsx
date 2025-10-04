@@ -71,7 +71,7 @@ export default function CommissionOfficialsPage({ params }: { params: { locale: 
   }, {} as Record<string, CommissionOfficial[]>);
   
   const departmentNames: Record<string, { en: string; bn: string }> = {
-    'Chief_and_Members': { en: 'Commission Chairman & Members', bn: 'কমিশনের প্রধান ও কর্মকর্তাবৃন্দ' },
+    'Chief_and_Members': { en: 'Commission Chairman & Members', bn: 'কর্মকর্তাবৃন্দ' },
     'Cabinet Division': { en: '', bn: '' },
     'Law and Justice Division': { en: 'Law Officers', bn: 'আইন বিষয়ক কর্মকর্তাবৃন্দ' },
     'National Parliament Secretariat': { en: 'National Parliament Secretariat', bn: 'জাতীয়  সচিবালয়' },
